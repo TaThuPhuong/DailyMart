@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/pink_primary</item>
+        <item name="android:fontFamily">@font/imbplexsans_font</item>
+        <item name="fontFamily">@font/imbplexsans_font</item>
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:windowHideAnimation">@anim/fade_out</item>
+        <item name="android:windowShowAnimation">@anim/fade_in</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+
+    </style>
+
+    <style name="ActivityAnimation" parent="@style/ActivityAnimation" tools:ignore="ResourceCycle">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+</resources>
