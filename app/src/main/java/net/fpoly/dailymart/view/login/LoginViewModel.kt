@@ -16,7 +16,6 @@ class LoginViewModel : ViewModel() {
         when (event) {
             is LoginEvent.ShowPassword -> {
                 _passwordStatus.value = !_passwordStatus.value!!
-                Log.d(TAG, "onEvent: ")
             }
             is LoginEvent.Login -> {
 

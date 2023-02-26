@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:onClick="@{() -> viewModel.openTab(3)}"
-                android:padding="20dp"
+                android:padding="25dp"
                 android:selected="@{viewModel.tabCount == 3 ? true : false}"
                 android:src="@drawable/ic_menu_show_more" />
         </LinearLayout>

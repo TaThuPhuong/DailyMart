@@ -6,6 +6,8 @@
         <entry key="..\:/DailyMart/app/src/main/res/drawable/bg_btn.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/bg_circle_on_boarding.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/bg_circle_unselect.xml" value="0.19" />
+        <entry key="..\:/DailyMart/app/src/main/res/drawable/bg_white_light_rd_10.xml" value="0.19" />
+        <entry key="..\:/DailyMart/app/src/main/res/drawable/bg_white_rd_top_10.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_app_splash.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_home_selected.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_home_unselected.xml" value="0.19" />
@@ -16,8 +18,11 @@
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_menu_show_more.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_person_gray.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_product_selected.xml" value="0.19" />
+        <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_product_unselected.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_receipt_selected.xml" value="0.19" />
+        <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_receipt_unselected.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_show_more_selected.xml" value="0.19" />
+        <entry key="..\:/DailyMart/app/src/main/res/drawable/ic_show_more_unselected.xml" value="0.19" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/activity_forget_password.xml" value="0.2" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
@@ -27,7 +32,7 @@
         <entry key="..\:/DailyMart/app/src/main/res/layout/fragment_intro_1.xml" value="0.253125" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/fragment_intro_2.xml" value="0.25416666666666665" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/fragment_intro_3.xml" value="0.25416666666666665" />
-        <entry key="..\:/DailyMart/app/src/main/res/layout/home_fragment.xml" value="0.1721311475409836" />
+        <entry key="..\:/DailyMart/app/src/main/res/layout/home_fragment.xml" value="0.264" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/product_fragment.xml" value="0.22826086956521738" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/receipt_fragment.xml" value="0.22826086956521738" />
         <entry key="..\:/DailyMart/app/src/main/res/layout/show_more_fragment.xml" value="0.22826086956521738" />

@@ -93,13 +93,13 @@
 
             <EditText
                 android:id="@+id/ed_password"
+                set_input_type="@{viewModel.passwordStatus.showPassword}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="@string/m_t_kh_u"
-                android:inputType="textPassword"
                 android:paddingVertical="8dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
@@ -110,7 +110,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_show_password" />
+                android:src="@{viewModel.passwordStatus.showPassword ? @drawable/ic_hide_password: @drawable/ic_show_password }" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -121,13 +121,13 @@
 
             <EditText
                 android:id="@+id/ed_confirm_password"
+                set_input_type="@{viewModel.passwordStatus.showConfirmPassword}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="@string/m_t_kh_u"
-                android:inputType="textPassword"
                 android:paddingVertical="8dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
@@ -138,7 +138,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_show_password" />
+                android:src="@{viewModel.passwordStatus.showConfirmPassword ? @drawable/ic_hide_password: @drawable/ic_show_password }" />
         </RelativeLayout>
 
         <TextView
