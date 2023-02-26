@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1000451473097",
+    "project_id": "dailysmart-7f19c",
+    "storage_bucket": "dailysmart-7f19c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000451473097:android:931ada658cbad91c8e5718",
+        "android_client_info": {
+          "package_name": "net.fpoly.dailymart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000451473097-0aeb3bnm3q0vjqgc83sco0879844l6jd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.fpoly.dailymart",
+            "certificate_hash": "87af5ffc140e8237d6fca710869a63d39d8721c3"
+          }
+        },
+        {
+          "client_id": "1000451473097-r4pc66ov3r5l0l5vbp34ciosrptgonss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBptKjyUXeATxaPtnyrDWxAsinKIjP0B7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000451473097-r4pc66ov3r5l0l5vbp34ciosrptgonss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.fpoly.dailymart">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
+        android:name=".DailySmartApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,9 +25,10 @@
         android:roundIcon="@mipmap/ic_application"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <!-- activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +40,31 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".view.on_boarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.forget_password.ForgetPasswordActivity"
+            android:exported="false" />
+        <!-- activity -->
+
+        <!-- service -->
+
+        <!-- service -->
+
+        <!-- receiver -->
+
+        <!-- receiver -->
+
     </application>
 
 </manifest>

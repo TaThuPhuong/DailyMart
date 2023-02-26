@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Daily Mart</string>
+
+    <string name="home_fragment">Home Fragment</string>
+    <string name="receipt_fragment">Receipt Fragment</string>
+    <string name="product_fragment">Product Fragment</string>
+    <string name="show_more_fragment">Show More Fragment</string>
+    <string name="welcome">Welcome</string>
+    <string name="to_the_daily_mart">To the Daily Mart</string>
+    <string name="daily_mart_gi_i_ph_p_ho_n_h_o_cho_c_a_h_ng_c_a_b_n">Daily Mart - giải pháp hoàn hảo cho cửa hàng của bạn</string>
+    <string name="n_gi_n_ti_n_l_i"><![CDATA[Đơn giản & Tiện Lợi]]></string>
+    <string name="qu_n_l_c_a_h_ng_d_d_ng_h_n_v_i_ng_d_ng_c_a_ch_ng_t_i">Quản lý cửa hàng dễ dàng hơn với ứng dụng của chúng tôi</string>
+    <string name="qu_n_l_n_h_ng">Quản lý đơn hàng</string>
+    <string name="qu_n_l_c_a_h_ng_th_ng_minh_t_i_u_h_a_quy_tr_nh_kinh_doanh">Quản lý cửa hàng thông minh, tối ưu hóa quy trình kinh doanh</string>
+    <string name="th_ng_k_b_o_c_o"><![CDATA[Thống kê & Báo cáo]]></string>
+    <string name="ti_t_ki_m_th_i_gian_v_n_ng_cao_hi_u_su_t_kinh_doanh_v_i_ng_d_ng_qu_n_l_c_a_h_ng_c_a_ch_ng_t_i">Tiết kiệm thời gian và nâng cao hiệu suất kinh doanh với ứng dụng quản lý cửa hàng của chúng tôi</string>
+    <string name="b_t_u_ngay">Bắt đầu ngay</string>
+    <string name="ng_ky">Đăng ký</string>
+    <string name="qu_n_m_t_kh_u">Quên mật khẩu</string>
+    <string name="vui_l_ng_nh_p_email_i_n_tho_i_ng_k_c_a_b_n">Vui lòng nhập Email/điện thoại đã đăng ký của bạn.</string>
+    <string name="ch_ng_t_i_s_g_i_m_x_c_minh_n_email_i_n_tho_i_ng_k_c_a_b_n">Chúng tôi sẽ gửi mã xác minh đến Email/điện thoại đã đăng ký của bạn.</string>
+    <string name="email_s_i_n_tho_i">Email/Số điện thoại</string>
+    <string name="g_i_m">Gửi mã</string>
+    <string name="m_t_kh_u">Mật khẩu</string>
+    <string name="qu_n_m_t_kh">Quên mật khẩu?</string>
+    <string name="ng_nh_p">Đăng nhập</string>
+    <string name="kh_ng_c_t_i_kho_n">Không có tài khoản?</string>
 </resources>

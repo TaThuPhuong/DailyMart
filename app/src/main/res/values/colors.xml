@@ -3,9 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="pink_light">#FFEAE3</color>
-    <color name="pink_medium">#FAD0C4</color>
-    <color name="pink_primary">#FF9A9E</color>
+    <color name="pink_light">#FAD0C4</color>
+    <color name="pink_medium">#FDA098</color>
+    <color name="pink_primary">#FF6E6A</color>
 
     <color name="gray_light">#9D9FA1</color>
     <color name="gray_medium">#505050</color>

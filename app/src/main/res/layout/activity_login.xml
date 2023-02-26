@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="net.fpoly.dailymart.view.login.LoginViewModel" />
+
+        <variable
+            name="viewModel"
+            type="LoginViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_app_register" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/imbplexsans_semibold"
+                android:text="@string/app_name"
+                android:textAllCaps="true"
+                android:textColor="@color/gray_primary"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/imbplexsans_semibold"
+            android:text="Đăng nhập"
+            android:textColor="@color/gray_primary"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ed_email_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="40dp"
+            android:drawableStart="@drawable/ic_person_gray"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:hint="@string/email_s_i_n_tho_i"
+            android:paddingVertical="8dp"
+            android:textColor="@color/gray_primary"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/ed_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_key"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:hint="@string/m_t_kh_u"
+                set_input_type="@{viewModel.passwordStatus}"
+                android:paddingVertical="8dp"
+                android:textColor="@color/gray_primary"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imv_show_password"
+                android:src="@{viewModel.passwordStatus ? @drawable/ic_hide_password: @drawable/ic_show_password }"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:paddingVertical="10dp"
+            android:text="@string/qu_n_m_t_kh"
+            android:textColor="@color/gray_light"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_btn"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:gravity="center"
+            android:text="@string/ng_nh_p"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="110dp"
+            android:layout_marginVertical="20dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/layout_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:text="@string/kh_ng_c_t_i_kho_n"
+                android:textColor="@color/gray_light"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:text="@string/ng_ky"
+                android:textColor="@color/pink_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
