@@ -1,4 +1,7 @@
 package net.fpoly.dailymart.view.tab.home
 
-class HomeViewModel {
+import androidx.lifecycle.ViewModel
+
+class HomeViewModel : ViewModel() {
+
 }

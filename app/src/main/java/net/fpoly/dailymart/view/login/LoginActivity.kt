@@ -18,6 +18,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModels { AppViewModelFactory }
 
+    override fun setOnClickListener() {
+        binding.imvShowPassword.setOnClickListener(this)
+        binding.btnLogin.setOnClickListener(this)
+        binding.layoutRegister.setOnClickListener(this)
+        binding.tvForgetPassword.setOnClickListener(this)
+    }
+
     override fun setupData() {
         setOnClickListener()
         binding.viewModel = viewModel
@@ -26,13 +33,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     override fun setupObserver() {
 
-    }
-
-    private fun setOnClickListener() {
-        binding.imvShowPassword.setOnClickListener(this)
-        binding.btnLogin.setOnClickListener(this)
-        binding.layoutRegister.setOnClickListener(this)
-        binding.tvForgetPassword.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

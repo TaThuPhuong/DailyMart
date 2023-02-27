@@ -14,22 +14,21 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     private val viewModel: RegisterViewModel by viewModels { AppViewModelFactory }
 
+    override fun setOnClickListener() {
+        binding.ccp.setOnClickListener(this)
+        binding.btnRegister.setOnClickListener(this)
+        binding.imvShowPassword.setOnClickListener(this)
+        binding.imvShowConfirmPassword.setOnClickListener(this)
+        binding.layoutLogin.setOnClickListener(this)
+    }
+
     override fun setupData() {
-        setOnClickListener()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
     }
 
     override fun setupObserver() {
 
-    }
-
-    private fun setOnClickListener() {
-        binding.ccp.setOnClickListener(this)
-        binding.btnRegister.setOnClickListener(this)
-        binding.imvShowPassword.setOnClickListener(this)
-        binding.imvShowConfirmPassword.setOnClickListener(this)
-        binding.layoutLogin.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

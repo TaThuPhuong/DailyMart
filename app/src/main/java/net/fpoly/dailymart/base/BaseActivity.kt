@@ -14,8 +14,8 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
     LifecycleObserver {
     open lateinit var binding: B
 
+    open fun setOnClickListener() {}
     protected abstract fun setupData()
-
     protected abstract fun setupObserver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,7 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, _ ->
             WindowInsetsCompat.CONSUMED
         }
+        setOnClickListener()
         setupData()
         setupObserver()
     }

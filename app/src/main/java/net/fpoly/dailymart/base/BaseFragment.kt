@@ -14,7 +14,7 @@ abstract class BaseFragment<B : ViewBinding>(val bindingFactory: (LayoutInflater
     open lateinit var binding: B
     protected abstract fun setupData()
     protected abstract fun setupObserver()
-
+    open fun setOnClickListener() {}
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,6 +31,7 @@ abstract class BaseFragment<B : ViewBinding>(val bindingFactory: (LayoutInflater
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
         setupData()
         setupObserver()
     }

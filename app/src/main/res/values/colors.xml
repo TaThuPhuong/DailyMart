@@ -12,4 +12,6 @@
     <color name="gray_medium">#505050</color>
     <color name="gray_primary">#282828</color>
 
+    <color name="no_color">#00FFFFFF</color>
+
 </resources>

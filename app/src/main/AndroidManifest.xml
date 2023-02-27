@@ -55,6 +55,24 @@
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.task.TaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.check_date.CheckDateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.order.OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.report.ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.stock.StockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.work_sheet.WorkSheetActivity"
+            android:exported="false" />
         <!-- activity -->
 
         <!-- service -->
