@@ -63,7 +63,7 @@
                             android:fontFamily="@font/imbplexsans_regular"
                             android:text="Doanh thu:"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="16dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="12.000.000đ"
                             android:textColor="@color/white"
-                            android:textSize="26sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -80,7 +80,7 @@
                             android:fontFamily="@font/imbplexsans_regular"
                             android:text="Đơn hàng:"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="16dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="12.000"
                             android:textColor="@color/white"
-                            android:textSize="26sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </RelativeLayout>

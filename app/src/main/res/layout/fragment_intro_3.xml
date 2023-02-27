@@ -19,16 +19,16 @@
         android:fontFamily="@font/imbplexsans_medium"
         android:text="@string/th_ng_k_b_o_c_o"
         android:textColor="@color/gray_primary"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="46dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/imbplexsans_regular"
         android:gravity="center"
         android:text="@string/ti_t_ki_m_th_i_gian_v_n_ng_cao_hi_u_su_t_kinh_doanh_v_i_ng_d_ng_qu_n_l_c_a_h_ng_c_a_ch_ng_t_i"
         android:textColor="@color/gray_primary"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 </LinearLayout>

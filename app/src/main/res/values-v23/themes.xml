@@ -4,8 +4,6 @@
     <style name="Base.AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/pink_primary</item>
-        <item name="android:fontFamily">@font/imbplexsans_font</item>
-        <item name="fontFamily">@font/imbplexsans_font</item>
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowActivityTransitions">true</item>

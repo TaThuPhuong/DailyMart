@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/imbplexsans_semibold"
             android:text="@string/ng_ky"
             android:textColor="@color/gray_primary"
@@ -52,14 +52,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="35dp"
+            android:gravity="center_vertical"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
+                app:ccp_arrowSize="14dp"
+                app:ccp_textSize="14dp"
+                app:ccp_contentColor="@color/gray_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:ccpDialog_textColor="@color/gray_light"
                 app:ccp_defaultPhoneCode="84" />
 
             <EditText
@@ -67,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
+                android:backgroundTint="@color/gray_medium"
                 android:hint="Số điện thoại"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -75,12 +81,13 @@
             android:id="@+id/ed_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="10dp"
             android:drawableStart="@drawable/ic_mail"
             android:drawablePadding="10dp"
             android:fontFamily="@font/imbplexsans_regular"
             android:hint="Email"
+            android:backgroundTint="@color/gray_medium"
             android:paddingVertical="8dp"
             android:textColor="@color/gray_primary"
             android:textSize="14sp" />
@@ -88,7 +95,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="20dp">
 
             <EditText
@@ -99,6 +106,7 @@
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/imbplexsans_regular"
+                android:backgroundTint="@color/gray_medium"
                 android:hint="@string/m_t_kh_u"
                 android:paddingVertical="8dp"
                 android:textColor="@color/gray_primary"
@@ -116,7 +124,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="20dp">
 
             <EditText
@@ -129,6 +137,7 @@
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="@string/m_t_kh_u"
                 android:paddingVertical="8dp"
+                android:backgroundTint="@color/gray_medium"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
 
@@ -145,7 +154,7 @@
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="35dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_btn"
             android:fontFamily="@font/imbplexsans_medium"
@@ -160,7 +169,7 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="110dp"
             android:layout_marginVertical="20dp"
-            android:background="@color/black" />
+            android:background="@color/gray_medium" />
 
         <LinearLayout
             android:id="@+id/layout_login"
