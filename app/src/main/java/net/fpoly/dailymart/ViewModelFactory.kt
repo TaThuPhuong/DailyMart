@@ -10,6 +10,7 @@ import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
 import net.fpoly.dailymart.view.pay.PayViewModel
+import net.fpoly.dailymart.view.payment.PaymentViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
@@ -60,6 +61,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     CategoryViewModel()
                 isAssignableFrom(PayViewModel::class.java) ->
                     PayViewModel()
+                isAssignableFrom(PaymentViewModel::class.java) ->
+                    PaymentViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

@@ -77,7 +77,7 @@
             android:exported="true" />
         <activity android:name=".view.task.AddTaskActivity" />
         <activity android:name=".view.pay.PayActivity" />
-
+        <activity android:name=".view.payment.PaymentActivity" />
         <!-- activity -->
 
         <!-- service -->
