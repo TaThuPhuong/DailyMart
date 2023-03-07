@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/product_fragment"
-        android:name="net.fpoly.dailymart.view.tab.product.ProductFragment"
+        android:name="net.fpoly.dailymart.view.tab.goods.GoodsFragment"
         android:label="@string/product_fragment">
         <argument
             android:name="userMessage"

@@ -78,6 +78,8 @@
         <activity android:name=".view.task.AddTaskActivity" />
         <activity android:name=".view.pay.PayActivity" />
         <activity android:name=".view.payment.PaymentActivity" />
+        <activity android:name=".view.supplier.SupplierActivity" />
+        <activity android:name=".view.products.ProductsActivity" />
         <!-- activity -->
 
         <!-- service -->

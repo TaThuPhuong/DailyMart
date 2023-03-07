@@ -11,13 +11,14 @@ import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
 import net.fpoly.dailymart.view.pay.PayViewModel
 import net.fpoly.dailymart.view.payment.PaymentViewModel
+import net.fpoly.dailymart.view.products.ProductsViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
-import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.stock.StockViewModel
+import net.fpoly.dailymart.view.supplier.SupplierViewModel
 import net.fpoly.dailymart.view.tab.home.HomeViewModel
-import net.fpoly.dailymart.view.tab.product.ProductViewModel
+import net.fpoly.dailymart.view.tab.goods.GoodsViewModel
 import net.fpoly.dailymart.view.tab.receipt.ReceiptViewModel
 import net.fpoly.dailymart.view.tab.show_more.ShowMoreViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
@@ -41,8 +42,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     HomeViewModel()
                 isAssignableFrom(ReceiptViewModel::class.java) ->
                     ReceiptViewModel()
-                isAssignableFrom(ProductViewModel::class.java) ->
-                    ProductViewModel()
+                isAssignableFrom(GoodsViewModel::class.java) ->
+                    GoodsViewModel()
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
                     ShowMoreViewModel()
                 isAssignableFrom(TaskViewModel::class.java) ->
@@ -63,6 +64,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     PayViewModel()
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
+                isAssignableFrom(SupplierViewModel::class.java) ->
+                    SupplierViewModel()
+                isAssignableFrom(ProductsViewModel::class.java) ->
+                    ProductsViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
