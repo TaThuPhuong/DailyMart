@@ -29,6 +29,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
+            val userRepository = app.userRepository
+            val taskRepository = app.taskRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
