@@ -13,7 +13,9 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:id="@+id/layout_toolbar"
@@ -78,21 +80,24 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onOpenTab(1)}"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_assigned"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Đã giao"
-                    android:textColor="@color/gray_medium"
+                    android:textColor="@{viewModel.tabAssignedOpen==false ? @color/gray_medium : @color/pink_primary}"
                     android:textSize="18sp" />
 
                 <View
+                    android:id="@+id/line_assigned"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_line_pink_primary" />
+                    android:background="@{viewModel.tabAssignedOpen==false ? @drawable/bg_line_gray_medium : @drawable/bg_line_pink_primary}" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,21 +107,24 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onOpenTab(2)}"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_finish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Đã hoàn thành"
-                    android:textColor="@color/gray_medium"
+                    android:textColor="@{viewModel.tabAssignedOpen==true ? @color/gray_medium : @color/pink_primary}"
                     android:textSize="18sp" />
 
                 <View
+                    android:id="@+id/line_finish"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_line_gray_medium" />
+                    android:background="@{viewModel.tabAssignedOpen==true ? @drawable/bg_line_gray_medium : @drawable/bg_line_pink_primary}" />
             </LinearLayout>
         </LinearLayout>
 

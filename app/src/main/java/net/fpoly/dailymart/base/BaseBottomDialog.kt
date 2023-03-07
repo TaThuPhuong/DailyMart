@@ -7,12 +7,12 @@ import android.view.WindowManager
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-open class BaseBottomDialog<B : ViewBinding>(
+abstract class BaseBottomDialog<B : ViewBinding>(
     mContext: Context,
     var bindingFactory: (LayoutInflater) -> B,
 ) : BottomSheetDialog(mContext) {
     lateinit var binding: B
-    open fun initData() {}
+    protected abstract fun initData()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = bindingFactory(layoutInflater)

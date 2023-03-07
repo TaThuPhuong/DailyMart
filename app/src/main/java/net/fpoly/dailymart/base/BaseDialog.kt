@@ -17,9 +17,9 @@ open class BaseDialog<B : ViewBinding>(
         super.onCreate(savedInstanceState)
         binding = bindingFactory(layoutInflater)
         setContentView(binding.root)
-        val window = window
-        window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//        val window = window
+//        window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setCancelable(true)
         setCanceledOnTouchOutside(true)
         initData()

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="net.fpoly.dailymart.view.pay.PayViewModel" />
+
+        <variable
+            name="viewModel"
+            type="PayViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:src="@drawable/ic_back_black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:gravity="center_vertical"
+                android:text="Thanh toán"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_scanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_toolbar"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="10dp">
+
+            <com.budiyev.android.codescanner.CodeScannerView
+                android:id="@+id/scanner_view"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/bg_btn"
+                android:visibility="visible"
+                app:autoFocusButtonColor="@color/white"
+                app:autoFocusButtonVisible="true"
+                app:flashButtonColor="@color/white"
+                app:flashButtonVisible="true"
+                app:frameAspectRatioHeight="2"
+                app:frameAspectRatioWidth="6"
+                app:frameColor="@color/white"
+                app:frameCornersRadius="10dp"
+                app:frameCornersSize="20dp"
+                app:frameSize="0.75"
+                app:frameThickness="2dp"
+                app:maskColor="@color/mark_color" />
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/cv_scanner"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_red_ff44c_rd_8">
+
+            <EditText
+                android:id="@+id/ed_product_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@id/imv_clear"
+                android:background="@color/no_color"
+                android:hint="Nhập mã sản phẩm"
+                android:padding="8dp"
+                android:textColor="@color/gray_medium"
+                android:textColorHint="@color/gray_light"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imv_clear"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_clear_black_24dp" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_search"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:text="Tổng hàng hóa"
+            android:textColor="@color/gray_medium"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_row"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.4"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Tên SP"
+                android:textColor="@color/pink_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="center_horizontal"
+                android:text="Số lượng"
+                android:textColor="@color/pink_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="end"
+                android:text="Đơn giá"
+                android:textColor="@color/pink_primary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_row">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_above="@+id/btn_pay"
+            android:layout_marginHorizontal="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Thành tiền"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:text="300.000 đ"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btn_pay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_btn"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:gravity="center"
+            android:text="Thanh toán"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</layout>

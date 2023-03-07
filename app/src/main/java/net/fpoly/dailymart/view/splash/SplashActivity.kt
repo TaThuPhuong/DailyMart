@@ -23,6 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         viewModel.loadingSplash.observe(this) {
             if (it >= 200) {
                 if (SharedPref.getTimeOnApp(this) < 1) {
+                    SharedPref.setTimeOnApp(this)
                     openActivity(OnBoardingActivity::class.java)
                 } else {
                     SharedPref.setTimeOnApp(this)

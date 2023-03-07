@@ -7,11 +7,13 @@
     <color name="pink_light">#FAD0C4</color>
     <color name="pink_medium">#FDA098</color>
     <color name="pink_primary">#FF6E6A</color>
+    <color name="mark_color">#5BFF6E6A</color>
 
     <color name="gray_light">#9D9FA1</color>
     <color name="gray_medium">#505050</color>
     <color name="gray_primary">#282828</color>
 
     <color name="no_color">#00FFFFFF</color>
-
+    <color name="red_FF444C">#FF444C</color>
+    <color name="blue_002F22">#002F22</color>
 </resources>

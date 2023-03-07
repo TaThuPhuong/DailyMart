@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_rd_top_10">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/imbplexsans_medium"
+        android:padding="20dp"
+        android:text="Tùy chọn"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imv_close"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:padding="20dp"
+        android:src="@drawable/ic_close_square" />
+
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imv_close"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_gray_light_rd_8"
+        android:drawableStart="@drawable/ic_edit_white"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:padding="10dp"
+        android:text="Sửa"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_edit"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_red_ff44c_rd_8"
+        android:drawableStart="@drawable/ic_delete"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:padding="10dp"
+        android:text="Xóa"
+        android:textColor="@color/red_FF444C"
+        android:textSize="16sp" />
+</RelativeLayout>

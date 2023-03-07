@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
+import net.fpoly.dailymart.view.pay.PayViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
@@ -54,6 +56,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     StockViewModel()
                 isAssignableFrom(WorkSheetViewModel::class.java) ->
                     WorkSheetViewModel()
+                isAssignableFrom(CategoryViewModel::class.java) ->
+                    CategoryViewModel()
+                isAssignableFrom(PayViewModel::class.java) ->
+                    PayViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
