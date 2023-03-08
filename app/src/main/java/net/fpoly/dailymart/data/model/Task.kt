@@ -14,5 +14,6 @@ data class Task(
     @ColumnInfo(name = "deadline") var deadline: Long,              // hạn
     @ColumnInfo(name = "autoCreate") var autoCreate: Boolean = false,
     @ColumnInfo(name = "finish") var finish: Boolean = false,
+    @ColumnInfo(name = "finish_time") var finishTime: Long = 0,
     @ColumnInfo(name = "comment") var comment: String = "",
 )
