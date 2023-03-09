@@ -21,4 +21,7 @@ interface TaskRepository {
 
     @Query("select * from task where id_receiver = :id and finish = :finish")
     suspend fun getTaskByIdAndFinish(id: String, finish: Boolean): Flow<List<Task>>?
+
+    suspend fun deleteTask(task: Task)
+    suspend fun deleteAllTask()
 }

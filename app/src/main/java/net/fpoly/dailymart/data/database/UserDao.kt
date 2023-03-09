@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.database
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -7,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.utils.ROLE
 
+@Dao
 interface UserDao {
     /** thêm mới hoặc thay thế 1 user nếu id user đã tồn tại **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,9 +24,9 @@ interface UserDao {
 
     /** lấy ra user theo vai trò  admin, manage, staff**/
     @Query("select * from user where role = :role")
-    suspend fun getUserByRole(role: ROLE): Flow<List<User>>?
+     fun getUserByRole(role: ROLE): Flow<List<User>>?
 
     /** lấy ra user theo trạng thái vô hiệu hóa **/
     @Query("select * from user where disable =:disable")
-    suspend fun getUserDisable(disable: Boolean): Flow<List<User>>?
+     fun getUserDisable(disable: Boolean): Flow<List<User>>?
 }

@@ -5,7 +5,9 @@ import android.content.Intent
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivitySplashBinding
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.on_boarding.OnBoardingActivity
@@ -17,6 +19,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     override fun setupData() {
         viewModel.loadSplash()
+        SharedPref.insertUser(
+            this,
+            User("1234", "admin", "admin@gmail.com", "0123456789", "12345678", ROLE.ADMIN, false)
+        )
     }
 
     override fun setupObserver() {

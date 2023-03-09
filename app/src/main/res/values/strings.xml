@@ -25,4 +25,6 @@
     <string name="qu_n_m_t_kh">Quên mật khẩu?</string>
     <string name="ng_nh_p">Đăng nhập</string>
     <string name="kh_ng_c_t_i_kho_n">Không có tài khoản?</string>
+    <string name="da_giao">Đã giao</string>
+    <string name="da_nhan">Đã nhận</string>
 </resources>

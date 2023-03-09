@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
-import net.fpoly.dailymart.databinding.ProductFragmentBinding
+import net.fpoly.dailymart.databinding.GoodsFragmentBinding
 import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.view.category.CategoryActivity
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
@@ -13,7 +13,7 @@ import net.fpoly.dailymart.view.order.OrderActivity
 import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.supplier.SupplierActivity
 
-class GoodsFragment : BaseFragment<ProductFragmentBinding>(ProductFragmentBinding::inflate),
+class GoodsFragment : BaseFragment<GoodsFragmentBinding>(GoodsFragmentBinding::inflate),
     View.OnClickListener {
 
     private val viewModel: GoodsViewModel by viewModels { AppViewModelFactory }

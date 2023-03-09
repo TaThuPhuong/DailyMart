@@ -30,4 +30,12 @@ class TaskRepositoryImpl(private val dao: TaskDao) : TaskRepository {
         return dao.getTaskByIdAndFinish(id, finish)
     }
 
+    override suspend fun deleteTask(task: Task) {
+        dao.deleteTask(task)
+    }
+
+    override suspend fun deleteAllTask() {
+        dao.deleteAllTask()
+    }
+
 }
