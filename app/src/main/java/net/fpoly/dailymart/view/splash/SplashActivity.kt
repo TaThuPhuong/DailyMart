@@ -2,7 +2,9 @@ package net.fpoly.dailymart.view.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
+import com.google.firebase.FirebaseOptions
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
@@ -21,8 +23,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         viewModel.loadSplash()
         SharedPref.insertUser(
             this,
-            User("1234", "admin", "admin@gmail.com", "0123456789", "12345678", ROLE.ADMIN, false)
+            User(
+                "1234",
+                "admin",
+                "admin@gmail.com",
+                "0123456789",
+                "12345678",
+                ROLE.ADMIN,
+                false,
+                "123443423"
+            )
         )
+        Log.d("YingMing", "setupData:     ${FirebaseOptions.fromResource(this)?.apiKey}")
     }
 
     override fun setupObserver() {

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.firbase.firestore.deleteTask
+import net.fpoly.dailymart.firbase.firestore.insertTask
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.ROLE
@@ -34,6 +36,8 @@ class TaskViewModel(
 
     private val _listUser = MutableLiveData<List<User>>(ArrayList())
     val listUser: LiveData<List<User>> = _listUser
+
+    private var taskDeleteRecent: Task? = null
 
     init {
         _role.value = mUser.role != ROLE.STAFF
@@ -61,9 +65,25 @@ class TaskViewModel(
         }
     }
 
+    fun onFinish(task: Task) {
+        viewModelScope.launch {
+            taskRepository.insertTask(task)
+        }
+    }
+
+    fun onRestore() {
+        viewModelScope.launch {
+            taskRepository.insertTask(taskDeleteRecent ?: return@launch)
+            insertTask(taskDeleteRecent ?: return@launch)
+            taskDeleteRecent = null
+        }
+    }
+
     fun onDeleteTask(task: Task) {
+        taskDeleteRecent = task
         viewModelScope.launch {
             taskRepository.deleteTask(task)
+            deleteTask(task)
         }
     }
 

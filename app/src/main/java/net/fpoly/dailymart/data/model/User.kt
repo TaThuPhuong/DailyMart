@@ -14,4 +14,5 @@ data class User(
     @ColumnInfo(name = "password") var password: String = "",
     @ColumnInfo(name = "role") var role: ROLE = ROLE.STAFF,
     @ColumnInfo(name = "disable") var disable: Boolean = false,
+    @ColumnInfo(name = "device_id") var deviceId: String = "",
 )

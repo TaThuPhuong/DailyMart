@@ -6,12 +6,16 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.viewModels
+import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityTaskBinding
+import net.fpoly.dailymart.databinding.DialogFinishTaskConfirmBinding
 import net.fpoly.dailymart.extention.view_extention.*
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.task.add_new.AddTaskActivity
 
 class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::inflate),
@@ -110,12 +114,9 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setSwipe() {
-        Log.d(TAG, "setSwipe: ")
-
         binding.layoutContent.setOnTouchListener(object : OnSwipeTouchListener(this) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
-                Log.d(TAG, "onSwipeLeft: ")
                 if (isAssignedOpen) {
                     viewModel.onOpenTab(2)
                 } else {
@@ -125,7 +126,6 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
             override fun onSwipeRight() {
                 super.onSwipeRight()
-                Log.d(TAG, "onSwipeRight: ")
                 if (isAssignedOpen) {
                     viewModel.onOpenTab(2)
                 } else {
@@ -138,13 +138,28 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView() {
         mTaskAdapter = TaskAdapter(this, mListTask, mListUser) { task ->
-            OptionTaskDialog(this,
+            OptionTaskDialog(this, task.finish,
+                onShowDetail = {},
+                onFinish = {
+                    FinishTaskConfirmDialog(this) { comment, time ->
+                        task.comment = comment ?: ""
+                        if (time != 0L) {
+                            task.finishTime = time
+                        }
+                        viewModel.onFinish(task)
+                    }.show()
+                },
                 onEdit = {
 
                 }, onDelete = {
                     DeleteTaskConfirmDialog(this) {
+                        val snack =
+                            Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+                        snack.setAction("Hoàn tác") {
+                            viewModel.onRestore()
+                        }
+                        snack.show()
                         viewModel.onDeleteTask(task)
-                        mTaskAdapter.notifyDataSetChanged()
                     }.show()
                 }).show()
         }

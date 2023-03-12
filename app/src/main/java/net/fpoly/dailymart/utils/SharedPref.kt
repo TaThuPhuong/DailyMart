@@ -30,4 +30,25 @@ object SharedPref {
         val result = sharedPref.getString("user", "")
         return Gson().fromJson(result, User::class.java)
     }
+
+    fun getNotificationId(context: Context): Int {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return sharedPref.getInt("notification_id", 0)
+    }
+
+    fun setNotificationId(context: Context) {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
+        val num = getNotificationId(context) + 1
+        sharedPref.putInt("notification_id", num).apply()
+    }
+
+    fun getTokenNotification(context: Context): String? {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return sharedPref.getString("token", "")
+    }
+
+    fun setTokenNotification(context: Context, value: String) {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
+        sharedPref.putString("token", value).apply()
+    }
 }

@@ -9,9 +9,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/imbplexsans_medium"
         android:padding="20dp"
-        android:text="Tùy chọn"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:text="Xác nhận hoàn thành công việc"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imv_close"
@@ -22,66 +21,56 @@
         android:src="@drawable/ic_close_square" />
 
     <TextView
-        android:id="@+id/btn_detail"
+        android:id="@+id/ed_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imv_close"
         android:layout_marginHorizontal="16dp"
-        android:background="@drawable/bg_gray_light_rd_8"
-        android:drawableStart="@drawable/ic_info"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:padding="10dp"
-        android:text="Chi tiết"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:text="Bạn có chắc muốn xác nhận hoàn thành công việc này không?"
+        android:textColor="@color/gray_medium"
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/btn_finish"
+    <EditText
+        android:id="@+id/ed_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_detail"
+        android:layout_below="@+id/ed_category_name"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_blue_light_rd_8"
-        android:drawableStart="@drawable/ic_task_finish"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:padding="10dp"
-        android:text="Đã hoàn thành"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_ed_search_task"
+        android:hint="Nhận xét"
+        android:padding="8dp"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_finish"
+        android:layout_below="@+id/ed_comment"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_blue_light_rd_8"
-        android:drawableStart="@drawable/ic_edit_white"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_red_ff44c_rd_8"
         android:drawablePadding="10dp"
         android:fontFamily="@font/imbplexsans_regular"
+        android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="Sửa"
-        android:textColor="@color/white"
+        android:text="Xác nhận"
+        android:textColor="@color/red_FF444C"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_edit"
+        android:layout_below="@+id/btn_confirm"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="46dp"
-        android:background="@drawable/bg_red_ff44c_rd_8"
-        android:drawableStart="@drawable/ic_delete"
         android:drawablePadding="10dp"
         android:fontFamily="@font/imbplexsans_regular"
+        android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="Xóa"
-        android:textColor="@color/red_FF444C"
+        android:text="Hủy bỏ"
+        android:textColor="@color/gray_light"
         android:textSize="16sp" />
 </RelativeLayout>
