@@ -1,4 +1,6 @@
 package net.fpoly.dailymart.view.tab.show_more
 
-class ShowMoreViewModel {
+import androidx.lifecycle.ViewModel
+
+class ShowMoreViewModel : ViewModel() {
 }

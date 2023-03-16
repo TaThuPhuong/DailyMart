@@ -135,4 +135,7 @@ dependencies {
 
     // bar code
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
