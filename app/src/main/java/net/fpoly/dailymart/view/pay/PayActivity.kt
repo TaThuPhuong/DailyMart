@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.pay
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.view.View
 import android.widget.Toast
@@ -17,6 +18,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.view.payment.PaymentActivity
 
 class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate),
     View.OnClickListener {
@@ -27,6 +29,7 @@ class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
         binding.imvClear.setOnClickListener(this)
+        binding.btnPay.setOnClickListener(this)
     }
 
     override fun setupData() {
@@ -108,6 +111,7 @@ class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate
     override fun onClick(v: View?) {
         when (v) {
             binding.imvBack -> finish()
+            binding.btnPay -> startActivity(Intent(this, PaymentActivity::class.java))
         }
     }
 }

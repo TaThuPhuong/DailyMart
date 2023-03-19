@@ -4,17 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
+import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainViewModel
+import net.fpoly.dailymart.view.message.MessageViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
 import net.fpoly.dailymart.view.pay.PayViewModel
 import net.fpoly.dailymart.view.payment.PaymentViewModel
 import net.fpoly.dailymart.view.products.ProductsViewModel
+import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
+import net.fpoly.dailymart.view.staff.StaffViewModel
 import net.fpoly.dailymart.view.stock.StockViewModel
 import net.fpoly.dailymart.view.supplier.SupplierViewModel
 import net.fpoly.dailymart.view.tab.home.HomeViewModel
@@ -73,6 +78,16 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     ProductsViewModel()
                 isAssignableFrom(AddTaskViewModel::class.java) ->
                     AddTaskViewModel(app, taskRepository, userRepository)
+                isAssignableFrom(ChangePasswordViewModel::class.java) ->
+                    ChangePasswordViewModel()
+                isAssignableFrom(StaffViewModel::class.java) ->
+                    StaffViewModel()
+                isAssignableFrom(AddStaffViewModel::class.java) ->
+                    AddStaffViewModel()
+                isAssignableFrom(ProfileViewModel::class.java) ->
+                    ProfileViewModel()
+                isAssignableFrom(MessageViewModel::class.java) ->
+                    MessageViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

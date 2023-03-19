@@ -30,7 +30,6 @@ class GoodsFragment : BaseFragment<GoodsFragmentBinding>(GoodsFragmentBinding::i
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.layoutToolbar.setMarginsStatusBar(mContext)
     }
 
     override fun setupObserver() {

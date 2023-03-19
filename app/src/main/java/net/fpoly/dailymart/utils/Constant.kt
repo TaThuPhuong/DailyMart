@@ -15,3 +15,7 @@ class Constant {
 enum class ROLE {
     ADMIN, MANAGE, STAFF
 }
+
+enum class CheckDateFilter {
+    SOON, SEVEN_DAY, CATEGORY
+}

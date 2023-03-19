@@ -36,7 +36,7 @@ class StaffAdapter(private var mListUser: List<User>, private val onSelectUser: 
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListUser[position]) {
-                binding.tvIdName.text = "${this.id} - ${this.name}"
+                binding.tvName.text = "${this.id} - ${this.name}"
                 binding.root.setOnClickListener {
                     onSelectUser(this)
                 }

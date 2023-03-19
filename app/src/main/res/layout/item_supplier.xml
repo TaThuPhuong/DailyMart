@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/bg_white_rd_12"
+    android:elevation="5dp"
+    android:paddingVertical="16dp"
+    android:paddingStart="16dp">
+
+    <TextView
+        android:id="@+id/tv_supplier_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/imv_phone"
+        android:fontFamily="@font/imbplexsans_semibold"
+        android:maxLines="1"
+        android:text="Tên nhà cung cấp"
+        android:textColor="@color/gray_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_supplier_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_supplier_name"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:text="Liên hệ: 0124235324534"
+        android:textColor="@color/gray_light"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/imv_phone"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/imv_message"
+        android:padding="10dp"
+        android:src="@drawable/ic_phone" />
+
+    <ImageView
+        android:id="@+id/imv_message"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_message_supplier" />
+
+</RelativeLayout>

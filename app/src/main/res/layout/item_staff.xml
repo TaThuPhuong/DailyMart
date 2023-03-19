@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_white_rd_12"
+    android:elevation="5dp"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/tv_id_name"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:gravity="center_vertical"
-        android:text="ST1234 - Phạm Văn Hiển" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/imbplexsans_medium"
+        android:text="Phạm Văn Hiển"
+        android:textColor="@color/gray_medium"
+        android:textSize="18sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_light" />
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:text="SDT: 0124235254"
+        android:textColor="@color/gray_light"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_btn"
+        android:fontFamily="@font/imbplexsans_medium"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:text="Admin"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+</RelativeLayout>

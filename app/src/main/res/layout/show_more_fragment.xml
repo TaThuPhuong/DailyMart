@@ -262,10 +262,33 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/layout_log_out"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_below="@+id/layout_manage" />
+                    android:layout_below="@+id/layout_manage"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="38dp"
+                    android:background="@drawable/bg_btn_gradient_pink"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:src="@drawable/ic_log_out" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/layout_manage"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center"
+                        android:text="Đăng xuất"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 

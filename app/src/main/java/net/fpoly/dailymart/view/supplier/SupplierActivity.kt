@@ -12,6 +12,10 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        binding.tvAdd.setOnClickListener {
+            AddSupplierDialog(this) {}.show()
+        }
     }
 
     override fun setupObserver() {
