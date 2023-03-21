@@ -26,6 +26,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
             User(
                 "1234",
                 "admin",
+                "",
                 "admin@gmail.com",
                 "0123456789",
                 "12345678",
