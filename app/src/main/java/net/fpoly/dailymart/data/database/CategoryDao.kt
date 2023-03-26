@@ -3,7 +3,7 @@ package net.fpoly.dailymart.data.database
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import net.fpoly.dailymart.data.model.Category
-
+@Dao
 interface CategoryDao {
     /** get id */
     @Query("select * from category where id =:id")
