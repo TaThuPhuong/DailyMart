@@ -10,6 +10,7 @@ import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.view.add_product.AddProductActivity
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.order.OrderActivity
+import net.fpoly.dailymart.view.pay.PayActivity
 import net.fpoly.dailymart.view.report.ReportActivity
 import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.task.TaskActivity
@@ -29,7 +30,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         binding.imvWorkSheet.setOnClickListener(this)
         binding.imvStock.setOnClickListener(this)
         binding.imvTask.setOnClickListener(this)
-        binding.imvOrder.setOnClickListener(this)
+        binding.imvPay.setOnClickListener(this)
     }
 
     override fun setupData() {
@@ -61,8 +62,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
             binding.imvTask -> {
                 openActivity(TaskActivity::class.java)
             }
-            binding.imvOrder -> {
-                openActivity(AddProductActivity::class.java)
+            binding.imvPay -> {
+                openActivity(PayActivity::class.java)
             }
         }
     }
