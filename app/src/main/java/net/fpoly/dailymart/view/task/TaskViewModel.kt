@@ -40,7 +40,7 @@ class TaskViewModel(
     private var taskDeleteRecent: Task? = null
 
     init {
-        _role.value = mUser.role != ROLE.STAFF
+        _role.value = mUser.role != ROLE.STAFF.value
         getListUser()
     }
 

@@ -85,6 +85,7 @@
                         android:textSize="16sp" />
 
                     <EditText
+                        android:id="@+id/ed_name_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
@@ -109,6 +110,7 @@
                         android:textSize="16sp" />
 
                     <EditText
+                        android:id="@+id/ed_email_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
@@ -133,6 +135,7 @@
                         android:textSize="16sp" />
 
                     <EditText
+                        android:id="@+id/ed_number_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
@@ -158,17 +161,19 @@
                         android:textSize="16sp" />
 
                     <EditText
+                        android:id="@+id/ed_role_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:gravity="end"
                         android:maxLines="1"
                         android:paddingEnd="44dp"
-                        android:text="Nhân viên"
+                        android:text="@{viewModel.newUser.role}"
                         android:textColor="@color/gray_primary"
                         tools:ignore="RtlSymmetry" />
 
                     <ImageView
+                        android:id="@+id/imv_change_role"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -177,42 +182,43 @@
                         android:src="@drawable/ic_back_black" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/layout_disable"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/layout_role"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp">
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/layout_disable"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_below="@+id/layout_role"-->
+<!--                    android:layout_marginHorizontal="24dp"-->
+<!--                    android:layout_marginTop="10dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/imbplexsans_regular"
-                        android:gravity="center"
-                        android:text="Trạng thái"
-                        android:textColor="@color/gray_primary"
-                        android:textSize="16sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:fontFamily="@font/imbplexsans_regular"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Trạng thái"-->
+<!--                        android:textColor="@color/gray_primary"-->
+<!--                        android:textSize="16sp" />-->
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:gravity="end"
-                        android:maxLines="1"
-                        android:paddingEnd="44dp"
-                        android:text="Đang hoạt động"
-                        android:textColor="@color/gray_primary"
-                        tools:ignore="RtlSymmetry" />
+<!--                    <EditText-->
+<!--                        android:id="@+id/ed_status_user"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:enabled="false"-->
+<!--                        android:gravity="end"-->
+<!--                        android:maxLines="1"-->
+<!--                        android:paddingEnd="44dp"-->
+<!--                        android:text="Đang hoạt động"-->
+<!--                        android:textColor="@color/gray_primary"-->
+<!--                        tools:ignore="RtlSymmetry" />-->
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:padding="14dp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_back_black" />
-                </RelativeLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:padding="14dp"-->
+<!--                        android:rotation="180"-->
+<!--                        android:src="@drawable/ic_back_black" />-->
+<!--                </RelativeLayout>-->
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 
