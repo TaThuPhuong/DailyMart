@@ -37,6 +37,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
             val userRepository = app.userRepository
             val taskRepository = app.taskRepository
+            val categoryRepository = app.categoryRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()

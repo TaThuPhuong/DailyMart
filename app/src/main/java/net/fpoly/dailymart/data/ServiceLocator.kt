@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import net.fpoly.dailymart.data.database.DailyMartDataBase
+import net.fpoly.dailymart.data.repository.CategoryRepositoryImpl
 import net.fpoly.dailymart.data.repository.TaskRepositoryImpl
 import net.fpoly.dailymart.data.repository.UserRepositoryImpl
+import net.fpoly.dailymart.repository.CategoryRepository
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.repository.UserRepository
 
@@ -15,9 +17,12 @@ object ServiceLocator {
     @Volatile
     var userRepository: UserRepository? = null
         @VisibleForTesting set
-
     @Volatile
     var taskRepository: TaskRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    var categoryRepository: CategoryRepository? = null
         @VisibleForTesting set
 
     fun providerUserRepository(context: Context): UserRepository {
@@ -40,6 +45,16 @@ object ServiceLocator {
     private fun createTaskRepositoryImpl(context: Context): TaskRepositoryImpl {
         val database = database ?: createDatabase(context)
         return TaskRepositoryImpl(database.taskDao)
+    }
+
+    fun providerCategoryRepository(context: Context): CategoryRepository {
+        synchronized(this){
+            return categoryRepository ?: categoryRepository ?: createCategoryRepositoryImpl(context)
+        }
+    }
+    private fun createCategoryRepositoryImpl(context: Context): CategoryRepository {
+        val database = database ?: createDatabase(context)
+        return CategoryRepositoryImpl(database.categoryDao)
     }
 
 
