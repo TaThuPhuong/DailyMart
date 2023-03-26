@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="net.fpoly.dailymart.data.model.Invoice"/>
+        <import type="net.fpoly.dailymart.utils.ConvertUtilsKt"/>
+        <import type="net.fpoly.dailymart.view.tab.receipt.ReceiptViewModel"/>
+        <import type="androidx.core.content.ContextCompat"/>
+        <import type="net.fpoly.dailymart.R"/>
+        <variable
+            name="viewmodel"
+            type="ReceiptViewModel" />
+
+        <variable
+            name="invoice"
+            type="Invoice" />
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="24dp"
+        android:onClick="@{() -> viewmodel.detailInvoice(context,invoice)}"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/id_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"
+                android:maxLength="20"
+                android:text="@{@string/hoa_don + invoice.id}"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/name_staff_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_light"
+                android:textSize="12sp"
+                android:text="@{@string/nhan_vien + invoice.userId}"
+                android:fontFamily="@font/imbplexsans_regular"
+                app:layout_constraintStart_toStartOf="@id/id_invoice"
+                app:layout_constraintTop_toBottomOf="@id/id_invoice"
+                />
+
+            <TextView
+                android:id="@+id/date_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_light"
+                android:textSize="12sp"
+                android:text="@{ConvertUtilsKt.fromMillisToStringDate(invoice.dateCreate, context.getString(R.string.slash))}"
+                android:fontFamily="@font/imbplexsans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/total_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_primary"
+                android:textSize="12sp"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.total)}"
+                android:fontFamily="@font/imbplexsans_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_invoice"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/line_dash_invoice"
+            android:contentDescription="@string/imagedescription" />
+    </LinearLayout>
+
+
+</layout>
