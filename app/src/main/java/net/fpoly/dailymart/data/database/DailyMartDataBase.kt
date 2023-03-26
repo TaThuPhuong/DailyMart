@@ -17,7 +17,6 @@ import net.fpoly.dailymart.data.model.*
 abstract class DailyMartDataBase : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val taskDao: TaskDao
-    abstract val invoiceDao: InvoiceDao
     abstract val categoryDao: CategoryDao
     abstract val expiryDao: ExpiryDao
     abstract val invoiceDao: InvoiceDao
