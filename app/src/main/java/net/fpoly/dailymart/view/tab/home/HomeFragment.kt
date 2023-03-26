@@ -7,6 +7,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.databinding.HomeFragmentBinding
 import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.view.add_product.AddProductActivity
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.order.OrderActivity
 import net.fpoly.dailymart.view.report.ReportActivity
@@ -61,7 +62,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
                 openActivity(TaskActivity::class.java)
             }
             binding.imvOrder -> {
-                openActivity(OrderActivity::class.java)
+                openActivity(AddProductActivity::class.java)
             }
         }
     }

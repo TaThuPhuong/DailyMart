@@ -86,9 +86,10 @@
         <activity android:name=".view.staff.StaffActivity" />
         <activity android:name=".view.add_staff.AddStaffActivity" />
         <activity android:name=".view.profile.ProfileActivity" />
-        <activity android:name=".view.message.MessageActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
+        <activity
+            android:name=".view.message.MessageActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.add_product.AddProductActivity" />
         <!-- activity -->
 
         <!-- service -->

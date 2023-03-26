@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.view.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
@@ -37,6 +38,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
             val userRepository = app.userRepository
             val taskRepository = app.taskRepository
+            val ppRepository = app.productPriceRepository
+            val pRepository = app.productRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -88,6 +91,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     ProfileViewModel()
                 isAssignableFrom(MessageViewModel::class.java) ->
                     MessageViewModel()
+                isAssignableFrom(AddProductViewModel::class.java) ->
+                    AddProductViewModel(pRepository,ppRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

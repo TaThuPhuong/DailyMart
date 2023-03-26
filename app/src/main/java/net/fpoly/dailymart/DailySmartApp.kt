@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import net.fpoly.dailymart.data.ServiceLocator
+import net.fpoly.dailymart.repository.ProductPriceRepository
+import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.Constant
@@ -21,6 +23,12 @@ class DailySmartApp : Application() {
 
     val taskRepository: TaskRepository
         get() = ServiceLocator.providerTaskRepository(this)
+
+    val productPriceRepository: ProductPriceRepository
+        get() = ServiceLocator.providerProductPriceRepository(this)
+
+    val productRepository: ProductRepository
+        get() = ServiceLocator.providerProductRepository(this)
 
     override fun onCreate() {
         super.onCreate()
