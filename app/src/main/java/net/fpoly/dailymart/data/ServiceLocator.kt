@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import net.fpoly.dailymart.data.database.DailyMartDataBase
+import net.fpoly.dailymart.data.repository.ProductPriceRepositoryImpl
+import net.fpoly.dailymart.data.repository.ProductRepositoryImpl
 import net.fpoly.dailymart.data.repository.CategoryRepositoryImpl
 import net.fpoly.dailymart.data.repository.TaskRepositoryImpl
 import net.fpoly.dailymart.data.repository.UserRepositoryImpl
+import net.fpoly.dailymart.repository.ProductPriceRepository
+import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.repository.CategoryRepository
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.repository.UserRepository
@@ -17,12 +21,21 @@ object ServiceLocator {
     @Volatile
     var userRepository: UserRepository? = null
         @VisibleForTesting set
+
     @Volatile
     var taskRepository: TaskRepository? = null
         @VisibleForTesting set
 
     @Volatile
     var categoryRepository: CategoryRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    var productPriceRepository: ProductPriceRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    var productRepository: ProductRepository? = null
         @VisibleForTesting set
 
     fun providerUserRepository(context: Context): UserRepository {
@@ -57,6 +70,29 @@ object ServiceLocator {
         return CategoryRepositoryImpl(database.categoryDao)
     }
 
+    fun providerProductPriceRepository(context: Context): ProductPriceRepository {
+        synchronized(this) {
+            return productPriceRepository ?: productPriceRepository
+            ?: createProductPriceRepositoryImpl(context)
+        }
+    }
+
+    private fun createProductPriceRepositoryImpl(context: Context): ProductPriceRepositoryImpl {
+        val database = database ?: createDatabase(context)
+        return ProductPriceRepositoryImpl(database.productPriceDao)
+    }
+
+    fun providerProductRepository(context: Context): ProductRepository {
+        synchronized(this) {
+            return productRepository ?: productRepository
+            ?: createProductRepositoryImpl(context)
+        }
+    }
+
+    private fun createProductRepositoryImpl(context: Context): ProductRepositoryImpl {
+        val database = database ?: createDatabase(context)
+        return ProductRepositoryImpl(database.productDao)
+    }
 
     @VisibleForTesting
     private fun createDatabase(context: Context): DailyMartDataBase {

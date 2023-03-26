@@ -10,6 +10,7 @@ import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.view.category.CategoryActivity
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.order.OrderActivity
+import net.fpoly.dailymart.view.products.ProductsActivity
 import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.supplier.SupplierActivity
 
@@ -40,7 +41,7 @@ class GoodsFragment : BaseFragment<GoodsFragmentBinding>(GoodsFragmentBinding::i
         when (v) {
             binding.layoutCategory -> openActivity(CategoryActivity::class.java)
             binding.layoutSupplier -> openActivity(SupplierActivity::class.java)
-            binding.layoutProducts -> {}
+            binding.layoutProducts -> openActivity(ProductsActivity::class.java)
             binding.layoutImportGoods -> openActivity(OrderActivity::class.java)
             binding.layoutCheckStock -> openActivity(StockActivity::class.java)
             binding.layoutCheckDate -> openActivity(CheckDateActivity::class.java)
