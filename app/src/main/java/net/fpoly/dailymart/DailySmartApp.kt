@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import net.fpoly.dailymart.data.ServiceLocator
+import net.fpoly.dailymart.repository.InvoiceRepository
 import net.fpoly.dailymart.repository.CategoryRepository
 import net.fpoly.dailymart.repository.ProductPriceRepository
 import net.fpoly.dailymart.repository.ProductRepository
@@ -24,6 +25,9 @@ class DailySmartApp : Application() {
 
     val taskRepository: TaskRepository
         get() = ServiceLocator.providerTaskRepository(this)
+
+    val invoiceRepository: InvoiceRepository
+        get() = ServiceLocator.providerInvoiceRepository(this)
 
     val categoryRepository: CategoryRepository
         get() = ServiceLocator.providerCategoryRepository(this)

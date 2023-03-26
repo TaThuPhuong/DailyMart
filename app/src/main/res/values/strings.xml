@@ -27,4 +27,10 @@
     <string name="kh_ng_c_t_i_kho_n">Không có tài khoản?</string>
     <string name="da_giao">Đã giao</string>
     <string name="da_nhan">Đã nhận</string>
+    <string name="disable_camera_permission">Chưa cấp quyền camera</string>
+    <string name="enable_camera_permission">Đã cấp quyền camera</string>
+    <string name="hoa_don">Hóa Đơn </string>
+    <string name="nhan_vien">Nhân viên </string>
+    <string name="imagedescription">imageDescription</string>
+    <string name="slash">/</string>
 </resources>

@@ -2,6 +2,7 @@ package net.fpoly.dailymart.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User

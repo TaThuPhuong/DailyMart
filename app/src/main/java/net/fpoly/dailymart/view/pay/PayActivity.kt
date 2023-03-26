@@ -15,6 +15,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
+import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
@@ -62,7 +63,7 @@ class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate
         codeScanner.isFlashEnabled = false
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Snackbar.make(binding.root, "${it.text}", Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(binding.root, it.text, Snackbar.LENGTH_SHORT)
                     .setAction("Ẩn") {
                         codeScanner.startPreview()
                     }.show()
@@ -86,10 +87,18 @@ class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Đã cấp quyền", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.enable_camera_permission),
+                    Toast.LENGTH_LONG
+                ).show()
                 startScanning()
             } else {
-                Toast.makeText(this, "Chưa có quyền", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.disable_camera_permission),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -97,13 +106,13 @@ class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate
     override fun onResume() {
         super.onResume()
         if (::codeScanner.isInitialized) {
-            codeScanner?.startPreview()
+            codeScanner.startPreview()
         }
     }
 
     override fun onPause() {
         if (::codeScanner.isInitialized) {
-            codeScanner?.releaseResources()
+            codeScanner.releaseResources()
         }
         super.onPause()
     }

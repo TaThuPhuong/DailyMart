@@ -36,8 +36,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
+            val context = app.context
             val userRepository = app.userRepository
             val taskRepository = app.taskRepository
+            val invoiceRepository = app.invoiceRepository
             val categoryRepository = app.categoryRepository
             val ppRepository = app.productPriceRepository
             val pRepository = app.productRepository
@@ -53,7 +55,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
                 isAssignableFrom(ReceiptViewModel::class.java) ->
-                    ReceiptViewModel()
+                    ReceiptViewModel(context, invoiceRepository)
                 isAssignableFrom(GoodsViewModel::class.java) ->
                     GoodsViewModel()
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
