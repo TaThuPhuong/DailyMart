@@ -1,5 +1,7 @@
 package net.fpoly.dailymart.view.staff
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +16,9 @@ class StaffViewModel(
 ) : ViewModel() {
     private val _listUser = MutableLiveData<List<User>>(ArrayList())
     val listUser: LiveData<List<User>> = _listUser
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
+    val updateUser = MutableLiveData(User())
 
     init {
         getListUser()
@@ -27,4 +32,10 @@ class StaffViewModel(
         }
     }
 
+    fun saveUser(user: User, context: Context) {
+        viewModelScope.launch {
+            userRepository.insertUser(user)
+            Toast.makeText(context, "Them thanh cong", Toast.LENGTH_LONG).show()
+        }
+    }
 }

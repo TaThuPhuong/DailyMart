@@ -1,12 +1,14 @@
-package net.fpoly.dailymart.view.add_staff
+package net.fpoly.dailymart.view.staff
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ItemStaffBinding
+import kotlin.math.log
 
 class StaffAdapter(
     private val mContext: Context,
@@ -41,6 +43,10 @@ class StaffAdapter(
                 binding.tvName.text = this.name
                 binding.tvPhone.text = this.phone
                 binding.tvRole.text = this.role
+                binding.root.setOnClickListener {
+                    onClick(this)
+                    Log.d("tuvm", "onBindViewHolder: onclick")
+                }
             }
         }
     }

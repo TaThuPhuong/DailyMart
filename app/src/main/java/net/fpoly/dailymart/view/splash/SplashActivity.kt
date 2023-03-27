@@ -37,9 +37,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 "",
                 "admin@gmail.com",
                 "0123456789",
-                "12345678",
                 ROLE.ADMIN.value,
-                false,
+                true,
+                "Android",
                 "123443423"
             )
         )

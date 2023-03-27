@@ -33,4 +33,5 @@
     <string name="nhan_vien">Nhân viên </string>
     <string name="imagedescription">imageDescription</string>
     <string name="slash">/</string>
+    <string name="th_m_nh_n_vi_n">Thêm Nhân Viên</string>
 </resources>
