@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.FirebaseOptions
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
@@ -20,6 +23,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModels { AppViewModelFactory }
 
     override fun setupData() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, _ ->
+            WindowInsetsCompat.CONSUMED
+        }
+
         viewModel.loadSplash()
         SharedPref.insertUser(
             this,
