@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="net.fpoly.dailymart.view.staff.StaffViewModel" />
+
+        <variable
+            name="viewModel"
+            type="StaffViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="58dp">
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:src="@drawable/ic_back_black" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:gravity="center_vertical"
+                android:text="Thông tin"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_update"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:gravity="center"
+                android:text="Lưu"
+                android:textColor="@color/pink_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imv_avatar"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/img_avatar_default" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/imv_avatar"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:gravity="center"
+                        android:text="Họ tên"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/ed_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:maxLines="1" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/layout_name"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:gravity="center"
+                        android:text="Email"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/ed_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:maxLines="1" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/layout_email"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:gravity="center"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/ed_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:inputType="number"
+                        android:maxLines="1" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_role"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/layout_phone"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:gravity="center"
+                        android:text="Chức vụ"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/ed_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:paddingEnd="44dp"
+                        android:textColor="@color/gray_primary"
+                        tools:ignore="RtlSymmetry" />
+
+                    <ImageView
+                        android:id="@+id/imv_change_role"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:padding="14dp"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_black" />
+                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/layout_disable"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_below="@+id/layout_role"
+                                    android:layout_marginHorizontal="24dp"
+                                    android:layout_marginTop="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:fontFamily="@font/imbplexsans_regular"
+                                        android:gravity="center"
+                                        android:text="Trạng thái"
+                                        android:textColor="@color/gray_primary"
+                                        android:textSize="16sp" />
+
+                                    <EditText
+                                        android:id="@+id/ed_status"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:gravity="end"
+                                        android:maxLines="1"
+                                        android:paddingEnd="44dp"
+                                        android:text="Đang hoạt động"
+                                        android:textColor="@color/gray_primary"
+                                        tools:ignore="RtlSymmetry" />
+
+                                    <ImageView
+                                        android:id="@+id/imv_change_status"
+                                        android:layout_width="40dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentEnd="true"
+                                        android:padding="14dp"
+                                        android:rotation="180"
+                                        android:src="@drawable/ic_back_black" />
+                                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

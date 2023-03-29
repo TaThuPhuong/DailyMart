@@ -163,6 +163,7 @@
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_white_rd_8"
+                    android:drawableEnd="@drawable/ic_calander_gray"
                     android:elevation="5dp"
                     android:hint="Hạn sử dụng"
                     android:padding="10dp"

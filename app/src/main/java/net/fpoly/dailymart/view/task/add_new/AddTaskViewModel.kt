@@ -6,10 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.RetrofitInstance
 import net.fpoly.dailymart.data.model.Data
@@ -106,7 +104,7 @@ class AddTaskViewModel(
     private fun sendNotification(task: Task) = CoroutineScope(Dispatchers.IO).launch {
         try {
             val data = NotificationData(Data("Nhiệm vụ mới", task.title,task.createAt), task.deviceReceiver)
-            val response = RetrofitInstance.api.postNotification(data)
+            val response = RetrofitInstance.apiPutNotification.postNotification(data)
             Log.d(TAG, "sendNotification: ${response.body()?.string()}")
             if (response.isSuccessful) {
 //                Log.d(TAG, "sendNotification: ${Gson().toJson(response)}")
