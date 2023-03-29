@@ -1,75 +1,34 @@
-package net.fpoly.dailymart.security;
+package net.fpoly.dailymart.security
 
-import android.util.Base64;
+import android.util.Base64
+import java.io.UnsupportedEncodingException
+import java.security.*
+import javax.crypto.BadPaddingException
+import javax.crypto.Cipher
+import javax.crypto.IllegalBlockSizeException
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
-import androidx.annotation.NonNull;
-
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-public class AES {
-
+class AES {
     /**
      * Encryption mode enumeration
      */
-    private enum EncryptMode {
-        ENCRYPT, DECRYPT;
+    private enum class EncryptMode {
+        ENCRYPT, DECRYPT
     }
 
     // cipher to be used for encryption and decryption
-    Cipher _cx;
+    var _cx: Cipher
 
     // encryption key and initialization vector
-    byte[] _key, _iv;
+    var _key: ByteArray
+    var _iv: ByteArray
 
-    public AES() throws NoSuchAlgorithmException, NoSuchPaddingException {
+    init {
         // initialize the cipher with transformation AES/CBC/PKCS5Padding
-        _cx = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        _key = new byte[32]; //256 bit key space
-        _iv = new byte[16]; //128 bit IV
-    }
-
-    /**
-     * Note: This function is no longer used.
-     * This function generates md5 hash of the input string
-     *
-     * @param inputString
-     * @return md5 hash of the input string
-     */
-    @NonNull
-    public static final String md5(final String inputString) {
-        final String MD5 = "MD5";
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = MessageDigest
-                    .getInstance(MD5);
-            digest.update(inputString.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuilder hexString = new StringBuilder();
-            for (byte aMessageDigest : messageDigest) {
-                String h = Integer.toHexString(0xFF & aMessageDigest);
-                while (h.length() < 2)
-                    h = "0" + h;
-                hexString.append(h);
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-        }
-        return "";
+        _cx = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        _key = ByteArray(32) //256 bit key space
+        _iv = ByteArray(16) //128 bit IV
     }
 
     /**
@@ -84,37 +43,37 @@ public class AES {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-    private String encryptDecrypt(String _inputText, String _encryptionKey,
-                                  EncryptMode _mode, String _initVector) throws UnsupportedEncodingException,
-            InvalidKeyException, InvalidAlgorithmParameterException,
-            IllegalBlockSizeException, BadPaddingException {
-        String _out = "";// output string
+    @Throws(
+        UnsupportedEncodingException::class,
+        InvalidKeyException::class,
+        InvalidAlgorithmParameterException::class,
+        IllegalBlockSizeException::class,
+        BadPaddingException::class
+    )
+    private fun encryptDecrypt(
+        _inputText: String,
+        _encryptionKey: String,
+        _mode: EncryptMode,
+        _initVector: String
+    ): String {
+        var _out = "" // output string
         //_encryptionKey = md5(_encryptionKey);
         //System.out.println("key="+_encryptionKey);
-
-        int len = _encryptionKey.getBytes("UTF-8").length; // length of the key	provided
-
-        if (_encryptionKey.getBytes("UTF-8").length > _key.length)
-            len = _key.length;
-
-        int ivlen = _initVector.getBytes("UTF-8").length;
-
-        if (_initVector.getBytes("UTF-8").length > _iv.length)
-            ivlen = _iv.length;
-
-        System.arraycopy(_encryptionKey.getBytes("UTF-8"), 0, _key, 0, len);
-        System.arraycopy(_initVector.getBytes("UTF-8"), 0, _iv, 0, ivlen);
+        var len = _encryptionKey.toByteArray(charset("UTF-8")).size // length of the key	provided
+        if (_encryptionKey.toByteArray(charset("UTF-8")).size > _key.size) len = _key.size
+        var ivlen = _initVector.toByteArray(charset("UTF-8")).size
+        if (_initVector.toByteArray(charset("UTF-8")).size > _iv.size) ivlen = _iv.size
+        System.arraycopy(_encryptionKey.toByteArray(charset("UTF-8")), 0, _key, 0, len)
+        System.arraycopy(_initVector.toByteArray(charset("UTF-8")), 0, _iv, 0, ivlen)
         //KeyGenerator _keyGen = KeyGenerator.getInstance("AES");
         //_keyGen.init(128);
-
-        SecretKeySpec keySpec = new SecretKeySpec(_key, "AES"); // Create a new SecretKeySpec
+        val keySpec = SecretKeySpec(_key, "AES") // Create a new SecretKeySpec
         // for the
         // specified key
         // data and
         // algorithm
         // name.
-
-        IvParameterSpec ivSpec = new IvParameterSpec(_iv); // Create a new
+        val ivSpec = IvParameterSpec(_iv) // Create a new
         // IvParameterSpec
         // instance with the
         // bytes from the
@@ -124,67 +83,35 @@ public class AES {
         // vector.
 
         // encryption
-        if (_mode.equals(EncryptMode.ENCRYPT)) {
+        if (_mode == EncryptMode.ENCRYPT) {
             // Potentially insecure random numbers on Android 4.3 and older.
             // Read
             // https://android-developers.blogspot.com/2013/08/some-securerandom-thoughts.html
             // for more info.
-            _cx.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);// Initialize this cipher instance
-            byte[] results = _cx.doFinal(_inputText.getBytes("UTF-8")); // Finish
+            _cx.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec) // Initialize this cipher instance
+            val results = _cx.doFinal(_inputText.toByteArray(charset("UTF-8"))) // Finish
             // multi-part
             // transformation
             // (encryption)
-            _out = Base64.encodeToString(results, Base64.NO_WRAP); // ciphertext
+            _out = Base64.encodeToString(results, Base64.NO_WRAP) // ciphertext
             // output
         }
 
         // decryption
-        if (_mode.equals(EncryptMode.DECRYPT)) {
-            _cx.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);// Initialize this ipher instance
-
-            byte[] decodedValue = Base64.decode(_inputText.getBytes(),
-                    Base64.NO_WRAP);
-            byte[] decryptedVal = _cx.doFinal(decodedValue); // Finish
+        if (_mode == EncryptMode.DECRYPT) {
+            _cx.init(Cipher.DECRYPT_MODE, keySpec, ivSpec) // Initialize this ipher instance
+            val decodedValue = Base64.decode(
+                _inputText.toByteArray(),
+                Base64.NO_WRAP
+            )
+            val decryptedVal = _cx.doFinal(decodedValue) // Finish
             // multi-part
             // transformation
             // (decryption)
-            _out = new String(decryptedVal);
+            _out = String(decryptedVal)
         }
-//        System.out.println(_out);
-        return _out; // return encrypted/decrypted string
-    }
-
-    /***
-     * This function computes the SHA256 hash of input string
-     *
-     * @param text   input text whose SHA256 hash has to be computed
-     * @param length length of the text to be returned
-     * @return returns SHA256 hash of input text
-     * @throws NoSuchAlgorithmException
-     * @throws UnsupportedEncodingException
-     */
-    public static String SHA256(String text, int length) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-
-        String resultStr;
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-        md.update(text.getBytes("UTF-8"));
-        byte[] digest = md.digest();
-
-        StringBuffer result = new StringBuffer();
-        for (byte b : digest) {
-            result.append(String.format("%02x", b)); //convert to hex
-        }
-        //return result.toString();
-
-        if (length > result.toString().length()) {
-            resultStr = result.toString();
-        } else {
-            resultStr = result.toString().substring(0, length);
-        }
-
-        return resultStr;
-
+        //        System.out.println(_out);
+        return _out // return encrypted/decrypted string
     }
 
     /***
@@ -201,12 +128,15 @@ public class AES {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-
-    public String encrypt(String _plainText, String _key, String _iv)
-            throws InvalidKeyException, UnsupportedEncodingException,
-            InvalidAlgorithmParameterException, IllegalBlockSizeException,
-            BadPaddingException {
-        return encryptDecrypt(_plainText, _key, EncryptMode.ENCRYPT, _iv);
+    @Throws(
+        InvalidKeyException::class,
+        UnsupportedEncodingException::class,
+        InvalidAlgorithmParameterException::class,
+        IllegalBlockSizeException::class,
+        BadPaddingException::class
+    )
+    fun encrypt(_plainText: String, _key: String, _iv: String): String {
+        return encryptDecrypt(_plainText, _key, EncryptMode.ENCRYPT, _iv)
     }
 
     /***
@@ -224,31 +154,94 @@ public class AES {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-    public String decrypt(String _encryptedText, String _key, String _iv)
-            throws InvalidKeyException, UnsupportedEncodingException,
-            InvalidAlgorithmParameterException, IllegalBlockSizeException,
-            BadPaddingException {
-        return encryptDecrypt(_encryptedText, _key, EncryptMode.DECRYPT, _iv);
+    @Throws(
+        InvalidKeyException::class,
+        UnsupportedEncodingException::class,
+        InvalidAlgorithmParameterException::class,
+        IllegalBlockSizeException::class,
+        BadPaddingException::class
+    )
+    fun decrypt(_encryptedText: String, _key: String, _iv: String): String {
+        return encryptDecrypt(_encryptedText, _key, EncryptMode.DECRYPT, _iv)
     }
 
-    /**
-     * this function generates random string for given length
-     *
-     * @param length Desired length
-     *               * @return
-     */
-    public static String generateRandomIV(int length) {
-        SecureRandom ranGen = new SecureRandom();
-        byte[] aesKey = new byte[16];
-        ranGen.nextBytes(aesKey);
-        StringBuffer result = new StringBuffer();
-        for (byte b : aesKey) {
-            result.append(String.format("%02x", b)); //convert to hex
+    companion object {
+        /**
+         * Note: This function is no longer used.
+         * This function generates md5 hash of the input string
+         *
+         * @param inputString
+         * @return md5 hash of the input string
+         */
+        fun md5(inputString: String): String {
+            val MD5 = "MD5"
+            try {
+                // Create MD5 Hash
+                val digest = MessageDigest
+                    .getInstance(MD5)
+                digest.update(inputString.toByteArray())
+                val messageDigest = digest.digest()
+
+                // Create Hex String
+                val hexString = StringBuilder()
+                for (aMessageDigest in messageDigest) {
+                    var h = Integer.toHexString(0xFF and aMessageDigest.toInt())
+                    while (h.length < 2) h = "0$h"
+                    hexString.append(h)
+                }
+                return hexString.toString()
+            } catch (e: NoSuchAlgorithmException) {
+            }
+            return ""
         }
-        if (length > result.toString().length()) {
-            return result.toString();
-        } else {
-            return result.toString().substring(0, length);
+
+        /***
+         * This function computes the SHA256 hash of input string
+         *
+         * @param text   input text whose SHA256 hash has to be computed
+         * @param length length of the text to be returned
+         * @return returns SHA256 hash of input text
+         * @throws NoSuchAlgorithmException
+         * @throws UnsupportedEncodingException
+         */
+        @Throws(NoSuchAlgorithmException::class, UnsupportedEncodingException::class)
+        fun SHA256(text: String, length: Int): String {
+            val resultStr: String
+            val md = MessageDigest.getInstance("SHA-256")
+            md.update(text.toByteArray(charset("UTF-8")))
+            val digest = md.digest()
+            val result = StringBuffer()
+            for (b in digest) {
+                result.append(String.format("%02x", b)) //convert to hex
+            }
+            //return result.toString();
+            resultStr = if (length > result.toString().length) {
+                result.toString()
+            } else {
+                result.toString().substring(0, length)
+            }
+            return resultStr
+        }
+
+        /**
+         * this function generates random string for given length
+         *
+         * @param length Desired length
+         * * @return
+         */
+        fun generateRandomIV(length: Int): String {
+            val ranGen = SecureRandom()
+            val aesKey = ByteArray(16)
+            ranGen.nextBytes(aesKey)
+            val result = StringBuffer()
+            for (b in aesKey) {
+                result.append(String.format("%02x", b)) //convert to hex
+            }
+            return if (length > result.toString().length) {
+                result.toString()
+            } else {
+                result.toString().substring(0, length)
+            }
         }
     }
 }
