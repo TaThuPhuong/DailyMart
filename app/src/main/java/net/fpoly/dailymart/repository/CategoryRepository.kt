@@ -12,5 +12,7 @@ interface CategoryRepository {
 
     suspend fun getCategoryId(id: String): Category?
 
-    fun getAllCategory(): Flow<List<Category>>?
+    fun getAllCategory(): Flow<List<Category>>
+
+//    fun searchCategory(name: String): Flow<List<Category>>
 }

@@ -22,7 +22,9 @@ class CategoryRepositoryImpl(private val dao:CategoryDao) : CategoryRepository {
         return dao.getCategoryId(id)
     }
 
-    override fun getAllCategory(): Flow<List<Category>>? {
+    override fun getAllCategory(): Flow<List<Category>> {
         return dao.getAllCategory()
     }
+
+
 }
