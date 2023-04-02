@@ -1,27 +1,25 @@
 package net.fpoly.dailymart.view.add_staff
 
-import android.content.Context
-import android.widget.Toast
+import UserRepositor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.repository.UserRepository
-import net.fpoly.dailymart.utils.ROLE
 
 class AddStaffViewModel(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepositor
 ) : ViewModel() {
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
 
-    val newUser = MutableLiveData(User())
-
-    fun saveUser(user: User, context: Context) {
+    fun postUser(userId: RegisterParam) {
         viewModelScope.launch {
-            userRepository.insertUser(user)
-            Toast.makeText(context, "Them thanh cong", Toast.LENGTH_LONG).show()
+            val result = userRepository.postUser(userId)
+            _user.value = result
         }
     }
 }
