@@ -1,6 +1,8 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.param.InvoiceParam
+import net.fpoly.dailymart.data.model.ListOrderResponse
+import net.fpoly.dailymart.data.model.param.OrderParam
+import net.fpoly.dailymart.data.model.OrderResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -16,8 +18,8 @@ interface InvoiceApi {
     @POST("api/invoice")
     fun insertInvoice(
         @Header("Authorization") token: String,
-        @Body model: InvoiceParam,
-    ): Call<ResponseBody>
+        @Body model: OrderParam,
+    ): Call<OrderResponse>
 
     @POST("api/invoiceDetail")
 
@@ -25,7 +27,7 @@ interface InvoiceApi {
     fun updateInvoice(
         @Header("Authorization") token: String,
         @Query("id") id: String,
-        model: InvoiceParam,
+        model: OrderParam,
     ): Call<ResponseBody>
 
     @GET("api/invoice/")
@@ -35,7 +37,7 @@ interface InvoiceApi {
     ): Call<ResponseBody>
 
     @GET("api/invoice")
-    fun getAllInvoice(@Header("Authorization") token: String): Call<ResponseBody>
+    fun getAllInvoice(@Header("Authorization") token: String): Call<ListOrderResponse>
 
     @DELETE("api/invoice/")
     fun deleteInvoice(

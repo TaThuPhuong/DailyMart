@@ -45,6 +45,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
 
             val ppRepository = app.productPriceRepository
             val pRepository = app.productRepository
+            val expiryRepository = app.expiryRepository
+//            val invoiceDetailRepository = app.invoiceDetailR
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()

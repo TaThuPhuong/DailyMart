@@ -31,6 +31,9 @@
     <string name="enable_camera_permission">Đã cấp quyền camera</string>
     <string name="hoa_don">Hóa Đơn </string>
     <string name="nhan_vien">Nhân viên </string>
+    <string name="don_gia">Đơn giá: </string>
+    <string name="so_luong">Số lượng: </string>
+    <string name="han_su_dung">Hạn sử dụng: </string>
     <string name="imagedescription">imageDescription</string>
     <string name="slash">/</string>
     <string name="th_m_nh_n_vi_n">Thêm Nhân Viên</string>

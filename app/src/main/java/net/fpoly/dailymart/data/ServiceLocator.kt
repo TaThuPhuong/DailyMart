@@ -21,6 +21,7 @@ object ServiceLocator {
     @Volatile
     var categoryRepository: CategoryRepository? = null
         @VisibleForTesting set
+
     @Volatile
     var supplierRepository: SupplierRepository? = null
         @VisibleForTesting set
@@ -35,6 +36,34 @@ object ServiceLocator {
 
     @Volatile
     var invoiceRepository: InvoiceRepository? = null
+
+    @Volatile
+    var invoiceDetailRepository: InvoiceDetailRepository? = null
+
+    @Volatile
+    var expiryRepository: ExpiryRepository? = null
+
+    fun providerExpiryRepository(context: Context): ExpiryRepository {
+        synchronized(this) {
+            return expiryRepository ?: expiryRepository ?: createExpiryRepositoryImpl(context)
+        }
+    }
+
+    private fun createExpiryRepositoryImpl(context: Context): ExpiryRepositoryImpl {
+        val database = database ?: createDatabase(context)
+        return ExpiryRepositoryImpl(database.expiryDao)
+    }
+
+    fun providerInvoiceDetailRepository(context: Context): InvoiceDetailRepository {
+        synchronized(this) {
+            return invoiceDetailRepository ?: invoiceDetailRepository ?: createInvoiceDetailRepositoryImpl(context)
+        }
+    }
+
+    private fun createInvoiceDetailRepositoryImpl(context: Context): InvoiceDetailRepositoryImpl {
+        val database = database ?: createDatabase(context)
+        return InvoiceDetailRepositoryImpl(database.invoiceDetailDao)
+    }
 
     fun providerUserRepository(context: Context): UserRepository {
         synchronized(this) {
@@ -59,7 +88,7 @@ object ServiceLocator {
     }
 
     fun providerCategoryRepository(context: Context): CategoryRepository {
-        synchronized(this){
+        synchronized(this) {
             return categoryRepository ?: categoryRepository ?: createCategoryRepositoryImpl(context)
         }
     }
@@ -68,7 +97,7 @@ object ServiceLocator {
         return CategoryRepositoryImpl(database.categoryDao)
     }
     fun providerSupplierRepository(context: Context): SupplierRepository {
-        synchronized(this){
+        synchronized(this) {
             return supplierRepository ?: supplierRepository ?: createSupplierRepositoryImpl(context)
         }
     }
@@ -79,7 +108,7 @@ object ServiceLocator {
     fun providerProductPriceRepository(context: Context): ProductPriceRepository {
         synchronized(this) {
             return productPriceRepository ?: productPriceRepository
-            ?: createProductPriceRepositoryImpl(context)
+                ?: createProductPriceRepositoryImpl(context)
         }
     }
 
@@ -91,7 +120,7 @@ object ServiceLocator {
     fun providerProductRepository(context: Context): ProductRepository {
         synchronized(this) {
             return productRepository ?: productRepository
-            ?: createProductRepositoryImpl(context)
+                ?: createProductRepositoryImpl(context)
         }
     }
 
@@ -101,7 +130,7 @@ object ServiceLocator {
     }
     fun providerInvoiceRepository(context: Context): InvoiceRepository {
         synchronized(this) {
-            return  invoiceRepository ?: createInvoiceRepository(context)
+            return invoiceRepository ?: createInvoiceRepository(context)
         }
     }
 

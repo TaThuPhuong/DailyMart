@@ -28,12 +28,17 @@ class DailySmartApp : Application() {
     val categoryRepository: CategoryRepository
         get() = ServiceLocator.providerCategoryRepository(this)
 
-
     val productPriceRepository: ProductPriceRepository
         get() = ServiceLocator.providerProductPriceRepository(this)
 
     val productRepository: ProductRepository
         get() = ServiceLocator.providerProductRepository(this)
+
+    val expiryRepository: ExpiryRepository
+        get() = ServiceLocator.providerExpiryRepository(this)
+
+//    val invoiceDetailRepository: InvoiceDetailRepository
+//        get() = ServiceLocator.providerExpiryRepository(this)
 
     override fun onCreate() {
         super.onCreate()
