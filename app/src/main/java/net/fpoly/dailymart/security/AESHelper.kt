@@ -2,8 +2,8 @@ package net.fpoly.dailymart.security
 
 class AESHelper {
     private var _aes: AES? = null
-    private var key: String? = null
-    private var iv: String? = null
+    private var key: String = ""
+    private var iv: String = ""
 
     init {
         try {
@@ -18,7 +18,7 @@ class AESHelper {
      * @param text
      * @return
      */
-    fun encrypt(text: String?): String {
+    fun encrypt(text: String): String {
         var output = ""
         try {
             output = _aes?.encrypt(text, key, iv) ?: "" //encrypt
@@ -33,7 +33,7 @@ class AESHelper {
      * @param text
      * @return
      */
-    fun decrypt(text: String?): String {
+    fun decrypt(text: String): String {
         var output = ""
         try {
             output = _aes?.decrypt(text, key, iv) ?: "" //decrypt
@@ -42,7 +42,7 @@ class AESHelper {
         return output
     }
 
-    fun setKeyVector(key: String?, iv: String?) {
+    fun setKeyVector(key: String, iv: String) {
         this.key = key
         this.iv = iv
     }
