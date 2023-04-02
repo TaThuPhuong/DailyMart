@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.view.order
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -86,6 +87,7 @@ class OrderViewModel() : ViewModel() {
         }
     }
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun getOrders(token: String) {
         viewModelScope.launch {
             try {
@@ -99,16 +101,18 @@ class OrderViewModel() : ViewModel() {
                     }
 
                     override fun onFailure(call: Call<ListOrderResponse>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        _listOrder.value = null
+                        Log.e(TAG, "onFailure: order: $t")
                     }
                 })
             } catch (e: Exception) {
-//                _listOrder.value = Result.failure(e)
-                Log.e(TAG, "getOrders: error: $e")
+                _listOrder.value = null
+                e.printStackTrace()
             }
         }
     }
 
+    @SuppressLint("NullSafeMutableLiveData")
     fun getProduct(id: String, token: String) {
         viewModelScope.launch {
             try {
@@ -118,14 +122,16 @@ class OrderViewModel() : ViewModel() {
                         response: Response<ProductResponse>,
                     ) {
                         _product.value = response.body()
-                        Log.d(TAG, "onResponse: product: ${response.body()}")
                     }
 
                     override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                        _product.value = null
+                        Log.e(TAG, "onFailure: failed: $t")
                     }
                 })
             } catch (e: Exception) {
-                Log.e(TAG, "getProduct: error: $e")
+                _product.value = null
+                e.printStackTrace()
             }
         }
     }

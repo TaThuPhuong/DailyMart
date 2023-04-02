@@ -13,13 +13,13 @@ import net.fpoly.dailymart.databinding.ItemOrderBinding
 
 class OrderAdapter(
     val mContext: Context,
-    var mListOrder: List<OrderParam> = ArrayList()
+    var mListOrder: List<OrderInfo> = ArrayList()
 ) :
     RecyclerView.Adapter<OrderAdapter.ItemView>() {
     class ItemView(val binding: ItemOrderBinding) : ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<OrderParam>) {
+    fun setData(list: List<OrderInfo>) {
         mListOrder = list
         notifyDataSetChanged()
     }
@@ -38,10 +38,10 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListOrder[position]) {
-//                binding.tvExpiryDate.text = this.dateCreate
-//                binding.tvProductName.text = this.name
-//                binding.tvQuantity.text = "SL: ${this.quantity}"
-//                binding.tvTotalInvoice.text = "Đơn giá: ${this.total}"
+                binding.tvExpiryDate.text = this.expiry_date
+                binding.tvProductName.text = this.name
+                binding.tvQuantity.text = "SL: ${this.quantity}"
+                binding.tvTotalInvoice.text = "Đơn giá: ${this.total}"
             }
         }
     }

@@ -41,5 +41,5 @@ data class OrderInfo(
     var name: String = "",
     var quantity: Int = 0,
     var expiry_date: String = "",
-    var total: Int = 0
+    var total: Long = 0
 )
