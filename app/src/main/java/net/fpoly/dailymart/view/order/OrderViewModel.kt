@@ -125,7 +125,7 @@ class OrderViewModel() : ViewModel() {
                     }
                 })
             } catch (e: Exception) {
-                Log.e(TAG, "getProduct: error: $e")
+
             }
         }
     }

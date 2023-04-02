@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.data.model.param.SupplierParam
+import net.fpoly.dailymart.data.model.param.SupplierParamList
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -24,7 +25,8 @@ interface SupplierApi {
     ): Call<ResponseBody>
 
     @GET("api/supplier")
-    fun getAllSupplier(@Header("") token: String): Call<ResponseBody>
+    fun getAllSupplier(@Header("Authorization") token: String
+    ): Call<SupplierParamList>
 
     @DELETE("api/supplier/")
     fun deleteSupplier(@Header("") token: String, @Query("id") id: String): Call<ResponseBody>

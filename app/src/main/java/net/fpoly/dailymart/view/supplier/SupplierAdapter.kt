@@ -6,18 +6,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.Supplier
+import net.fpoly.dailymart.data.model.param.SupplierParam
+import net.fpoly.dailymart.data.model.param.SupplierParamList
 import net.fpoly.dailymart.databinding.ItemSupplierBinding
 
 class SupplierAdapter(
     private val mContext: Context,
-    private var mListSupplier: List<Supplier>,
-    private val onClick: (Supplier) -> Unit
+    private var mListSupplier: List<SupplierParam>,
+    private val onClick: (SupplierParam) -> Unit
 ) : RecyclerView.Adapter<SupplierAdapter.ItemSupplier>() {
+//    val supplier= SupplierParam()
+    var mlistSup = mutableListOf<SupplierParam>()
 
     class ItemSupplier(val binding: ItemSupplierBinding):RecyclerView.ViewHolder(binding.root)
     @SuppressLint("NotifyDataSetChanged")
-    fun setSupplierData(listSupplier: List<Supplier>){
+    fun setSupplierData(listSupplier: List<SupplierParam>){
         mListSupplier = listSupplier
+//        this.mlistSup = mlistSup.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -28,9 +33,8 @@ class SupplierAdapter(
     override fun onBindViewHolder(holder: ItemSupplier, position: Int) {
         with(holder){
             with(mListSupplier[position]){
-
-                binding.tvSupplierName.text = this.name
-                binding.tvSupplierPhone.text= this.phone
+                binding.tvSupplierName.text = this.supplierName+ "Name: "
+                binding.tvSupplierPhone.text= this.phoneNumber+ "Phone: "
                 binding.root.setOnClickListener{
                     onClick(this)
                 }
