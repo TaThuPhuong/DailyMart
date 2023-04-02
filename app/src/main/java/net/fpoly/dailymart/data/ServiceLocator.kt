@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data
 
+import net.fpoly.dailymart.repository.UserRepository
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
@@ -36,16 +37,16 @@ object ServiceLocator {
     @Volatile
     var invoiceRepository: InvoiceRepository? = null
 
-    fun providerUserRepository(context: Context): UserRepository {
-        synchronized(this) {
-            return userRepository ?: userRepository ?: createUserRepositoryImpl(context)
-        }
-    }
+//    fun providerUserRepository(context: Context): UserRepository {
+//        synchronized(this) {
+//            return userRepository ?: userRepository ?: createUserRepositoryImpl(context)
+//        }
+//    }
 
-    private fun createUserRepositoryImpl(context: Context): UserRepositoryImpl {
-        val database = database ?: createDatabase(context)
-        return UserRepositoryImpl(database.userDao)
-    }
+//    private fun createUserRepositoryImpl(context: Context): UserRepositoryImpl {
+//        val database = database ?: createDatabase(context)
+//        return UserRepositoryImpl(database.userDao)
+//    }
 
     fun providerTaskRepository(context: Context): TaskRepository {
         synchronized(this) {

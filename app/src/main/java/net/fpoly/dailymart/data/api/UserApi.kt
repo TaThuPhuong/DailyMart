@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.api
 
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.ChangePassParam
 import net.fpoly.dailymart.data.model.param.LoginParam
 import net.fpoly.dailymart.data.model.param.RegisterParam
@@ -12,7 +13,7 @@ import retrofit2.http.POST
 interface UserApi {
 
     @POST("api/register")
-    fun register(@Body model: RegisterParam): Call<ResponseBody>
+    fun register(@Body model: RegisterParam): User
 
     @POST("api/login")
     fun login( @Body login: LoginParam): Call<ResponseBody>

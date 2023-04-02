@@ -159,7 +159,6 @@
 
             <EditText
                 android:id="@+id/ed_role_user"
-                android:text="@{viewModel.newUser.role}"
                 android:backgroundTint="@color/gray_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
