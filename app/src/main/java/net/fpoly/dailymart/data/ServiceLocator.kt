@@ -4,6 +4,7 @@ import net.fpoly.dailymart.repository.UserRepository
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.database.DailyMartDataBase
 import net.fpoly.dailymart.data.repository.*
 import net.fpoly.dailymart.repository.*
@@ -99,12 +100,11 @@ object ServiceLocator {
     }
     fun providerSupplierRepository(context: Context): SupplierRepository {
         synchronized(this) {
-            return supplierRepository ?: supplierRepository ?: createSupplierRepositoryImpl(context)
+            return supplierRepository ?: createSupplierRepositoryImpl()
         }
     }
-    private fun createSupplierRepositoryImpl(context: Context): SupplierRepository {
-        val database = database ?: createDatabase(context)
-        return SupplierRepositoryImpl(database.supplierDao)
+    private fun createSupplierRepositoryImpl(): SupplierRepository {
+        return SupplierRepositoryImpl(ServerInstance.apiSupplierApi)
     }
     fun providerProductPriceRepository(context: Context): ProductPriceRepository {
         synchronized(this) {

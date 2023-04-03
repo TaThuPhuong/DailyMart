@@ -37,4 +37,6 @@
     <string name="imagedescription">imageDescription</string>
     <string name="slash">/</string>
     <string name="th_m_nh_n_vi_n">Thêm Nhân Viên</string>
+    <string name="empty_list">Danh sách trống</string>
+    <string name="add_new">Thêm mới</string>
 </resources>
