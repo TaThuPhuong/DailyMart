@@ -46,8 +46,9 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
             password = phone,
             email = email,
             phoneNumber = phone,
-            status = "true",
-            role = role
+            role = role,
+            deviceId = "",
+            linkAvt = ""
         )
         viewModel.postUser(user)
     }
