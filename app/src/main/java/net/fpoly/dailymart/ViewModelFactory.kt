@@ -77,7 +77,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(WorkSheetViewModel::class.java) ->
                     WorkSheetViewModel()
                 isAssignableFrom(CategoryViewModel::class.java) ->
-                    CategoryViewModel(categoryRepository)
+                    CategoryViewModel()
                 isAssignableFrom(PayViewModel::class.java) ->
                     PayViewModel()
                 isAssignableFrom(PaymentViewModel::class.java) ->

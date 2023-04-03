@@ -15,8 +15,6 @@ class SupplierAdapter(
     private var mListSupplier: List<SupplierParam>,
     private val onClick: (SupplierParam) -> Unit
 ) : RecyclerView.Adapter<SupplierAdapter.ItemSupplier>() {
-//    val supplier= SupplierParam()
-    var mlistSup = mutableListOf<SupplierParam>()
 
     class ItemSupplier(val binding: ItemSupplierBinding):RecyclerView.ViewHolder(binding.root)
     @SuppressLint("NotifyDataSetChanged")
@@ -33,8 +31,8 @@ class SupplierAdapter(
     override fun onBindViewHolder(holder: ItemSupplier, position: Int) {
         with(holder){
             with(mListSupplier[position]){
-                binding.tvSupplierName.text = this.supplierName+ "Name: "
-                binding.tvSupplierPhone.text= this.phoneNumber+ "Phone: "
+                binding.tvSupplierName.text = this.supplierName
+                binding.tvSupplierPhone.text=this.phoneNumber
                 binding.root.setOnClickListener{
                     onClick(this)
                 }

@@ -17,7 +17,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     val TAG ="SuppActivity"
     private val viewModel: SupplierViewModel by viewModels { AppViewModelFactory }
     private lateinit var mSupplierAdapter: SupplierAdapter
-    val token ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDM2MzY5MCwiZXhwIjoxNjgwNDUwMDkwfQ.WXpnhDjUdkI_JQyTSQ9Jyz2QWaX6fN3G57YQF8HDrc8"
+    private val token ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDQ1MDM5MiwiZXhwIjoxNjgwNTM2NzkyfQ.9eX83EmjrNfekfLOBTnes2TYOplKEy9nxvtHFahGET8"
 
     private var mlistSupplier : List<SupplierParam> = ArrayList()
 
@@ -37,16 +37,11 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
 
     @SuppressLint("SetTextI18n")
     override fun setupObserver() {
-//        viewModel.listSupplier.observe(this) {
-//            it.data.forEach {
-//            }
-//            mSupplierAdapter.setSupplierData(it)
-//        }
     viewModel.listSupplier.observe(this){listSupplier ->
         Log.d(TAG, "setupObserver: ${listSupplier}"  )
-//        mlistSupplier = listSupplier.mList
+        viewModel.getAllSuppliers(token)
+        mlistSupplier = listSupplier.mList
         mSupplierAdapter.setSupplierData(mlistSupplier)
-//        viewModel.getAllSuppliers(token)
     }
     }
     private fun initRecycleView() {

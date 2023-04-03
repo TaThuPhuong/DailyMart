@@ -15,7 +15,7 @@ import retrofit2.http.Query
 interface SupplierApi {
 
     @POST("api/supplier")
-    fun insertSupplier(@Header("") token: String, @Body model: SupplierParam): Call<ResponseBody>
+    fun insertSupplier(@Header("Authorization") token: String, @Body model: SupplierParam): Call<SupplierParamList>
 
     @PUT("api/supplier/")
     fun updateSupplier(

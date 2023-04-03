@@ -7,3 +7,5 @@ data class SupplierParam(
     var phoneNumber: String,
 )
 
+data class SupplierParamList(@SerializedName("data")val mList : List<SupplierParam>)
+
