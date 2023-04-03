@@ -26,7 +26,7 @@ class StaffViewModel(
 
     private fun getListUser() {
         viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.STAFF)?.collect { users ->
+            userRepository.getUserByRole(ROLE.staff)?.collect { users ->
                 _listUser.value = users
             }
         }

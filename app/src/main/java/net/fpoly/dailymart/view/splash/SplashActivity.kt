@@ -2,12 +2,10 @@ package net.fpoly.dailymart.view.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.FirebaseOptions
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
@@ -37,13 +35,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 "",
                 "admin@gmail.com",
                 "0123456789",
-                ROLE.ADMIN.value,
+                ROLE.admin,
                 true,
                 "Android",
                 "123443423"
             )
         )
-        Log.d("YingMing", "setupData:     ${FirebaseOptions.fromResource(this)?.apiKey}")
     }
 
     override fun setupObserver() {

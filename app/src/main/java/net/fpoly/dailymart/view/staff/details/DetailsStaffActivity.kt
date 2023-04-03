@@ -16,7 +16,7 @@ class DetailsStaffActivity :
     BaseActivity<ActivityDetailsStaffBinding>(ActivityDetailsStaffBinding::inflate) {
     private val viewModel: StaffViewModel by viewModels { AppViewModelFactory }
     private var mUser: User? = null
-    private var role: String? = ""
+    private var role: ROLE = ROLE.staff
     private var status: Boolean = true
 
     override fun setupData() {
@@ -37,13 +37,12 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        role = binding.edRole.text.toString()
         val user = User(
             id = mUser!!.id,
             name = name,
             email = email,
             phone = phone,
-            role = role!!,
+            role = role,
             disable = status
         )
 
@@ -52,13 +51,9 @@ class DetailsStaffActivity :
 
     private fun setupBtnChangeRole() {
         binding.imvChangeRole.setOnClickListener {
-            ChangeRoleDialog(this, mRole = ROLE.STAFF) {
-                if (it.value == "STAFF") {
-                    binding.edRole.setText("Nhân viên")
-                } else {
-                    binding.edRole.setText("Quản lý")
-                }
-                role = it.value
+            ChangeRoleDialog(this, mRole = ROLE.staff) {
+                binding.edRole.setText(it.value)
+                role = it
             }.show()
         }
     }
@@ -82,11 +77,7 @@ class DetailsStaffActivity :
             binding.edName.setText(mUser!!.name)
             binding.edEmail.setText(mUser!!.email)
             binding.edNumber.setText(mUser!!.phone)
-            if (mUser!!.role == "STAFF") {
-                binding.edRole.setText("Nhân viên")
-            } else {
-                binding.edRole.setText("Quản lý")
-            }
+            binding.edRole.setText(mUser!!.role.value)
             if (mUser!!.disable) {
                 binding.edStatus.setText("Vô hiệu hóa")
             } else {

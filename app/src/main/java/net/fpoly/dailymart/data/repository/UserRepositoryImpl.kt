@@ -6,24 +6,24 @@ import net.fpoly.dailymart.data.database.UserDao
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.utils.ROLE
 
-//class UserRepositoryImpl(private val dao: UserDao) : UserRepository {
-//    override suspend fun insertUser(user: User) {
-//        dao.insertUser(user)
-//    }
-//
-//    override fun getAllUser(): Flow<List<User>>? {
-//        return dao.getAllUser()
-//    }
-//
-//    override suspend fun getUserById(id: String): User? {
-//        return dao.getUserById(id)
-//    }
-//
-//    override suspend fun getUserByRole(role: ROLE): Flow<List<User>>? {
-//        return dao.getUserByRole(role)
-//    }
-//
-//    override suspend fun getUserDisable(disable: Boolean): Flow<List<User>>? {
-//        return dao.getUserDisable(disable)
-//    }
-//}
+class UserRepositoryImpl(private val dao: UserDao) : UserRepository {
+    override suspend fun insertUser(user: User) {
+        dao.insertUser(user)
+    }
+
+    override fun getAllUser(): Flow<List<User>>? {
+        return dao.getAllUser()
+    }
+
+    override suspend fun getUserById(id: String): User? {
+        return dao.getUserById(id)
+    }
+
+    override fun getUserByRole(role: ROLE): Flow<List<User>>? {
+        return dao.getUserByRole(role)
+    }
+
+    override fun getUserDisable(disable: Boolean): Flow<List<User>>? {
+        return dao.getUserDisable(disable)
+    }
+}
