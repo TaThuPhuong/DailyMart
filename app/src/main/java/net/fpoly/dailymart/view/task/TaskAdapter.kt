@@ -9,7 +9,7 @@ import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ItemTaskBinding
-import net.fpoly.dailymart.extention.view_extention.setImage
+import net.fpoly.dailymart.extension.view_extention.setImage
 import java.text.SimpleDateFormat
 import java.util.Calendar
 

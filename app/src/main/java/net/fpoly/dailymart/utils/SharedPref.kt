@@ -26,7 +26,7 @@ object SharedPref {
         sharedPref.putString("user", gson).apply()
     }
 
-    fun getUser(context: Context): User {
+    fun getUser(context: Context): User? {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         val result = sharedPref.getString("user", "")
         return Gson().fromJson(result, User::class.java)

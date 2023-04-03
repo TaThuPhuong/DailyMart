@@ -25,7 +25,7 @@ class TaskViewModel(
     private val _tabAssignedOpen = MutableLiveData(true)
     val tabAssignedOpen: LiveData<Boolean> = _tabAssignedOpen
 
-    private var mUser: User = SharedPref.getUser(app)
+    private var mUser: User? = SharedPref.getUser(app)
 
     private val _role = MutableLiveData(false)
     val role: LiveData<Boolean> = _role
@@ -39,7 +39,7 @@ class TaskViewModel(
     private var taskDeleteRecent: Task? = null
 
     init {
-        _role.value = mUser.role != ROLE.staff
+        _role.value = mUser!!.role != ROLE.staff
         getListUser()
     }
 
@@ -49,7 +49,7 @@ class TaskViewModel(
                 if (_role.value == true) {
                     getAllListTaskByStatus(false)
                 } else {
-                    getListTaskByIdAndStatus(mUser.id, false)
+                    getListTaskByIdAndStatus(mUser!!.id, false)
                 }
                 _tabAssignedOpen.value = true
             }
@@ -57,7 +57,7 @@ class TaskViewModel(
                 if (_role.value == true) {
                     getAllListTaskByStatus(true)
                 } else {
-                    getListTaskByIdAndStatus(mUser.id, true)
+                    getListTaskByIdAndStatus(mUser!!.id, true)
                 }
                 _tabAssignedOpen.value = false
             }

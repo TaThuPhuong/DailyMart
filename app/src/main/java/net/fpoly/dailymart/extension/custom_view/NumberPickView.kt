@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.extention.custom_view
+package net.fpoly.dailymart.extension.custom_view
 
 import android.content.Context
 import android.graphics.*

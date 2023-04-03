@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.extention.view_extention;
+package net.fpoly.dailymart.extension.view_extention;
 
 import android.content.Context;
 import android.view.GestureDetector;

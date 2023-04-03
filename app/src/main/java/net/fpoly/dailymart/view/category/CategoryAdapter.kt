@@ -2,16 +2,13 @@ package net.fpoly.dailymart.view.category
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.param.CategoryParam
 import net.fpoly.dailymart.databinding.ItemProductBinding
-import net.fpoly.dailymart.extention.view_extention.gone
-import net.fpoly.dailymart.view.category.AddCategoryDialog as toa
+import net.fpoly.dailymart.extension.view_extention.gone
 
 
 class CategoryAdapter(

@@ -3,7 +3,6 @@ package net.fpoly.dailymart.view.task
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
@@ -12,10 +11,7 @@ import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityTaskBinding
-import net.fpoly.dailymart.databinding.DialogFinishTaskConfirmBinding
-import net.fpoly.dailymart.extention.view_extention.*
-import net.fpoly.dailymart.utils.ROLE
-import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.extension.view_extention.*
 import net.fpoly.dailymart.view.task.add_new.AddTaskActivity
 
 class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::inflate),

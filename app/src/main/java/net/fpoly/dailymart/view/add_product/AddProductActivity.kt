@@ -13,14 +13,13 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
-import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityAddProductBinding
-import net.fpoly.dailymart.extention.view_extention.getTextOnChange
-import net.fpoly.dailymart.extention.view_extention.gone
-import net.fpoly.dailymart.extention.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.firbase.storege.Images
 import net.fpoly.dailymart.utils.ImagesUtils
 
