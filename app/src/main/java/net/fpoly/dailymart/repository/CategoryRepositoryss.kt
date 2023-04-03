@@ -3,7 +3,6 @@ package net.fpoly.dailymart.repository
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.CategoryParam
 import net.fpoly.dailymart.data.model.param.CategoryParamList
-import net.fpoly.dailymart.data.model.param.SupplierParamList
 import retrofit2.Call
 
 class CategoryRepositoryss {

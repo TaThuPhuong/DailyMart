@@ -20,8 +20,8 @@ import net.fpoly.dailymart.data.database.OrderInfo
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
-import net.fpoly.dailymart.extention.view_extention.gone
-import net.fpoly.dailymart.extention.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 
 class OrderActivity :
     BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::inflate),
