@@ -14,7 +14,7 @@ class Constant {
 }
 
 enum class ROLE(val value: String) {
-    ADMIN("Admin"), MANAGE("Quản lý"), STAFF("Nhân viên")
+    ADMIN("Admin"), MANAGE("manage"), STAFF("staff")
 }
 
 enum class CheckDateFilter {

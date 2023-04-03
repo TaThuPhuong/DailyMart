@@ -25,7 +25,8 @@ class AddStaffViewModel(
         server.register(userParam).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 response.isSuccessful
-                Log.d("tuvm", "onResponse: " + response.body()?.string())
+                Log.d("tuvm", "onResponse: $response")
+                Log.d("tuvm", "onResponse: $userParam")
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
