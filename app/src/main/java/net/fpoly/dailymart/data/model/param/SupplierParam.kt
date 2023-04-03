@@ -6,6 +6,5 @@ data class SupplierParam(
     val supplierName: String,
     var phoneNumber: String,
 )
-
 data class SupplierParamList(@SerializedName("data")val mList : List<SupplierParam>)
 

@@ -8,7 +8,7 @@ import retrofit2.Call
 
 class CategoryRepositoryss {
     private val supplierService = ServerInstance.apiCategory
-    fun insertCategory(token : String , category : CategoryParam) : Call<CategoryParamList>{
+    fun insertCategory(token : String , category : CategoryParam) : Call<CategoryParam>{
         return supplierService.insertCategory(token,category)
     }
 
