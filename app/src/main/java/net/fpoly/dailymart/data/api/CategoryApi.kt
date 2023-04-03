@@ -14,7 +14,7 @@ interface CategoryApi {
     fun insertCategory(
         @Header("Authorization") token: String,
         @Body model: CategoryParam,
-    ): Call<CategoryParamList>
+    ): Call<CategoryParam>
 
     // update
     @PUT("api/industry/")

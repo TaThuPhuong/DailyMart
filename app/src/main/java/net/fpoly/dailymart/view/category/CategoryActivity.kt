@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.category
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.param.CategoryParam
+import net.fpoly.dailymart.data.model.param.CategoryParamList
 import net.fpoly.dailymart.databinding.ActivityCategoryBinding
 
 
@@ -25,8 +27,13 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
 
         binding.imvAdd.setOnClickListener {
             AddCategoryDialog(this){
-//                viewModel.insertCategory(Category(id = it,name = it))
-//                viewModel.getAllCategory()
+                viewModel.getAllCategory(token)
+                if (viewModel.insertCategory(token, CategoryParam(name = it)) != null) {
+                    Toast.makeText(this, "Thanh", Toast.LENGTH_SHORT).show()
+                }
+                viewModel.insertCategory(token, CategoryParam(name = it))
+                Log.d(TAG, "setupData: ${it}")
+
             }.show()
         }
         initRecycleView()

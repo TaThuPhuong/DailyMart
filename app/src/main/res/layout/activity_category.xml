@@ -78,7 +78,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:text="Tổng số : 6"
+                android:text="Tổng số : "
                 android:textSize="16sp" />
         </RelativeLayout>
 

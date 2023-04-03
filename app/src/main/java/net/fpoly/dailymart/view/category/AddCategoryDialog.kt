@@ -18,8 +18,8 @@ class AddCategoryDialog(private val mContext: Context, private val onConfirm: (S
             if (edtCategory.isEmpty()){
                 Toast.makeText(context, "Dữ liệu không được để trống", Toast.LENGTH_SHORT).show()
             }else{
-//                onConfirm(edtCategory)
-                Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show()
+                onConfirm(edtCategory)
+//                Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }
