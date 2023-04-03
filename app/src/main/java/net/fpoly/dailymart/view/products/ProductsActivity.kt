@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.database.ProductInfo
+import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityProductsBinding
 import net.fpoly.dailymart.view.add_product.AddProductActivity
 
@@ -17,7 +17,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     private lateinit var mProductAdapter: ProductAdapter
 
-    private var mListProduct: List<ProductInfo> = ArrayList()
+    private var mListProduct: List<Product> = ArrayList()
 
     override fun setupData() {
         binding.viewModel = viewModel

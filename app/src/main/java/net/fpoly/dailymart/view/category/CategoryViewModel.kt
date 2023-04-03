@@ -6,18 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Category
-import net.fpoly.dailymart.repository.CategoryRepository
 
-class CategoryViewModel(private val categoryRepository: CategoryRepository) : ViewModel() {
+class CategoryViewModel() : ViewModel() {
     private val _listCategory = MutableLiveData<List<Category>>(ArrayList())
     val listCategory: LiveData<List<Category>> = _listCategory
 
     fun getAllCategory(){
-        viewModelScope.launch {
-            categoryRepository.getAllCategory().collect{
-                _listCategory.value = it
-            }
-        }
+
     }
 
 //    fun searchCategoryName(nameSearch : String){
@@ -30,13 +25,9 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
 //    }
 
     fun insertCategory(category: Category) {
-        viewModelScope.launch {
-            categoryRepository.insertCategory(category)
-        }
+
     }
     fun deleteCategory(category: Category) {
-        viewModelScope.launch {
-            categoryRepository.deleteCategory(category)
-        }
+
     }
 }

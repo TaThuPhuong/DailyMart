@@ -8,12 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.ROLE
 
-class StaffViewModel(
-    private val userRepository: UserRepository
-) : ViewModel() {
+class StaffViewModel() : ViewModel() {
     private val _listUser = MutableLiveData<List<User>>(ArrayList())
     val listUser: LiveData<List<User>> = _listUser
     private val _user = MutableLiveData<User>()
@@ -26,16 +23,11 @@ class StaffViewModel(
 
     private fun getListUser() {
         viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.staff)?.collect { users ->
-                _listUser.value = users
-            }
+
         }
     }
 
     fun saveUser(user: User, context: Context) {
-        viewModelScope.launch {
-            userRepository.insertUser(user)
-            Toast.makeText(context, "Them thanh cong", Toast.LENGTH_LONG).show()
-        }
+
     }
 }

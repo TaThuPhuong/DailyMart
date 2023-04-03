@@ -6,13 +6,9 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.data.model.InvoiceType
-import net.fpoly.dailymart.repository.InvoiceRepository
 import net.fpoly.dailymart.utils.SharedPref
 
-class ReceiptViewModel(
-    context: Context,
-    private val repository: InvoiceRepository
-) : ViewModel() {
+class ReceiptViewModel(context: Context, ) : ViewModel() {
 
     private val _openTabReceipt = MutableLiveData(TAB_SELL)
     val openTabReceipt: LiveData<Int> = _openTabReceipt
@@ -28,15 +24,7 @@ class ReceiptViewModel(
 
     init {
         viewModelScope.launch {
-            val invoices = repository.getInvoices()
-            invoices.onSuccess {
-                val result = it.toMutableList()
-                invoicesResult = result
-                this@ReceiptViewModel.invoices.value = result
-            }
-            invoices.onFailure {
-                this@ReceiptViewModel.invoices.value = mutableListOf()
-            }
+
         }
     }
 
