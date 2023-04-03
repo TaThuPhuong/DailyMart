@@ -13,7 +13,7 @@ import retrofit2.http.POST
 interface UserApi {
 
     @POST("api/register")
-    fun register(@Body model: RegisterParam): User
+    fun register(@Body model: RegisterParam): Call<ResponseBody>
 
     @POST("api/login")
     fun login( @Body login: LoginParam): Call<ResponseBody>
