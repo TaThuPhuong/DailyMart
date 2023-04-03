@@ -17,7 +17,6 @@ open class FirebaseMessageService : FirebaseMessagingService() {
         val title = map["title"]
         val body = map["body"]
         val taskId = map["taskId"]?.toLong() ?: 0L
-        Log.d("YingMing", "taskId: $taskId")
         if (title != null && body != null) {
             createNotification(applicationContext, title, body, taskId)
         }
@@ -25,7 +24,6 @@ open class FirebaseMessageService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("YingMing", "onNewToken: $token")
         SharedPref.setTokenNotification(applicationContext, token)
     }
 }
