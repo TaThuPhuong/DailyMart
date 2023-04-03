@@ -8,11 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import gun0912.tedimagepicker.util.ToastUtil
 import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.LoginParam
 import net.fpoly.dailymart.data.model.root.LoginRoot
-import net.fpoly.dailymart.extention.blankException
+import net.fpoly.dailymart.extension.blankException
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.security.AESUtils
 import net.fpoly.dailymart.utils.SharedPref
 import okhttp3.ResponseBody
@@ -49,10 +51,10 @@ class LoginViewModel(val app: Application) : ViewModel() {
                 _passwordStatus.value = !_passwordStatus.value!!
             }
             is LoginEvent.OnPhoneNumberChange -> {
-                _validatePhone.value = event.value.blankException()
                 _loginParam.value = _loginParam.value?.copy(
                     phoneNumber = event.value
                 )
+                _validatePhone.value = event.value.blankException()
             }
             is LoginEvent.OnPasswordChange -> {
                 _loginParam.value = _loginParam.value?.copy(
@@ -66,8 +68,10 @@ class LoginViewModel(val app: Application) : ViewModel() {
                     if (it.checkValidate()) {
                         mLoadingDialog.showLoading()
                         login(it)
+                        showToast(app, "Đăng nhập thành công")
                     } else {
                         loginSuccess.value = false
+                        showToast(app, "Chưa nhập tài khoản hoặc mật khẩu")
                     }
                 }
             }
@@ -82,7 +86,6 @@ class LoginViewModel(val app: Application) : ViewModel() {
                 if (response.isSuccessful) {
                     val type = object : TypeToken<LoginRoot>() {}.type
                     val res: LoginRoot = Gson().fromJson(response.body()?.string(), type)
-                    Log.d(TAG, "onResponse: $res")
                     res.data.deviceId = SharedPref.getTokenNotification(app)
                     res.data.accessToken = AESUtils.encrypt(res.data.accessToken)
                     SharedPref.setAccessToken(app, res.data.accessToken)

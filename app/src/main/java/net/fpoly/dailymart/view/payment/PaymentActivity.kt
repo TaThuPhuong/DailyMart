@@ -4,7 +4,7 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPaymentBinding
-import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 
 class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBinding::inflate) {
 

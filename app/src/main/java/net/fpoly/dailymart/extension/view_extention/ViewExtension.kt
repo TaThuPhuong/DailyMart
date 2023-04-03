@@ -1,5 +1,6 @@
-package net.fpoly.dailymart.extention.view_extention
+package net.fpoly.dailymart.extension.view_extention
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -45,6 +46,7 @@ fun EditText.getTextOnChange(onTextChange: (String) -> Unit) {
     })
 }
 
+@SuppressLint("InternalInsetResource", "DiscouragedApi")
 private fun getStatusBarHeight(context: Context): Int {
     var result = 0
     val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")

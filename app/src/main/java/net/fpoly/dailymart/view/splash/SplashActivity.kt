@@ -12,6 +12,7 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivitySplashBinding
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.login.LoginActivity
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.on_boarding.OnBoardingActivity
 
@@ -21,26 +22,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModels { AppViewModelFactory }
 
     override fun setupData() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, _ ->
-            WindowInsetsCompat.CONSUMED
-        }
-
         viewModel.loadSplash()
-        SharedPref.insertUser(
-            this,
-            User(
-                "1234",
-                "admin",
-                "",
-                "admin@gmail.com",
-                "0123456789",
-                ROLE.admin,
-                true,
-                "Android",
-                "123443423"
-            )
-        )
     }
 
     override fun setupObserver() {
@@ -51,7 +33,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     openActivity(OnBoardingActivity::class.java)
                 } else {
                     SharedPref.setTimeOnApp(this)
-                    openActivity(MainActivity::class.java)
+                    if (SharedPref.getUser(this@SplashActivity) != null) {
+                        openActivity(MainActivity::class.java)
+                    } else {
+                        openActivity(LoginActivity::class.java)
+                    }
                 }
             }
         }
@@ -59,6 +45,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     private fun openActivity(c: Class<*>) {
         startActivity(Intent(this, c))
-        finish()
+        finishAffinity()
     }
 }
