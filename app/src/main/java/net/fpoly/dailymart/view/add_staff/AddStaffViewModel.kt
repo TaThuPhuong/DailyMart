@@ -22,11 +22,17 @@ class AddStaffViewModel(
 
     fun postUser(userParam: RegisterParam) {
         val server = ServerInstance.apiUser
+        Log.d("YingMing", "userParam: $userParam")
         server.register(userParam).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                response.isSuccessful
-                Log.d("tuvm", "onResponse: $response")
-                Log.d("tuvm", "onResponse: $userParam")
+                if (response.isSuccessful) {
+                    Log.d("YingMing", "onResponse: " + response.body()?.string())
+                    Log.d("YingMing", "onResponse: " + response.body())
+                } else {
+                    Log.d("YingMing", "code: " + response.code())
+                    Log.d("YingMing", "message: " + response.message())
+                    Log.d("YingMing", "errorBody: " + response.errorBody()?.string())
+                }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

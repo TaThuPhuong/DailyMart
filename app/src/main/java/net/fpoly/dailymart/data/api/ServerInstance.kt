@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.utils.Constant
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,19 +19,19 @@ class ServerInstance {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val apiUser by lazy {
+        val apiUser: UserApi by lazy {
             retrofit.create(UserApi::class.java)
         }
-        val apiCategory by lazy {
+        val apiCategory: CategoryApi by lazy {
             retrofit.create(CategoryApi::class.java)
         }
-        val apiSupplierApi by lazy {
+        val apiSupplierApi: SupplierApi by lazy {
             retrofit.create(SupplierApi::class.java)
         }
-        val apiProductApi by lazy {
+        val apiProductApi: ProductApi by lazy {
             retrofit.create(ProductApi::class.java)
         }
-        val apiInvoiceApi by lazy {
+        val apiInvoiceApi: InvoiceApi by lazy {
             retrofit.create(InvoiceApi::class.java)
         }
     }

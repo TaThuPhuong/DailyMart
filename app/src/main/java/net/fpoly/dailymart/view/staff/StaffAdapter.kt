@@ -42,7 +42,7 @@ class StaffAdapter(
             with(mListStaff[position]) {
                 binding.tvName.text = this.name
                 binding.tvPhone.text = this.phone
-                binding.tvRole.text = this.role
+                binding.tvRole.text = this.role.value
                 binding.root.setOnClickListener {
                     onClick(this)
                     Log.d("tuvm", "onBindViewHolder: onclick")

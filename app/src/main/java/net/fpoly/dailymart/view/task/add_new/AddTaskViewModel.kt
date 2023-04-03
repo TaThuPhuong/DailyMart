@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.RetrofitInstance
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Data
 import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.data.model.Task
@@ -41,13 +42,12 @@ class AddTaskViewModel(
 
     init {
         _task.value = _task.value?.copy(
-            idCreator = mUser.id,
+            idCreator = mUser!!.id,
             deviceCreator = mUser.deviceId
         )
         viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.STAFF)?.collect { users ->
-                _listUser.value = users
-            }
+            val server = ServerInstance.apiUser
+
         }
     }
 

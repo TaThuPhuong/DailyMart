@@ -1,6 +1,5 @@
-package net.fpoly.dailymart.extention.view_extention
+package net.fpoly.dailymart.extension.view_extention
 
-import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
@@ -17,7 +16,6 @@ fun ImageView.setImage(src: Int) {
 
 @BindingAdapter("set_input_type")
 fun EditText.setType(b: Boolean) {
-
     transformationMethod =
         if (b) HideReturnsTransformationMethod.getInstance() else PasswordTransformationMethod.getInstance()
 }

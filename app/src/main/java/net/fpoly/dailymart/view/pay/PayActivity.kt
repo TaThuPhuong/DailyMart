@@ -18,7 +18,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
-import net.fpoly.dailymart.extention.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.view.payment.PaymentActivity
 
 class PayActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate),

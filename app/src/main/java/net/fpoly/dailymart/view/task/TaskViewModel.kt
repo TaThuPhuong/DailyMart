@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
@@ -26,7 +25,7 @@ class TaskViewModel(
     private val _tabAssignedOpen = MutableLiveData(true)
     val tabAssignedOpen: LiveData<Boolean> = _tabAssignedOpen
 
-    private var mUser: User = SharedPref.getUser(app)
+    private var mUser: User? = SharedPref.getUser(app)
 
     private val _role = MutableLiveData(false)
     val role: LiveData<Boolean> = _role
@@ -40,7 +39,7 @@ class TaskViewModel(
     private var taskDeleteRecent: Task? = null
 
     init {
-        _role.value = mUser.role != ROLE.STAFF.value
+        _role.value = mUser!!.role != ROLE.staff
         getListUser()
     }
 
@@ -50,7 +49,7 @@ class TaskViewModel(
                 if (_role.value == true) {
                     getAllListTaskByStatus(false)
                 } else {
-                    getListTaskByIdAndStatus(mUser.id, false)
+                    getListTaskByIdAndStatus(mUser!!.id, false)
                 }
                 _tabAssignedOpen.value = true
             }
@@ -58,7 +57,7 @@ class TaskViewModel(
                 if (_role.value == true) {
                     getAllListTaskByStatus(true)
                 } else {
-                    getListTaskByIdAndStatus(mUser.id, true)
+                    getListTaskByIdAndStatus(mUser!!.id, true)
                 }
                 _tabAssignedOpen.value = false
             }
@@ -105,7 +104,7 @@ class TaskViewModel(
 
     private fun getListUser() {
         viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.STAFF)?.collect { users ->
+            userRepository.getUserByRole(ROLE.staff)?.collect { users ->
                 _listUser.value = users
             }
         }

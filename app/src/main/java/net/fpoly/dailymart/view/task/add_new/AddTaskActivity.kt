@@ -1,8 +1,6 @@
 package net.fpoly.dailymart.view.task.add_new
 
 import android.annotation.SuppressLint
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -10,9 +8,9 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityAddTaskBinding
-import net.fpoly.dailymart.extention.view_extention.getTextOnChange
-import net.fpoly.dailymart.extention.view_extention.gone
-import net.fpoly.dailymart.extention.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.view.task.PickTimeDialog
 import java.text.SimpleDateFormat
 

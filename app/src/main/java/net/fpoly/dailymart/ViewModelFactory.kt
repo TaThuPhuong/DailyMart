@@ -53,7 +53,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(RegisterViewModel::class.java) ->
                     RegisterViewModel()
                 isAssignableFrom(LoginViewModel::class.java) ->
-                    LoginViewModel()
+                    LoginViewModel(app)
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
                 isAssignableFrom(ReceiptViewModel::class.java) ->
