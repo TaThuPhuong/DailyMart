@@ -6,12 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import net.fpoly.dailymart.data.ServiceLocator
-import net.fpoly.dailymart.repository.InvoiceRepository
-import net.fpoly.dailymart.repository.CategoryRepository
-import net.fpoly.dailymart.repository.ProductPriceRepository
-import net.fpoly.dailymart.repository.ProductRepository
-import net.fpoly.dailymart.repository.TaskRepository
-import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.repository.*
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
 
@@ -25,7 +20,8 @@ class DailySmartApp : Application() {
 
     val taskRepository: TaskRepository
         get() = ServiceLocator.providerTaskRepository(this)
-
+    val supplierRepository: SupplierRepository
+        get() = ServiceLocator.providerSupplierRepository(this)
     val invoiceRepository: InvoiceRepository
         get() = ServiceLocator.providerInvoiceRepository(this)
 

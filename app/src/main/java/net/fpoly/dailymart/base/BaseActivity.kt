@@ -38,5 +38,7 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         setupData()
         setupObserver()
     }
+
+
 }
 
