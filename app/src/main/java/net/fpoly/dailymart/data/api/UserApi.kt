@@ -11,15 +11,15 @@ import retrofit2.http.POST
 
 interface UserApi {
 
-    @POST("api/register")
+    @POST("register")
     fun register(@Body model: RegisterParam): Call<ResponseBody>
 
-    @POST("api/login")
+    @POST("login")
     fun login( @Body login: LoginParam): Call<ResponseBody>
 
-    @POST("api/change-pass")
+    @POST("change-pass")
     fun changePassword(@Header("Authorization") token: String, @Body model: ChangePassParam): Call<ResponseBody>
 
-    @POST("api/log-out")
+    @POST("log-out")
     fun logout(@Header("Authorization") token: String)
 }
