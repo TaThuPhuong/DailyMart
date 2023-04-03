@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityLoginBinding
+import net.fpoly.dailymart.extention.view_extention.getTextOnChange
 import net.fpoly.dailymart.view.forget_password.ForgetPasswordActivity
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.register.RegisterActivity
@@ -26,24 +27,36 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     override fun setupData() {
-        setOnClickListener()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        onEditTextChange()
+        viewModel.initLoadingDialog(this)
     }
 
     override fun setupObserver() {
-
+        viewModel.loginSuccess.observe(this) {
+            if (it) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finishAffinity()
+            }
+        }
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvShowPassword -> {
-                viewModel.onEvent(LoginEvent.ShowPassword)
-                binding.edPassword.requestFocus()
-            }
-            binding.btnLogin -> openActivity(MainActivity::class.java)
+            binding.imvShowPassword -> viewModel.onEvent(LoginEvent.ShowPassword)
+            binding.btnLogin -> viewModel.onEvent(LoginEvent.Login)
             binding.layoutRegister -> openActivity(RegisterActivity::class.java)
             binding.tvForgetPassword -> openActivity(ForgetPasswordActivity::class.java)
+        }
+    }
+
+    private fun onEditTextChange() {
+        binding.edEmailPhone.getTextOnChange {
+            viewModel.onEvent(LoginEvent.OnPhoneNumberChange(it))
+        }
+        binding.edPassword.getTextOnChange {
+            viewModel.onEvent(LoginEvent.OnPasswordChange(it))
         }
     }
 

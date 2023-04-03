@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
@@ -40,7 +39,7 @@ class TaskViewModel(
     private var taskDeleteRecent: Task? = null
 
     init {
-        _role.value = mUser.role != ROLE.STAFF.value
+        _role.value = mUser.role != ROLE.staff
         getListUser()
     }
 
@@ -105,7 +104,7 @@ class TaskViewModel(
 
     private fun getListUser() {
         viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.STAFF)?.collect { users ->
+            userRepository.getUserByRole(ROLE.staff)?.collect { users ->
                 _listUser.value = users
             }
         }
