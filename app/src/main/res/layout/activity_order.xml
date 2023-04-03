@@ -155,8 +155,8 @@
                     android:textColor="@color/gray_medium"
                     android:textColorHint="@color/gray_light" />
 
-                <TextView
-                    android:id="@+id/tv_expiry_date"
+                <EditText
+                    android:id="@+id/ed_expiry_date"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/ed_quantity"
@@ -175,7 +175,7 @@
                     android:id="@+id/btn_add"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/tv_expiry_date"
+                    android:layout_below="@+id/ed_expiry_date"
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_btn"

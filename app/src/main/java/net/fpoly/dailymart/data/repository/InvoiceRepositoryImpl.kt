@@ -1,6 +1,5 @@
 package net.fpoly.dailymart.data.repository
 
-import androidx.room.Query
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import net.fpoly.dailymart.repository.InvoiceRepository
 
 class InvoiceRepositoryImpl(
     private val invoiceDao: InvoiceDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : InvoiceRepository {
 
     override suspend fun getInvoices(): Result<List<Invoice>> = withContext(ioDispatcher) {
@@ -34,4 +33,7 @@ class InvoiceRepositoryImpl(
         invoiceDao.updateInvoice(invoice)
     }
 
+//    override fun getOrders(): Flow<List<OrderInfo>> {
+//        return null
+//    }
 }

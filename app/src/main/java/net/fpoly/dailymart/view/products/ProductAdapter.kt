@@ -44,11 +44,6 @@ class ProductAdapter(val mContext: Context, var mListProduct: List<ProductInfo> 
                 binding.tvName.text = this.name
                 binding.tvId.text = "ID: ${this.id}"
                 binding.tvPrice.text = "Giá bán:\n${this.sell_price.toMoney()}"
-                Glide.with(mContext).load(this.img_product)
-                    .placeholder(R.drawable.img_default)
-                    .override(80, 20)
-                    .into(binding.imvImage)
-
             }
         }
     }

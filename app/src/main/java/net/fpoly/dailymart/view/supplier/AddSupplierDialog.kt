@@ -12,14 +12,22 @@ class AddSupplierDialog(private val mContext: Context, private val onAdd: (Suppl
     override fun initData() {
         binding.imvClose.setOnClickListener { dismiss() }
         binding.tvAddNew.setOnClickListener {
-            val supName = binding.edSupplierName.text.toString()
-            val supPhone= binding.edSupplierPhone.text.toString()
-            val supplier = Supplier()
-            supplier.name = supName
-            supplier.phone = supPhone
-            Log.d("aa", "initData: "+supplier)
-            onAdd(supplier)
+
+//            onAdd()
             dismiss()
         }
     }
 }
+
+
+
+//binding.tvAddNew.setOnClickListener {
+//            val supName = binding.edSupplierName.text.toString()
+//            val supPhone= binding.edSupplierPhone.text.toString()
+//            val supplier = Supplier()
+//            supplier.name = supName
+//            supplier.phone = supPhone
+//            Log.d("aa", "initData: "+supplier)
+//            onAdd(supplier)
+//            dismiss()
+//        }
