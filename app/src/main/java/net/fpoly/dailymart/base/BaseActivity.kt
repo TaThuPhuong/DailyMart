@@ -29,7 +29,7 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
-            view.updatePadding(insets.left, 0, insets.right, insets.bottom)
+            view.updatePadding(0, 0, 0, 0)
             WindowInsetsCompat.CONSUMED
         }
 

@@ -42,7 +42,7 @@
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
 
-            <net.fpoly.dailymart.extention.custom_view.NumberPickView
+            <net.fpoly.dailymart.extension.custom_view.NumberPickView
                 android:id="@+id/npv_popup_pick1"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_120sdp"
@@ -58,7 +58,7 @@
                 app:npv_TextSizeSelected="@dimen/_15sdp"
                 app:npv_WrapSelectorWheel="false" />
 
-            <net.fpoly.dailymart.extention.custom_view.NumberPickView
+            <net.fpoly.dailymart.extension.custom_view.NumberPickView
                 android:id="@+id/npv_popup_pick2"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_120sdp"

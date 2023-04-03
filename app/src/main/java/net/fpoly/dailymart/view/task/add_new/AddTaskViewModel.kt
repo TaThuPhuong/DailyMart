@@ -42,7 +42,7 @@ class AddTaskViewModel(
 
     init {
         _task.value = _task.value?.copy(
-            idCreator = mUser.id,
+            idCreator = mUser!!.id,
             deviceCreator = mUser.deviceId
         )
         viewModelScope.launch {

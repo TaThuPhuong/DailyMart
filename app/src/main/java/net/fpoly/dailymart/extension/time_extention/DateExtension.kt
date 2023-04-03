@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.extention.time_extention
+package net.fpoly.dailymart.extension.time_extention
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat

@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
+        android:focusable="false"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
@@ -79,12 +79,12 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/imbplexsans_regular"
             android:hint="@string/email_s_i_n_tho_i"
+            android:maxLines="1"
             android:paddingVertical="8dp"
             android:textColor="@color/gray_primary"
             android:textSize="14sp" />
 
         <TextView
-            set_visible="@{viewModel.validatePhone != null}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ed_email_phone"
@@ -97,7 +97,7 @@
         <RelativeLayout
             android:id="@+id/layout_password"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ed_email_phone"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="20dp">
@@ -106,12 +106,13 @@
                 android:id="@+id/ed_password"
                 set_input_type="@{viewModel.passwordStatus}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:backgroundTint="@color/gray_primary"
                 android:drawableStart="@drawable/ic_key"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="@string/m_t_kh_u"
+                android:maxLines="1"
                 android:paddingVertical="8dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
@@ -119,22 +120,20 @@
             <ImageView
                 android:id="@+id/imv_show_password"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:padding="10dp"
                 android:src="@{viewModel.passwordStatus ? @drawable/ic_hide_password: @drawable/ic_show_password }" />
-        </RelativeLayout>
 
-        <TextView
-            set_visible="@{viewModel.validatePassword != null}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_password"
-            android:layout_marginHorizontal="35dp"
-            android:text="@{viewModel.validatePassword}"
-            android:textColor="@color/red_FF444C"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ed_password"
+                android:text="@{viewModel.validatePassword}"
+                android:textColor="@color/red_FF444C"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_forget_password"
