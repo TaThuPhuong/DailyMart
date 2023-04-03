@@ -100,10 +100,11 @@ object ServiceLocator {
     }
     fun providerSupplierRepository(context: Context): SupplierRepository {
         synchronized(this) {
-            return supplierRepository ?: createSupplierRepositoryImpl()
+            return supplierRepository ?: supplierRepository ?: createSupplierRepositoryImpl(context)
         }
     }
-    private fun createSupplierRepositoryImpl(): SupplierRepository {
+    private fun createSupplierRepositoryImpl(context: Context): SupplierRepository {
+        val database = database ?: createDatabase(context)
         return SupplierRepositoryImpl(ServerInstance.apiSupplierApi)
     }
     fun providerProductPriceRepository(context: Context): ProductPriceRepository {

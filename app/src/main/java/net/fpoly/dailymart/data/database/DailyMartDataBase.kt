@@ -10,7 +10,7 @@ import net.fpoly.dailymart.data.model.*
 
 @Database(
     entities = [User::class, Task::class, Category::class, Expiry::class, Invoice::class,
-        InvoiceDetail::class, Product::class, ProductPrice::class, Supplier::class],
+        InvoiceDetail::class, Product::class, ProductPrice::class],
     version = 1,
     exportSchema = false
 )
@@ -24,7 +24,6 @@ abstract class DailyMartDataBase : RoomDatabase() {
     abstract val productDao: ProductDao
     abstract val productPriceDao: ProductPriceDao
     abstract val recentActivityDao: RecentActivityDao
-    abstract val supplierDao: SupplierDao
 
     companion object {
         const val DATABASE_NAME = "daily_mart_db"
