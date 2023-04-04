@@ -40,48 +40,21 @@ class CategoryViewModel() : ViewModel() {
             }catch (e:Exception){
                 Log.e(TAG, "getAll: error: $e")
             }
-            }
         }
+    }
 
     fun insertCategory(token: String,category : CategoryParam){
         viewModelScope.launch {
-            try {
-                categoryRepository.insertCategory(token , category).enqueue(object : Callback<CategoryParam>{
-                    override fun onResponse(
-                        call: Call<CategoryParam>,
-                        response: Response<CategoryParam>
-                    ) {
-                        Log.e(TAG, "onRespons: add success: ${response}")
-                        Log.e(TAG, "onRespons: add success: ${call}")
-                    }
-                    override fun onFailure(call: Call<CategoryParam>, t: Throwable) {
-
-                    }
-
-                })
-
+//            try {
 //                categoryRepository.insertCategory(token, category).enqueue(object : Callback<CategoryParam> {
-//                    override fun onResponse(
-//                        call: Call<CategoryParam>,
-//                        response: Response<CategoryParam>
-//                    ) {
-//                        if (response.body() != null) {
-//                            Log.d(TAG, "onRespons: add success: ${response.body()}")
-//                        } else {
-//                            Log.e(TAG, "onResponse: $response", )
-//                        }
-//                    }
 //
-//                    override fun onFailure(call: Call<CategoryParam>, t: Throwable) {
-//                        Log.e(TAG, "onFailure: add failed: $t")
-//                    }
 //                })
-            }catch (e:Exception){
-                Log.e(TAG, "insertCategory: error: $e")
-            }
+//            }catch (e:Exception){
+//                Log.e(TAG, "insertCategory: error: $e")
+//            }
         }
     }
-    }
+}
 
 //    fun searchCategoryName(nameSearch : String){
 //        viewModelScope.launch {

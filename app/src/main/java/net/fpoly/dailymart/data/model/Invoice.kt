@@ -6,14 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
-//foreignKeys = [
-//ForeignKey(
-//entity = User::class,
-//parentColumns = arrayOf("id"),
-//childColumns = arrayOf("user_id")
-//)
-//]
-@Entity(tableName = "invoice")
 data class Invoice(
     @PrimaryKey @ColumnInfo(name = "id") val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "user_id") var userId: String = "",

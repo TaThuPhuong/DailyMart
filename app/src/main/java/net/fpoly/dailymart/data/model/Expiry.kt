@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "expiry")
 data class Expiry(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int? = null,
     @ColumnInfo(name = "product_id") var productId: String = "",

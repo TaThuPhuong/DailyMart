@@ -3,23 +3,33 @@ package net.fpoly.dailymart.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import java.util.*
 
-@Entity(tableName = "task")
 data class Task(
-    @PrimaryKey @ColumnInfo(name = "createAt") val createAt: Long = 0, // thời gian tạo khóa chính
-    @ColumnInfo(name = "id_creator") val idCreator: String = "",       // id nhân viên tạo
-    @ColumnInfo(name = "id_receiver") val idReceiver: String = "",      // id nhân viên nhận
-    @ColumnInfo(name = "device_creator") val deviceCreator: String = "",
-    @ColumnInfo(name = "device_receiver ") val deviceReceiver: String = "",
-    @ColumnInfo(name = "title") val title: String = "",                 // tiêu đề
-    @ColumnInfo(name = "description") val description: String = "",     // mô tả
-    @ColumnInfo(name = "deadline") var deadline: Long = 0,              // hạn
-    @ColumnInfo(name = "autoCreate") var autoCreate: Boolean = false,
-    @ColumnInfo(name = "finish") var finish: Boolean = false,
-    @ColumnInfo(name = "finish_time") var finishTime: Long = 0,
-    @ColumnInfo(name = "comment") var comment: String = "",
+    @SerializedName("_id") val id: String = "",
+    @SerializedName("createdAt") var createAt: Date = Date(),
+    @SerializedName("id_Creator") var idCreator: User = User(),
+    @SerializedName("id_Receiver") var idReceiver: User = User(),
+    @SerializedName("task_tittle") var title: String = "",
+    @SerializedName("description") var description: String = "",
+    @SerializedName("deadline") var deadline: Long = 0,
+    @SerializedName("finish") var finish: Boolean = false,
+    @SerializedName("finish_time") var finishTime: Long = 0,
+    @SerializedName("task_comment") var comment: String = "",
 ) {
     companion object {
-        const val TABLE_NAME = "task"
+         val listTitle = arrayListOf("Đang thực hiện", "Đã hoàn thành")
     }
 }
+
+data class TaskParam(
+    @SerializedName("id_Creator") var idCreator: String = "",
+    @SerializedName("id_Receiver") var idReceiver: String = "",
+    @SerializedName("task_tittle") var title: String = "",
+    @SerializedName("description") var description: String = "",
+    @SerializedName("deadline") var deadline: Date = Date(),
+    @SerializedName("finish") var finish: Boolean = false,
+    @SerializedName("finish_time") var finishTime: Long = 0,
+    @SerializedName("task_comment") var comment: String = "",
+)

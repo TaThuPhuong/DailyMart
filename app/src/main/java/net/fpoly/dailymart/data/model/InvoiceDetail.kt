@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "invoice_detail")
 data class InvoiceDetail(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int? = null,
     @ColumnInfo(name = "invoice_id") var invoiceId: String = "",

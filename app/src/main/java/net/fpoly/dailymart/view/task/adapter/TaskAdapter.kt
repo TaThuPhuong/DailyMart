@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.task
+package net.fpoly.dailymart.view.task.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,7 +16,6 @@ import java.util.Calendar
 class TaskAdapter(
     private val mContext: Context,
     private var mListTask: List<Task>,
-    private var mListUser: List<User>,
     private val onClick: (Task) -> Unit,
 ) :
     RecyclerView.Adapter<TaskAdapter.ItemView>() {
@@ -26,12 +25,6 @@ class TaskAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun setTaskData(listTask: List<Task>) {
         mListTask = listTask
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setUserData(listUser: List<User>) {
-        mListUser = listUser
         notifyDataSetChanged()
     }
 
@@ -58,8 +51,8 @@ class TaskAdapter(
                     binding.imvTask.setImage(R.drawable.ic_task_received)
                 }
                 binding.tvTitle.text = this.title
-                binding.tvReceiver.text = getNameById(this.idReceiver)
-                binding.tvTime.text = "Từ ${getTime(this.createAt)} - ${getTime(this.deadline)}"
+                binding.tvReceiver.text = this.idReceiver.name
+                binding.tvTime.text = "Từ ${SimpleDateFormat("HH:mm")} - ${getTime(this.deadline)}"
                 binding.tvDate.text = SimpleDateFormat("dd.MM.yyyy").format(this.createAt)
                 binding.root.setOnClickListener {
                     onClick(this)
@@ -67,14 +60,9 @@ class TaskAdapter(
             }
         }
     }
-
-    private fun getNameById(id: String): String {
-        return mListUser.filter { it.id == id }[0].name
-    }
-
     private fun getTime(time: Long): String {
         val cal = Calendar.getInstance()
         cal.timeInMillis = time
-        return "${cal[Calendar.HOUR_OF_DAY]}h${cal[Calendar.MINUTE]}"
+        return "${cal[Calendar.HOUR_OF_DAY]}:${cal[Calendar.MINUTE]}"
     }
 }

@@ -31,6 +31,6 @@ class SplashViewModel : ViewModel() {
             override fun run() {
                 handler.post(update)
             }
-        }, 300, 20)
+        }, 100, 10)
     }
 }

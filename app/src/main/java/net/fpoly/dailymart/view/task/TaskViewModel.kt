@@ -1,30 +1,29 @@
 package net.fpoly.dailymart.view.task
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.firbase.firestore.deleteTask
-import net.fpoly.dailymart.firbase.firestore.insertTask
-import net.fpoly.dailymart.repository.TaskRepository
-import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.data.model.response.TaskResponse
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class TaskViewModel(
-    private val app: Application,
-    private val taskRepository: TaskRepository,
-    private val userRepository: UserRepository,
-) :
-    ViewModel() {
+class TaskViewModel(private val app: Application) : ViewModel() {
 
-    private val _tabAssignedOpen = MutableLiveData(true)
-    val tabAssignedOpen: LiveData<Boolean> = _tabAssignedOpen
-
+    private val TAG = "YingMing"
     private var mUser: User? = SharedPref.getUser(app)
 
     private val _role = MutableLiveData(false)
@@ -33,80 +32,51 @@ class TaskViewModel(
     private val _listTask = MutableLiveData<List<Task>>(ArrayList())
     val listTask: LiveData<List<Task>> = _listTask
 
-    private val _listUser = MutableLiveData<List<User>>(ArrayList())
-    val listUser: LiveData<List<User>> = _listUser
-
     private var taskDeleteRecent: Task? = null
+
+    private val server = ServerInstance.apiTask
 
     init {
         _role.value = mUser!!.role != ROLE.staff
-        getListUser()
     }
 
-    fun onOpenTab(id: Int) {
-        when (id) {
-            1 -> {
-                if (_role.value == true) {
-                    getAllListTaskByStatus(false)
+    fun getAllTask(position: Int) {
+        server.getAllTask(SharedPref.getAccessToken(app)).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "onResponse: ${response.body()?.string()}")
+//                    val type = object : TypeToken<TaskResponse>() {}.type
+//                    val res: TaskResponse = Gson().fromJson(response.body()?.string(), type)
+//                    if (position == 0) {
+//                        _listTask.value = res.data.filter { !it.finish }
+//                    } else {
+//                        _listTask.value = res.data.filter { it.finish }
+//                    }
+
                 } else {
-                    getListTaskByIdAndStatus(mUser!!.id, false)
+                    showToast(app, response.errorBody()?.string() ?: "")
                 }
-                _tabAssignedOpen.value = true
             }
-            2 -> {
-                if (_role.value == true) {
-                    getAllListTaskByStatus(true)
-                } else {
-                    getListTaskByIdAndStatus(mUser!!.id, true)
-                }
-                _tabAssignedOpen.value = false
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
             }
-        }
+        })
+
     }
 
     fun onFinish(task: Task) {
-        viewModelScope.launch {
-            taskRepository.insertTask(task)
-        }
+
     }
 
     fun onRestore() {
         viewModelScope.launch {
-            taskRepository.insertTask(taskDeleteRecent ?: return@launch)
-            insertTask(taskDeleteRecent ?: return@launch)
             taskDeleteRecent = null
         }
     }
 
     fun onDeleteTask(task: Task) {
         taskDeleteRecent = task
-        viewModelScope.launch {
-            taskRepository.deleteTask(task)
-            deleteTask(task)
-        }
-    }
 
-    private fun getAllListTaskByStatus(finish: Boolean) {
-        viewModelScope.launch {
-            taskRepository.getTaskFinish(finish)?.collect { tasks ->
-                _listTask.value = tasks.sortedByDescending { it.createAt }
-            }
-        }
-    }
-
-    private fun getListTaskByIdAndStatus(id: String, finish: Boolean) {
-        viewModelScope.launch {
-            taskRepository.getTaskByIdAndFinish(id, finish)?.collect { tasks ->
-                _listTask.value = tasks.sortedByDescending { it.createAt }
-            }
-        }
-    }
-
-    private fun getListUser() {
-        viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.staff)?.collect { users ->
-                _listUser.value = users
-            }
-        }
     }
 }

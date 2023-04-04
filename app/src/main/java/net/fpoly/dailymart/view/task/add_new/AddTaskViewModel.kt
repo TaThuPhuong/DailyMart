@@ -9,30 +9,21 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.api.RetrofitInstance
 import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.Data
-import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.data.model.Task
+import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.firbase.firestore.insertTask
-import net.fpoly.dailymart.repository.TaskRepository
-import net.fpoly.dailymart.repository.UserRepository
-import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.extension.time_extention.toDate
 import net.fpoly.dailymart.utils.SharedPref
 
-class AddTaskViewModel(
-    private val app: Application,
-    private val taskRepository: TaskRepository,
-    private val userRepository: UserRepository,
-) : ViewModel() {
+class AddTaskViewModel(private val app: Application, ) : ViewModel() {
 
     private val TAG = "YingMing"
 
     private val mUser = SharedPref.getUser(app)
 
-    private val _task = MutableLiveData(Task())
-    val task: LiveData<Task> = _task
+    private val _task = MutableLiveData(TaskParam())
+    val task: LiveData<TaskParam> = _task
 
     private val _taskValidate = MutableLiveData(false)
     val taskValidate: LiveData<Boolean> = _taskValidate
@@ -43,7 +34,6 @@ class AddTaskViewModel(
     init {
         _task.value = _task.value?.copy(
             idCreator = mUser!!.id,
-            deviceCreator = mUser.deviceId
         )
         viewModelScope.launch {
             val server = ServerInstance.apiUser
@@ -62,19 +52,17 @@ class AddTaskViewModel(
             is AddTaskEvent.ReceiverChange -> {
                 _task.value = _task.value?.copy(
                     idReceiver = event.user.id,
-                    deviceReceiver = event.user.deviceId
                 )
                 checkValidate()
             }
             is AddTaskEvent.TimeStartChange -> {
                 _task.value = _task.value?.copy(
-                    createAt = event.time
                 )
                 checkValidate()
             }
             is AddTaskEvent.TimeEndChange -> {
                 _task.value = _task.value?.copy(
-                    deadline = event.time
+                    deadline = event.time.toDate()
                 )
                 checkValidate()
             }
@@ -85,32 +73,28 @@ class AddTaskViewModel(
                 checkValidate()
             }
             is AddTaskEvent.AddNew -> {
-                viewModelScope.launch {
-                    _task.value?.let {
-                        taskRepository.insertTask(it)
-                        insertTask(it)
-                        sendNotification(it)
-                    }
-                }
             }
         }
     }
 
     private fun checkValidate() {
-        _taskValidate.value =
-            !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.createAt == 0L || _task.value?.deadline == 0L)
+//        _taskValidate.value =
+//            !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.createAt == 0L || _task.value?.deadline == 0L)
     }
 
     private fun sendNotification(task: Task) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            val data = NotificationData(Data("Nhiệm vụ mới", task.title,task.createAt), task.deviceReceiver)
-            val response = RetrofitInstance.apiPutNotification.postNotification(data)
-            Log.d(TAG, "sendNotification: ${response.body()?.string()}")
-            if (response.isSuccessful) {
+//            val data = NotificationData(
+//                Data("Nhiệm vụ mới", task.title, task.createAt),
+//                task.
+//            )
+//            val response = RetrofitInstance.apiPutNotification.postNotification(data)
+//            Log.d(TAG, "sendNotification: ${response.body()?.string()}")
+//            if (response.isSuccessful) {
 //                Log.d(TAG, "sendNotification: ${Gson().toJson(response)}")
-            } else {
+//            } else {
 //                Log.d(TAG, "sendNotification: ${response.errorBody().toString()}")
-            }
+//            }
         } catch (e: Exception) {
             Log.e("YingMing", "sendNotification: $e")
         }

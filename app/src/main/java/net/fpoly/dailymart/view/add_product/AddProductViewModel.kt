@@ -1,21 +1,14 @@
 package net.fpoly.dailymart.view.add_product
 
 import android.util.Log
-import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductPrice
-import net.fpoly.dailymart.firbase.storege.Images
-import net.fpoly.dailymart.repository.ProductPriceRepository
-import net.fpoly.dailymart.repository.ProductRepository
 
-class AddProductViewModel(
-    private val pRepository: ProductRepository,
-    private val ppRepository: ProductPriceRepository,
-) : ViewModel() {
+class AddProductViewModel() : ViewModel() {
 
     private val TAG = "YingMing"
 
@@ -83,8 +76,7 @@ class AddProductViewModel(
                     img_product = event.linkImage
                 )
                 viewModelScope.launch {
-                    pRepository.insertProduct(_product.value!!)
-                    ppRepository.insertProductPrice(_productPrice.value!!)
+
                 }
             }
         }
