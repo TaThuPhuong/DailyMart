@@ -22,6 +22,9 @@ class TaskAdapter(
 
     class ItemView(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root)
 
+    @SuppressLint("SimpleDateFormat")
+    private val timeFormatter = SimpleDateFormat("HH:mm")
+
     @SuppressLint("NotifyDataSetChanged")
     fun setTaskData(listTask: List<Task>) {
         mListTask = listTask
@@ -52,17 +55,13 @@ class TaskAdapter(
                 }
                 binding.tvTitle.text = this.title
                 binding.tvReceiver.text = this.idReceiver.name
-                binding.tvTime.text = "Từ ${SimpleDateFormat("HH:mm")} - ${getTime(this.deadline)}"
+                binding.tvTime.text = "Từ ${timeFormatter.format(this.createAt)} -" +
+                        " ${timeFormatter.format(this.deadline)}"
                 binding.tvDate.text = SimpleDateFormat("dd.MM.yyyy").format(this.createAt)
                 binding.root.setOnClickListener {
                     onClick(this)
                 }
             }
         }
-    }
-    private fun getTime(time: Long): String {
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = time
-        return "${cal[Calendar.HOUR_OF_DAY]}:${cal[Calendar.MINUTE]}"
     }
 }

@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.api
 
+import net.fpoly.dailymart.data.model.TaskParam
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -35,6 +36,6 @@ interface TaskApi {
         @Query("_id") id: String,
     ): Call<ResponseBody>
 
-    @GET("getAllTask")
+    @GET("task")
     fun getAllTask(@Header("Authorization") token: String): Call<ResponseBody>
 }

@@ -6,21 +6,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.ServerInstance
+import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.extension.time_extention.toDate
 import net.fpoly.dailymart.utils.SharedPref
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class AddTaskViewModel(private val app: Application, ) : ViewModel() {
+class AddTaskViewModel(private val app: Application) : ViewModel() {
 
     private val TAG = "YingMing"
 
     private val mUser = SharedPref.getUser(app)
+    private val mToken = SharedPref.getAccessToken(app)
 
     private val _task = MutableLiveData(TaskParam())
     val task: LiveData<TaskParam> = _task
@@ -28,17 +36,16 @@ class AddTaskViewModel(private val app: Application, ) : ViewModel() {
     private val _taskValidate = MutableLiveData(false)
     val taskValidate: LiveData<Boolean> = _taskValidate
 
-    private val _listUser = MutableLiveData<List<User>>(ArrayList())
-    val listUser: LiveData<List<User>> = _listUser
+    private val _listUser = MutableLiveData<List<User>?>()
+    val listUser: LiveData<List<User>?> = _listUser
+
+    private val remoteUser = ServerInstance.apiUser
+    private val remoteTask = ServerInstance.apiTask
 
     init {
         _task.value = _task.value?.copy(
             idCreator = mUser!!.id,
         )
-        viewModelScope.launch {
-            val server = ServerInstance.apiUser
-
-        }
     }
 
     fun onEvent(event: AddTaskEvent) {
@@ -75,6 +82,27 @@ class AddTaskViewModel(private val app: Application, ) : ViewModel() {
             is AddTaskEvent.AddNew -> {
             }
         }
+    }
+
+    fun getAllUser() {
+        remoteUser.getAllUser2(mToken).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d(TAG, "onFailure: $t")
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//                    val type = object : TypeToken<Result<List<User>>>() {}.type
+//                    val res: ResultData<List<User>> =
+//                        Gson().fromJson(response.body()?.string(), type)
+                    Log.d(TAG, "_listUser: ${response.body()?.string()}")
+//                    _listUser.value = res.result
+                    Log.d(TAG, "_listUser: ${_listUser.value}")
+                } else {
+                    Log.d(TAG, "onFailure: ${response.errorBody()?.string()}")
+                }
+            }
+        })
     }
 
     private fun checkValidate() {

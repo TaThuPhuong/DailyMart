@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.task
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
@@ -14,19 +15,21 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
     private val TAG = "YingMing"
 
-    private val viewModel by viewModels<TaskViewModel> { AppViewModelFactory }
+    private val viewModel: TaskViewModel by activityViewModels()
 
     private lateinit var mTaskAdapter: TaskAdapter
 
-    private lateinit var mListTask: List<Task>
+    private var mListTask: List<Task> = ArrayList()
 
     override fun setupData() {
-
+        initRecycleView()
     }
 
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
             Log.d(TAG, "list task: $it")
+            mTaskAdapter.setTaskData(it)
+            mListTask = it
         }
     }
 

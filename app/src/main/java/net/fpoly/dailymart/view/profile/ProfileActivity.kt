@@ -51,7 +51,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
     private fun getRole(role: ROLE): String {
         return when (role) {
             ROLE.staff -> "Nhân viên"
-            ROLE.manage -> "Quản lý"
+            ROLE.manager -> "Quản lý"
             ROLE.admin -> "Admin"
         }
     }

@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.databinding.ActivityTaskBinding
 import net.fpoly.dailymart.extension.view_extention.*
@@ -22,6 +23,8 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
+    private lateinit var mLoadingDialog: LoadingDialog
+
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
         binding.imvAdd.setOnClickListener(this)
@@ -29,6 +32,7 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     }
 
     override fun setupData() {
+        mLoadingDialog = LoadingDialog(this)
         binding.layoutToolbar.setMarginsStatusBar(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -45,13 +49,16 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                viewModel.getAllTask(position)
+                mLoadingDialog.showLoading()
+                viewModel.getAllTask(binding.viewPager.currentItem)
             }
         })
     }
 
     override fun setupObserver() {
-
+        viewModel.listTask.observe(this){
+            mLoadingDialog.hideLoading()
+        }
     }
 
 

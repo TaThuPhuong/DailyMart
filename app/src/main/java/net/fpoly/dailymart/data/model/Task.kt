@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import net.fpoly.dailymart.extension.time_extention.toDate
 import java.util.*
 
 data class Task(
@@ -19,7 +20,7 @@ data class Task(
     @SerializedName("task_comment") var comment: String = "",
 ) {
     companion object {
-         val listTitle = arrayListOf("Đang thực hiện", "Đã hoàn thành")
+        val listTitle = arrayListOf("Đang thực hiện", "Đã hoàn thành")
     }
 }
 
@@ -32,4 +33,15 @@ data class TaskParam(
     @SerializedName("finish") var finish: Boolean = false,
     @SerializedName("finish_time") var finishTime: Long = 0,
     @SerializedName("task_comment") var comment: String = "",
-)
+) {
+    constructor(task: Task) : this() {
+        this.idCreator = task.idCreator.id
+        this.idReceiver = task.idReceiver.id
+        this.title = task.title
+        this.description = task.description
+        this.deadline = task.deadline.toDate()
+        this.finish = task.finish
+        this.finishTime = task.finishTime
+        this.comment = task.comment
+    }
+}

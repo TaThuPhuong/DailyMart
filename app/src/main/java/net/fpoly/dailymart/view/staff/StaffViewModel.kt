@@ -1,21 +1,12 @@
 package net.fpoly.dailymart.view.staff
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
-import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UserModel
-import net.fpoly.dailymart.repository.UserRepository
-import net.fpoly.dailymart.utils.ROLE
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
