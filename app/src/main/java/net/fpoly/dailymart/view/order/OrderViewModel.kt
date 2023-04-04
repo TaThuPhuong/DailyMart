@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.ListOrderResponse
+import net.fpoly.dailymart.data.model.ListProductResponse
 import net.fpoly.dailymart.data.model.OrderResponse
 import net.fpoly.dailymart.data.model.ProductResponse
 import net.fpoly.dailymart.data.model.param.OrderParam
@@ -19,41 +20,6 @@ import retrofit2.Response
 
 class OrderViewModel() : ViewModel() {
     private val TAG = "OrderViewModel"
-//    private val _product = MutableLiveData<ProductInfo>(ProductInfo())
-//    val product: LiveData<ProductInfo> = _product
-//    private val _listOrder = MutableLiveData<List<OrderInfo>>(ArrayList())
-//    val listOrder: LiveData<List<OrderInfo>> = _listOrder
-
-//    fun insertOrder(invoice: Invoice, invoiceD: InvoiceDetail, expiry: Expiry) = viewModelScope.launch {
-//        iRepository.insertInvoice(invoice)
-//        idRepository.insertInvoiceD(invoiceD)
-//        eRepository.insertExpiry(expiry)
-//    }
-//
-//    fun updateOrder(invoice: Invoice, invoiceD: InvoiceDetail) = viewModelScope.launch {
-//        iRepository.updateInvoice(invoice)
-//        idRepository.updateInvoiceD(invoiceD)
-//    }
-//
-//    fun deleteOrder(invoice: Invoice, invoiceD: InvoiceDetail) = viewModelScope.launch {
-//        iRepository.deleteInvoice(invoice)
-//        idRepository.deleteInvoiceD(invoiceD)
-//    }
-//
-//    fun findProductById(productId: String) = viewModelScope.launch {
-//        _product.value = pRepository.getProductById(productId)
-//    }
-//
-//    fun detailOrder(context: Context, invoice: Invoice) {
-//    }
-//
-//    fun getAllOrder() {
-//        viewModelScope.launch {
-//            iRepository.getOrders().collect { orders ->
-//                _listOrder.value = orders.sortedBy { it.name }
-//            }
-//        }
-//    }
 
     private val invoiceRepository = OrderRepository()
     private val _newOrder = MutableLiveData<OrderResponse>()
@@ -112,27 +78,87 @@ class OrderViewModel() : ViewModel() {
         }
     }
 
+    fun getAllProduct(token: String) {
+        viewModelScope.launch {
+            try {
+                productRepository.getAllProduct(token)
+                    .enqueue(object : Callback<ListProductResponse> {
+                        override fun onResponse(
+                            call: Call<ListProductResponse>,
+                            response: Response<ListProductResponse>,
+                        ) {
+                            Log.d(TAG, "onResponse: list product: ${response.body()}")
+                        }
+
+                        override fun onFailure(call: Call<ListProductResponse>, t: Throwable) {
+                            Log.e(TAG, "onFailure: list product: $t")
+                        }
+                    })
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     @SuppressLint("NullSafeMutableLiveData")
     fun getProduct(id: String, token: String) {
         viewModelScope.launch {
             try {
-                productRepository.getProductById(id, token).enqueue(object : Callback<ProductResponse> {
-                    override fun onResponse(
-                        call: Call<ProductResponse>,
-                        response: Response<ProductResponse>,
-                    ) {
-                        _product.value = response.body()
-                    }
+                productRepository.getProductById(id, token)
+                    .enqueue(object : Callback<ProductResponse> {
+                        override fun onResponse(
+                            call: Call<ProductResponse>,
+                            response: Response<ProductResponse>,
+                        ) {
+                            Log.d(TAG, "onResponse: product: ${response.body()}")
+                            _product.value = response.body()
+                        }
 
-                    override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
-                        _product.value = null
-                        Log.e(TAG, "onFailure: failed: $t")
-                    }
-                })
+                        override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                            _product.value = null
+                            Log.e(TAG, "onFailure: failed: $t")
+                        }
+                    })
             } catch (e: Exception) {
                 _product.value = null
                 e.printStackTrace()
             }
         }
     }
+
+//    private val _product = MutableLiveData<ProductInfo>(ProductInfo())
+//    val product: LiveData<ProductInfo> = _product
+//    private val _listOrder = MutableLiveData<List<OrderInfo>>(ArrayList())
+//    val listOrder: LiveData<List<OrderInfo>> = _listOrder
+
+//    fun insertOrder(invoice: Invoice, invoiceD: InvoiceDetail, expiry: Expiry) = viewModelScope.launch {
+//        iRepository.insertInvoice(invoice)
+//        idRepository.insertInvoiceD(invoiceD)
+//        eRepository.insertExpiry(expiry)
+//    }
+//
+//    fun updateOrder(invoice: Invoice, invoiceD: InvoiceDetail) = viewModelScope.launch {
+//        iRepository.updateInvoice(invoice)
+//        idRepository.updateInvoiceD(invoiceD)
+//    }
+//
+//    fun deleteOrder(invoice: Invoice, invoiceD: InvoiceDetail) = viewModelScope.launch {
+//        iRepository.deleteInvoice(invoice)
+//        idRepository.deleteInvoiceD(invoiceD)
+//    }
+//
+//    fun findProductById(productId: String) = viewModelScope.launch {
+//        _product.value = pRepository.getProductById(productId)
+//    }
+//
+//    fun detailOrder(context: Context, invoice: Invoice) {
+//    }
+//
+//    fun getAllOrder() {
+//        viewModelScope.launch {
+//            iRepository.getOrders().collect { orders ->
+//                _listOrder.value = orders.sortedBy { it.name }
+//            }
+//        }
+//    }
 }

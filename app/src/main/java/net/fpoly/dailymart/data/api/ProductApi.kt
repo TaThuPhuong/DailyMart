@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.api
 
+import net.fpoly.dailymart.data.model.ListProductResponse
 import net.fpoly.dailymart.data.model.ProductResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -9,9 +10,11 @@ import retrofit2.http.Query
 
 interface ProductApi {
     @GET("api/product")
-    fun getAllProduct()
+    fun getAllProduct(
+        @Header("Authorization") token: String
+    ): Call<ListProductResponse>
 
-    @GET("api/product/{id}")
+    @GET("api/product/detailProduct/{id}")
     fun getProduct(
         @Header("Authorization") token: String,
         @Path("id") id: String,

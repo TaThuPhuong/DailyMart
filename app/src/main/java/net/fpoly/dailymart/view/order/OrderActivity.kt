@@ -2,6 +2,9 @@ package net.fpoly.dailymart.view.order
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -34,12 +37,14 @@ class OrderActivity :
     private lateinit var codeScanner: CodeScanner
     private val listOrderInfo = ArrayList<OrderInfo>()
     private var token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDQ1MDM5MiwiZXhwIjoxNjgwNTM2NzkyfQ.9eX83EmjrNfekfLOBTnes2TYOplKEy9nxvtHFahGET8"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDUzNjkxNCwiZXhwIjoxNjgwNjIzMzE0fQ.XcrkWCEaXgR95m9BK-MdrCld8JDjwJqgSQ4XrNQ_T1g"
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getOrders(token)
+        viewModel.getAllProduct(token)
+        setupProductName()
     }
 
     override fun setupObserver() {
@@ -96,6 +101,12 @@ class OrderActivity :
 //        }
         if (mListOrder.isEmpty()) {
             binding.imgListEmpty.visible()
+        }
+
+        viewModel.product.observe(this) {
+            if (it != null) {
+                binding.tvName.text = it.data.productName
+            }
         }
     }
 
@@ -196,5 +207,20 @@ class OrderActivity :
                 }
             }
         }
+    }
+
+    private fun setupProductName() {
+        binding.edId.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d(TAG, "onTextChanged: $s")
+                viewModel.getProduct(s.toString(), token)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 }
