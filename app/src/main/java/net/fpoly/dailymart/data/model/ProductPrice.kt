@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "product_price")
 data class ProductPrice(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int? = null,
     @ColumnInfo(name = "product_id") val productId: String = "",

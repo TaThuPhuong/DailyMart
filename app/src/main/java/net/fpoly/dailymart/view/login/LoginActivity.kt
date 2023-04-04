@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.initLoadingDialog(this)
+        viewModel.initLoadDialog(this)
     }
 
     override fun setupObserver() {

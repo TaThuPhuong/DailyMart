@@ -5,9 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import net.fpoly.dailymart.data.ServiceLocator
-import net.fpoly.dailymart.repository.*
-import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
 
 class DailySmartApp : Application() {

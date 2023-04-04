@@ -59,13 +59,13 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
                 isAssignableFrom(ReceiptViewModel::class.java) ->
-                    ReceiptViewModel(context, invoiceRepository)
+                    ReceiptViewModel(context)
                 isAssignableFrom(GoodsViewModel::class.java) ->
                     GoodsViewModel()
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
                     ShowMoreViewModel()
                 isAssignableFrom(TaskViewModel::class.java) ->
-                    TaskViewModel(app, taskRepository, userRepository)
+                    TaskViewModel(app)
                 isAssignableFrom(CheckDateViewModel::class.java) ->
                     CheckDateViewModel()
                 isAssignableFrom(OrderViewModel::class.java) ->
@@ -85,13 +85,13 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(SupplierViewModel::class.java) ->
                     SupplierViewModel(supplierRepository)
                 isAssignableFrom(ProductsViewModel::class.java) ->
-                    ProductsViewModel(pRepository)
+                    ProductsViewModel()
                 isAssignableFrom(AddTaskViewModel::class.java) ->
-                    AddTaskViewModel(app, taskRepository, userRepository)
+                    AddTaskViewModel(app)
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
                     ChangePasswordViewModel()
                 isAssignableFrom(StaffViewModel::class.java) ->
-                    StaffViewModel(userRepository)
+                    StaffViewModel()
                 isAssignableFrom(AddStaffViewModel::class.java) ->
                     AddStaffViewModel()
                 isAssignableFrom(ProfileViewModel::class.java) ->
@@ -99,7 +99,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(MessageViewModel::class.java) ->
                     MessageViewModel()
                 isAssignableFrom(AddProductViewModel::class.java) ->
-                    AddProductViewModel(pRepository,ppRepository)
+                    AddProductViewModel()
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

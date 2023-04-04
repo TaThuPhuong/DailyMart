@@ -34,5 +34,8 @@ class ServerInstance {
         val apiInvoiceApi: InvoiceApi by lazy {
             retrofit.create(InvoiceApi::class.java)
         }
+        val apiTask: TaskApi by lazy {
+            retrofit.create(TaskApi::class.java)
+        }
     }
 }
