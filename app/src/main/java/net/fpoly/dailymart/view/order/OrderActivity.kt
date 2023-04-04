@@ -25,6 +25,8 @@ import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
 import net.fpoly.dailymart.extention.view_extention.gone
 import net.fpoly.dailymart.extention.view_extention.visible
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderActivity :
     BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::inflate),
@@ -36,6 +38,7 @@ class OrderActivity :
     private val TAG = "OrderActivity"
     private lateinit var codeScanner: CodeScanner
     private val listOrderInfo = ArrayList<OrderInfo>()
+    private var productName = ""
     private var token =
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDUzNjkxNCwiZXhwIjoxNjgwNjIzMzE0fQ.XcrkWCEaXgR95m9BK-MdrCld8JDjwJqgSQ4XrNQ_T1g"
 
@@ -45,6 +48,7 @@ class OrderActivity :
         viewModel.getOrders(token)
         viewModel.getAllProduct(token)
         setupProductName()
+        setupExpiryDate()
     }
 
     override fun setupObserver() {
@@ -105,7 +109,10 @@ class OrderActivity :
 
         viewModel.product.observe(this) {
             if (it != null) {
+                productName = it.data.productName
                 binding.tvName.text = it.data.productName
+            } else {
+                productName = ""
             }
         }
     }
@@ -187,23 +194,25 @@ class OrderActivity :
             }
             binding.btnAdd -> {
                 val idProduct = binding.edId.text.toString()
-                val quantity = Integer.parseInt(binding.edQuantity.text.toString())
+                val quantity = binding.edQuantity.text.toString()
                 val expiryDate = binding.edExpiryDate.toString()
-                val product = ProductByOrder(idProduct, 2000, quantity, expiryDate)
-                val order =
-                    OrderParam(
-                        "640c20d2151e0d8e2339166b",
-                        listOf(product),
-                        "IMPORT",
-                        expiryDate,
-                    )
-                if (viewModel.insertOrder(order, token) != null) {
-                    binding.edId.setText("")
-                    binding.edQuantity.setText("")
-                    binding.edExpiryDate.setText("")
-                    ToastUtil.showToast("Insert new order successfully")
-                } else {
-                    ToastUtil.showToast("Insert order failed")
+                if (validate()) {
+                    val product = ProductByOrder(idProduct, 2000, Integer.parseInt(quantity), expiryDate)
+                    val order =
+                        OrderParam(
+                            "640c20d2151e0d8e2339166b",
+                            listOf(product),
+                            "IMPORT",
+                            expiryDate,
+                        )
+                    if (viewModel.insertOrder(order, token) != null) {
+                        binding.edId.setText("")
+                        binding.edQuantity.setText("")
+                        binding.edExpiryDate.setText("")
+                        ToastUtil.showToast("Insert new order successfully")
+                    } else {
+                        ToastUtil.showToast("Insert order failed")
+                    }
                 }
             }
         }
@@ -222,5 +231,85 @@ class OrderActivity :
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun setupExpiryDate() {
+        binding.edExpiryDate.addTextChangedListener(object : TextWatcher {
+            private var current = ""
+            private val ddmmyyyy = "DDMMYYYY"
+            private val cal = Calendar.getInstance()
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.toString() != current) {
+                    var clean = s.toString().replace("[^\\d.]".toRegex(), "")
+                    val cleanC = current.replace("[^\\d.]".toRegex(), "")
+                    val cl = clean.length
+                    var sel = cl
+                    var i = 2
+                    while (i <= cl && i < 6) {
+                        sel++
+                        i += 2
+                    }
+                    // Fix for pressing delete next to a forward slash
+                    if (clean == cleanC) sel--
+                    if (clean.length < 8) {
+                        clean = clean + ddmmyyyy.substring(clean.length)
+                    } else {
+                        // This part makes sure that when we finish entering numbers
+                        // the date is correct, fixing it otherwise
+                        var day = clean.substring(0, 2).toInt()
+                        var mon = clean.substring(2, 4).toInt()
+                        var year = clean.substring(4, 8).toInt()
+                        if (mon > 12) mon = 12
+                        cal[Calendar.MONTH] = mon - 1
+                        year = if (year < 1900) 1900 else if (year > 2100) 2100 else year
+                        cal[Calendar.YEAR] = year
+                        // ^ first set year for the line below to work correctly
+                        // with leap years - otherwise, date e.g. 29/02/2012
+                        // would be automatically corrected to 28/02/2012
+                        day = if (day > cal.getActualMaximum(Calendar.DATE)) {
+                            cal.getActualMaximum(
+                                Calendar.DATE,
+                            )
+                        } else {
+                            day
+                        }
+                        clean = String.format("%02d%02d%02d", day, mon, year)
+                    }
+                    clean = String.format(
+                        "%s-%s-%s",
+                        clean.substring(0, 2),
+                        clean.substring(2, 4),
+                        clean.substring(4, 8),
+                    )
+                    sel = if (sel < 0) 0 else sel
+                    current = clean
+                    binding.edExpiryDate.setText(current)
+                    binding.edExpiryDate.setSelection(if (sel < current.length) sel else current.length)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable) {}
+        })
+    }
+
+    private fun validate(): Boolean {
+        if (binding.edId.text.isEmpty()) {
+            binding.edId.error = "Mã sản phẩm không được để trống"
+            return false
+        }
+        if (binding.edQuantity.text.toString().isEmpty()) {
+            binding.edQuantity.error = "Số lượng không được để trống"
+            return false
+        }
+        if (binding.edExpiryDate.text.isEmpty()) {
+            binding.edExpiryDate.error = "Hạn sử dụng không được để trống"
+            return false
+        }
+        if (productName.isEmpty()) {
+            binding.edId.error = "Mã sản phẩm không tồn tại"
+            return false
+        }
+        return true
     }
 }
