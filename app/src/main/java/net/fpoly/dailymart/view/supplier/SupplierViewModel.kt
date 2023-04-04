@@ -53,6 +53,7 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
 
     fun addNewSupplier(supplier: SupplierParam) {
         viewModelScope.launch {
+            isLoading.postValue(true)
             val result = repository.insertSupplier(supplier, token)
             if (result.isSuccess()) {
                 getAllSuppliers()
@@ -60,11 +61,14 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
             } else {
                 showSnackbar.postValue(MESSAGE_ADD_FAILED)
             }
+            isLoading.postValue(false)
+
         }
     }
 
     fun editNewSupplier(id: String, supplier: SupplierParam) {
         viewModelScope.launch {
+            isLoading.postValue(true)
             val result = repository.editSupplier(id, supplier, token)
             if (result.isSuccess()) {
                 getAllSuppliers()
@@ -72,11 +76,13 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
             } else {
                 showSnackbar.postValue(MESSAGE_EDIT_FAILED)
             }
+            isLoading.postValue(false)
         }
     }
 
     fun removeSupplier(supplier: Supplier) {
         viewModelScope.launch {
+            isLoading.postValue(true)
             val res = repository.removeSupplier(supplier, token)
             if (res.isSuccess()) {
                 getAllSuppliers()
@@ -84,6 +90,7 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
             } else {
                 showSnackbar.postValue(MESSAGE_REMOVE_FAILED)
             }
+            isLoading.postValue(true)
         }
     }
 

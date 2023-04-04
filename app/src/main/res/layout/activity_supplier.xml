@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -25,6 +26,8 @@
                 android:id="@+id/list_supplier"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
                 app:supplierItems="@{viewModel.listSupplier}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.core.widget.NestedScrollView>
@@ -33,13 +36,13 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:background="@drawable/bg_toolbar_supplier">
+            android:background="@color/pink_primary">
 
             <ImageView
                 android:id="@+id/imv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:padding="24dp"
                 android:src="@drawable/ic_back_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +52,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_medium"
-                android:text="Nhà Cung Cấp"
                 android:includeFontPadding="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Nhà Cung Cấp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 app:layout_constraintTop_toTopOf="@id/imv_back"
                 app:layout_constraintBottom_toBottomOf="@id/imv_back"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
@@ -77,8 +80,9 @@
                 android:background="@color/no_color"
                 android:drawableStart="@drawable/ic_search_pink"
                 android:drawablePadding="10dp"
-                android:hint="Tên, sdt"
-                android:padding="8dp"
+                android:hint="Tên, SĐT,..."
+                android:paddingStart="16dp"
+                android:paddingEnd="6dp"
                 android:textColor="@color/pink_primary"
                 android:textColorHint="@color/pink_primary"
                 android:textSize="16sp" />
@@ -137,5 +141,23 @@
                 android:fontFamily="@font/imbplexsans_regular"/>
             
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#33000000"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> null}"
+            >
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
