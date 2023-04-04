@@ -104,7 +104,7 @@
             android:layout_marginEnd="18dp"
             android:background="@drawable/bg_pink_light_rd_8"
             android:drawablePadding="5dp"
-            android:onClick="@{() -> viewModel.showDialogAdd()}"
+            android:onClick="@{() -> viewModel.showDialogAdd(context)}"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:text="@string/add_new"
@@ -117,7 +117,7 @@
             android:orientation="vertical"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewModel.listSupplier.size() == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.listSupplier.size() == 0 &amp;&amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             >
             
             <ImageView

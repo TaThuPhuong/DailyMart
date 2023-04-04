@@ -13,17 +13,10 @@ interface SupplierApi {
     @GET("supplier")
     suspend fun getSuppliers(@Header("Authorization") token: String) : ResultData<ArrayList<Supplier>>
 
-//    @PUT("api/supplier/")
-//    fun updateSupplier(
-//        @Header("") token: String,
-//        @Query("id") id: String,
-//        @Body model: SupplierParam,
-//    ): Call<ResponseBody>
+    @DELETE("supplier/{id}")
+    suspend fun removeSuppliers(@Header("Authorization") token: String, @Path("id") idSupplier: String) : ResultData<Unit>
 
-//    @GET("api/supplier")
-//    fun getAllSupplier(@Header("Authorization") token: String
-//    ): Call<SupplierParamList>
-//
-//    @DELETE("api/supplier/")
-//    fun deleteSupplier(@Header("") token: String, @Query("id") id: String): Call<ResponseBody>
+    @PUT("supplier/{id}")
+    suspend fun updateSuppliers(@Header("Authorization") token: String, @Path("id") idSupplier: String, @Body param: SupplierParam) : ResultData<Unit>
+
 }

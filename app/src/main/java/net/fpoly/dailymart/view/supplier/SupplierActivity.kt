@@ -12,30 +12,30 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
 
     private val viewModel: SupplierViewModel by viewModels { AppViewModelFactory }
     private lateinit var supplierAdapter: SupplierAdapter
-    private lateinit var addSupplierDialog: AddSupplierDialog
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         setupListSupplier()
         setupSearchSupplier()
         setupBtnClear()
-        setupDialogAdd()
         setupSnackbar()
+        setupBtnBack()
+    }
+
+    private fun setupBtnBack() {
+        binding.imvBack.setOnClickListener{
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun setupSnackbar() {
         binding.root.setupSnackbar(this, viewModel.showSnackbar)
     }
 
-    private fun setupDialogAdd() {
-        addSupplierDialog = AddSupplierDialog(this, viewModel)
-        viewModel.eventShowDialogAdd.observe(this) {
-            addSupplierDialog.show()
-        }
+    override fun setupObserver() {
     }
-
-    override fun setupObserver() {}
 
     private fun setupBtnClear() {
         binding.imvClear.setOnClickListener { binding.edSearch.setText("") }

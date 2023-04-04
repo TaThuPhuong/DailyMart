@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_white_rd_top_10"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/imbplexsans_medium"
+        android:paddingTop="26dp"
+        android:paddingStart="26dp"
+        android:text="Tùy Chọn"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="26dp"
+        android:paddingEnd="26dp"
+        android:src="@drawable/ic_close_square" />
+
+    <TextView
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/title"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/bg_blue_light_rd_8"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:padding="10dp"
+        android:text="Sửa"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_task_finish" />
+
+    <TextView
+        android:id="@+id/btn_remove"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/btn_update"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_red_ff44c_rd_8"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:padding="10dp"
+        android:text="Xóa"
+        android:textColor="@color/red_FF444C"
+        android:textSize="16sp"
+        android:layout_marginBottom="26dp"
+        app:drawableStartCompat="@drawable/ic_delete" />
+
+</RelativeLayout>
