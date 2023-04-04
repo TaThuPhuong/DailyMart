@@ -89,7 +89,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
                     ChangePasswordViewModel()
                 isAssignableFrom(StaffViewModel::class.java) ->
-                    StaffViewModel(userRepository)
+                    StaffViewModel()
                 isAssignableFrom(AddStaffViewModel::class.java) ->
                     AddStaffViewModel()
                 isAssignableFrom(ProfileViewModel::class.java) ->

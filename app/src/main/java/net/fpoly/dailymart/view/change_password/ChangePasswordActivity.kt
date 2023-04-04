@@ -18,4 +18,8 @@ class ChangePasswordActivity :
     override fun setupObserver() {
 
     }
+
+    private fun validateFiled(){
+        binding.edNewPass
+    }
 }

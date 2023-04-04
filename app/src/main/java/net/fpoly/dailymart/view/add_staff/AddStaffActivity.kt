@@ -1,10 +1,12 @@
 package net.fpoly.dailymart.view.add_staff
 
+import android.widget.Toast
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ActivityAddStaffBinding
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.view.profile.ChangeRoleDialog
 
@@ -30,6 +32,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
     private fun setupBtnSave() {
         binding.tvSave.setOnClickListener {
             createUser()
+            showToast(applicationContext, "Success");
         }
     }
 
@@ -42,9 +45,9 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
             password = phone,
             email = email,
             phoneNumber = phone,
-            role =role,
+            role = role,
             deviceId = "124234",
-            linkAvt = "dfhhfdggdcvb"
+            linkAvt = "https//:abc.com"
         )
         viewModel.postUser(user)
     }
