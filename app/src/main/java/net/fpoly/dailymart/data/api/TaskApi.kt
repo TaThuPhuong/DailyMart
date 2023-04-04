@@ -1,6 +1,5 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.param.TaskParam
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

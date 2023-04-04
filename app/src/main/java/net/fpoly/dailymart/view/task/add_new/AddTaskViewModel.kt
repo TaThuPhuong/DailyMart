@@ -9,13 +9,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.api.RetrofitInstance
 import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.Data
-import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.data.model.Task
+import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.data.model.param.TaskParam
 import net.fpoly.dailymart.extension.time_extention.toDate
 import net.fpoly.dailymart.utils.SharedPref
 
