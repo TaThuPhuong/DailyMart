@@ -3,6 +3,7 @@ package net.fpoly.dailymart.data.repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.api.SupplierApi
 import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.Supplier
@@ -10,7 +11,7 @@ import net.fpoly.dailymart.data.model.SupplierParam
 import net.fpoly.dailymart.repository.SupplierRepository
 
 class SupplierRepositoryImpl(
-    private val remoteData: SupplierApi,
+    private val remoteData: SupplierApi = ServerInstance.apiSupplierApi,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : SupplierRepository {
 

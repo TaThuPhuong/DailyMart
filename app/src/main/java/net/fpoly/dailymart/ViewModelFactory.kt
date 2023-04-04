@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
 import net.fpoly.dailymart.view.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
@@ -37,16 +38,6 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
             val context = app.context
-            val userRepository = app.userRepository
-            val taskRepository = app.taskRepository
-            val invoiceRepository = app.invoiceRepository
-            val categoryRepository = app.categoryRepository
-            val supplierRepository = app.supplierRepository
-
-            val ppRepository = app.productPriceRepository
-            val pRepository = app.productRepository
-            val expiryRepository = app.expiryRepository
-//            val invoiceDetailRepository = app.invoiceDetailR
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -83,7 +74,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
                 isAssignableFrom(SupplierViewModel::class.java) ->
-                    SupplierViewModel(supplierRepository)
+                    SupplierViewModel(SupplierRepositoryImpl())
                 isAssignableFrom(ProductsViewModel::class.java) ->
                     ProductsViewModel()
                 isAssignableFrom(AddTaskViewModel::class.java) ->

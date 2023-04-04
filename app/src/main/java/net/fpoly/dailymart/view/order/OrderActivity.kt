@@ -16,7 +16,6 @@ import com.budiyev.android.codescanner.ScanMode
 import gun0912.tedimagepicker.util.ToastUtil
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.database.OrderInfo
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
@@ -29,7 +28,6 @@ class OrderActivity :
 
     private val viewModel: OrderViewModel by viewModels { AppViewModelFactory }
     private lateinit var mOrderAdapter: OrderAdapter
-    private var mListOrder: List<OrderInfo> = ArrayList()
     private val TAG = "OrderActivity"
     private lateinit var codeScanner: CodeScanner
     private var token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDM2MzY5MCwiZXhwIjoxNjgwNDUwMDkwfQ.WXpnhDjUdkI_JQyTSQ9Jyz2QWaX6fN3G57YQF8HDrc8"
