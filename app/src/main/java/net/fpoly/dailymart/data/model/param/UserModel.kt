@@ -16,4 +16,12 @@ data class Datum(
     val phoneNumber: String,
     val deviceID: String,
     val linkAvt: String
-) : Serializable
+) : Serializable{
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        if(deviceID.isNullOrEmpty()){
+           result
+        }
+        return result
+    }
+}

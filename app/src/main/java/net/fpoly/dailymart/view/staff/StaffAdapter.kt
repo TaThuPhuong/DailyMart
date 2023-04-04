@@ -39,11 +39,12 @@ class StaffAdapter(
         return mListStaff.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListStaff[position]) {
                 binding.tvName.text = this.name
-                binding.tvPhone.text = this.phoneNumber
+                binding.tvPhone.text = "SĐT: ${this.phoneNumber}"
                 binding.tvRole.text = this.role
                 binding.root.setOnClickListener {
                     onClick(this)
