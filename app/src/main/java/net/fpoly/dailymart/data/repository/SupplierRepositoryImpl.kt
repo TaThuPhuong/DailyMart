@@ -17,10 +17,40 @@ class SupplierRepositoryImpl(
 
     override suspend fun getSuppliers(token: String): ResultData<ArrayList<Supplier>> =
         withContext(ioDispatcher) {
-            remoteData.getSuppliers(token)
+            try {
+                remoteData.getSuppliers(token)
+            } catch (e: Exception) {
+                ResultData(status = 0, result = arrayListOf())
+            }
         }
 
-    override suspend fun insertSupplier(supplier: SupplierParam, token: String) = withContext(Dispatchers.IO) {
-        remoteData.insertSupplier(token, supplier)
+    override suspend fun insertSupplier(supplier: SupplierParam, token: String) =
+        withContext(ioDispatcher) {
+            try {
+                remoteData.insertSupplier(token, supplier)
+            } catch (e: Exception) {
+                ResultData(result = Supplier())
+            }
+        }
+
+    override suspend fun editSupplier(
+        id: String,
+        supplier: SupplierParam,
+        token: String
+    ): ResultData<Unit> = withContext(Dispatchers.IO) {
+        try {
+            remoteData.updateSuppliers(token, id, supplier)
+        } catch (ex: Exception) {
+            ResultData(result = Unit)
+        }
     }
+
+    override suspend fun removeSupplier(supplier: Supplier, token: String): ResultData<Unit> =
+        withContext(ioDispatcher) {
+            try {
+                remoteData.removeSuppliers(token, supplier.id)
+            }catch (ex: Exception){
+                ResultData(result = Unit)
+            }
+        }
 }

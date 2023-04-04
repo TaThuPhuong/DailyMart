@@ -74,7 +74,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
                 isAssignableFrom(SupplierViewModel::class.java) ->
-                    SupplierViewModel(SupplierRepositoryImpl())
+                    SupplierViewModel(context ,SupplierRepositoryImpl())
                 isAssignableFrom(ProductsViewModel::class.java) ->
                     ProductsViewModel()
                 isAssignableFrom(AddTaskViewModel::class.java) ->

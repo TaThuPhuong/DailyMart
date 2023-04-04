@@ -3,11 +3,8 @@
 
 
     <data>
-
         <import type="net.fpoly.dailymart.view.supplier.SupplierViewModel" />
-
         <import type="net.fpoly.dailymart.data.model.Supplier" />
-
         <variable
             name="supplier"
             type="Supplier" />
@@ -26,6 +23,7 @@
         android:elevation="1dp"
         android:shadowColor="#05000000"
         android:shadowDy="-5"
+        android:onClick="@{() -> viewmodel.clickItems(context, supplier)}"
         android:paddingVertical="16dp"
         android:layout_marginHorizontal="16dp"
         android:paddingStart="12dp"
