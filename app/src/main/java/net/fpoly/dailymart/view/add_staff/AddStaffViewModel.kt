@@ -17,21 +17,22 @@ import retrofit2.Response
 
 class AddStaffViewModel(
 ) : ViewModel() {
+    val TAG = "tuvm";
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
     fun postUser(userParam: RegisterParam) {
         val server = ServerInstance.apiUser
-        Log.d("YingMing", "userParam: $userParam")
+        Log.d(TAG, "userParam: $userParam")
         server.register(userParam).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    Log.d("YingMing", "onResponse: " + response.body()?.string())
-                    Log.d("YingMing", "onResponse: " + response.body())
+                    Log.d(TAG, "onResponse: " + response.body()?.string())
+                    Log.d(TAG, "onResponse: " + response.body())
                 } else {
-                    Log.d("YingMing", "code: " + response.code())
-                    Log.d("YingMing", "message: " + response.message())
-                    Log.d("YingMing", "errorBody: " + response.errorBody()?.string())
+                    Log.d(TAG, "code: " + response.code())
+                    Log.d(TAG, "message: " + response.message())
+                    Log.d(TAG, "errorBody: " + response.errorBody()?.string())
                 }
             }
 
