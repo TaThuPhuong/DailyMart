@@ -7,9 +7,8 @@ import com.google.gson.annotations.SerializedName
 import net.fpoly.dailymart.utils.ROLE
 import java.io.Serializable
 
-@Entity(tableName = "user")
 data class User(
-    @PrimaryKey @ColumnInfo(name = "id") @SerializedName("_id") val id: String = "",
+    @ColumnInfo(name = "id") @SerializedName("_id") val id: String = "",
     @ColumnInfo(name = "full_name") @SerializedName("name") var name: String = "",
     @ColumnInfo(name = "avatar") @SerializedName("linkAvt") var avatar: String = "",
     @ColumnInfo(name = "email") @SerializedName("email") var email: String = "",

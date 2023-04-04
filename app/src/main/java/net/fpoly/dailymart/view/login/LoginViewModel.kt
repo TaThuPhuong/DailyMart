@@ -22,10 +22,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(val app: Application) : ViewModel() {
+class LoginViewModel(private val app: Application) : ViewModel() {
 
     private val TAG = "YingMing"
-
     private val _passwordStatus = MutableLiveData(false)
     val passwordStatus: LiveData<Boolean> = _passwordStatus
 
@@ -41,7 +40,11 @@ class LoginViewModel(val app: Application) : ViewModel() {
 
     private lateinit var mLoadingDialog: LoadingDialog
 
-    fun initLoadingDialog(context: Context) {
+    init {
+        _validatePhone.value = ""
+        _validatePassword.value = ""
+    }
+    fun initLoadDialog(context: Context){
         mLoadingDialog = LoadingDialog(context)
     }
 

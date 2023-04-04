@@ -74,7 +74,6 @@ class AddProductActivity :
     private fun setEditTextChange() {
         binding.edId.getTextOnChange {
             viewModel.onEvent(ProductEvent.IdChange(it))
-            _id.value = it
         }
         binding.edName.getTextOnChange {
             viewModel.onEvent(ProductEvent.NameChange(it))

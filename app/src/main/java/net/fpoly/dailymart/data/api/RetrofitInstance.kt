@@ -18,7 +18,7 @@ class RetrofitInstance {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val apiPutNotification by lazy {
+        val apiPutNotification : PutNotificationApi by lazy {
             retrofit.create(PutNotificationApi::class.java)
         }
     }

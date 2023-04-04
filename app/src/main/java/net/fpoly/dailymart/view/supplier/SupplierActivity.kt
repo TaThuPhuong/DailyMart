@@ -1,50 +1,66 @@
 package net.fpoly.dailymart.view.supplier
 
-import android.annotation.SuppressLint
+import android.view.View
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.widget.doAfterTextChanged
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.databinding.ActivitySupplierBinding
-import org.checkerframework.checker.units.qual.m
+import net.fpoly.dailymart.extension.setupSnackbar
 
 class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierBinding::inflate) {
 
     private val viewModel: SupplierViewModel by viewModels { AppViewModelFactory }
-    private lateinit var mSupplierAdapter: SupplierAdapter
+    private lateinit var supplierAdapter: SupplierAdapter
+    private lateinit var addSupplierDialog: AddSupplierDialog
 
-    private var mlistSupplier : List<Supplier> = ArrayList()
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        setupListSupplier()
+        setupSearchSupplier()
+        setupBtnClear()
+        setupDialogAdd()
+        setupSnackbar()
+    }
 
-        binding.tvAdd.setOnClickListener {
-            AddSupplierDialog(this) {
-                viewModel.insertSuppliers(Supplier(name = it.name, phone = it.phone))
-                viewModel.getAllSuppliers()
-            }.show()
+    private fun setupSnackbar() {
+        binding.root.setupSnackbar(this, viewModel.showSnackbar)
+    }
+
+    private fun setupDialogAdd() {
+        addSupplierDialog = AddSupplierDialog(this, viewModel)
+        viewModel.eventShowDialogAdd.observe(this) {
+            addSupplierDialog.show()
         }
-        initRecycleView()
     }
 
+    override fun setupObserver() {}
 
-    @SuppressLint("SetTextI18n")
-    override fun setupObserver() {
-    viewModel.listSupplier.observe(this){listSupplier ->
-
-        mSupplierAdapter.setSupplierData(listSupplier)
-//        mlistSupplier = listSupplier
-        viewModel.getAllSuppliers()
-
-
+    private fun setupBtnClear() {
+        binding.imvClear.setOnClickListener { binding.edSearch.setText("") }
     }
-    }
-    private fun initRecycleView() {
-        mSupplierAdapter = SupplierAdapter(this,mlistSupplier){
-            binding.rcvListSupplier.layoutManager = LinearLayoutManager(this)
+
+    private fun setupSearchSupplier() {
+        binding.edSearch.doAfterTextChanged {
+            val text = binding.edSearch.text
+            if (text.isNotEmpty()) {
+                binding.imvClear.visibility = View.VISIBLE
+                viewModel.listSupplier.value?.also { invoices ->
+                    val result =
+                        invoices.filter { it.id.contains(text) || it.supplierName.contains(text) }
+                            .toMutableList()
+                    viewModel.listSupplier.value = result
+                }
+            } else {
+                binding.imvClear.visibility = View.GONE
+                viewModel.listSupplier.value = viewModel.listSupplierRemote
+            }
         }
-        binding.rcvListSupplier.adapter = mSupplierAdapter
+    }
 
+    private fun setupListSupplier() {
+        supplierAdapter = SupplierAdapter(viewModel)
+        binding.listSupplier.adapter = supplierAdapter
     }
 }

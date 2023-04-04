@@ -84,94 +84,40 @@
                 android:src="@drawable/ic_add" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_filter"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/layout_search"
-            android:layout_marginHorizontal="60dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            app:tabBackground="@drawable/bg_tab_unselected"
+            app:tabIndicator="@drawable/bg_tab_selected"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="#FB3838"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="@dimen/_40sdp"
+            app:tabMode="auto"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:tabTextColor="#8D9AB3" />
 
-            <LinearLayout
-                android:id="@+id/layout_assigned"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="@{()->viewModel.onOpenTab(1)}"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_assigned"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:text="@{viewModel.role==true ? @string/da_giao : @string/da_nhan}"
-                    android:textColor="@{viewModel.tabAssignedOpen==false ? @color/gray_medium : @color/pink_primary}"
-                    android:textSize="18sp" />
-
-                <View
-                    android:id="@+id/line_assigned"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@{viewModel.tabAssignedOpen==false ? @drawable/bg_line_gray_medium : @drawable/bg_line_pink_primary}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_finish"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="@{()->viewModel.onOpenTab(2)}"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_finish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:text="Đã hoàn thành"
-                    android:textColor="@{viewModel.tabAssignedOpen==true ? @color/gray_medium : @color/pink_primary}"
-                    android:textSize="18sp" />
-
-                <View
-                    android:id="@+id/line_finish"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@{viewModel.tabAssignedOpen==true ? @drawable/bg_line_gray_medium : @drawable/bg_line_pink_primary}" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_content"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/layout_filter">
+            android:layout_below="@+id/tab_layout" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_list_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <TextView
-                android:id="@+id/tv_no_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/gray_light"
-                android:gravity="center"
-                android:paddingVertical="5dp"
-                android:text="Danh sách trống"
-                android:textColor="@color/red_FF444C"
-                android:visibility="gone" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_no_data"
+            set_visible="@{viewModel.hasTask}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_layout"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray_light"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="Danh sách trống"
+            android:textColor="@color/red_FF444C"
+            android:visibility="visible" />
     </RelativeLayout>
 </layout>

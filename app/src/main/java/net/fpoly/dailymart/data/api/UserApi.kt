@@ -25,10 +25,13 @@ interface UserApi {
     @POST("change-pass")
     fun changePassword(
         @Header("Authorization") token: String,
-        @Body model: ChangePassParam
+        @Body model: ChangePassParam,
     ): Call<ResponseBody>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")
     fun logout(@Header("Authorization") token: String)
+
+    @GET("getAllNameUser")
+    fun getAllUser2(@Header("Authorization") token: String): Call<ResponseBody>
 }

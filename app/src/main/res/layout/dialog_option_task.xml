@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_white_rd_top_10">
@@ -19,7 +20,8 @@
         android:layout_height="70dp"
         android:layout_alignParentEnd="true"
         android:padding="20dp"
-        android:src="@drawable/ic_close_square" />
+        android:src="@drawable/ic_close_square"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/btn_detail"
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imv_close"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_gray_light_rd_8"
         android:drawableStart="@drawable/ic_info"
         android:drawablePadding="10dp"
@@ -34,7 +37,8 @@
         android:padding="10dp"
         android:text="Chi tiết"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:ignore="UseCompatTextViewDrawableXml" />
 
     <TextView
         android:id="@+id/btn_finish"
@@ -42,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_detail"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_blue_light_rd_8"
         android:drawableStart="@drawable/ic_task_finish"
         android:drawablePadding="10dp"
@@ -58,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_finish"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_blue_light_rd_8"
         android:drawableStart="@drawable/ic_edit_white"
         android:drawablePadding="10dp"
@@ -66,7 +70,8 @@
         android:padding="10dp"
         android:text="Sửa"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:ignore="UseCompatTextViewDrawableXml" />
 
     <TextView
         android:id="@+id/btn_delete"
@@ -74,7 +79,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_edit"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="46dp"
         android:background="@drawable/bg_red_ff44c_rd_8"
         android:drawableStart="@drawable/ic_delete"
@@ -83,5 +87,6 @@
         android:padding="10dp"
         android:text="Xóa"
         android:textColor="@color/red_FF444C"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:ignore="UseCompatTextViewDrawableXml" />
 </RelativeLayout>
