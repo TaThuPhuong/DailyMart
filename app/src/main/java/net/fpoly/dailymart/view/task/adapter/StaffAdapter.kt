@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.task.add_new
+package net.fpoly.dailymart.view.task.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -30,7 +30,7 @@ class ChangeRoleDialog(val mContext: Context, var mRole: ROLE, val onSelected: (
         binding.tvManage.setOnClickListener {
             setSelected(binding.tvManage)
             setUnSelected(binding.tvStaff)
-            mRole = ROLE.manage
+            mRole = ROLE.manager
         }
         binding.tvSelect.setOnClickListener {
             onSelected(mRole)

@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.param.Datum
+import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ActivityStaffBinding
 import net.fpoly.dailymart.view.add_staff.AddStaffActivity
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
@@ -15,7 +17,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
 
     private val viewModel: StaffViewModel by viewModels { AppViewModelFactory }
     private lateinit var mStaffAdapter: StaffAdapter
-    private var mListUser: List<User> = ArrayList()
+    private var mListUser: List<Datum> = ArrayList()
 
     override fun setupData() {
         binding.viewModel = viewModel
@@ -29,9 +31,13 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
     }
 
     override fun setupObserver() {
-        viewModel.listUser.observe(this) { users ->
-            mStaffAdapter.setUserData(users)
-            mListUser = users
+//        viewModel.listUser.observe(this) { users ->
+//            mStaffAdapter.setUserData(users)
+//            mListUser = users
+//        }
+        viewModel.user.observe(this) { user ->
+            mStaffAdapter.setUserData(user)
+            mListUser = user
         }
     }
 

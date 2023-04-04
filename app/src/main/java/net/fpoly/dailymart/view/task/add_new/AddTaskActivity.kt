@@ -12,6 +12,7 @@ import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.view.task.PickTimeDialog
+import net.fpoly.dailymart.view.task.adapter.StaffAdapter
 import java.text.SimpleDateFormat
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBinding::inflate),
@@ -39,14 +40,18 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.getAllUser()
         initRecycleView()
         setOnTextChange()
     }
 
     override fun setupObserver() {
         viewModel.listUser.observe(this) { users ->
-            Log.d(TAG, "setupObserver: $users")
-            mListUser = users
+            if (users != null) {
+                Log.d(TAG, "setupObserver: $users")
+                mListUser = users
+                mStaffAdapter.setUserData(users)
+            }
         }
     }
 
