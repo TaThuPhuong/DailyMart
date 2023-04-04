@@ -21,4 +21,5 @@
     <color name="no_color">#00FFFFFF</color>
     <color name="red_FF444C">#FF444C</color>
     <color name="blue_002F22">#002F22</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

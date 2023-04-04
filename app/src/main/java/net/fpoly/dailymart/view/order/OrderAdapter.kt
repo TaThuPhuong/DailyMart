@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.data.database.InvoiceDao
 import net.fpoly.dailymart.data.database.OrderInfo
+import net.fpoly.dailymart.data.model.OrderResponse
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.databinding.ItemOrderBinding
 
 class OrderAdapter(
     val mContext: Context,
-    var mListOrder: List<OrderInfo> = ArrayList()
+    var mListOrder: List<OrderResponse> = ArrayList()
 ) :
     RecyclerView.Adapter<OrderAdapter.ItemView>() {
     class ItemView(val binding: ItemOrderBinding) : ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<OrderInfo>) {
+    fun setData(list: List<OrderResponse>) {
         mListOrder = list
         notifyDataSetChanged()
     }
@@ -38,10 +39,10 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListOrder[position]) {
-                binding.tvExpiryDate.text = this.expiry_date
-                binding.tvProductName.text = this.name
-                binding.tvQuantity.text = "SL: ${this.quantity}"
-                binding.tvTotalInvoice.text = "Đơn giá: ${this.total}"
+//                binding.tvExpiryDate.text = this.invoiceDetails[0].product
+                binding.tvProductName.text = this.invoiceDetails[0].product.productName
+                binding.tvQuantity.text = "SL: ${this.invoiceDetails[0].quantity}"
+                binding.tvTotalInvoice.text = "Đơn giá: ${this.invoiceDetails[0].price}"
             }
         }
     }

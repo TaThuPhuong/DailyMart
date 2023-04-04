@@ -2,7 +2,6 @@ package net.fpoly.dailymart.view.order
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -17,6 +16,7 @@ import gun0912.tedimagepicker.util.ToastUtil
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.database.OrderInfo
+import net.fpoly.dailymart.data.model.OrderResponse
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
@@ -29,7 +29,7 @@ class OrderActivity :
 
     private val viewModel: OrderViewModel by viewModels { AppViewModelFactory }
     private lateinit var mOrderAdapter: OrderAdapter
-    private var mListOrder = ArrayList<OrderInfo>()
+    private var mListOrder = ArrayList<OrderResponse>()
     private val TAG = "OrderActivity"
     private lateinit var codeScanner: CodeScanner
     private val listOrderInfo = ArrayList<OrderInfo>()
@@ -40,41 +40,62 @@ class OrderActivity :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getOrders(token)
-
     }
 
     override fun setupObserver() {
-        viewModel.listOrder.observe(this) { listOrder ->
-            Log.d(TAG, "setupObserver: listorder: ${listOrder.data}")
-            listOrder?.data?.forEach { orderResponse ->
-                Log.d(TAG, "setupObserver: orderresponse: ${orderResponse.invoiceDetails}")
-                orderResponse.invoiceDetails.forEach { invoiceDetails ->
-                    viewModel.getProduct(invoiceDetails.product, token)
-                    viewModel.product.observe(this) { product ->
-                        if (product == null) {
-                            val orderInfo = OrderInfo(
-                                "null",
-                                0,
-                                "null",
-                            )
-                            mListOrder.add(orderInfo)
-                        } else {
-                            val orderInfo = OrderInfo(
-                                product.data.productName,
-                                invoiceDetails.quantity,
-                                orderResponse.dateCreated,
-                            )
-                            mListOrder.add(orderInfo)
-                            mOrderAdapter = OrderAdapter(this, mListOrder)
-                            binding.rcvImportProduct.adapter = mOrderAdapter
-                            Log.d(TAG, "setupObserver: mlistorderINfo: $mListOrder")
-                            Log.d(TAG, "setupObserver: product: ${product.data}")
-                        }
-                    }
-                }
-            }
-//            mListOrder = listOrderInfo
-//            Log.d(TAG, "setupObserver: mlistorder: $mListOrder")
+//        viewModel.listOrder.observe(this) { listOrder ->
+//            Log.d(TAG, "setupObserver: listorder: ${listOrder.data}")
+// //            listOrder?.data?.forEach { orderResponse ->
+// //                Log.d(TAG, "setupObserver: orderresponse: ${orderResponse.invoiceDetails}")
+// //                orderResponse.invoiceDetails.forEach { invoiceDetails ->
+// //                    viewModel.getProduct(invoiceDetails.product, token)
+// //                    viewModel.product.observe(this) { product ->
+// //                        if (product == null) {
+// //                            val orderInfo = OrderInfo(
+// //                                "null",
+// //                                0,
+// //                                "null",
+// //                            )
+// //                            mListOrder.add(orderInfo)
+// //                        } else {
+// //                            val orderInfo = OrderInfo(
+// //                                product.data.productName,
+// //                                invoiceDetails.quantity,
+// //                                orderResponse.dateCreated,
+// //                            )
+// //                            mListOrder.add(orderInfo)
+// //                            mOrderAdapter = OrderAdapter(this, mListOrder)
+// //                            binding.rcvImportProduct.adapter = mOrderAdapter
+// //                            Log.d(TAG, "setupObserver: mlistorderINfo: $mListOrder")
+// //                            Log.d(TAG, "setupObserver: product: ${product.data}")
+// //                        }
+// //                    }
+// //                }
+// //                if (product == null) {
+// //                    val orderInfo = OrderInfo(
+// //                        "null",
+// //                        0,
+// //                        "null",
+// //                    )
+// //                    mListOrder.add(orderInfo)
+// //                } else {
+// //                    val orderInfo = OrderInfo(
+// //                        product.data.productName,
+// //                        invoiceDetails.quantity,
+// //                        orderResponse.dateCreated,
+// //                    )
+// //                    mListOrder.add(orderInfo)
+// //                    mOrderAdapter = OrderAdapter(this, mListOrder)
+// //                    binding.rcvImportProduct.adapter = mOrderAdapter
+// //                    Log.d(TAG, "setupObserver: mlistorderINfo: $mListOrder")
+// //                    Log.d(TAG, "setupObserver: product: ${product.data}")
+// //                }
+// //            mListOrder = listOrder.data
+// //            Log.d(TAG, "setupObserver: mlistorder: $mListOrder")
+//
+//        }
+        if (mListOrder.isEmpty()) {
+            binding.imgListEmpty.visible()
         }
     }
 
@@ -88,9 +109,6 @@ class OrderActivity :
         } else {
             startScanning()
         }
-    }
-
-    private fun newOrder() {
     }
 
     private fun startScanning() {
@@ -162,7 +180,12 @@ class OrderActivity :
                 val expiryDate = binding.edExpiryDate.toString()
                 val product = ProductByOrder(idProduct, 2000, quantity, expiryDate)
                 val order =
-                    OrderParam("640c20d2151e0d8e2339166b", listOf(product), "IMPORT", expiryDate)
+                    OrderParam(
+                        "640c20d2151e0d8e2339166b",
+                        listOf(product),
+                        "IMPORT",
+                        expiryDate,
+                    )
                 if (viewModel.insertOrder(order, token) != null) {
                     binding.edId.setText("")
                     binding.edQuantity.setText("")
