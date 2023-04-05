@@ -6,11 +6,15 @@ import android.view.View
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
+import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.databinding.ActivityAddTaskBinding
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.task.PickTimeDialog
 import net.fpoly.dailymart.view.task.adapter.StaffAdapter
 import java.text.SimpleDateFormat
@@ -22,24 +26,27 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
 
     private val viewModel: AddTaskViewModel by viewModels { AppViewModelFactory }
 
-    private var mListUser: List<User> = ArrayList()
+    private var mListUser: List<UserRes> = ArrayList()
 
     private lateinit var mStaffAdapter: StaffAdapter
 
     @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
 
+    private lateinit var mLoadingDialog: LoadingDialog
+
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
         binding.btnAddTask.setOnClickListener(this)
-        binding.layoutTimeStart.setOnClickListener(this)
         binding.layoutTimeEnd.setOnClickListener(this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setupData() {
+        mLoadingDialog = LoadingDialog(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
+        binding.tvTimeStart.text = "Bắt đầu: ${timeFormat.format(System.currentTimeMillis())}"
         viewModel.getAllUser()
         initRecycleView()
         setOnTextChange()
@@ -48,9 +55,14 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     override fun setupObserver() {
         viewModel.listUser.observe(this) { users ->
             if (users != null) {
-                Log.d(TAG, "setupObserver: $users")
                 mListUser = users
                 mStaffAdapter.setUserData(users)
+            }
+        }
+        viewModel.addSuccess.observe(this) {
+            if (it) {
+                mLoadingDialog.hideLoading()
+                finish()
             }
         }
     }
@@ -59,12 +71,6 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     override fun onClick(v: View?) {
         when (v) {
             binding.imvBack -> finish()
-            binding.layoutTimeStart -> {
-                PickTimeDialog(this) { time ->
-                    binding.tvTimeStart.text = "Bắt đầu: ${timeFormat.format(time)}"
-                    viewModel.onEvent(AddTaskEvent.TimeStartChange(time))
-                }.show()
-            }
             binding.layoutTimeEnd -> {
                 PickTimeDialog(this) { time ->
                     binding.tvTimeEnd.text = "Kết thúc: ${timeFormat.format(time)}"
@@ -72,8 +78,8 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
                 }.show()
             }
             binding.btnAddTask -> {
+                mLoadingDialog.showLoading()
                 viewModel.onEvent(AddTaskEvent.AddNew)
-                finish()
             }
         }
     }
@@ -93,13 +99,11 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
             viewModel.onEvent(AddTaskEvent.TitleChange(it))
         }
         binding.edName.getTextOnChange {
-            Log.d(TAG, "setOnTextChange: $it")
             val listFilter =
                 mListUser.filter { user ->
                     user.id.contains(it, true)
                             || user.name.contains(it, true)
                 }
-            Log.d(TAG, "setOnTextChange: $listFilter")
             if (listFilter.isNotEmpty()) {
                 mStaffAdapter.setUserData(listFilter)
                 binding.rcvListUser.visible()

@@ -80,4 +80,9 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
         binding.edSearch.getTextOnChange {
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTask(binding.viewPager.currentItem)
+    }
 }

@@ -10,14 +10,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
-import net.fpoly.dailymart.utils.Constant.Companion.TASK_ID
 import net.fpoly.dailymart.view.task.TaskActivity
 
 @RequiresApi(Build.VERSION_CODES.M)
-fun createNotification(context: Context, title: String, message: String, taskId: Long) {
+fun createNotification(context: Context, title: String, message: String) {
 
     val intent = Intent(context, TaskActivity::class.java)
-    intent.putExtra(TASK_ID, taskId)
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)

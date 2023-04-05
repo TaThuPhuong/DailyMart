@@ -1,30 +1,20 @@
 package net.fpoly.dailymart.view.task
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.data.model.response.TaskResponse
-import net.fpoly.dailymart.extension.showToast
+import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class TaskViewModel(private val app: Application) : ViewModel() {
+class TaskViewModel(private val app: Application, private val repo: TaskRepository) : ViewModel() {
 
     private val TAG = "YingMing"
     private var mUser: User? = SharedPref.getUser(app)
@@ -39,88 +29,73 @@ class TaskViewModel(private val app: Application) : ViewModel() {
 
     private var taskDeleteRecent: Task? = null
 
-    private val server = ServerInstance.apiTask
     private val mToken = SharedPref.getAccessToken(app)
     private var mViewPosition = 0
+    val message = MutableLiveData<String>()
 
     init {
         _role.value = mUser!!.role != ROLE.staff
-        Log.d(TAG, "_role: ${mUser!!.role}")
     }
 
     fun getAllTask(position: Int) {
         mViewPosition = position
-        server.getAllTask(mToken).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    val type = object : TypeToken<TaskResponse>() {}.type
-                    val res: TaskResponse = Gson().fromJson(response.body()?.string(), type)
-                    Log.d(TAG, "onResponse: ${res.data}")
-                    if (res.data.isNotEmpty()) {
-                        if (position == 0) {
-                            _listTask.value = res.data.filter { !it.finish }
-                            hasTask.value = _listTask.value?.isEmpty()
-                        } else {
-                            _listTask.value = res.data.filter { it.finish }
-                            hasTask.value = _listTask.value?.isEmpty()
-                        }
-                    }
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = repo.getAllTask(mToken)
+            if (res.isSuccess()) {
+                if (position == 0) {
+                    _listTask.postValue(res.data?.filter { !it.finish }
+                        ?.sortedByDescending { it.createAt })
+                    hasTask.postValue(_listTask.value?.isEmpty())
                 } else {
-                    showToast(app, response.errorBody()?.string() ?: "")
+                    _listTask.postValue(res.data?.filter { it.finish }
+                        ?.sortedByDescending { it.createAt })
+                    hasTask.postValue(_listTask.value?.isEmpty())
                 }
+            } else {
+                message.postValue(res.message!!)
             }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onResponse: $t")
-            }
-        })
+        }
     }
 
     fun onFinish(task: Task) {
-        server.updateTask(mToken, TaskParam(task), task.id)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>,
-                ) {
-
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                }
-            })
+        task.finish = true
+        viewModelScope.launch(Dispatchers.Default) {
+            val res = repo.updateTask(mToken, TaskParam(task), task.id)
+            if (res.isSuccess()) {
+                message.postValue(res.message!!)
+                getAllTask(mViewPosition)
+            } else {
+                message.postValue(res.message!!)
+            }
+        }
     }
 
     fun onRestore() {
         taskDeleteRecent?.let {
-            server.insertTask(mToken, TaskParam(it)).enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>,
-                ) {
+            viewModelScope.launch(Dispatchers.Default) {
+                val res = repo.insertTask(mToken, TaskParam(it))
+                if (res.isSuccess()) {
+                    message.postValue(res.message!!)
                     getAllTask(mViewPosition)
+                    taskDeleteRecent = null
+                } else {
+                    message.postValue(res.message!!)
                 }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                }
-            })
+            }
         }
     }
 
-    fun onDeleteTask(task: Task) {
-        taskDeleteRecent = task
-        server.deleteTask(mToken, task.id).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    getAllTask(mViewPosition)
-                }
+    fun onDeleteTask(task: Task, onDeleteSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = repo.deleteTask(mToken, task.id)
+            if (res.isSuccess()) {
+                taskDeleteRecent = task
+                message.postValue(res.message!!)
+                getAllTask(mViewPosition)
+                onDeleteSuccess()
+            } else {
+                message.postValue(res.message!!)
             }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-            }
-        })
+        }
     }
 }

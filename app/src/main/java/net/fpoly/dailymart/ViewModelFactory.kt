@@ -30,6 +30,8 @@ import net.fpoly.dailymart.view.tab.receipt.ReceiptViewModel
 import net.fpoly.dailymart.view.tab.show_more.ShowMoreViewModel
 import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
+import net.fpoly.dailymart.view.task.task_detail.TaskDetailViewModel
+import net.fpoly.dailymart.view.task.task_edit.TaskEditViewModel
 import net.fpoly.dailymart.view.work_sheet.WorkSheetViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -38,6 +40,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
             val context = app.context
+            val taskRepository = app.taskRepository
+            val userRepository = app.userRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -46,7 +50,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(RegisterViewModel::class.java) ->
                     RegisterViewModel()
                 isAssignableFrom(LoginViewModel::class.java) ->
-                    LoginViewModel(app)
+                    LoginViewModel(app, userRepository)
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
                 isAssignableFrom(ReceiptViewModel::class.java) ->
@@ -56,7 +60,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
                     ShowMoreViewModel()
                 isAssignableFrom(TaskViewModel::class.java) ->
-                    TaskViewModel(app)
+                    TaskViewModel(app, taskRepository)
                 isAssignableFrom(CheckDateViewModel::class.java) ->
                     CheckDateViewModel()
                 isAssignableFrom(OrderViewModel::class.java) ->
@@ -74,11 +78,11 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
                 isAssignableFrom(SupplierViewModel::class.java) ->
-                    SupplierViewModel(context ,SupplierRepositoryImpl())
+                    SupplierViewModel(context, SupplierRepositoryImpl())
                 isAssignableFrom(ProductsViewModel::class.java) ->
                     ProductsViewModel()
                 isAssignableFrom(AddTaskViewModel::class.java) ->
-                    AddTaskViewModel(app)
+                    AddTaskViewModel(app, taskRepository, userRepository)
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
                     ChangePasswordViewModel()
                 isAssignableFrom(StaffViewModel::class.java) ->
@@ -91,6 +95,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     MessageViewModel()
                 isAssignableFrom(AddProductViewModel::class.java) ->
                     AddProductViewModel()
+                isAssignableFrom(TaskDetailViewModel::class.java) ->
+                    TaskDetailViewModel()
+                isAssignableFrom(TaskDetailViewModel::class.java)->
+                    TaskEditViewModel(app,taskRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

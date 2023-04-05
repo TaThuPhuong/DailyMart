@@ -1,0 +1,27 @@
+package net.fpoly.dailymart.data
+
+import net.fpoly.dailymart.data.repository.TaskRepositoryImpl
+import net.fpoly.dailymart.data.repository.UserRepositoryImpl
+import net.fpoly.dailymart.repository.TaskRepository
+import net.fpoly.dailymart.repository.UserRepository
+
+object AppModule {
+    @Volatile
+    var taskRepository: TaskRepository? = null
+
+    @Volatile
+    var userRepository: UserRepository? = null
+    @Volatile
+    var productRepository = null
+
+    fun providerTaskRepository() : TaskRepository{
+        synchronized(this){
+            return taskRepository ?:  TaskRepositoryImpl()
+        }
+    }
+    fun providerUserRepository() : UserRepository{
+        synchronized(this){
+            return userRepository ?:  UserRepositoryImpl()
+        }
+    }
+}

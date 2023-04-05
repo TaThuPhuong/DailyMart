@@ -1,15 +1,19 @@
 package net.fpoly.dailymart.view.task
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
-import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.databinding.FragmentTaskBinding
+import net.fpoly.dailymart.extension.showToast
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.task.adapter.TaskAdapter
+import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
+
 
 class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::inflate) {
 
@@ -31,13 +35,21 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
             mTaskAdapter.setTaskData(it)
             mListTask = it
         }
+        viewModel.message.observe(this) {
+            if (it != null) showToast(mContext, it)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView() {
-        mTaskAdapter = TaskAdapter(mContext, mListTask) { task ->
+        mTaskAdapter = TaskAdapter(mListTask) { task ->
             OptionTaskDialog(mContext, task.finish,
-                onShowDetail = {},
+                onShowDetail = {
+                    Intent(mContext, TaskDetailActivity::class.java).also {
+                        it.putExtra(Constant.TASK, task)
+                        startActivity(it)
+                    }
+                },
                 onFinish = {
                     FinishTaskConfirmDialog(mContext) { comment, time ->
                         task.comment = comment ?: ""
@@ -51,13 +63,14 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
                 }, onDelete = {
                     DeleteTaskConfirmDialog(mContext) {
-                        val snack =
-                            Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
-                        snack.setAction("Hoàn tác") {
-                            viewModel.onRestore()
+                        viewModel.onDeleteTask(task) {
+                            val snack =
+                                Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+                            snack.setAction("Hoàn tác") {
+                                viewModel.onRestore()
+                            }
+                            snack.show()
                         }
-                        snack.show()
-                        viewModel.onDeleteTask(task)
                     }.show()
                 }).show()
         }

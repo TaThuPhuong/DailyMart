@@ -16,7 +16,6 @@ class LoadingDialog(val context: Context) {
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.setContentView(R.layout.dialog_loading)
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         dialog!!.show()
     }
 

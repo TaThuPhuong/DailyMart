@@ -1,9 +1,12 @@
 package net.fpoly.dailymart.data.api
 
+import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.data.model.param.ChangePassParam
 import net.fpoly.dailymart.data.model.param.LoginParam
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UserModel
+import net.fpoly.dailymart.data.model.response.ResponseResult
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -15,7 +18,7 @@ interface UserApi {
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("login")
-    fun login(@Body login: LoginParam): Call<ResponseBody>
+    suspend fun login(@Body login: LoginParam): ResponseResult<User>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @GET("getAllNameUser")
@@ -33,5 +36,12 @@ interface UserApi {
     fun logout(@Header("Authorization") token: String)
 
     @GET("getAllNameUser")
-    fun getAllUser2(@Header("Authorization") token: String): Call<ResponseBody>
+    suspend fun getAllUser2(@Header("Authorization") token: String): ResponseResult<List<UserRes>>
+
+    @PUT("updateUser/{id}")
+    suspend fun updateUser(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body userParam: UserRes
+    ): ResponseResult<Unit>
 }

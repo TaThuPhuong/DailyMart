@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class TaskAdapter(
-    private val mContext: Context,
     private var mListTask: List<Task>,
     private val onClick: (Task) -> Unit,
 ) :
