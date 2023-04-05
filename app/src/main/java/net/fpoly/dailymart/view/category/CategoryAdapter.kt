@@ -1,51 +1,56 @@
 package net.fpoly.dailymart.view.category
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.data.model.Category
-import net.fpoly.dailymart.data.model.param.CategoryParam
-import net.fpoly.dailymart.databinding.ItemProductBinding
-import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.databinding.ItemCategoryBinding
 
+class CategoryAdapter(private val viewModel: CategoryViewModel) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
 
-class CategoryAdapter(
-    private val mContext: Context,
-    private var mListCategory: List<CategoryParam>,
-    private val onClick: (CategoryParam) -> Unit,
-) : RecyclerView.Adapter<CategoryAdapter.ItemCategory>() {
-
-    class ItemCategory(val binding: ItemProductBinding):RecyclerView.ViewHolder(binding.root)
-    @SuppressLint("NotifyDataSetChanged")
-    fun setCategoryData(listCategory: List<CategoryParam>){
-        mListCategory = listCategory
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCategory {
-        return ItemCategory(ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    }
-    @SuppressLint("SetTextI18n", "SimpleDateFormat")
-    override fun onBindViewHolder(holder: ItemCategory, position: Int) {
-        with(holder){
-            with(mListCategory[position]){
-//                binding.tvId.text = this.id
-                binding.tvName.text= this.name
-                binding.tvPrice.gone()
-                binding.tvId.gone()
-                binding.imvImage.gone()
-                binding.root.setOnClickListener{
-                    onClick(this)
-                }
+    class CategoryViewHolder(val binding: ItemCategoryBinding) : ViewHolder(binding.root) {
+        fun bind(viewModel: CategoryViewModel, item: Category) {
+            binding.viewmodel = viewModel
+            binding.category = item
+            binding.executePendingBindings()
+        }
+        companion object {
+            fun from(parent: ViewGroup): CategoryViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemCategoryBinding.inflate(layoutInflater, parent, false)
+                return CategoryViewHolder(binding)
             }
         }
     }
-    override fun getItemCount(): Int {
-        return mListCategory.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder =
+        CategoryViewHolder.from(parent)
+
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(viewModel, item)
     }
 
+}
 
+class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem == newItem
+    }
+}
+
+@BindingAdapter("app:categoryItems")
+fun setItemsCategory(list: RecyclerView, items: List<Category>?){
+    items?.let {
+        (list.adapter as CategoryAdapter).submitList(items)
+    }
 }
 

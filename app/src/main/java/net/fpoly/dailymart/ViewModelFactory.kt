@@ -68,7 +68,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(WorkSheetViewModel::class.java) ->
                     WorkSheetViewModel()
                 isAssignableFrom(CategoryViewModel::class.java) ->
-                    CategoryViewModel()
+                    CategoryViewModel(context)
                 isAssignableFrom(PayViewModel::class.java) ->
                     PayViewModel()
                 isAssignableFrom(PaymentViewModel::class.java) ->
@@ -91,6 +91,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     MessageViewModel()
                 isAssignableFrom(AddProductViewModel::class.java) ->
                     AddProductViewModel()
+
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

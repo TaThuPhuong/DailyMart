@@ -1,77 +1,124 @@
 package net.fpoly.dailymart.view.category
 
-import android.util.Log
-import androidx.lifecycle.LiveData
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.model.param.CategoryParam
-import net.fpoly.dailymart.data.model.param.CategoryParamList
-import net.fpoly.dailymart.repository.CategoryRepositoryss
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import net.fpoly.dailymart.data.model.Category
+import net.fpoly.dailymart.data.model.CategoryParam
+import net.fpoly.dailymart.data.model.Response
+import net.fpoly.dailymart.data.repository.CategoryRepositoryImpl
+import net.fpoly.dailymart.utils.SharedPref
 
-class CategoryViewModel() : ViewModel() {
-    private val TAG = "CategoryVM"
-    private val _listCategory = MutableLiveData<CategoryParamList>()
-    val listCategory: LiveData<CategoryParamList> = _listCategory
+class CategoryViewModel(context: Context) : ViewModel() {
 
-    private val _newCategory = MutableLiveData<CategoryParam>()
-    private val newCategory: LiveData<CategoryParam> = _newCategory
+    val repository = CategoryRepositoryImpl()
 
-    private val categoryRepository = CategoryRepositoryss()
+    var listCategoryRemoteData = listOf<Category>()
+    val listCategory = MutableLiveData(listOf<Category>())
+    val token = SharedPref.getAccessToken(context)
 
-    fun getAllCategory(token: String){
+    val totalCountCategory = listCategory.switchMap {
+        MutableLiveData(it.size)
+    }
+
+    val showSnackbar = MutableLiveData<String>()
+    val isLoading = MutableLiveData(true)
+
+    init {
+        getAllCategory()
+    }
+
+    private fun getAllCategory() {
         viewModelScope.launch {
-            try {
-                categoryRepository.getAllCategory(token).enqueue(object : Callback<CategoryParamList> {
-                    override fun onResponse(
-                        call: Call<CategoryParamList>,
-                        response: Response<CategoryParamList>
-                    ) {
-                        _listCategory.value = response.body()
-                        Log.d(TAG, "onResponse: ${response.body()}")
-                    }
-                    override fun onFailure(call: Call<CategoryParamList>, t: Throwable) {
-                    }
-                })
-            }catch (e:Exception){
-                Log.e(TAG, "getAll: error: $e")
+            isLoading.postValue(true)
+            when (val result = repository.getAllCategory(token)) {
+                is Response.Success -> {
+                    listCategoryRemoteData = result.data
+                    listCategory.postValue(result.data)
+                }
+                is Response.Error -> {
+                    showSnackbar.postValue(GET_ALL_FAILED)
+                }
             }
+            isLoading.postValue(false)
         }
     }
 
-    fun insertCategory(token: String,category : CategoryParam){
+    fun clickAddNew(context: Context) {
+        AddEditCategoryDialog(context, this, null).show()
+    }
+
+    fun clickEdit(context: Context, category: Category) {
+        AddEditCategoryDialog(context, this, category).show()
+    }
+
+    fun clickRemove(context: Context, category: Category) {
+        ConfirmRemoveCategoryDialog(context, category, this).show()
+    }
+
+    fun moreOptionCategory(context: Context, category: Category) {
+        MoreCategoryPopup(context, category, this).show()
+    }
+
+    fun createNewCategory(categoryParam: CategoryParam) {
         viewModelScope.launch {
-//            try {
-//                categoryRepository.insertCategory(token, category).enqueue(object : Callback<CategoryParam> {
-//
-//                })
-//            }catch (e:Exception){
-//                Log.e(TAG, "insertCategory: error: $e")
-//            }
+            isLoading.postValue(true)
+            when (repository.addCategory(categoryParam, token)) {
+                is Response.Success -> {
+                    getAllCategory()
+                    showSnackbar.postValue(ADD_SUCCESS)
+                }
+                is Response.Error -> {
+                    showSnackbar.postValue(ADD_FAILED)
+                }
+            }
+            isLoading.postValue(false)
+
         }
+    }
+
+    fun editCategory(idCategory: String, categoryParam: CategoryParam) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            when (repository.updateCategory(idCategory, categoryParam, token)) {
+                is Response.Success -> {
+                    getAllCategory()
+                    showSnackbar.postValue(EDIT_SUCCESS)
+                }
+                is Response.Error -> {
+                    showSnackbar.postValue(EDIT_FAILED)
+                }
+            }
+            isLoading.postValue(false)
+        }
+    }
+
+    fun removeCategory(idCategory: String) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            when (repository.removeCategory(idCategory, token)) {
+                is Response.Success -> {
+                    getAllCategory()
+                    showSnackbar.postValue(REMOVE_SUCCESS)
+                }
+                is Response.Error -> {
+                    showSnackbar.postValue(REMOVE_FAILED)
+                }
+            }
+            isLoading.postValue(false)
+        }
+    }
+
+    companion object {
+        const val GET_ALL_FAILED = "Cập nhật danh sách thất bại"
+        const val ADD_SUCCESS = "Thêm loại hàng thành công"
+        const val ADD_FAILED = "Thêm loại hàng thất bại"
+        const val EDIT_SUCCESS = "Sửa loại hàng thành công"
+        const val EDIT_FAILED = "Sửa loại hàng thất bại"
+        const val REMOVE_SUCCESS = "Xóa loại hàng thành công"
+        const val REMOVE_FAILED = "Xóa loại hàng thất bại"
     }
 }
-
-//    fun searchCategoryName(nameSearch : String){
-//        viewModelScope.launch {
-//            categoryRepository.searchCategory("%$nameSearch%").collect{
-//                categoryRepository.searchCategory(nameSearch)
-//
-//            }
-//        }
-//    }
-//    fun insertCategory(category: Category) {
-//        viewModelScope.launch {
-//            categoryRepository.insertCategory(category)
-//        }
-//    }
-//    fun deleteCategory(category: Category) {
-//        viewModelScope.launch {
-//            categoryRepository.deleteCategory(category)
-//        }
-//    }
-//}
