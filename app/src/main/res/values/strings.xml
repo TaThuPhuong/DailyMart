@@ -39,4 +39,6 @@
     <string name="th_m_nh_n_vi_n">Thêm Nhân Viên</string>
     <string name="empty_list">Danh sách trống</string>
     <string name="add_new">Thêm mới</string>
+    <string name="total_category">Tổng số: %d</string>
+    <string name="id_category">ID: %s</string>
 </resources>
