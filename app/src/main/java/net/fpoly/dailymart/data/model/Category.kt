@@ -1,7 +1,13 @@
 package net.fpoly.dailymart.data.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+
+data class Category(
+    @SerializedName("_id") val id: String = "",
+    @SerializedName("name") var name: String = "",
 
 data class Category(
     @SerializedName("_id") val id: String = UUID.randomUUID().toString(),
@@ -20,6 +26,3 @@ sealed class Response<out R> {
 
 val Response<*>.succeeded
     get() = this is Response.Success && data != null
-
-
-

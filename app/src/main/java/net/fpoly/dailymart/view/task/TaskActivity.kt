@@ -56,7 +56,7 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     }
 
     override fun setupObserver() {
-        viewModel.listTask.observe(this){
+        viewModel.listTask.observe(this) {
             mLoadingDialog.hideLoading()
         }
     }
@@ -78,6 +78,12 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     private fun setSearchTask() {
         binding.edSearch.getTextOnChange {
+            viewModel.textSearch.postValue(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTask(binding.viewPager.currentItem)
     }
 }

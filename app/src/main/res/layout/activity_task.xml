@@ -67,6 +67,7 @@
 
                 <ImageView
                     android:id="@+id/imv_clear"
+                    set_visible="@{viewModel.textSearch.length() != 0}"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -108,7 +109,7 @@
 
         <TextView
             android:id="@+id/tv_no_data"
-            set_visible="@{viewModel.hasTask}"
+            set_visible="@{viewModel.listTask.size() ==0}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab_layout"

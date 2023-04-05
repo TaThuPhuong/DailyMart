@@ -19,3 +19,23 @@ data class User(
     @ColumnInfo(name = "info_bank") var infoBank: String? = null,
     @ColumnInfo(name = "accessToken") @SerializedName("accessToken") var accessToken: String = "",
 ) : Serializable
+
+data class UserRes(
+    @SerializedName("id") var id: String = "",
+    @SerializedName("name") var name: String = "",
+    @SerializedName("phoneNumber") var phoneNumber: String = "",
+    @SerializedName("status") var status: Boolean = true,
+    @SerializedName("role") var role: ROLE = ROLE.staff,
+    @SerializedName("linkAvt") var linkAvt: String = "",
+    @SerializedName("deviceId") var deviceId: String = "",
+) {
+    constructor(user: User) : this() {
+        this.id = user.id
+        this.name = user.name
+        this.role = user.role
+        this.deviceId = user.deviceId
+        this.status = user.disable
+        this.phoneNumber = user.phone
+        this.linkAvt = user.avatar
+    }
+}

@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class TaskAdapter(
-    private val mContext: Context,
     private var mListTask: List<Task>,
     private val onClick: (Task) -> Unit,
 ) :
@@ -45,7 +44,7 @@ class TaskAdapter(
             with(mListTask[position]) {
                 if (this.finish) {
                     binding.root.setBackgroundResource(R.drawable.bg_green_light_bd_rd_10)
-                    binding.imvTask.setImage(R.drawable.ic_task_finish)
+                    binding.imvTask.setImage(R.drawable.ic_finish_task)
                 } else if (System.currentTimeMillis() > this.deadline) {
                     binding.root.setBackgroundResource(R.drawable.bg_red_ff44c_rd_8)
                     binding.imvTask.setImage(R.drawable.ic_task_out_of_date)
