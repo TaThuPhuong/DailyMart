@@ -42,6 +42,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val context = app.context
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository
+            val productRepository = app.productRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -97,7 +98,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     AddProductViewModel()
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
                     TaskDetailViewModel()
-                isAssignableFrom(TaskDetailViewModel::class.java)->
+                isAssignableFrom(TaskEditViewModel::class.java)->
                     TaskEditViewModel(app,taskRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

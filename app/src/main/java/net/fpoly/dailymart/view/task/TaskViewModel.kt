@@ -25,13 +25,12 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
     private val _listTask = MutableLiveData<List<Task>>()
     val listTask: LiveData<List<Task>> = _listTask
 
-    val hasTask = MutableLiveData(false)
-
     private var taskDeleteRecent: Task? = null
 
     private val mToken = SharedPref.getAccessToken(app)
     private var mViewPosition = 0
     val message = MutableLiveData<String>()
+    val textSearch = MutableLiveData<String>(null)
 
     init {
         _role.value = mUser!!.role != ROLE.staff
@@ -45,11 +44,9 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
                 if (position == 0) {
                     _listTask.postValue(res.data?.filter { !it.finish }
                         ?.sortedByDescending { it.createAt })
-                    hasTask.postValue(_listTask.value?.isEmpty())
                 } else {
                     _listTask.postValue(res.data?.filter { it.finish }
                         ?.sortedByDescending { it.createAt })
-                    hasTask.postValue(_listTask.value?.isEmpty())
                 }
             } else {
                 message.postValue(res.message!!)

@@ -49,7 +49,7 @@ class AddTaskViewModel(
 
     private val _deviceId = MutableLiveData("")
     val message = MutableLiveData<String>()
-    val addSuccess = MutableLiveData(false)
+    val addSuccess = MutableLiveData<Boolean>(null)
 
     init {
         _task.value = _task.value?.copy(

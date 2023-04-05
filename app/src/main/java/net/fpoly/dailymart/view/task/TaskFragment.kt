@@ -10,9 +10,12 @@ import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.databinding.FragmentTaskBinding
 import net.fpoly.dailymart.extension.showToast
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.task.adapter.TaskAdapter
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
+import net.fpoly.dailymart.view.task.task_edit.TaskEditActivity
 
 
 class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::inflate) {
@@ -38,6 +41,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
         viewModel.message.observe(this) {
             if (it != null) showToast(mContext, it)
         }
+        viewModel.textSearch.observe(this) {
+            if (it == null) mTaskAdapter.setTaskData(mListTask)
+            if (it != null) onSearch(it)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,7 +67,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
                     }.show()
                 },
                 onEdit = {
-
+                    Intent(mContext, TaskEditActivity::class.java).also {
+                        it.putExtra(Constant.TASK, task)
+                        startActivity(it)
+                    }
                 }, onDelete = {
                     DeleteTaskConfirmDialog(mContext) {
                         viewModel.onDeleteTask(task) {
@@ -75,6 +85,20 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
                 }).show()
         }
         binding.rcvListTask.adapter = mTaskAdapter
+    }
+
+    private fun onSearch(s: String) {
+        val listFilter =
+            mListTask.filter { task ->
+                task.idReceiver.name.contains(s, true) || task.title.contains(s, true)
+            }
+        if (listFilter.isNotEmpty()) {
+            mTaskAdapter.setTaskData(listFilter)
+            binding.rcvListTask.visible()
+        } else {
+            mTaskAdapter.setTaskData(ArrayList())
+            binding.rcvListTask.gone()
+        }
     }
 
     companion object {

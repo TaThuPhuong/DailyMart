@@ -33,7 +33,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
 
-    private lateinit var mLoadingDialog: LoadingDialog
+    private var mLoadingDialog: LoadingDialog? = null
 
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
@@ -60,9 +60,9 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
             }
         }
         viewModel.addSuccess.observe(this) {
-            if (it) {
-                mLoadingDialog.hideLoading()
-                finish()
+            if (it != null) {
+                mLoadingDialog?.hideLoading()
+                if (it) finish()
             }
         }
     }
@@ -78,7 +78,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
                 }.show()
             }
             binding.btnAddTask -> {
-                mLoadingDialog.showLoading()
+                mLoadingDialog!!.showLoading()
                 viewModel.onEvent(AddTaskEvent.AddNew)
             }
         }

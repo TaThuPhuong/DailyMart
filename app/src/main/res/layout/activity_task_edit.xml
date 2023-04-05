@@ -81,6 +81,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="20dp"
+                        android:thumb="@drawable/thumb"
+                        app:track="@drawable/track"
                         android:layout_marginStart="30dp"
                         android:checked="@{viewModel.taskParam.finish}" />
                 </LinearLayout>
@@ -178,7 +180,6 @@
 
                 <EditText
                     android:id="@+id/ed_comment"
-                    set_visible="@{viewModel.task.comment.length()!=0}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_description"

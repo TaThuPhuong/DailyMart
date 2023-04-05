@@ -23,6 +23,7 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
 
     val taskParam = MutableLiveData(TaskParam())
     val message = MutableLiveData<String>()
+    val updateTaskSuccess = MutableLiveData<Boolean>(null)
 
     @SuppressLint("SimpleDateFormat")
     fun setTask(task: Task) {
@@ -81,8 +82,10 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
                     val res = repo.updateTask(mToken, taskParam.value!!, task.value!!.id)
                     if (res.isSuccess()) {
                         message.postValue(res.message!!)
+                        updateTaskSuccess.postValue(true)
                     } else {
                         message.postValue(res.message!!)
+                        updateTaskSuccess.postValue(false)
                     }
                 }
             }

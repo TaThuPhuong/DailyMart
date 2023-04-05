@@ -10,6 +10,9 @@ data class Product(
     @SerializedName("supplier") var supplier: Supplier = Supplier(),
     @SerializedName("industry") var category: Category = Category(),
     @SerializedName("barcode") var barcode: String = "",
+    @SerializedName("importPrice") var importPrice: Double = 0.0,
+    @SerializedName("sellPrice") var sellPrice: Double = 0.0,
+    @SerializedName("totalQuantity") var totalQuantity: Int = 0,
     @SerializedName("unit") var unit: String = "",
     @SerializedName("img_product") var img_product: String? = "",
 ) {
@@ -26,5 +29,5 @@ data class ProductParam(
     @SerializedName("importPrice") var importPrice: Double = 0.0,
     @SerializedName("sellPrice") var sellPrice: Double = 0.0,
     @SerializedName("imageProduct") var imageProduct: String = "",
-    @SerializedName("unit") var unit: String = ""
+    @SerializedName("unit") var unit: String = "",
 )
