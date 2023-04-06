@@ -9,12 +9,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ProductApi {
-    @GET("api/product")
+    @GET("product")
     fun getAllProduct(
         @Header("Authorization") token: String
     ): Call<ListProductResponse>
 
-    @GET("api/product/detailProduct/{id}")
+    @GET("product/detailProduct/{id}")
     fun getProduct(
         @Header("Authorization") token: String,
         @Path("id") id: String,

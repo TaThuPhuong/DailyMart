@@ -1,12 +1,14 @@
 package net.fpoly.dailymart.view.order
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.ListOrderResponse
 import net.fpoly.dailymart.data.model.ListProductResponse
 import net.fpoly.dailymart.data.model.OrderResponse
@@ -30,9 +32,15 @@ class OrderViewModel() : ViewModel() {
     private val productRepository = ProductByOrderRepository()
     private val _product = MutableLiveData<ProductResponse>()
     val product: LiveData<ProductResponse> = _product
+    private lateinit var mLoadingDialog: LoadingDialog
+
+    fun initLoadDialog(context: Context) {
+        mLoadingDialog = LoadingDialog(context)
+    }
 
     fun insertOrder(invoice: OrderParam, token: String) {
         viewModelScope.launch {
+            mLoadingDialog.showLoading()
             try {
                 invoiceRepository.insertInvoice(invoice, token)
                     .enqueue(object : Callback<OrderResponse> {
@@ -41,14 +49,18 @@ class OrderViewModel() : ViewModel() {
                             response: Response<OrderResponse>,
                         ) {
                             Log.d(TAG, "onRespons: add success: ${response.body()}")
+                            _newOrder.value = response.body()
+                            mLoadingDialog.hideLoading()
                         }
 
                         override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
                             Log.e(TAG, "onFailure: add failed: $t")
+                            mLoadingDialog.hideLoading()
                         }
                     })
             } catch (e: Exception) {
                 Log.e(TAG, "onFailure: failed: $e")
+                mLoadingDialog.hideLoading()
             }
         }
     }
@@ -80,6 +92,7 @@ class OrderViewModel() : ViewModel() {
 
     fun getAllProduct(token: String) {
         viewModelScope.launch {
+            mLoadingDialog.showLoading()
             try {
                 productRepository.getAllProduct(token)
                     .enqueue(object : Callback<ListProductResponse> {
@@ -88,14 +101,17 @@ class OrderViewModel() : ViewModel() {
                             response: Response<ListProductResponse>,
                         ) {
                             Log.d(TAG, "onResponse: list product: ${response.body()}")
+                            mLoadingDialog.hideLoading()
                         }
 
                         override fun onFailure(call: Call<ListProductResponse>, t: Throwable) {
                             Log.e(TAG, "onFailure: list product: $t")
+                            mLoadingDialog.hideLoading()
                         }
                     })
             } catch (e: Exception) {
                 e.printStackTrace()
+                mLoadingDialog.hideLoading()
             }
         }
     }
@@ -103,6 +119,7 @@ class OrderViewModel() : ViewModel() {
     @SuppressLint("NullSafeMutableLiveData")
     fun getProduct(id: String, token: String) {
         viewModelScope.launch {
+            mLoadingDialog.showLoading()
             try {
                 productRepository.getProductById(id, token)
                     .enqueue(object : Callback<ProductResponse> {
@@ -112,16 +129,19 @@ class OrderViewModel() : ViewModel() {
                         ) {
                             Log.d(TAG, "onResponse: product: ${response.body()}")
                             _product.value = response.body()
+                            mLoadingDialog.hideLoading()
                         }
 
                         override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                             _product.value = null
                             Log.e(TAG, "onFailure: failed: $t")
+                            mLoadingDialog.hideLoading()
                         }
                     })
             } catch (e: Exception) {
                 _product.value = null
                 e.printStackTrace()
+                mLoadingDialog.hideLoading()
             }
         }
     }

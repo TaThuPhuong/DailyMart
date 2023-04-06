@@ -10,7 +10,6 @@
         <import type="net.fpoly.dailymart.utils.ConvertUtilsKt"/>
         <import type="net.fpoly.dailymart.view.order.OrderViewModel"/>
         <import type="androidx.core.content.ContextCompat"/>
-        <import type="net.fpoly.dailymart.data.database.OrderInfo"/>
         <import type="net.fpoly.dailymart.R"/>
         <variable
             name="viewmodel"
@@ -20,9 +19,6 @@
             name="invoice"
             type="Invoice" />
 
-        <variable
-            name="order"
-            type="OrderInfo" />
 
         <variable
             name="product"
@@ -57,7 +53,6 @@
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp"
                 android:maxLength="20"
-                android:text="@{order.name}"
                 android:fontFamily="@font/imbplexsans_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(order.total)}"
                 android:fontFamily="@font/imbplexsans_regular"
                 app:layout_constraintStart_toStartOf="@id/tv_product_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -92,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_primary"
                 android:textSize="12sp"
-                android:text="@{order.expiry_date}"
                 android:fontFamily="@font/imbplexsans_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_quantity"

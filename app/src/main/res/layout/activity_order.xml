@@ -167,7 +167,7 @@
                     android:drawableStart="@drawable/ic_calander_gray"
                     android:drawablePadding="10dp"
                     android:elevation="5dp"
-                    android:hint="Hạn sử dụng"
+                    android:hint="Hạn sử dụng (30-02-2023)"
                     android:padding="10dp"
                     android:textColor="@color/gray_medium"
                     android:textColorHint="@color/gray_light"

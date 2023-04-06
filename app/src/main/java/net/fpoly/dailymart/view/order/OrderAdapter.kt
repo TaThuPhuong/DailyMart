@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.data.database.InvoiceDao
-import net.fpoly.dailymart.data.database.OrderInfo
 import net.fpoly.dailymart.data.model.OrderResponse
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.databinding.ItemOrderBinding

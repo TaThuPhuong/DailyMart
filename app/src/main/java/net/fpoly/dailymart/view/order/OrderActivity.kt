@@ -18,13 +18,12 @@ import com.budiyev.android.codescanner.ScanMode
 import gun0912.tedimagepicker.util.ToastUtil
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.database.OrderInfo
 import net.fpoly.dailymart.data.model.OrderResponse
 import net.fpoly.dailymart.data.model.param.OrderParam
 import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
-import net.fpoly.dailymart.extention.view_extention.gone
-import net.fpoly.dailymart.extention.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,14 +36,14 @@ class OrderActivity :
     private var mListOrder = ArrayList<OrderResponse>()
     private val TAG = "OrderActivity"
     private lateinit var codeScanner: CodeScanner
-    private val listOrderInfo = ArrayList<OrderInfo>()
     private var productName = ""
     private var token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDUzNjkxNCwiZXhwIjoxNjgwNjIzMzE0fQ.XcrkWCEaXgR95m9BK-MdrCld8JDjwJqgSQ4XrNQ_T1g"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDYyMzk5NCwiZXhwIjoxNzY2OTM3NTk0fQ.W6G-sBuJ_ySLD-iL-9e9dW8OjUHrHCd0AqMlO35XI6M"
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.initLoadDialog(this)
         viewModel.getOrders(token)
         viewModel.getAllProduct(token)
         setupProductName()
@@ -112,7 +111,7 @@ class OrderActivity :
                 productName = it.data.productName
                 binding.tvName.text = it.data.productName
             } else {
-                productName = ""
+                binding.tvName.text = ""
             }
         }
     }
@@ -197,7 +196,8 @@ class OrderActivity :
                 val quantity = binding.edQuantity.text.toString()
                 val expiryDate = binding.edExpiryDate.toString()
                 if (validate()) {
-                    val product = ProductByOrder(idProduct, 2000, Integer.parseInt(quantity), expiryDate)
+                    val product =
+                        ProductByOrder(idProduct, 2000, Integer.parseInt(quantity), expiryDate)
                     val order =
                         OrderParam(
                             "640c20d2151e0d8e2339166b",
@@ -205,13 +205,17 @@ class OrderActivity :
                             "IMPORT",
                             expiryDate,
                         )
-                    if (viewModel.insertOrder(order, token) != null) {
-                        binding.edId.setText("")
-                        binding.edQuantity.setText("")
-                        binding.edExpiryDate.setText("")
-                        ToastUtil.showToast("Insert new order successfully")
-                    } else {
-                        ToastUtil.showToast("Insert order failed")
+                    viewModel.insertOrder(order, token)
+                    viewModel.newOrder.observe(this) {
+                        if (it != null) {
+                            binding.edId.setText("")
+                            binding.edQuantity.setText("")
+                            binding.edExpiryDate.setText("")
+                            binding.tvName.text = ""
+                            ToastUtil.showToast("Insert new order successfully")
+                        } else {
+                            ToastUtil.showToast("Insert order failed")
+                        }
                     }
                 }
             }
@@ -225,7 +229,7 @@ class OrderActivity :
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.d(TAG, "onTextChanged: $s")
-                viewModel.getProduct(s.toString(), token)
+                viewModel.getProduct(s.toString().trim(), token)
             }
 
             override fun afterTextChanged(s: Editable?) {
