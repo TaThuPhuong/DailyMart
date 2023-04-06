@@ -12,7 +12,11 @@ import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemProductBinding
 import net.fpoly.dailymart.utils.toMoney
 
-class ProductAdapter(val mContext: Context, var mListProduct: List<Product> = ArrayList()) :
+class ProductAdapter(
+    val mContext: Context,
+    var mListProduct: List<Product> = ArrayList(),
+    val onClick: (Product) -> Unit
+) :
     RecyclerView.Adapter<ProductAdapter.ItemView>() {
 
     class ItemView(val binding: ItemProductBinding) : ViewHolder(binding.root)
@@ -48,7 +52,9 @@ class ProductAdapter(val mContext: Context, var mListProduct: List<Product> = Ar
                     .placeholder(R.drawable.img_default)
                     .override(80, 20)
                     .into(binding.imvImage)
-
+                binding.root.setOnClickListener {
+                    onClick(this)
+                }
             }
         }
     }

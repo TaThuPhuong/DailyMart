@@ -26,14 +26,15 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.tvAddNew.setOnClickListener {
             startActivity(Intent(this, AddProductActivity::class.java))
         }
-        mProductAdapter = ProductAdapter(this, mListProduct)
+        mProductAdapter = ProductAdapter(this, mListProduct){
+
+        }
         binding.rcvProducts.adapter = mProductAdapter
         viewModel.getListProduct()
     }
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
-            Log.d(TAG, "setupObserver: $it")
             mProductAdapter.setData(it)
             mListProduct = it
         }
