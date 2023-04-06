@@ -12,12 +12,14 @@ import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.utils.sendNotification
 import net.fpoly.dailymart.view.task.task_detail.TaskDetail
 import java.text.SimpleDateFormat
 
 class TaskEditViewModel(private val app: Application, private val repo: TaskRepository) :
     ViewModel() {
     private val mToken = SharedPref.getAccessToken(app)
+    private var mTask: Task? = null
     private val _task = MutableLiveData(TaskDetail())
     val task: LiveData<TaskDetail> = _task
 
@@ -27,6 +29,7 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
 
     @SuppressLint("SimpleDateFormat")
     fun setTask(task: Task) {
+        mTask = task
         _task.value = TaskDetail(
             id = task.id,
             title = task.title,
@@ -83,6 +86,13 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
                     if (res.isSuccess()) {
                         message.postValue(res.message!!)
                         updateTaskSuccess.postValue(true)
+                        mTask?.idReceiver?.deviceId?.let {
+                            sendNotification(
+                                "Đã chỉnh sửa",
+                                mTask?.title ?: "",
+                                it
+                            )
+                        }
                     } else {
                         message.postValue(res.message!!)
                         updateTaskSuccess.postValue(false)

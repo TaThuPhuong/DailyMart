@@ -34,7 +34,6 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
-            Log.d(TAG, "list task: $it")
             mTaskAdapter.setTaskData(it)
             mListTask = it
         }

@@ -20,6 +20,7 @@ import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.utils.sendNotification
 import net.fpoly.dailymart.view.task.task_detail.TaskDetail
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -93,7 +94,7 @@ class AddTaskViewModel(
                     _task.value?.let {
                         val res = taskRepo.insertTask(mToken, it)
                         if (res.isSuccess()) {
-                            sendNotification(it)
+                            sendNotification("Bạn vừa giao 1 nhiệm vụ mới",_task.value!!.title,_deviceId.value!!)
                             message.postValue(res.message!!)
                             addSuccess.postValue(true)
                         } else {
@@ -122,18 +123,6 @@ class AddTaskViewModel(
         _taskValidate.value =
             !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.deadline == 0L)
     }
-
-    private fun sendNotification(task: TaskParam) =
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                _deviceId.value?.let {
-                    val data = NotificationData(Data("Nhiệm vụ mới", task.title), it)
-                    RetrofitInstance.apiPutNotification.postNotification(data)
-                }
-            } catch (e: Exception) {
-                Log.e("YingMing", "sendNotification: $e")
-            }
-        }
 }
 
 sealed class AddTaskEvent {
