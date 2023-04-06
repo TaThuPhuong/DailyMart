@@ -3,6 +3,7 @@ package net.fpoly.dailymart.utils
 import android.content.Context
 import com.google.gson.Gson
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.security.AESUtils
 
 object SharedPref {
 
@@ -25,7 +26,7 @@ object SharedPref {
         sharedPref.putString("user", gson).apply()
     }
 
-    fun getUser(context: Context): User {
+    fun getUser(context: Context): User? {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         val result = sharedPref.getString("user", "")
         return Gson().fromJson(result, User::class.java)
@@ -42,13 +43,23 @@ object SharedPref {
         sharedPref.putInt("notification_id", num).apply()
     }
 
-    fun getTokenNotification(context: Context): String? {
+    fun getTokenNotification(context: Context): String {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return sharedPref.getString("token", "")
+        return sharedPref.getString("token", "")!!
     }
 
     fun setTokenNotification(context: Context, value: String) {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
         sharedPref.putString("token", value).apply()
+    }
+
+    fun setAccessToken(context: Context, token: String) {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
+        sharedPref.putString("token", token).apply()
+    }
+
+    fun getAccessToken(context: Context): String {
+        val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return AESUtils.decrypt(sharedPref.getString("token", "")!!)
     }
 }

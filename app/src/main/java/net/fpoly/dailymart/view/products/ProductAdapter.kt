@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import net.fpoly.dailymart.R
-import net.fpoly.dailymart.data.database.ProductInfo
+import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemProductBinding
 import net.fpoly.dailymart.utils.toMoney
 
-class ProductAdapter(val mContext: Context, var mListProduct: List<ProductInfo> = ArrayList()) :
+class ProductAdapter(val mContext: Context, var mListProduct: List<Product> = ArrayList()) :
     RecyclerView.Adapter<ProductAdapter.ItemView>() {
 
     class ItemView(val binding: ItemProductBinding) : ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<ProductInfo>) {
+    fun setData(list: List<Product>) {
         mListProduct = list
         notifyDataSetChanged()
     }
@@ -43,7 +43,12 @@ class ProductAdapter(val mContext: Context, var mListProduct: List<ProductInfo> 
             with(mListProduct[position]) {
                 binding.tvName.text = this.name
                 binding.tvId.text = "ID: ${this.id}"
-                binding.tvPrice.text = "Giá bán:\n${this.sell_price.toMoney()}"
+//                binding.tvPrice.text = "Giá bán:\n${this..toMoney()}"
+                Glide.with(mContext).load(this.img_product)
+                    .placeholder(R.drawable.img_default)
+                    .override(80, 20)
+                    .into(binding.imvImage)
+
             }
         }
     }

@@ -1,13 +1,26 @@
 package net.fpoly.dailymart.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "supplier")
+import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class Supplier(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int? = null,
-    @ColumnInfo(name = "name") var name: String = "",
-    @ColumnInfo(name = "phone") var phone: String = "",
+    @SerializedName("_id") var id: String = UUID.randomUUID().toString(),
+    @SerializedName("supplierName") val supplierName: String = "",
+    @SerializedName("phoneNumber") var phoneNumber: String = "",
+    @SerializedName("createdAt") var createdAt: String = "",
 )
+
+data class SupplierParam(
+    @SerializedName("supplierName") val supplierName: String = "",
+    @SerializedName("phoneNumber") var phoneNumber: String = "",
+    )
+
+data class ResultData<T>(
+    var status: Int = 0,
+    var message: String = "",
+    @SerializedName("data") var result: T
+) {
+    fun isSuccess(): Boolean {
+        return status == 1
+    }
+}

@@ -36,7 +36,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
             binding.tvSave -> {}
             binding.imvAvatar -> {}
             binding.layoutRole -> {
-                ChangeRoleDialog(this, ROLE.STAFF) {
+                ChangeRoleDialog(this, ROLE.staff) {
                     binding.tvRole.text = getRole(it)
                 }.show()
             }
@@ -50,9 +50,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
 
     private fun getRole(role: ROLE): String {
         return when (role) {
-            ROLE.STAFF -> "Nhân viên"
-            ROLE.MANAGE -> "Quản lý"
-            ROLE.ADMIN -> "Admin"
+            ROLE.staff -> "Nhân viên"
+            ROLE.manager -> "Quản lý"
+            ROLE.admin -> "Admin"
         }
     }
 

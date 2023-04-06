@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "products")
 data class Product(
     @PrimaryKey @ColumnInfo(name = "id") var id: String = "",
     @ColumnInfo(name = "name") var name: String = "",

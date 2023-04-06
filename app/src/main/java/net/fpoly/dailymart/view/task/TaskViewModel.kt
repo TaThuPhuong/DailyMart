@@ -1,113 +1,126 @@
 package net.fpoly.dailymart.view.task
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.collect
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Task
+import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.User
-import net.fpoly.dailymart.firbase.firestore.deleteTask
-import net.fpoly.dailymart.firbase.firestore.insertTask
-import net.fpoly.dailymart.repository.TaskRepository
-import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.data.model.response.TaskResponse
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class TaskViewModel(
-    private val app: Application,
-    private val taskRepository: TaskRepository,
-    private val userRepository: UserRepository,
-) :
-    ViewModel() {
+class TaskViewModel(private val app: Application) : ViewModel() {
 
-    private val _tabAssignedOpen = MutableLiveData(true)
-    val tabAssignedOpen: LiveData<Boolean> = _tabAssignedOpen
-
-    private var mUser: User = SharedPref.getUser(app)
+    private val TAG = "YingMing"
+    private var mUser: User? = SharedPref.getUser(app)
 
     private val _role = MutableLiveData(false)
     val role: LiveData<Boolean> = _role
 
-    private val _listTask = MutableLiveData<List<Task>>(ArrayList())
+    private val _listTask = MutableLiveData<List<Task>>()
     val listTask: LiveData<List<Task>> = _listTask
 
-    private val _listUser = MutableLiveData<List<User>>(ArrayList())
-    val listUser: LiveData<List<User>> = _listUser
+    val hasTask = MutableLiveData(false)
 
     private var taskDeleteRecent: Task? = null
 
+    private val server = ServerInstance.apiTask
+    private val mToken = SharedPref.getAccessToken(app)
+    private var mViewPosition = 0
+
     init {
-        _role.value = mUser.role != ROLE.STAFF.value
-        getListUser()
+        _role.value = mUser!!.role != ROLE.staff
+        Log.d(TAG, "_role: ${mUser!!.role}")
     }
 
-    fun onOpenTab(id: Int) {
-        when (id) {
-            1 -> {
-                if (_role.value == true) {
-                    getAllListTaskByStatus(false)
+    fun getAllTask(position: Int) {
+        mViewPosition = position
+        server.getAllTask(mToken).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val type = object : TypeToken<TaskResponse>() {}.type
+                    val res: TaskResponse = Gson().fromJson(response.body()?.string(), type)
+                    Log.d(TAG, "onResponse: ${res.data}")
+                    if (res.data.isNotEmpty()) {
+                        if (position == 0) {
+                            _listTask.value = res.data.filter { !it.finish }
+                            hasTask.value = _listTask.value?.isEmpty()
+                        } else {
+                            _listTask.value = res.data.filter { it.finish }
+                            hasTask.value = _listTask.value?.isEmpty()
+                        }
+                    }
                 } else {
-                    getListTaskByIdAndStatus(mUser.id, false)
+                    showToast(app, response.errorBody()?.string() ?: "")
                 }
-                _tabAssignedOpen.value = true
             }
-            2 -> {
-                if (_role.value == true) {
-                    getAllListTaskByStatus(true)
-                } else {
-                    getListTaskByIdAndStatus(mUser.id, true)
-                }
-                _tabAssignedOpen.value = false
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d(TAG, "onResponse: $t")
             }
-        }
+        })
     }
 
     fun onFinish(task: Task) {
-        viewModelScope.launch {
-            taskRepository.insertTask(task)
-        }
+        server.updateTask(mToken, TaskParam(task), task.id)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
+                ) {
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                }
+            })
     }
 
     fun onRestore() {
-        viewModelScope.launch {
-            taskRepository.insertTask(taskDeleteRecent ?: return@launch)
-            insertTask(taskDeleteRecent ?: return@launch)
-            taskDeleteRecent = null
+        taskDeleteRecent?.let {
+            server.insertTask(mToken, TaskParam(it)).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
+                ) {
+                    getAllTask(mViewPosition)
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                }
+            })
         }
     }
 
     fun onDeleteTask(task: Task) {
         taskDeleteRecent = task
-        viewModelScope.launch {
-            taskRepository.deleteTask(task)
-            deleteTask(task)
-        }
-    }
-
-    private fun getAllListTaskByStatus(finish: Boolean) {
-        viewModelScope.launch {
-            taskRepository.getTaskFinish(finish)?.collect { tasks ->
-                _listTask.value = tasks.sortedByDescending { it.createAt }
+        server.deleteTask(mToken, task.id).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    getAllTask(mViewPosition)
+                }
             }
-        }
-    }
 
-    private fun getListTaskByIdAndStatus(id: String, finish: Boolean) {
-        viewModelScope.launch {
-            taskRepository.getTaskByIdAndFinish(id, finish)?.collect { tasks ->
-                _listTask.value = tasks.sortedByDescending { it.createAt }
-            }
-        }
-    }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-    private fun getListUser() {
-        viewModelScope.launch {
-            userRepository.getUserByRole(ROLE.STAFF)?.collect { users ->
-                _listUser.value = users
             }
-        }
+        })
     }
 }

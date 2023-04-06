@@ -1,31 +1,22 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.param.SupplierParam
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Query
+import net.fpoly.dailymart.data.model.ResultData
+import net.fpoly.dailymart.data.model.Supplier
+import net.fpoly.dailymart.data.model.SupplierParam
+import retrofit2.http.*
 
 interface SupplierApi {
 
-    @POST("api/supplier")
-    fun insertSupplier(@Header("") token: String, @Body model: SupplierParam): Call<ResponseBody>
+    @POST("supplier")
+    suspend fun insertSupplier(@Header("Authorization") token: String, @Body supplier: SupplierParam): ResultData<Supplier>
 
-    @PUT("api/supplier/")
-    fun updateSupplier(
-        @Header("") token: String,
-        @Query("id") id: String,
-        @Body model: SupplierParam,
-    ): Call<ResponseBody>
+    @GET("supplier")
+    suspend fun getSuppliers(@Header("Authorization") token: String) : ResultData<ArrayList<Supplier>>
 
-    @GET("api/supplier")
-    fun getAllSupplier(@Header("") token: String): Call<ResponseBody>
+    @DELETE("supplier/{id}")
+    suspend fun removeSuppliers(@Header("Authorization") token: String, @Path("id") idSupplier: String) : ResultData<Unit>
 
-    @DELETE("api/supplier/")
-    fun deleteSupplier(@Header("") token: String, @Query("id") id: String): Call<ResponseBody>
+    @PUT("supplier/{id}")
+    suspend fun updateSuppliers(@Header("Authorization") token: String, @Path("id") idSupplier: String, @Body param: SupplierParam) : ResultData<Unit>
+
 }

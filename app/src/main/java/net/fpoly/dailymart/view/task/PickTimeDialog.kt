@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import net.fpoly.dailymart.base.BaseBottomDialog
 import net.fpoly.dailymart.databinding.DialogPickTimeBinding
-import net.fpoly.dailymart.extention.custom_view.NumberPickView
-import net.fpoly.dailymart.extention.num_extention.toStrDecimal
+import net.fpoly.dailymart.extension.custom_view.NumberPickView
+import net.fpoly.dailymart.extension.num_extension.toStrDecimal
 import java.util.Calendar
 
 class PickTimeDialog(

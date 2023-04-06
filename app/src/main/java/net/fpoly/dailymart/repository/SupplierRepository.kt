@@ -1,13 +1,13 @@
 package net.fpoly.dailymart.repository
 
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+
+import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.Supplier
+import net.fpoly.dailymart.data.model.SupplierParam
 
 interface SupplierRepository {
-    suspend fun getSupplierId(id: Int): Supplier?
-    fun getAllSupplier(): Flow<List<Supplier>>
-    suspend fun insertSupplier(supplier: Supplier)
-    suspend fun updateSupplier(supplier: Supplier)
-    suspend fun deleteSupplier(supplier: Supplier)
+    suspend fun getSuppliers(token: String): ResultData<ArrayList<Supplier>>
+    suspend fun insertSupplier(supplier: SupplierParam, token: String): ResultData<Supplier>
+    suspend fun editSupplier(id: String, supplier: SupplierParam, token: String): ResultData<Unit>
+    suspend fun removeSupplier(supplier: Supplier, token: String): ResultData<Unit>
 }

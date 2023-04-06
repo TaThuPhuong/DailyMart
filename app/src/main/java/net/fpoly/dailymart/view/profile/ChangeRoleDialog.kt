@@ -13,7 +13,7 @@ class ChangeRoleDialog(val mContext: Context, var mRole: ROLE, val onSelected: (
 
 
     override fun initData() {
-        if (mRole == ROLE.STAFF) {
+        if (mRole == ROLE.staff) {
             setSelected(binding.tvStaff)
             setUnSelected(binding.tvManage)
         } else {
@@ -25,12 +25,12 @@ class ChangeRoleDialog(val mContext: Context, var mRole: ROLE, val onSelected: (
         binding.tvStaff.setOnClickListener {
             setSelected(binding.tvStaff)
             setUnSelected(binding.tvManage)
-            mRole = ROLE.STAFF
+            mRole = ROLE.staff
         }
         binding.tvManage.setOnClickListener {
             setSelected(binding.tvManage)
             setUnSelected(binding.tvStaff)
-            mRole = ROLE.MANAGE
+            mRole = ROLE.manager
         }
         binding.tvSelect.setOnClickListener {
             onSelected(mRole)
