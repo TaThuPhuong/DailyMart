@@ -5,49 +5,36 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.model.Product
-import net.fpoly.dailymart.data.model.ProductPrice
+import net.fpoly.dailymart.data.api.ServerInstance
+import net.fpoly.dailymart.data.model.ProductParam
 
 class AddProductViewModel() : ViewModel() {
 
     private val TAG = "YingMing"
 
-    private val _product = MutableLiveData(Product())
+    private val _product = MutableLiveData(ProductParam())
 
-    private val _productPrice = MutableLiveData(ProductPrice())
+    private val remoteProduct  = ServerInstance.apiProductApi
 
     fun onEvent(event: ProductEvent) {
         when (event) {
             is ProductEvent.IdCategoryChange -> {
                 _product.value = _product.value?.copy(
-                    categoryId = event.id
+                    category = event.id
                 )
             }
             is ProductEvent.IdSupplierChange -> {
                 _product.value = _product.value?.copy(
-                    supplierId = event.id
+                    supplier = event.id
                 )
             }
             is ProductEvent.IdChange -> {
                 _product.value = _product.value?.copy(
-                    id = event.id,
                     barcode = event.id
-                )
-                _productPrice.value = _productPrice.value?.copy(
-                    productId = event.id,
-                    effectiveDate = System.currentTimeMillis()
                 )
             }
             is ProductEvent.ImportPriceChange -> {
-                try {
-                    _productPrice.value = _productPrice.value?.copy(
-                        importPrice = event.price.toDouble()
-                    )
-                } catch (e: Exception) {
-                    _productPrice.value = _productPrice.value?.copy(
-                        importPrice = 0.0
-                    )
-                }
+
             }
             is ProductEvent.NameChange -> {
                 _product.value = _product.value?.copy(
@@ -55,15 +42,7 @@ class AddProductViewModel() : ViewModel() {
                 )
             }
             is ProductEvent.SellPriceChange -> {
-                try {
-                    _productPrice.value = _productPrice.value?.copy(
-                        sellPrice = event.price.toDouble()
-                    )
-                } catch (e: Exception) {
-                    _productPrice.value = _productPrice.value?.copy(
-                        sellPrice = 0.0
-                    )
-                }
+
             }
             is ProductEvent.UnitChange -> {
                 _product.value = _product.value?.copy(
@@ -73,7 +52,7 @@ class AddProductViewModel() : ViewModel() {
             is ProductEvent.AddProduct -> {
                 Log.d(TAG, "onEvent: ${event.linkImage}")
                 _product.value = _product.value?.copy(
-                    img_product = event.linkImage
+                    imageProduct = event.linkImage
                 )
                 viewModelScope.launch {
 

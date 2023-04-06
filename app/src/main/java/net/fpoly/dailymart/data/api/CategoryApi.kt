@@ -1,30 +1,37 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.data.model.Category
-import net.fpoly.dailymart.data.model.param.CategoryParam
-import net.fpoly.dailymart.data.model.param.CategoryParamList
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.http.*
+import net.fpoly.dailymart.data.model.CategoryParam
+import net.fpoly.dailymart.data.model.ResultData
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface CategoryApi {
 
-    // thêm mới
-    @POST("api/industry")
-    fun insertCategory(
-        @Header("Authorization") token: String,
-        @Body model: CategoryParam,
-    ): Call<CategoryParam>
+    @GET("industry")
+    suspend fun getAllCategory(@Header("Authorization") token: String): ResultData<List<Category>>
 
-    // update
-    @PUT("api/industry/")
-    fun updateCategory(
-        @Header("Authorization") token: String,
-        @Query("id") id: String,
-        @Body model: Category,
-    ): Call<ResponseBody>
+    @POST("industry")
+    suspend fun addCategory(
+        @Body category: CategoryParam,
+        @Header("Authorization") token: String
+    ): ResultData<Category>
 
-    // get all
-    @GET("api/industry")
-    fun getAllCategory(@Header("Authorization") token: String): Call<CategoryParamList>
+    @PUT("industry/{id}")
+    suspend fun updateCategory(
+        @Path("id") id: String,
+        @Body category: CategoryParam,
+        @Header("Authorization") token: String
+    ): ResultData<Unit>
+
+    @DELETE("industry/{id}")
+    suspend fun removeCategory(
+        @Path("id") id: String,
+        @Header("Authorization") token: String
+    ): ResultData<Unit>
 }

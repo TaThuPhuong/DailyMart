@@ -11,19 +11,28 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.api.RetrofitInstance
 import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.ResultData
-import net.fpoly.dailymart.data.model.Task
-import net.fpoly.dailymart.data.model.TaskParam
-import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.*
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.toDate
+import net.fpoly.dailymart.repository.TaskRepository
+import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.utils.sendNotification
+import net.fpoly.dailymart.view.task.task_detail.TaskDetail
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddTaskViewModel(private val app: Application) : ViewModel() {
+class AddTaskViewModel(
+    private val app: Application,
+    private val taskRepo: TaskRepository,
+    private val userRepo: UserRepository
+) :
+    ViewModel() {
 
     private val TAG = "YingMing"
 
@@ -36,11 +45,12 @@ class AddTaskViewModel(private val app: Application) : ViewModel() {
     private val _taskValidate = MutableLiveData(false)
     val taskValidate: LiveData<Boolean> = _taskValidate
 
-    private val _listUser = MutableLiveData<List<User>?>()
-    val listUser: LiveData<List<User>?> = _listUser
+    private val _listUser = MutableLiveData<List<UserRes>?>()
+    val listUser: LiveData<List<UserRes>?> = _listUser
 
-    private val remoteUser = ServerInstance.apiUser
-    private val remoteTask = ServerInstance.apiTask
+    private val _deviceId = MutableLiveData("")
+    val message = MutableLiveData<String>()
+    val addSuccess = MutableLiveData<Boolean>(null)
 
     init {
         _task.value = _task.value?.copy(
@@ -60,16 +70,16 @@ class AddTaskViewModel(private val app: Application) : ViewModel() {
                 _task.value = _task.value?.copy(
                     idReceiver = event.user.id,
                 )
+                _deviceId.value = event.user.deviceId
                 checkValidate()
             }
             is AddTaskEvent.TimeStartChange -> {
-                _task.value = _task.value?.copy(
-                )
+                _task.value = _task.value?.copy()
                 checkValidate()
             }
             is AddTaskEvent.TimeEndChange -> {
                 _task.value = _task.value?.copy(
-                    deadline = event.time.toDate()
+                    deadline = event.time
                 )
                 checkValidate()
             }
@@ -80,58 +90,44 @@ class AddTaskViewModel(private val app: Application) : ViewModel() {
                 checkValidate()
             }
             is AddTaskEvent.AddNew -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    _task.value?.let {
+                        val res = taskRepo.insertTask(mToken, it)
+                        if (res.isSuccess()) {
+                            sendNotification("Bạn vừa giao 1 nhiệm vụ mới",_task.value!!.title,_deviceId.value!!)
+                            message.postValue(res.message!!)
+                            addSuccess.postValue(true)
+                        } else {
+                            message.postValue(res.message!!)
+                        }
+                    }
+                }
             }
         }
     }
 
     fun getAllUser() {
-        remoteUser.getAllUser2(mToken).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "onFailure: $t")
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-//                    val type = object : TypeToken<Result<List<User>>>() {}.type
-//                    val res: ResultData<List<User>> =
-//                        Gson().fromJson(response.body()?.string(), type)
-                    Log.d(TAG, "_listUser: ${response.body()?.string()}")
-//                    _listUser.value = res.result
-                    Log.d(TAG, "_listUser: ${_listUser.value}")
-                } else {
-                    Log.d(TAG, "onFailure: ${response.errorBody()?.string()}")
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = userRepo.getAllUser2(mToken)
+            if (res.isSuccess()) {
+                res.data?.let { users ->
+                    _listUser.postValue(users.filter { it.role == ROLE.staff })
                 }
+            } else {
+                message.postValue(res.message!!)
             }
-        })
+        }
     }
 
     private fun checkValidate() {
-//        _taskValidate.value =
-//            !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.createAt == 0L || _task.value?.deadline == 0L)
-    }
-
-    private fun sendNotification(task: Task) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-//            val data = NotificationData(
-//                Data("Nhiệm vụ mới", task.title, task.createAt),
-//                task.
-//            )
-//            val response = RetrofitInstance.apiPutNotification.postNotification(data)
-//            Log.d(TAG, "sendNotification: ${response.body()?.string()}")
-//            if (response.isSuccessful) {
-//                Log.d(TAG, "sendNotification: ${Gson().toJson(response)}")
-//            } else {
-//                Log.d(TAG, "sendNotification: ${response.errorBody().toString()}")
-//            }
-        } catch (e: Exception) {
-            Log.e("YingMing", "sendNotification: $e")
-        }
+        _taskValidate.value =
+            !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.deadline == 0L)
     }
 }
 
 sealed class AddTaskEvent {
     data class TitleChange(val title: String) : AddTaskEvent()
-    data class ReceiverChange(val user: User) : AddTaskEvent()
+    data class ReceiverChange(val user: UserRes) : AddTaskEvent()
     data class TimeStartChange(val time: Long) : AddTaskEvent()
     data class TimeEndChange(val time: Long) : AddTaskEvent()
     data class DescriptionChange(val des: String) : AddTaskEvent()

@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.data.model.NotificationData
+import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.utils.Constant.Companion.CONTENT_TYPE
 import net.fpoly.dailymart.utils.Constant.Companion.SERVER_KEY
 import okhttp3.ResponseBody

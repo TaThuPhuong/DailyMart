@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.databinding.ItemStaffBinding
 
-class StaffAdapter(private var mListUser: List<User>, private val onSelectUser: (User) -> Unit) :
+class StaffAdapter(
+    private var mListUser: List<UserRes>,
+    private val onSelectUser: (UserRes) -> Unit
+) :
     RecyclerView.Adapter<StaffAdapter.ItemView>() {
 
     class ItemView(val binding: ItemStaffBinding) : RecyclerView.ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUserData(listUser: List<User>) {
+    fun setUserData(listUser: List<UserRes>) {
         mListUser = listUser
         notifyDataSetChanged()
     }
@@ -36,7 +40,9 @@ class StaffAdapter(private var mListUser: List<User>, private val onSelectUser: 
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListUser[position]) {
-                binding.tvName.text = "${this.id} - ${this.name}"
+                binding.tvName.text = this.name
+                binding.tvPhone.text = "SĐT: ${this.phoneNumber}"
+                binding.tvRole.text = this.role.value
                 binding.root.setOnClickListener {
                     onSelectUser(this)
                 }

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityLoginBinding
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.view.forget_password.ForgetPasswordActivity
 import net.fpoly.dailymart.view.main.MainActivity
@@ -38,6 +39,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 openActivity(MainActivity::class.java)
                 finishAffinity()
             }
+        }
+        viewModel.message.observe(this) {
+            showToast(this, it)
         }
     }
 
