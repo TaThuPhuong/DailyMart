@@ -28,7 +28,6 @@ class DetailsStaffActivity :
         setData()
         binding.tvUpdate.setOnClickListener {
             updateUser()
-            Toast.makeText(this, "Thanh Cong", Toast.LENGTH_SHORT).show();
             onBackPressed()
         }
         setupBtnChangeRole()
@@ -43,16 +42,17 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        val user = User(
-            id = mUser!!.id,
+        val user = Datum(
+            _id = mUser!!._id,
             name = name,
             email = email,
-            phone = phone,
-            role = role,
-            disable = status
+            phoneNumber = phone,
+            role = role.toString(),
+            status = status,
+            deviceID = "abcaaaa123111",
+            linkAvt = "https//:android.com"
         )
-
-//        viewModel.saveUser(user, this)
+        viewModel.updateUser(mUser!!._id, user, this)
     }
 
     private fun setupBtnChangeRole() {

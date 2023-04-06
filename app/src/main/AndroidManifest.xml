@@ -28,8 +28,11 @@
         android:theme="@style/Base.AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <!--        <activity-->
+        <!--            android:name=".view.splash.SplashActivity"-->
+        <!--            android:exported="true">-->
         <activity
-            android:name=".view.splash.SplashActivity"
+            android:name=".view.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,12 +54,9 @@
         <activity
             android:name=".view.register.RegisterActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.main.MainActivity"
-            android:exported="false" />
+        <!--        <activity-->
+        <!--            android:name=".view.login.LoginActivity"-->
+        <!--            android:exported="false" />-->
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />

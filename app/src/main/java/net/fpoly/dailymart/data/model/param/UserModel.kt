@@ -9,7 +9,7 @@ data class UserModel (
 ) : Serializable
 
 data class Datum(
-    val id: String,
+    val _id: String,
     val name: String,
     val status: Boolean,
     val role: String,
@@ -19,10 +19,28 @@ data class Datum(
     val linkAvt: String
 ) : Serializable{
     override fun hashCode(): Int {
-        var result = id.hashCode()
-        if(deviceID.isNullOrEmpty()){
+        val result = _id.hashCode()
+        if(deviceID.isEmpty()){
            result
         }
         return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Datum
+
+        if (_id != other._id) return false
+        if (name != other.name) return false
+        if (status != other.status) return false
+        if (role != other.role) return false
+        if (email != other.email) return false
+        if (phoneNumber != other.phoneNumber) return false
+        if (deviceID != other.deviceID) return false
+        if (linkAvt != other.linkAvt) return false
+
+        return true
     }
 }
