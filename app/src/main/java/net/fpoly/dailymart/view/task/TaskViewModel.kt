@@ -13,6 +13,7 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.repository.TaskRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.utils.sendNotification
 
 class TaskViewModel(private val app: Application, private val repo: TaskRepository) : ViewModel() {
 
@@ -55,7 +56,7 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
     }
 
     fun onFinish(task: Task) {
-        task.finish = true
+        task.finish = task.finishTime != 0L
         viewModelScope.launch(Dispatchers.Default) {
             val res = repo.updateTask(mToken, TaskParam(task), task.id)
             if (res.isSuccess()) {
@@ -63,6 +64,11 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
                 getAllTask(mViewPosition)
             } else {
                 message.postValue(res.message!!)
+            }
+            if (mUser!!.role == ROLE.staff) {
+                sendNotification("Đã hoàn thành", task.title, task.idCreator.deviceId)
+            }else{
+                sendNotification("Đã nhận xét", task.title, task.idReceiver.deviceId)
             }
         }
     }
