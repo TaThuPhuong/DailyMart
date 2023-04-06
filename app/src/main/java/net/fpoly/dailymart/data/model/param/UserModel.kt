@@ -13,6 +13,7 @@ data class Datum(
     val name: String,
     val status: Boolean,
     val role: String,
+    val email: String,
     val phoneNumber: String,
     val deviceID: String,
     val linkAvt: String

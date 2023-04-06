@@ -77,7 +77,7 @@ class DetailsStaffActivity :
         mUser = intent.getSerializableExtra("user") as? Datum
         mUser?.let {
             binding.edName.setText(mUser!!.name)
-//            binding.edEmail.setText(mUser!!.email)
+            binding.edEmail.setText(mUser!!.email)
             binding.edNumber.setText(mUser!!.phoneNumber)
             binding.edRole.setText(mUser!!.role)
             binding.edStatus.setText(mUser!!.status.toString())
