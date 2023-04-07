@@ -1,13 +1,16 @@
 package net.fpoly.dailymart.view.products
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityProductsBinding
-import net.fpoly.dailymart.view.add_product.AddProductActivity
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.view.products.add_product.AddProductActivity
+import net.fpoly.dailymart.view.products.adapter.ProductAdapter
 
 class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsBinding::inflate) {
 
@@ -22,21 +25,48 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.imvBack.setOnClickListener { finish() }
-        binding.tvAddNew.setOnClickListener {
-            startActivity(Intent(this, AddProductActivity::class.java))
-        }
-        mProductAdapter = ProductAdapter(this, mListProduct){
+        viewModel.getListProduct()
+        mProductAdapter = ProductAdapter(this, mListProduct) {
 
         }
         binding.rcvProducts.adapter = mProductAdapter
-        viewModel.getListProduct()
+        binding.imvBack.setOnClickListener { finish() }
+        binding.imvClear.setOnClickListener {
+            binding.edSearch.setText("")
+            binding.imvClear.gone()
+            mProductAdapter.setData(mListProduct)
+        }
+        binding.tvAddNew.setOnClickListener {
+            startActivity(Intent(this, AddProductActivity::class.java))
+        }
+        setSearch()
     }
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
             mProductAdapter.setData(it)
             mListProduct = it
+        }
+    }
+
+    private fun setSearch() {
+        binding.edSearch.getTextOnChange {
+            val listFilter = mListProduct.filter { product ->
+                product.name.contains(it, true) ||
+                        product.barcode.contains(it, true)
+            }
+            mProductAdapter.setData(listFilter)
+            if (listFilter.isEmpty()) {
+                binding.tvNoData.visible()
+            } else {
+                binding.tvNoData.gone()
+            }
+            if (it.isEmpty()) {
+                binding.imvClear.gone()
+                mProductAdapter.setData(mListProduct)
+            } else {
+                binding.imvClear.visible()
+            }
         }
     }
 

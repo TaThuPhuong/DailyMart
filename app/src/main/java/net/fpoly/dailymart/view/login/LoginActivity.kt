@@ -41,7 +41,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
         }
         viewModel.message.observe(this) {
-            showToast(this, it)
+            if (it.isNotEmpty()) {
+                showToast(this, it)
+            }
         }
     }
 

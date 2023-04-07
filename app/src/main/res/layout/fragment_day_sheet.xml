@@ -107,7 +107,7 @@
             <View
                 android:id="@+id/viewLine2"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/layout_ca_1"
                 android:background="@color/pink_light" />
 
@@ -141,7 +141,7 @@
             <View
                 android:id="@+id/viewLine3"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/layout_ca_2"
                 android:background="@color/pink_light" />
 
@@ -175,7 +175,7 @@
             <View
                 android:id="@+id/viewLine4"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/layout_ca_3"
                 android:background="@color/pink_light" />
         </RelativeLayout>

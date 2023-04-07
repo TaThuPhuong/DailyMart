@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.add_product
+package net.fpoly.dailymart.view.products.add_product
 
 import android.Manifest
 import android.content.pm.PackageManager

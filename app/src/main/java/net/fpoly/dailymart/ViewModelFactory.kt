@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
-import net.fpoly.dailymart.view.add_product.AddProductViewModel
+import net.fpoly.dailymart.view.products.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
@@ -43,6 +43,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository
             val productRepository = app.productRepository
+            val categoryRepository = app.categoryRepository
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -81,7 +82,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(SupplierViewModel::class.java) ->
                     SupplierViewModel(context, SupplierRepositoryImpl())
                 isAssignableFrom(ProductsViewModel::class.java) ->
-                    ProductsViewModel(app,productRepository)
+                    ProductsViewModel(app, productRepository)
                 isAssignableFrom(AddTaskViewModel::class.java) ->
                     AddTaskViewModel(app, taskRepository, userRepository)
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
@@ -98,8 +99,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     AddProductViewModel()
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
                     TaskDetailViewModel()
-                isAssignableFrom(TaskEditViewModel::class.java)->
-                    TaskEditViewModel(app,taskRepository)
+                isAssignableFrom(TaskEditViewModel::class.java) ->
+                    TaskEditViewModel(app, taskRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

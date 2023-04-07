@@ -95,7 +95,7 @@
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.add_product.AddProductActivity" /> <!-- activity -->
+        <activity android:name=".view.products.add_product.AddProductActivity" /> <!-- activity -->
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"

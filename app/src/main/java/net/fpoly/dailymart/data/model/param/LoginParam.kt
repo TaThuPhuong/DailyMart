@@ -6,4 +6,9 @@ data class LoginParam(
 ) {
     fun checkValidate(): Boolean =
         !(phoneNumber.trim().isEmpty() || password.trim().isEmpty())
+
+    companion object {
+        const val SUCCESS = "Đăng nhập thành công"
+        const val FAIL = "Đăng nhập thất bại"
+    }
 }
