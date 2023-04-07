@@ -44,6 +44,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val userRepository = app.userRepository
             val productRepository = app.productRepository
             val categoryRepository = app.categoryRepository
+            val supplierRepository = app.supplierRepository
+
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
@@ -96,7 +98,12 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(MessageViewModel::class.java) ->
                     MessageViewModel()
                 isAssignableFrom(AddProductViewModel::class.java) ->
-                    AddProductViewModel()
+                    AddProductViewModel(
+                        app,
+                        productRepository,
+                        supplierRepository,
+                        categoryRepository
+                    )
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
                     TaskDetailViewModel()
                 isAssignableFrom(TaskEditViewModel::class.java) ->

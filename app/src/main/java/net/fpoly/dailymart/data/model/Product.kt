@@ -33,6 +33,6 @@ data class ProductParam(
 )
 
 fun ProductParam.checkValidate(): Boolean {
-    return name.trim().isNotEmpty() || barcode.trim().isNotEmpty() || supplier.trim()
-        .isNotEmpty() || category.trim().isNotEmpty() || importPrice != 0.0 || sellPrice != 0.0
+    return name.trim().isNotEmpty() && barcode.trim().isNotEmpty() && supplier.trim()
+        .isNotEmpty() && category.trim().isNotEmpty() && importPrice != 0.0 && sellPrice != 0.0
 }

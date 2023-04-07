@@ -1,27 +1,59 @@
 package net.fpoly.dailymart.view.products.add_product
 
 import android.app.Application
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.ProductParam
-import net.fpoly.dailymart.data.model.checkValidate
+import net.fpoly.dailymart.data.model.*
+import net.fpoly.dailymart.repository.CategoryRepository
 import net.fpoly.dailymart.repository.ProductRepository
+import net.fpoly.dailymart.repository.SupplierRepository
 import net.fpoly.dailymart.utils.SharedPref
 
-class AddProductViewModel(private val app: Application, private val repo: ProductRepository) :
+class AddProductViewModel(
+    private val app: Application,
+    private val productRepo: ProductRepository,
+    private val supplierRepo: SupplierRepository,
+    private val categoryRepo: CategoryRepository
+) :
     ViewModel() {
 
     private val TAG = "YingMing"
 
     private val mToken = SharedPref.getAccessToken(app)
     private val _product = MutableLiveData(ProductParam())
+    val product: LiveData<ProductParam> = _product
     val actionSuccess = MutableLiveData(false)
-    val message = MutableLiveData<String>(null)
+    val message = MutableLiveData<String>()
     val checkValidate = MutableLiveData(false)
+
+    private val _listCategory = MutableLiveData<List<Category>>(ArrayList())
+    val listCategory: LiveData<List<Category>> = _listCategory
+
+    private val _listSupplier = MutableLiveData<List<Supplier>>(ArrayList())
+    val listSupplier: LiveData<List<Supplier>> = _listSupplier
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val resCategory = categoryRepo.getAllCategory(mToken)
+            val resSupplier = supplierRepo.getSuppliers(mToken)
+
+            when (resCategory) {
+                is Response.Success -> {
+                    _listCategory.postValue(resCategory.data!!)
+                }
+                is Response.Error -> {
+
+                }
+            }
+            if (resSupplier.isSuccess()) {
+                _listSupplier.postValue(resSupplier.result!!)
+            }
+        }
+    }
 
     fun onEvent(event: ProductEvent) {
         when (event) {
@@ -85,12 +117,12 @@ class AddProductViewModel(private val app: Application, private val repo: Produc
                 checkValidate.value?.let {
                     if (it) {
                         viewModelScope.launch {
-                            val res = repo.insertProduct(mToken, _product.value!!)
+                            val res = productRepo.insertProduct(mToken, _product.value!!)
                             if (res.isSuccess()) {
                                 message.postValue("Thêm thành công")
                                 actionSuccess.postValue(true)
                             } else {
-                                message.postValue("Thêm thất bại")
+                                message.postValue(res.message!!)
                                 actionSuccess.postValue(false)
                             }
                         }

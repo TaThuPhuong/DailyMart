@@ -10,6 +10,7 @@ class DailySmartApp : Application() {
     val userRepository = AppModule.providerUserRepository()
     val productRepository = AppModule.providerProductRepository()
     val categoryRepository = AppModule.providerCategoryRepository()
+    val supplierRepository = AppModule.providerSupplierRepository()
     val context: Context
         get() = applicationContext
 }
