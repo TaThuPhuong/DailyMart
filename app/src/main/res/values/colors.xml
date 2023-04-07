@@ -21,4 +21,8 @@
     <color name="no_color">#00FFFFFF</color>
     <color name="red_FF444C">#FF444C</color>
     <color name="blue_002F22">#002F22</color>
+
+    <color name="color_btn_orange_state_false">#E65100</color>
+    <color name="colorTextTabBar">#8D9AB3</color>
+    <color name="colorTextGold">#FEB530</color>
 </resources>
