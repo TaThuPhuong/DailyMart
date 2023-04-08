@@ -1,8 +1,7 @@
 package net.fpoly.dailymart.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Product(
     @SerializedName("_id") var id: String = "",
@@ -15,7 +14,7 @@ data class Product(
     @SerializedName("totalQuantity") var totalQuantity: Int = 0,
     @SerializedName("unit") var unit: String = "",
     @SerializedName("img_product") var img_product: String = "",
-) {
+) : Serializable {
     companion object {
         const val TABLE_NAME = "products"
     }

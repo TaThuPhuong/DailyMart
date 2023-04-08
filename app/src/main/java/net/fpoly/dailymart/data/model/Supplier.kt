@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.UUID
 
 data class Supplier(
@@ -8,7 +9,7 @@ data class Supplier(
     @SerializedName("supplierName") val supplierName: String = "",
     @SerializedName("phoneNumber") var phoneNumber: String = "",
     @SerializedName("createdAt") var createdAt: String = "",
-)
+) : Serializable
 
 data class SupplierParam(
     @SerializedName("supplierName") val supplierName: String = "",

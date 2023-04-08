@@ -6,12 +6,17 @@ import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityProductsBinding
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.products.add_product.AddProductActivity
 import net.fpoly.dailymart.view.products.adapter.ProductAdapter
+import net.fpoly.dailymart.view.task.detail_product.ProductDetailActivity
 
 class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsBinding::inflate) {
 
@@ -23,28 +28,37 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     private var mListProduct: List<Product> = ArrayList()
 
+    private var mUser: User? = null
+
     override fun setupData() {
+        mUser = SharedPref.getUser(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getListProducts()
         mProductAdapter = ProductAdapter(this, mListProduct) {
-            ProductOptionDialog(this,
-                onDetail = {
+            if (mUser!!.role != ROLE.staff) {
+                ProductOptionDialog(this,
+                    onDetail = {
+                        val intent = Intent(this, ProductDetailActivity::class.java)
+                        intent.putExtra(Constant.PRODUCT, it)
+                        startActivity(intent)
+                    }, onEdit = {
 
-                }, onEdit = {
-
-                }, onDelete = {
-                    DeleteProductConfirmDialog(this) {
-                        viewModel.onDelete(it){
-                            val snack =
-                                Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
-                            snack.setAction("Hoàn tác") {
-                                viewModel.onRestore()
+                    }, onDelete = {
+                        DeleteProductConfirmDialog(this) {
+                            viewModel.onDelete(it) {
+                                val snack =
+                                    Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+                                snack.setAction("Hoàn tác") {
+                                    viewModel.onRestore()
+                                }
+                                snack.show()
                             }
-                            snack.show()
-                        }
-                    }.show()
-                }).show()
+                        }.show()
+                    }).show()
+            } else {
+
+            }
         }
         binding.rcvProducts.adapter = mProductAdapter
         binding.imvBack.setOnClickListener { finish() }

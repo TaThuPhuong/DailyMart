@@ -17,6 +17,8 @@ import net.fpoly.dailymart.view.order.OrderViewModel
 import net.fpoly.dailymart.view.pay.PayViewModel
 import net.fpoly.dailymart.view.payment.PaymentViewModel
 import net.fpoly.dailymart.view.products.ProductsViewModel
+import net.fpoly.dailymart.view.task.detail_product.ProductDetailViewModel
+import net.fpoly.dailymart.view.products.edit_product.ProductEditViewModel
 import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
@@ -108,6 +110,14 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     TaskDetailViewModel()
                 isAssignableFrom(TaskEditViewModel::class.java) ->
                     TaskEditViewModel(app, taskRepository)
+                isAssignableFrom(ProductDetailViewModel::class.java) ->
+                    ProductDetailViewModel()
+                isAssignableFrom(ProductEditViewModel::class.java) ->
+                    ProductEditViewModel(
+                        app,
+                        categoryRepository,
+                        supplierRepository
+                    )
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
