@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1000451473097",
+    "firebase_url": "https://dailysmart-7f19c-default-rtdb.firebaseio.com",
     "project_id": "dailysmart-7f19c",
     "storage_bucket": "dailysmart-7f19c.appspot.com"
   },
@@ -22,7 +23,7 @@
           }
         },
         {
-          "client_id": "1000451473097-r4pc66ov3r5l0l5vbp34ciosrptgonss.apps.googleusercontent.com",
+          "client_id": "1000451473097-a26s3g0e4dnodvueofjf51qmoi1rh2qe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1000451473097-r4pc66ov3r5l0l5vbp34ciosrptgonss.apps.googleusercontent.com",
+              "client_id": "1000451473097-a26s3g0e4dnodvueofjf51qmoi1rh2qe.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

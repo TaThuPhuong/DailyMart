@@ -24,8 +24,10 @@ import net.fpoly.dailymart.databinding.ActivityAddProductBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.hide
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.firbase.storege.Images
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ImagesUtils
 
 class AddProductActivity :
@@ -46,6 +48,7 @@ class AddProductActivity :
         binding.imvBack.setOnClickListener(this)
         binding.imvScan.setOnClickListener(this)
         binding.tvCategory.setOnClickListener(this)
+        binding.tvSupplier.setOnClickListener(this)
         binding.imvAddImage.setOnClickListener(this)
         binding.btnAddProduct.setOnClickListener(this)
     }
@@ -67,6 +70,12 @@ class AddProductActivity :
                 showToast(this, it)
             }
         }
+        viewModel.listCategory.observe(this) {
+            mListCategory = it
+        }
+        viewModel.listSupplier.observe(this) {
+            mListSupplier = it
+        }
     }
 
     override fun onClick(v: View?) {
@@ -76,16 +85,34 @@ class AddProductActivity :
                 binding.cvScanner.visible()
                 checkPermission()
             }
-            binding.tvCategory -> {}
+            binding.tvCategory -> {
+                if (mListCategory.isNotEmpty()) {
+                    ChoseCategoryDialog(this, mListCategory) {
+                        viewModel.onEvent(ProductEvent.IdCategoryChange(it.id))
+                        binding.tvCategory.text = it.name
+                    }.show()
+                }
+            }
+            binding.tvSupplier -> {
+                if (mListSupplier.isNotEmpty()) {
+                    ChoseSupplierDialog(this, mListSupplier) {
+                        viewModel.onEvent(ProductEvent.IdSupplierChange(it.id))
+                        binding.tvSupplier.text = it.supplierName
+                    }.show()
+                }
+            }
             binding.imvAddImage -> {
                 ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
-                    binding.imvAddImage.gone()
+                    binding.imvAddImage.hide()
                 }
             }
             binding.btnAddProduct -> {
-                Images.uploadImage(binding.imvImage, Product.TABLE_NAME, id) {
-                    viewModel.onEvent(ProductEvent.AddProduct(it))
-                }
+                Images.uploadImage(binding.imvImage, Product.TABLE_NAME, id,
+                    onSuccess = {
+                        viewModel.onEvent(ProductEvent.AddProduct(it))
+                    }, onFail = {
+                        viewModel.onEvent(ProductEvent.AddProduct(Constant.IMAGE_DEFAULT))
+                    })
             }
         }
     }
@@ -102,6 +129,9 @@ class AddProductActivity :
         }
         binding.edSellPrice.getTextOnChange {
             viewModel.onEvent(ProductEvent.SellPriceChange(it))
+        }
+        binding.edUnit.getTextOnChange {
+            viewModel.onEvent(ProductEvent.UnitChange(it))
         }
     }
 

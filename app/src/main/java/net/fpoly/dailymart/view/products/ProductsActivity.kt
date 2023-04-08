@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.products
 
 import android.content.Intent
 import androidx.activity.viewModels
+import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
@@ -25,9 +26,25 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.getListProduct()
+        viewModel.getListProducts()
         mProductAdapter = ProductAdapter(this, mListProduct) {
+            ProductOptionDialog(this,
+                onDetail = {
 
+                }, onEdit = {
+
+                }, onDelete = {
+                    DeleteProductConfirmDialog(this) {
+                        viewModel.onDelete(it){
+                            val snack =
+                                Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+                            snack.setAction("Hoàn tác") {
+                                viewModel.onRestore()
+                            }
+                            snack.show()
+                        }
+                    }.show()
+                }).show()
         }
         binding.rcvProducts.adapter = mProductAdapter
         binding.imvBack.setOnClickListener { finish() }
@@ -72,6 +89,6 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     override fun onResume() {
         super.onResume()
-        viewModel.getListProduct()
+        viewModel.getListProducts()
     }
 }

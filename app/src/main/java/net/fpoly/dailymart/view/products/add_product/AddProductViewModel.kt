@@ -1,23 +1,31 @@
 package net.fpoly.dailymart.view.products.add_product
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.*
+import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.repository.CategoryRepository
 import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.repository.SupplierRepository
 import net.fpoly.dailymart.utils.SharedPref
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
 
 class AddProductViewModel(
     private val app: Application,
     private val productRepo: ProductRepository,
     private val supplierRepo: SupplierRepository,
-    private val categoryRepo: CategoryRepository
+    private val categoryRepo: CategoryRepository,
 ) :
     ViewModel() {
 
@@ -79,11 +87,11 @@ class AddProductViewModel(
                 checkValidate.value = _product.value?.checkValidate()
                 try {
                     _product.value = _product.value?.copy(
-                        importPrice = event.price.toDouble()
+                        importPrice = event.price.toInt()
                     )
                 } catch (e: Exception) {
                     _product.value = _product.value?.copy(
-                        importPrice = 0.0
+                        importPrice = 0
                     )
                 }
             }
@@ -97,11 +105,11 @@ class AddProductViewModel(
                 checkValidate.value = _product.value?.checkValidate()
                 try {
                     _product.value = _product.value?.copy(
-                        sellPrice = event.price.toDouble()
+                        sellPrice = event.price.toInt()
                     )
                 } catch (e: Exception) {
                     _product.value = _product.value?.copy(
-                        sellPrice = 0.0
+                        sellPrice = 0
                     )
                 }
             }
@@ -116,15 +124,44 @@ class AddProductViewModel(
                 )
                 checkValidate.value?.let {
                     if (it) {
-                        viewModelScope.launch {
-                            val res = productRepo.insertProduct(mToken, _product.value!!)
-                            if (res.isSuccess()) {
-                                message.postValue("Thêm thành công")
-                                actionSuccess.postValue(true)
-                            } else {
-                                message.postValue(res.message!!)
-                                actionSuccess.postValue(false)
+                        viewModelScope.launch(Dispatchers.IO) {
+                            try {
+                                ServerInstance.apiProduct.insertProduct(mToken, _product.value!!)
+                                    .enqueue(object : Callback<ResponseBody> {
+                                        override fun onResponse(
+                                            call: Call<ResponseBody>,
+                                            response: retrofit2.Response<ResponseBody>,
+                                        ) {
+                                            if (response.isSuccessful) {
+                                                message.postValue("Thêm thành công")
+                                                actionSuccess.postValue(true)
+                                                Log.e(TAG, "body: ${response.body()?.string()}")
+                                                Log.e(
+                                                    TAG,
+                                                    "errorBody: ${response.errorBody()?.string()}",
+                                                )
+                                            } else {
+                                                message.postValue(response.message())
+                                                actionSuccess.postValue(false)
+                                                Log.e(TAG, "body: ${response.body()?.string()}")
+                                                Log.e(
+                                                    TAG,
+                                                    "errorBody: ${response.errorBody()?.string()}",
+                                                )
+                                            }
+                                        }
+
+                                        override fun onFailure(
+                                            call: Call<ResponseBody>,
+                                            t: Throwable,
+                                        ) {
+                                            Log.e(TAG, "onFailure: $t")
+                                        }
+                                    })
+                            } catch (e: Exception) {
+
                             }
+
                         }
                     } else {
                         message.postValue("Chưa nhập đủ dữ liệu")

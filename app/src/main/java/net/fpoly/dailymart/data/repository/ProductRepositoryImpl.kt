@@ -13,23 +13,23 @@ import net.fpoly.dailymart.repository.ProductRepository
 
 class ProductRepositoryImpl
     (
-    private val api: ProductApi = ServerInstance.apiProductApi,
+    private val api: ProductApi = ServerInstance.apiProduct,
     private val coroutineScope: CoroutineDispatcher = Dispatchers.IO,
 ) : ProductRepository {
 
     private val TAG = "YingMing"
 
-    override suspend fun insertProduct(
-        token: String,
-        productParam: ProductParam,
-    ): ResponseResult<Product> = withContext(coroutineScope) {
-        try {
-            api.insertProduct(token, productParam)
-        } catch (e: Exception) {
-            Log.e(TAG, "Exception: $e")
-            ResponseResult(0, "Lỗi", null)
-        }
-    }
+//    override suspend fun insertProduct(
+//        token: String,
+//        productParam: ProductParam,
+//    ): ResponseResult<Unit> = withContext(coroutineScope) {
+//        try {
+//            api.insertProduct(token, productParam)
+//        } catch (e: Exception) {
+//            Log.e(TAG, "Exception: $e")
+//            ResponseResult(0, "Lỗi", null)
+//        }
+//    }
 
     override suspend fun getAllProduct(token: String): ResponseResult<List<Product>> =
         withContext(coroutineScope) {

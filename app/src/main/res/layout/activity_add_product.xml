@@ -235,17 +235,18 @@
                     app:cardCornerRadius="8dp">
 
                     <ImageView
+                        android:id="@+id/imv_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_default" />
+
+                    <ImageView
                         android:id="@+id/imv_add_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_add_image" />
-
-                    <ImageView
-                        android:id="@+id/imv_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop" />
                 </androidx.cardview.widget.CardView>
 
 
