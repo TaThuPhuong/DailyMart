@@ -119,6 +119,6 @@
             android:paddingVertical="5dp"
             android:text="Danh sách trống"
             android:textColor="@color/red_FF444C"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

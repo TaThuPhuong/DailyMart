@@ -26,21 +26,16 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
 
     private val _loginParam = MutableLiveData(LoginParam())
 
-    private val _validatePhone = MutableLiveData("")
+    private val _validatePhone = MutableLiveData<String>(null)
     val validatePhone: LiveData<String> = _validatePhone
 
-    private val _validatePassword = MutableLiveData("")
+    private val _validatePassword = MutableLiveData<String>(null)
     val validatePassword: LiveData<String> = _validatePassword
 
     val loginSuccess = MutableLiveData(false)
-    val message = MutableLiveData("")
+    val message = MutableLiveData<String>()
 
     private lateinit var mLoadingDialog: LoadingDialog
-
-    init {
-        _validatePhone.value = ""
-        _validatePassword.value = ""
-    }
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context)
@@ -61,7 +56,6 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
                 _loginParam.value = _loginParam.value?.copy(
                     password = event.value
                 )
-                _validatePassword.value = event.value.blankException()
             }
 
             is LoginEvent.Login -> {
@@ -70,6 +64,8 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
                         mLoadingDialog.showLoading()
                         login(it)
                     } else {
+                        _validatePhone.value = it.phoneNumber.blankException()
+                        _validatePassword.value = it.password.blankException()
                         loginSuccess.value = false
                     }
                 }
@@ -90,9 +86,9 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
                     loginSuccess.postValue(true)
                     Log.d(TAG, "UserRes: ${UserRes(it)}")
                 }
-                message.postValue(res.message)
+                message.postValue(res.message!!)
             } else {
-                message.postValue(res.message)
+                message.postValue(res.message!!)
                 loginSuccess.postValue(false)
             }
         }

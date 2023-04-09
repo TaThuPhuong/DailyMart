@@ -1,11 +1,9 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.utils.Constant
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 class ServerInstance {
@@ -28,7 +26,7 @@ class ServerInstance {
         val apiSupplierApi: SupplierApi by lazy {
             retrofit.create(SupplierApi::class.java)
         }
-        val apiProductApi: ProductApi by lazy {
+        val apiProduct: ProductApi by lazy {
             retrofit.create(ProductApi::class.java)
         }
         val apiInvoiceApi: InvoiceApi by lazy {
