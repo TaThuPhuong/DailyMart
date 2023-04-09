@@ -30,7 +30,7 @@ import retrofit2.Response
 class AddTaskViewModel(
     private val app: Application,
     private val taskRepo: TaskRepository,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
 ) :
     ViewModel() {
 
@@ -67,6 +67,7 @@ class AddTaskViewModel(
                 checkValidate()
             }
             is AddTaskEvent.ReceiverChange -> {
+                Log.e(TAG, "ReceiverChange: ${event.user.id}")
                 _task.value = _task.value?.copy(
                     idReceiver = event.user.id,
                 )
@@ -93,12 +94,18 @@ class AddTaskViewModel(
                 viewModelScope.launch(Dispatchers.IO) {
                     _task.value?.let {
                         val res = taskRepo.insertTask(mToken, it)
+                        Log.e(TAG, "_task: $it")
                         if (res.isSuccess()) {
-                            sendNotification("Bạn vừa giao 1 nhiệm vụ mới",_task.value!!.title,_deviceId.value!!)
+                            sendNotification(
+                                "Bạn vừa giao 1 nhiệm vụ mới",
+                                _task.value!!.title,
+                                _deviceId.value!!
+                            )
                             message.postValue(res.message!!)
                             addSuccess.postValue(true)
                         } else {
                             message.postValue(res.message!!)
+                            addSuccess.postValue(false)
                         }
                     }
                 }

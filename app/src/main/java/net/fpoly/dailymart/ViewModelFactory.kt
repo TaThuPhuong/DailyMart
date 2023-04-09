@@ -34,6 +34,7 @@ import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailViewModel
 import net.fpoly.dailymart.view.task.task_edit.TaskEditViewModel
+import net.fpoly.dailymart.view.work_sheet.EditWorkSheetViewModel
 import net.fpoly.dailymart.view.work_sheet.WorkSheetViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -114,10 +115,12 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     ProductDetailViewModel()
                 isAssignableFrom(ProductEditViewModel::class.java) ->
                     ProductEditViewModel(
-                        app,productRepository,
+                        app, productRepository,
                         categoryRepository,
                         supplierRepository
                     )
+                isAssignableFrom(EditWorkSheetViewModel::class.java) ->
+                    EditWorkSheetViewModel(app, userRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

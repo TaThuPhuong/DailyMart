@@ -28,7 +28,7 @@ class TaskRepositoryImpl(
                 Log.e(TAG, "insertTask: ${this.message}")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "updateTask Ex: $e")
+            Log.e(TAG, "insertTask Ex: $e")
             ResponseResult(0, "Đã xảy ra lỗi trong quá trình", null)
         }
     }
