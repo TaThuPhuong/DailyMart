@@ -32,7 +32,6 @@ class DetailsStaffActivity :
         setData()
         binding.tvUpdate.setOnClickListener {
             updateUser()
-            finish()
         }
         viewModel.initLoadDialog(context = this)
         setupBtnChangeRole()
@@ -57,7 +56,7 @@ class DetailsStaffActivity :
             deviceId = "abcaaaa123111",
             linkAvt = "https//:android.com"
         )
-        viewModel.updateUser(mUser!!._id, user, this)
+        viewModel.updateUser(mUser!!._id, user, this,this)
     }
 
     private fun setupBtnChangeRole() {

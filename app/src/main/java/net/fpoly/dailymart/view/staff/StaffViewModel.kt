@@ -15,13 +15,14 @@ import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UserModel
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class StaffViewModel(
-    private val app: Application
+    private val app: Application,
 ) : ViewModel() {
     val TAG = "tuvm";
     private val _user = MutableLiveData<List<Datum>>()
@@ -81,7 +82,7 @@ class StaffViewModel(
             })
     }
 
-    fun updateUser(id: String?, userParams: RegisterParam, context: Context) {
+    fun updateUser(id: String?, userParams: RegisterParam, context: Context, activity: DetailsStaffActivity?) {
         val serverInstance = ServerInstance.apiUser
         mLoadingDialog.showLoading()
         serverInstance.updateUser2(
@@ -98,6 +99,9 @@ class StaffViewModel(
                     Log.d(TAG, "Update user res : " + response.errorBody())
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                     mLoadingDialog.hideLoading()
+                    if (activity != null) {
+                        activity.finish()
+                    }
                 }
             }
 
@@ -135,7 +139,7 @@ class StaffViewModel(
                 _userParam.value?.let {
                     if (it.checkValidate()) {
                         mLoadingDialog.showLoading()
-                        updateUser(userParams = it, context = context, id = it._id);
+                        updateUser(userParams = it, context = context, id = it._id, activity = null);
                     } else {
                         loginSuccess.value = false
                     }

@@ -45,7 +45,7 @@ class ChangePasswordActivity :
             newPass = newPass,
             oldPass = oldPass,
         )
-        viewModel.changePass(changePassParam)
+        viewModel.changePass(changePassParam, this, this)
     }
 
 }

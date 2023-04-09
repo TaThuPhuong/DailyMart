@@ -75,7 +75,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
             deviceId = "124234",
             linkAvt = "https//:abc.com"
         )
-        viewModel.postUser(user, this)
+        viewModel.postUser(user, this,this)
     }
 
     private fun setupBtnChangeRole() {

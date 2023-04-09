@@ -25,7 +25,9 @@ import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
+import net.fpoly.dailymart.view.staff.StaffActivity
 import net.fpoly.dailymart.view.staff.StaffViewModel
+import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import net.fpoly.dailymart.view.stock.StockViewModel
 import net.fpoly.dailymart.view.supplier.SupplierViewModel
 import net.fpoly.dailymart.view.tab.home.HomeViewModel
@@ -43,7 +45,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
-            var activity = Activity()
+            var activity = DetailsStaffActivity()
             val context = app.context
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository

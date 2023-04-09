@@ -49,30 +49,33 @@ class AddStaffViewModel(
         mLoadingDialog = LoadingDialog(context)
     }
 
-    fun postUser(userParam: RegisterParam, context: Context) {
+    fun postUser(userParam: RegisterParam, context: Context, activity: AddStaffActivity?) {
         val server = ServerInstance.apiUser
         Log.d(TAG, "userParam: $userParam")
-        mLoadingDialog.showLoading()
         server.register(
             userParam,
             mToken
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    loginSuccess.postValue(true)
                     Log.d(TAG, "onResponse: " + response.body()?.string())
                     Log.d(TAG, "onResponse: " + response.body())
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
+                    loginSuccess.postValue(true)
+                    activity?.finish()
                 } else {
-                    loginSuccess.postValue(false)
                     Log.d(TAG, "code: " + response.code())
                     Log.d(TAG, "message: " + response.message())
                     Log.d(TAG, "errorBody: " + response.errorBody()?.string())
+                    loginSuccess.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 print(t.message)
+                loginSuccess.postValue(false)
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                activity?.finish()
             }
 
         })
@@ -103,8 +106,11 @@ class AddStaffViewModel(
                 _userParam.value?.let {
                     if (it.checkValidate()) {
                         mLoadingDialog.showLoading()
-                        postUser(it, context = context)
+                        postUser(it, context = context, activity = null)
                     } else {
+                        _validatePhone.value = it.phoneNumber.blankException()
+                        _validateName.value = it.name.blankException()
+                        _validateEmailUser.value = it.email.blankException()
                         loginSuccess.value = false
                     }
                 }
