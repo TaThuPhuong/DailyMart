@@ -19,6 +19,8 @@ data class SupplierParam(
 data class ResultData<T>(
     var status: Int = 0,
     var message: String = "",
+    var currentPage: Int = 0,
+    var totalPage: Int = 0,
     @SerializedName("data") var result: T
 ) {
     fun isSuccess(): Boolean {

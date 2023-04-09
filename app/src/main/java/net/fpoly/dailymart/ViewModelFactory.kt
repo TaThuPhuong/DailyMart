@@ -32,7 +32,7 @@ import net.fpoly.dailymart.view.stock.StockViewModel
 import net.fpoly.dailymart.view.supplier.SupplierViewModel
 import net.fpoly.dailymart.view.tab.home.HomeViewModel
 import net.fpoly.dailymart.view.tab.goods.GoodsViewModel
-import net.fpoly.dailymart.view.tab.receipt.ReceiptViewModel
+import net.fpoly.dailymart.view.tab.invoice.InvoiceViewModel
 import net.fpoly.dailymart.view.tab.show_more.ShowMoreViewModel
 import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
@@ -65,8 +65,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     LoginViewModel(app, userRepository)
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
-                isAssignableFrom(ReceiptViewModel::class.java) ->
-                    ReceiptViewModel(context)
+                isAssignableFrom(InvoiceViewModel::class.java) ->
+                    InvoiceViewModel(context)
                 isAssignableFrom(GoodsViewModel::class.java) ->
                     GoodsViewModel()
                 isAssignableFrom(ShowMoreViewModel::class.java) ->

@@ -29,8 +29,10 @@
     <string name="da_nhan">Đã nhận</string>
     <string name="disable_camera_permission">Chưa cấp quyền camera</string>
     <string name="enable_camera_permission">Đã cấp quyền camera</string>
-    <string name="hoa_don">Hóa Đơn </string>
-    <string name="nhan_vien">Nhân viên </string>
+    <string name="hoa_don">Hóa Đơn: %s</string>
+    <string name="nhan_vien">Nhân viên: %s</string>
+    <string name="customer_name">Khách hàng: %s</string>
+
     <string name="don_gia">Đơn giá: </string>
     <string name="so_luong">Số lượng: </string>
     <string name="han_su_dung">Hạn sử dụng: </string>
@@ -40,5 +42,17 @@
     <string name="empty_list">Danh sách trống</string>
     <string name="add_new">Thêm mới</string>
     <string name="total_category">Tổng số: %d</string>
+    <string name="total_invoice">Tổng thanh toán: %s VNĐ</string>
+
     <string name="id_category">ID: %s</string>
+    <string name="date_create">Ngày tạo: %s</string>
+
+
+    <string name="invoice_sell">Bán hàng</string>
+    <string name="invoice_import">Nhập hàng</string>
+    <string name="invoice_deduction">Hoàn tiền</string>
+    <string name="type_invoice">Kiểu hóa đơn: %s</string>
+    <string name="name_customer">Khách lẻ</string>
+
+
 </resources>

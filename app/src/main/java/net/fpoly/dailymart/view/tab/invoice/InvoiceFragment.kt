@@ -1,16 +1,15 @@
-package net.fpoly.dailymart.view.tab.receipt
+package net.fpoly.dailymart.view.tab.invoice
 
-import android.content.Intent
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
-import net.fpoly.dailymart.databinding.ReceiptFragmentBinding
-import net.fpoly.dailymart.view.pay.PayActivity
+import net.fpoly.dailymart.databinding.InvoicceFragmentBinding
+import net.fpoly.dailymart.extension.setupSnackbar
 
-class ReceiptFragment : BaseFragment<ReceiptFragmentBinding>(ReceiptFragmentBinding::inflate) {
+class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBinding::inflate) {
 
-    private val viewModel: ReceiptViewModel by viewModels { AppViewModelFactory }
+    private val viewModel: InvoiceViewModel by viewModels { AppViewModelFactory }
     private lateinit var invoiceSellAdapter: InvoiceAdapter
     private lateinit var invoiceImportAdapter: InvoiceAdapter
     private lateinit var invoiceDeductionAdapter: InvoiceAdapter
@@ -18,19 +17,23 @@ class ReceiptFragment : BaseFragment<ReceiptFragmentBinding>(ReceiptFragmentBind
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        setupSnackbar()
         setupBtnBack()
-        setupBtnAdd()
         setupAdapter()
         setupEditSearch()
+    }
+
+    private fun setupSnackbar() {
+        binding.root.setupSnackbar(this, viewModel.showSnackbar)
     }
 
     private fun setupEditSearch() {
         binding.edSearchInvoice.doAfterTextChanged {
             val text = binding.edSearchInvoice.text
             if (text.isNotEmpty()) {
-                viewModel.invoices.value?.also { invoices ->
+                viewModel.invoicesResult.also { invoices ->
                     val result =
-                        invoices.filter { it.userId.contains(text) || it.id.contains(text) }
+                        invoices.filter { it.id.contains(text) || it.user.name.contains(text)}
                             .toMutableList()
                     viewModel.invoices.value = result
                 }
@@ -42,7 +45,7 @@ class ReceiptFragment : BaseFragment<ReceiptFragmentBinding>(ReceiptFragmentBind
 
     private fun setupBtnBack() {
         binding.imvBack.setOnClickListener {
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -56,12 +59,7 @@ class ReceiptFragment : BaseFragment<ReceiptFragmentBinding>(ReceiptFragmentBind
         binding.rvDeduction.adapter = invoiceDeductionAdapter
     }
 
-    private fun setupBtnAdd() {
-        binding.imvAdd.setOnClickListener {
-//           viewModel.addNewInvoice()
-            startActivity(Intent(mContext, PayActivity::class.java))
-        }
-    }
+//            startActivity(Intent(mContext, PayActivity::class.java))
 
     override fun setupObserver() {
 
