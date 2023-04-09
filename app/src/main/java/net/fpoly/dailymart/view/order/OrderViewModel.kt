@@ -65,68 +65,68 @@ class OrderViewModel() : ViewModel() {
     val product: LiveData<ProductResponse> = _product
 
     fun insertOrder(invoice: OrderParam, token: String) {
-        viewModelScope.launch {
-            try {
-                invoiceRepository.insertInvoice(invoice, token)
-                    .enqueue(object : Callback<OrderResponse> {
-                        override fun onResponse(
-                            call: Call<OrderResponse>,
-                            response: Response<OrderResponse>,
-                        ) {
-                            Log.d(TAG, "onRespons: add success: ${response.body()}")
-                        }
-
-                        override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                            Log.e(TAG, "onFailure: add failed: $t")
-                        }
-                    })
-            } catch (e: Exception) {
-                Log.e(TAG, "onFailure: failed: $e")
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+//                invoiceRepository.insertInvoice(invoice, token)
+//                    .enqueue(object : Callback<OrderResponse> {
+//                        override fun onResponse(
+//                            call: Call<OrderResponse>,
+//                            response: Response<OrderResponse>,
+//                        ) {
+//                            Log.d(TAG, "onRespons: add success: ${response.body()}")
+//                        }
+//
+//                        override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
+//                            Log.e(TAG, "onFailure: add failed: $t")
+//                        }
+//                    })
+//            } catch (e: Exception) {
+//                Log.e(TAG, "onFailure: failed: $e")
+//            }
+//        }
     }
 
     fun getOrders(token: String) {
-        viewModelScope.launch {
-            try {
-                invoiceRepository.getInvoices(token).enqueue(object : Callback<ListOrderResponse> {
-                    override fun onResponse(
-                        call: Call<ListOrderResponse>,
-                        response: Response<ListOrderResponse>,
-                    ) {
-                        Log.d(TAG, "getOrders: data:  ${response.body()}")
-                        _listOrder.value = response.body()
-                    }
-
-                    override fun onFailure(call: Call<ListOrderResponse>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-                })
-            } catch (e: Exception) {
-//                _listOrder.value = Result.failure(e)
-                Log.e(TAG, "getOrders: error: $e")
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+//                invoiceRepository.getInvoices(token).enqueue(object : Callback<ListOrderResponse> {
+//                    override fun onResponse(
+//                        call: Call<ListOrderResponse>,
+//                        response: Response<ListOrderResponse>,
+//                    ) {
+//                        Log.d(TAG, "getOrders: data:  ${response.body()}")
+//                        _listOrder.value = response.body()
+//                    }
+//
+//                    override fun onFailure(call: Call<ListOrderResponse>, t: Throwable) {
+//                        TODO("Not yet implemented")
+//                    }
+//                })
+//            } catch (e: Exception) {
+////                _listOrder.value = Result.failure(e)
+//                Log.e(TAG, "getOrders: error: $e")
+//            }
+//        }
     }
 
     fun getProduct(id: String, token: String) {
-        viewModelScope.launch {
-            try {
-                productRepository.getProductById(id, token).enqueue(object : Callback<ProductResponse> {
-                    override fun onResponse(
-                        call: Call<ProductResponse>,
-                        response: Response<ProductResponse>,
-                    ) {
-                        _product.value = response.body()
-                        Log.d(TAG, "onResponse: product: ${response.body()}")
-                    }
-
-                    override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
-                    }
-                })
-            } catch (e: Exception) {
-
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+//                productRepository.getProductById(id, token).enqueue(object : Callback<ProductResponse> {
+//                    override fun onResponse(
+//                        call: Call<ProductResponse>,
+//                        response: Response<ProductResponse>,
+//                    ) {
+//                        _product.value = response.body()
+//                        Log.d(TAG, "onResponse: product: ${response.body()}")
+//                    }
+//
+//                    override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+//                    }
+//                })
+//            } catch (e: Exception) {
+//
+//            }
+//        }
     }
 }

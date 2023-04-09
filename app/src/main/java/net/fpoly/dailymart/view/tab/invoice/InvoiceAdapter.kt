@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.tab.receipt
+package net.fpoly.dailymart.view.tab.invoice
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.databinding.ItemInvoiceBinding
 
-class InvoiceAdapter(private val viewModel: ReceiptViewModel) : ListAdapter<Invoice, InvoiceAdapter.ViewHolder>(TaskDiffCallback()) {
+class InvoiceAdapter(private val viewModel: InvoiceViewModel) : ListAdapter<Invoice, InvoiceAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return  ViewHolder.from(parent)
@@ -24,7 +24,7 @@ class InvoiceAdapter(private val viewModel: ReceiptViewModel) : ListAdapter<Invo
     class ViewHolder private constructor(val binding: ItemInvoiceBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind( item: Invoice, viewModel: ReceiptViewModel) {
+        fun bind( item: Invoice, viewModel: InvoiceViewModel) {
             binding.invoice = item
             binding.viewmodel = viewModel
         }

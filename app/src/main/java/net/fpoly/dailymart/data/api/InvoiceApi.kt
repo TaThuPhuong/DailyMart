@@ -1,47 +1,30 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.ListOrderResponse
-import net.fpoly.dailymart.data.model.param.OrderParam
-import net.fpoly.dailymart.data.model.OrderResponse
-import okhttp3.ResponseBody
-import retrofit2.Call
+import net.fpoly.dailymart.data.model.Invoice
+import net.fpoly.dailymart.data.model.ResultData
+import net.fpoly.dailymart.data.model.param.InvoiceParam
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface InvoiceApi {
 
-    @POST("api/invoice")
-    fun insertInvoice(
-        @Header("Authorization") token: String,
-        @Body model: OrderParam,
-    ): Call<OrderResponse>
+    @GET("invoice")
+    suspend fun getInvoices(@Header("Authorization") token: String): ResultData<ArrayList<Invoice>>
 
-    @POST("api/invoiceDetail")
+    @GET("invoice/{id}")
+    suspend fun getInvoice(@Header("Authorization") token: String, @Path("id") id: String): ResultData<Invoice>
 
-    @PUT("api/invoice/")
-    fun updateInvoice(
-        @Header("Authorization") token: String,
-        @Query("id") id: String,
-        model: OrderParam,
-    ): Call<ResponseBody>
+    @POST("invoice")
+    suspend fun insertInvoice(@Header("Authorization") token: String,@Body invoice: InvoiceParam): ResultData<Invoice>
 
-    @GET("api/invoice/")
-    fun getInvoice(
-        @Header("Authorization") token: String,
-        @Query("id") id: String,
-    ): Call<ResponseBody>
+    @PUT("invoice/{id}")
+    suspend fun updateInvoice(@Header("Authorization") token: String,@Path("id") id: String ,@Body invoice: InvoiceParam): ResultData<Invoice>
 
-    @GET("api/invoice")
-    fun getAllInvoice(@Header("Authorization") token: String): Call<ListOrderResponse>
-
-    @DELETE("api/invoice/")
-    fun deleteInvoice(
-        @Header("Authorization") token: String,
-        @Query("id") id: String,
-    ): Call<ResponseBody>
+    @DELETE("invoice/{id}")
+    suspend fun removeInvoice(@Header("Authorization") token: String, @Path("id") id: String): ResultData<Unit>
 }
