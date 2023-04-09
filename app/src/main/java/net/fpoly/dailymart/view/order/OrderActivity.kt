@@ -39,34 +39,34 @@ class OrderActivity :
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.initLoadDialog(this)
+//        viewModel.initLoadDialog(this)
         viewModel.getOrders(token)
-        viewModel.getAllProduct(token)
+//        viewModel.getAllProduct(token)
         setupProductName()
         setupExpiryDate()
         initRecycleView()
     }
 
     override fun setupObserver() {
-        viewModel.listOrder.observe(this) { listOrder ->
-            if (listOrder.data[0].invoiceType == "IMPORT") {
-                mListOrder = listOrder.data
-            }
-            if (mListOrder.isEmpty()) {
-                binding.imgListEmpty.visible()
-            }
-            mOrderAdapter.setData(mListOrder)
-            Log.d(TAG, "setupObserver: $mListOrder")
-        }
-
-        viewModel.product.observe(this) {
-            if (it != null) {
-                productName = it.data.productName
-                binding.tvName.text = it.data.productName
-            } else {
-                binding.tvName.text = ""
-            }
-        }
+//        viewModel.listOrder.observe(this) { listOrder ->
+//            if (listOrder.data[0].invoiceType == "IMPORT") {
+//                mListOrder = listOrder.data
+//            }
+//            if (mListOrder.isEmpty()) {
+//                binding.imgListEmpty.visible()
+//            }
+//            mOrderAdapter.setData(mListOrder)
+//            Log.d(TAG, "setupObserver: $mListOrder")
+//        }
+//
+//        viewModel.product.observe(this) {
+//            if (it != null) {
+//                productName = it.data.productName
+//                binding.tvName.text = it.data.productName
+//            } else {
+//                binding.tvName.text = ""
+//            }
+//        }
     }
 
     private fun checkPermission() {
@@ -172,17 +172,17 @@ class OrderActivity :
                     viewModel.insertOrder(order, token)
                     viewModel.getOrders(token)
                     mOrderAdapter.notifyDataSetChanged()
-                    viewModel.newOrder.observe(this) {
-                        if (it != null) {
-                            binding.edId.setText("")
-                            binding.edQuantity.setText("")
-                            binding.edExpiryDate.setText("")
-                            binding.tvName.text = ""
-                            ToastUtil.showToast("Insert new order successfully")
-                        } else {
-                            ToastUtil.showToast("Insert order failed")
-                        }
-                    }
+//                    viewModel.newOrder.observe(this) {
+//                        if (it != null) {
+//                            binding.edId.setText("")
+//                            binding.edQuantity.setText("")
+//                            binding.edExpiryDate.setText("")
+//                            binding.tvName.text = ""
+//                            ToastUtil.showToast("Insert new order successfully")
+//                        } else {
+//                            ToastUtil.showToast("Insert order failed")
+//                        }
+//                    }
                 }
             }
         }

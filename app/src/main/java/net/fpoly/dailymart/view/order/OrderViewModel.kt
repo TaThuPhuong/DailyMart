@@ -17,12 +17,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class OrderViewModel() : ViewModel() {
-    private val TAG = "OrderViewModel"
+//    private val TAG = "OrderViewModel"
 //    private val _product = MutableLiveData<ProductInfo>(ProductInfo())
 //    val product: LiveData<ProductInfo> = _product
 //    private val _listOrder = MutableLiveData<List<OrderInfo>>(ArrayList())
 //    val listOrder: LiveData<List<OrderInfo>> = _listOrder
-
+//
 //    fun insertOrder(invoice: Invoice, invoiceD: InvoiceDetail, expiry: Expiry) = viewModelScope.launch {
 //        iRepository.insertInvoice(invoice)
 //        idRepository.insertInvoiceD(invoiceD)
@@ -53,16 +53,16 @@ class OrderViewModel() : ViewModel() {
 //            }
 //        }
 //    }
-
-    private val invoiceRepository = OrderRepository()
-    private val _newOrder = MutableLiveData<OrderResponse>()
-    val newOrder: LiveData<OrderResponse> = _newOrder
-    private val _listOrder = MutableLiveData<ListOrderResponse>()
-    val listOrder: LiveData<ListOrderResponse> = _listOrder
-
-    private val productRepository = ProductByOrderRepository()
-    private val _product = MutableLiveData<ProductResponse>()
-    val product: LiveData<ProductResponse> = _product
+//
+//    private val invoiceRepository = OrderRepository()
+//    private val _newOrder = MutableLiveData<OrderResponse>()
+//    val newOrder: LiveData<OrderResponse> = _newOrder
+//    private val _listOrder = MutableLiveData<ListOrderResponse>()
+//    val listOrder: LiveData<ListOrderResponse> = _listOrder
+//
+//    private val productRepository = ProductByOrderRepository()
+//    private val _product = MutableLiveData<ProductResponse>()
+//    val product: LiveData<ProductResponse> = _product
 
     fun insertOrder(invoice: OrderParam, token: String) {
 //        viewModelScope.launch {
