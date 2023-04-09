@@ -3,34 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="net.fpoly.dailymart.data.model.Invoice"/>
-        <import type="net.fpoly.dailymart.data.model.InvoiceDetail"/>
-        <import type="net.fpoly.dailymart.data.model.Product"/>
-        <import type="net.fpoly.dailymart.data.model.Expiry"/>
-        <import type="net.fpoly.dailymart.utils.ConvertUtilsKt"/>
-        <import type="net.fpoly.dailymart.view.order.OrderViewModel"/>
-        <import type="androidx.core.content.ContextCompat"/>
-        <import type="net.fpoly.dailymart.R"/>
-        <variable
-            name="viewmodel"
-            type="OrderViewModel" />
-
-        <variable
-            name="invoice"
-            type="Invoice" />
-
-        <variable
-            name="product"
-            type="Product" />
-
-        <variable
-            name="expiry"
-            type="Expiry" />
-
-        <variable
-            name="invoiceDetail"
-            type="InvoiceDetail" />
-
     </data>
 
 
@@ -52,7 +24,6 @@
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp"
                 android:maxLength="20"
-                android:text="@{product.name}"
                 android:fontFamily="@font/imbplexsans_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.total)}"
                 android:fontFamily="@font/imbplexsans_regular"
                 app:layout_constraintStart_toStartOf="@id/tv_product_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -76,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp"
-                android:text="@{invoiceDetail.quantity}"
                 android:fontFamily="@font/imbplexsans_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -88,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_primary"
                 android:textSize="12sp"
-                android:text="@{expiry.expiryDate}"
                 android:fontFamily="@font/imbplexsans_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_quantity"
