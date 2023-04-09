@@ -93,7 +93,8 @@
         <activity android:name=".view.task.task_detail.TaskDetailActivity" />
         <activity android:name=".view.task.task_edit.TaskEditActivity" />
         <activity android:name=".view.task.detail_product.ProductDetailActivity" />
-        <activity android:name=".view.products.edit_product.ProductEditActivity"/>
+        <activity android:name=".view.products.edit_product.ProductEditActivity" />
+        <activity android:name=".view.work_sheet.EditWorkSheetActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />

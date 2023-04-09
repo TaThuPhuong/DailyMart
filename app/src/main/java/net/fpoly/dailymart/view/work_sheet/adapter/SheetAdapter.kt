@@ -1,11 +1,10 @@
-package net.fpoly.dailymart.view.work_sheet
+package net.fpoly.dailymart.view.work_sheet.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ItemSheetBinding
 
 class SheetAdapter(var mList: List<String>) : RecyclerView.Adapter<SheetAdapter.ItemView>() {

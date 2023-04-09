@@ -192,6 +192,13 @@
                     android:weightSum="3">
 
                     <ImageView
+                        android:id="@+id/imv_pay"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_pay" />
+
+                    <ImageView
                         android:id="@+id/imv_check_date"
                         android:layout_width="0dp"
                         android:layout_height="80dp"
@@ -205,12 +212,7 @@
                         android:layout_weight="1"
                         android:src="@drawable/img_report" />
 
-                    <ImageView
-                        android:id="@+id/imv_work_sheet"
-                        android:layout_width="0dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_word_sheet" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -222,13 +224,6 @@
                     android:weightSum="3">
 
                     <ImageView
-                        android:id="@+id/imv_stock"
-                        android:layout_width="0dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_stock" />
-
-                    <ImageView
                         android:id="@+id/imv_task"
                         android:layout_width="0dp"
                         android:layout_height="80dp"
@@ -236,11 +231,19 @@
                         android:src="@drawable/img_task" />
 
                     <ImageView
-                        android:id="@+id/imv_pay"
+                        android:id="@+id/imv_stock"
                         android:layout_width="0dp"
                         android:layout_height="80dp"
                         android:layout_weight="1"
-                        android:src="@drawable/img_order" />
+                        android:src="@drawable/img_stock" />
+
+                    <ImageView
+                        android:id="@+id/imv_work_sheet"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_work_sheet" />
+
                 </LinearLayout>
 
                 <TextView

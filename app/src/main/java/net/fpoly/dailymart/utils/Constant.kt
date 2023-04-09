@@ -11,7 +11,10 @@ class Constant {
         const val CHANNEL_ID = "Daily mart"
         const val TASK = "task"
         const val PRODUCT = "product"
-        const val IMAGE_DEFAULT ="https://firebasestorage.googleapis.com/v0/b/dailysmart-7f19c.appspot.com/o/products%2Fimg_default.png?alt=media&token=819a99fe-355c-4012-87f5-4507db7d7727"
+        const val TIME = "time"
+        const val WORK_SHEET = "work_sheet"
+        const val IMAGE_DEFAULT =
+            "https://firebasestorage.googleapis.com/v0/b/dailysmart-7f19c.appspot.com/o/products%2Fimg_default.png?alt=media&token=819a99fe-355c-4012-87f5-4507db7d7727"
     }
 }
 
