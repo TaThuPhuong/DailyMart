@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.products
+package net.fpoly.dailymart.view.products.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,7 +12,11 @@ import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemProductBinding
 import net.fpoly.dailymart.utils.toMoney
 
-class ProductAdapter(val mContext: Context, var mListProduct: List<Product> = ArrayList()) :
+class ProductAdapter(
+    val mContext: Context,
+    var mListProduct: List<Product> = ArrayList(),
+    val onClick: (Product) -> Unit
+) :
     RecyclerView.Adapter<ProductAdapter.ItemView>() {
 
     class ItemView(val binding: ItemProductBinding) : ViewHolder(binding.root)
@@ -42,13 +46,15 @@ class ProductAdapter(val mContext: Context, var mListProduct: List<Product> = Ar
         with(holder) {
             with(mListProduct[position]) {
                 binding.tvName.text = this.name
-                binding.tvId.text = "ID: ${this.id}"
-//                binding.tvPrice.text = "Giá bán:\n${this..toMoney()}"
+                binding.tvId.text = "Barcode: ${this.barcode}"
+                binding.tvPrice.text = "Giá bán:\n${this.sellPrice.toMoney()}"
                 Glide.with(mContext).load(this.img_product)
                     .placeholder(R.drawable.img_default)
                     .override(80, 20)
                     .into(binding.imvImage)
-
+                binding.root.setOnClickListener {
+                    onClick(this)
+                }
             }
         }
     }

@@ -18,10 +18,10 @@ import retrofit2.http.Query
 interface ProductApi {
 
     @POST("product")
-    suspend fun insertProduct(
+    fun insertProduct(
         @Header("Authorization") token: String,
         @Body productParam: ProductParam,
-    ): ResponseResult<Product>
+    ): Call<ResponseBody>
 
     @GET("product")
     suspend fun getAllProduct(@Header("Authorization") token: String): ResponseResult<List<Product>>

@@ -14,10 +14,10 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import java.io.IOException
 
 object ImagesUtils {
-    fun checkPermissionPickImage(context: Context, imv: ImageView) {
+    fun checkPermissionPickImage(context: Context, imv: ImageView, onChoseImage: () -> Unit) {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
-                openImagesPicker(context, imv)
+                openImagesPicker(context, imv, onChoseImage)
             }
 
             override fun onPermissionDenied(deniedPermissions: List<String?>) {
@@ -34,7 +34,7 @@ object ImagesUtils {
             .check();
     }
 
-    private fun openImagesPicker(context: Context, imv: ImageView) {
+    private fun openImagesPicker(context: Context, imv: ImageView, onChoseImage: () -> Unit) {
         TedImagePicker.with(context)
             .start { uri ->
                 try {
@@ -44,6 +44,7 @@ object ImagesUtils {
                     val bitmap: Bitmap? = pathFile?.let { compressImageFromPath(bitmap1, it) }
                     Glide.with(context).load(bitmap)
                         .into(imv)
+                    onChoseImage()
 
                 } catch (e: Exception) {
                 }
@@ -51,7 +52,6 @@ object ImagesUtils {
     }
 
     private fun compressImageFromPath(bitmap: Bitmap, filePath: String): Bitmap? {
-        // kiểm tra orientation của ảnh và xoay đúng chiều cho bitmap
         var scaledBitmap: Bitmap? = null
         val exif: ExifInterface
 

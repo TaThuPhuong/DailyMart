@@ -93,7 +93,6 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
             val res = repo.deleteTask(mToken, task.id)
             if (res.isSuccess()) {
                 taskDeleteRecent = task
-                message.postValue(res.message!!)
                 getAllTask(mViewPosition)
                 onDeleteSuccess()
             } else {

@@ -1,13 +1,14 @@
 package net.fpoly.dailymart.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 data class Category(
     @SerializedName("_id") val id: String = UUID.randomUUID().toString(),
     @SerializedName("industryName") val name: String = "",
     @SerializedName("createdAt") val createAt: String = "",
-)
+) : Serializable
 
 data class CategoryParam(
     @SerializedName("industryName") val name: String,

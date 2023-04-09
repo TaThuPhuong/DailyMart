@@ -5,7 +5,7 @@ import net.fpoly.dailymart.data.model.ProductResponse
 import retrofit2.Call
 
 class ProductByOrderRepository {
-    private val productService = ServerInstance.apiProductApi
+    private val productService = ServerInstance.apiProduct
 
     suspend fun getProductById(id: String, token: String): Call<ProductResponse> {
         return productService.getProduct(token, id)
