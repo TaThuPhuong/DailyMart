@@ -16,6 +16,7 @@ import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.view.add_staff.AddStaffActivity
+import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 
 class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::inflate) {
@@ -24,7 +25,6 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
     private val viewModel: StaffViewModel by viewModels { AppViewModelFactory }
     private lateinit var mStaffAdapter: StaffAdapter
     private var mListUser: List<Datum> = ArrayList()
-    private var isAssignedOpen = true
 
     override fun setupData() {
         binding.viewModel = viewModel
@@ -37,6 +37,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
         binding.imvClear.setOnClickListener {
             binding.edSearch.setText("")
         }
+        viewModel.initLoadDialog(context = this)
         setUserSearch()
         initRecycleView()
     }
@@ -46,6 +47,10 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
 //            mStaffAdapter.setUserData(users)
 //            mListUser = users
 //        }
+        viewModel.loginSuccess.observe(this) {
+
+        }
+        viewModel.getUser()
         viewModel.user.observe(this) { user ->
             mStaffAdapter.setUserData(user)
             mListUser = user
@@ -75,8 +80,8 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
                 binding.tvNoData.gone()
             } else {
                 val listFilerTitle = mListUser.filter { user ->
-                    user.name.contains(it, true)
-                    user.phoneNumber.contains(it, true)
+                    user.name.contains(it, true) ||
+                            user.phoneNumber.contains(it, true)
                 }
                 binding.imvClear.visible()
                 val listFiler: ArrayList<Datum> = ArrayList()

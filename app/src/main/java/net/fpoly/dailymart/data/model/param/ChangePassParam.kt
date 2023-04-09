@@ -1,8 +1,10 @@
 package net.fpoly.dailymart.data.model.param
 
+import com.google.gson.annotations.SerializedName
+
 data class ChangePassParam(
-    val id: String = "",
-    val phoneNumber: String = "",
-    val oldPass: String = "",
-    val newPass: String = "",
+    @SerializedName("id") val id: String = "",
+    @SerializedName("phoneNumber") val phoneNumber: String = "",
+    @SerializedName("oldPass") val oldPass: String = "",
+    @SerializedName("newPass") val newPass: String = "",
 )

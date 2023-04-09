@@ -7,9 +7,12 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
+import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UserModel
 import net.fpoly.dailymart.databinding.ActivityDetailsStaffBinding
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.profile.ChangeDisableDialog
 import net.fpoly.dailymart.view.profile.ChangeRoleDialog
 import net.fpoly.dailymart.view.staff.StaffViewModel
@@ -22,15 +25,15 @@ class DetailsStaffActivity :
     private var status: Boolean = true
 
     override fun setupData() {
+        onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.imvBack.setOnClickListener { finish() }
         setData()
         binding.tvUpdate.setOnClickListener {
             updateUser()
-            Toast.makeText(this, "Thanh Cong", Toast.LENGTH_SHORT).show();
-            onBackPressed()
         }
+        viewModel.initLoadDialog(context = this)
         setupBtnChangeRole()
         setupBtnChangeStatus()
     }
@@ -43,16 +46,17 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        val user = User(
-            id = mUser!!.id,
+        val user = RegisterParam(
+            _id = mUser!!._id,
             name = name,
             email = email,
-            phone = phone,
+            phoneNumber = phone,
             role = role,
-            disable = status
+            status = status,
+            deviceId = "abcaaaa123111",
+            linkAvt = "https//:android.com"
         )
-
-//        viewModel.saveUser(user, this)
+        viewModel.updateUser(mUser!!._id, user, this,this)
     }
 
     private fun setupBtnChangeRole() {
@@ -61,6 +65,18 @@ class DetailsStaffActivity :
                 role = it
                 binding.edRole.setText(role.toString())
             }.show()
+        }
+    }
+
+    private fun onEditTextChange() {
+        binding.edName.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnNameUser(it), this)
+        }
+        binding.edNumber.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnPhoneNumberChange(it), this)
+        }
+        binding.edEmail.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnEmail(it), this)
         }
     }
 
@@ -77,7 +93,7 @@ class DetailsStaffActivity :
         mUser = intent.getSerializableExtra("user") as? Datum
         mUser?.let {
             binding.edName.setText(mUser!!.name)
-//            binding.edEmail.setText(mUser!!.email)
+            binding.edEmail.setText(mUser!!.email)
             binding.edNumber.setText(mUser!!.phoneNumber)
             binding.edRole.setText(mUser!!.role)
             binding.edStatus.setText(mUser!!.status.toString())

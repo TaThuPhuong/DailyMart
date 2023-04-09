@@ -37,9 +37,9 @@ class UserRepositoryImpl(
         token: String,
         id: String,
         userParam: UserRes
-    ): ResponseResult<Unit> = withContext(coroutineScope){
+    ): ResponseResult<Unit> = withContext(coroutineScope) {
         try {
-            api.updateUser(token,id,userParam)
+            api.updateUser(token, id, userParam)
         } catch (e: Exception) {
             ResponseResult(0, "Đã xảy ra lỗi", null)
         }
