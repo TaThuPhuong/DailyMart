@@ -69,7 +69,7 @@
                 <RelativeLayout
                     android:id="@+id/layout_name"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/imv_avatar"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="50dp">
@@ -90,12 +90,21 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:maxLines="1" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ed_name"
+                        android:gravity="end"
+                        android:text="@{viewModel.validateNameUser}"
+                        android:textColor="@color/red_FF444C"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/layout_name"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp">
@@ -115,12 +124,21 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:maxLines="1" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ed_email"
+                        android:gravity="end"
+                        android:text="@{viewModel.validateEmailUser}"
+                        android:textColor="@color/red_FF444C"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/layout_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/layout_email"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp">
@@ -141,6 +159,15 @@
                         android:gravity="end"
                         android:inputType="number"
                         android:maxLines="1" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ed_number"
+                        android:gravity="end"
+                        android:text="@{viewModel.validatePhone}"
+                        android:textColor="@color/red_FF444C"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </RelativeLayout>
 
                 <RelativeLayout

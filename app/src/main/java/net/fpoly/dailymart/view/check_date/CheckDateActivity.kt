@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityCheckDateBinding
+import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.utils.CheckDateFilter
 
 class CheckDateActivity :
@@ -16,6 +17,8 @@ class CheckDateActivity :
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.layoutToolbar.setMarginsStatusBar(this)
+        binding.imvBack.setOnClickListener { finish() }
         binding.imvFilter.setOnClickListener {
             FilterCheckDateDialog(this, mFilter) {
                 binding.tvFilter.text = getTextFilter(it)
