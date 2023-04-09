@@ -16,6 +16,7 @@ import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.products.add_product.AddProductActivity
 import net.fpoly.dailymart.view.products.adapter.ProductAdapter
+import net.fpoly.dailymart.view.products.edit_product.ProductEditActivity
 import net.fpoly.dailymart.view.task.detail_product.ProductDetailActivity
 
 class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsBinding::inflate) {
@@ -43,7 +44,9 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
                         intent.putExtra(Constant.PRODUCT, it)
                         startActivity(intent)
                     }, onEdit = {
-
+                        val intent = Intent(this, ProductEditActivity::class.java)
+                        intent.putExtra(Constant.PRODUCT, it)
+                        startActivity(intent)
                     }, onDelete = {
                         DeleteProductConfirmDialog(this) {
                             viewModel.onDelete(it) {

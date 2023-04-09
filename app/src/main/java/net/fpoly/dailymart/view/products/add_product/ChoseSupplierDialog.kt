@@ -16,6 +16,9 @@ class ChoseSupplierDialog(
     BaseBottomDialog<DialogChoseSupplierBinding>(mContext, DialogChoseSupplierBinding::inflate) {
 
     override fun initData() {
+
+        binding.imvClose.setOnClickListener { dismiss() }
+
         val mAdapter = SupplierAdapter(mList) {
             onChose(it)
             dismiss()

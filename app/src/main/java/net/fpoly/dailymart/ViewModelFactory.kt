@@ -114,7 +114,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     ProductDetailViewModel()
                 isAssignableFrom(ProductEditViewModel::class.java) ->
                     ProductEditViewModel(
-                        app,
+                        app,productRepository,
                         categoryRepository,
                         supplierRepository
                     )

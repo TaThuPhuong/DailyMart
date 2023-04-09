@@ -16,6 +16,9 @@ class ChoseCategoryDialog(
     BaseBottomDialog<DialogChoseCategoryBinding>(mContext, DialogChoseCategoryBinding::inflate) {
 
     override fun initData() {
+
+        binding.imvClose.setOnClickListener { dismiss() }
+
         val mAdapter = CategoryAdapter(mListCategory) {
             onChose(it)
             dismiss()
