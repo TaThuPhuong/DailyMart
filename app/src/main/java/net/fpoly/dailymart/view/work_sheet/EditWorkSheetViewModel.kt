@@ -37,7 +37,7 @@ class EditWorkSheetViewModel(private val app: Application, private val userRepo:
     @SuppressLint("SimpleDateFormat")
     fun saveWorkSheet(sheet: WorkSheet) {
         Log.e(TAG, "sheet: $sheet")
-        WorkSheetDao.insertWorkSheet(sheet, SimpleDateFormat("MM_yyyy").format(sheet.time)) {
+        WorkSheetDao.insertWorkSheet(sheet, SimpleDateFormat("dd_MM_yyyy").format(sheet.time)) {
             saveSuccess.postValue(it)
         }
     }

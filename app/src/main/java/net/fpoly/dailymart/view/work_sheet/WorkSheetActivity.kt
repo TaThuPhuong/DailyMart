@@ -45,7 +45,6 @@ class WorkSheetActivity :
         mListTitle.clear()
         for (i in 0 until numDay) {
             val sheet = getSheetByDay(i + 1)
-            Log.e(TAG, "initSheet: $sheet")
             val frag = SheetDayFragment(sheet)
             mListFragment.add(frag)
             mListTitle.add("${(i + 1)}/${calender[Calendar.MONTH] + 1}")
