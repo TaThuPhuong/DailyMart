@@ -49,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_toolbar"
             android:background="@color/red_FF444C"
-            android:paddingTop="30dp"
             app:tabGravity="fill"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/AppTabTextAppearanceEvent" />
