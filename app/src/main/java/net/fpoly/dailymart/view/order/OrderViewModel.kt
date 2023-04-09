@@ -49,8 +49,8 @@ class OrderViewModel() : ViewModel() {
                             response: Response<OrderResponse>,
                         ) {
                             Log.d(TAG, "onRespons: add success: ${response.body()}")
-                            _newOrder.value = response.body()
                             mLoadingDialog.hideLoading()
+                            _newOrder.value = response.body()
                         }
 
                         override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
@@ -68,6 +68,7 @@ class OrderViewModel() : ViewModel() {
     @SuppressLint("NullSafeMutableLiveData")
     fun getOrders(token: String) {
         viewModelScope.launch {
+            mLoadingDialog.showLoading()
             try {
                 invoiceRepository.getInvoices(token).enqueue(object : Callback<ListOrderResponse> {
                     override fun onResponse(
@@ -76,16 +77,19 @@ class OrderViewModel() : ViewModel() {
                     ) {
                         Log.d(TAG, "getOrders: data:  ${response.body()}")
                         _listOrder.value = response.body()
+                        mLoadingDialog.hideLoading()
                     }
 
                     override fun onFailure(call: Call<ListOrderResponse>, t: Throwable) {
                         _listOrder.value = null
                         Log.e(TAG, "onFailure: order: $t")
+                        mLoadingDialog.hideLoading()
                     }
                 })
             } catch (e: Exception) {
                 _listOrder.value = null
                 e.printStackTrace()
+                mLoadingDialog.hideLoading()
             }
         }
     }

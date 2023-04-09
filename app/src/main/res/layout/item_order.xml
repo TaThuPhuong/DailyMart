@@ -3,35 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="net.fpoly.dailymart.data.model.Invoice"/>
-        <import type="net.fpoly.dailymart.data.model.InvoiceDetail"/>
-        <import type="net.fpoly.dailymart.data.model.Product"/>
-        <import type="net.fpoly.dailymart.data.model.Expiry"/>
-        <import type="net.fpoly.dailymart.utils.ConvertUtilsKt"/>
-        <import type="net.fpoly.dailymart.view.order.OrderViewModel"/>
-        <import type="androidx.core.content.ContextCompat"/>
-        <import type="net.fpoly.dailymart.R"/>
-        <variable
-            name="viewmodel"
-            type="OrderViewModel" />
-
-        <variable
-            name="invoice"
-            type="Invoice" />
-
-
-        <variable
-            name="product"
-            type="Product" />
-
-        <variable
-            name="expiry"
-            type="Expiry" />
-
-        <variable
-            name="invoiceDetail"
-            type="InvoiceDetail" />
-
     </data>
 
 

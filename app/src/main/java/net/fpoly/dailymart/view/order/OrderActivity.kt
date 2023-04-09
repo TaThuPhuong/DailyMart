@@ -10,11 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
+import com.budiyev.android.codescanner.*
 import gun0912.tedimagepicker.util.ToastUtil
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
@@ -24,8 +20,8 @@ import net.fpoly.dailymart.data.model.param.ProductByOrder
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderActivity :
     BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::inflate),
@@ -38,7 +34,7 @@ class OrderActivity :
     private lateinit var codeScanner: CodeScanner
     private var productName = ""
     private var token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDYyMzk5NCwiZXhwIjoxNzY2OTM3NTk0fQ.W6G-sBuJ_ySLD-iL-9e9dW8OjUHrHCd0AqMlO35XI6M"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzBmNWQ0NTNlNmZhNTlhNzhkMGZmOSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjgwOTMwMzU5LCJleHAiOjE3NjcyNDM5NTl9.bZqZ1ydZ-6QykLY78A8EmRUTsNZTTVUyLB-H56wbi7M"
 
     override fun setupData() {
         binding.viewModel = viewModel
@@ -48,62 +44,19 @@ class OrderActivity :
         viewModel.getAllProduct(token)
         setupProductName()
         setupExpiryDate()
+        initRecycleView()
     }
 
     override fun setupObserver() {
-//        viewModel.listOrder.observe(this) { listOrder ->
-//            Log.d(TAG, "setupObserver: listorder: ${listOrder.data}")
-// //            listOrder?.data?.forEach { orderResponse ->
-// //                Log.d(TAG, "setupObserver: orderresponse: ${orderResponse.invoiceDetails}")
-// //                orderResponse.invoiceDetails.forEach { invoiceDetails ->
-// //                    viewModel.getProduct(invoiceDetails.product, token)
-// //                    viewModel.product.observe(this) { product ->
-// //                        if (product == null) {
-// //                            val orderInfo = OrderInfo(
-// //                                "null",
-// //                                0,
-// //                                "null",
-// //                            )
-// //                            mListOrder.add(orderInfo)
-// //                        } else {
-// //                            val orderInfo = OrderInfo(
-// //                                product.data.productName,
-// //                                invoiceDetails.quantity,
-// //                                orderResponse.dateCreated,
-// //                            )
-// //                            mListOrder.add(orderInfo)
-// //                            mOrderAdapter = OrderAdapter(this, mListOrder)
-// //                            binding.rcvImportProduct.adapter = mOrderAdapter
-// //                            Log.d(TAG, "setupObserver: mlistorderINfo: $mListOrder")
-// //                            Log.d(TAG, "setupObserver: product: ${product.data}")
-// //                        }
-// //                    }
-// //                }
-// //                if (product == null) {
-// //                    val orderInfo = OrderInfo(
-// //                        "null",
-// //                        0,
-// //                        "null",
-// //                    )
-// //                    mListOrder.add(orderInfo)
-// //                } else {
-// //                    val orderInfo = OrderInfo(
-// //                        product.data.productName,
-// //                        invoiceDetails.quantity,
-// //                        orderResponse.dateCreated,
-// //                    )
-// //                    mListOrder.add(orderInfo)
-// //                    mOrderAdapter = OrderAdapter(this, mListOrder)
-// //                    binding.rcvImportProduct.adapter = mOrderAdapter
-// //                    Log.d(TAG, "setupObserver: mlistorderINfo: $mListOrder")
-// //                    Log.d(TAG, "setupObserver: product: ${product.data}")
-// //                }
-// //            mListOrder = listOrder.data
-// //            Log.d(TAG, "setupObserver: mlistorder: $mListOrder")
-//
-//        }
-        if (mListOrder.isEmpty()) {
-            binding.imgListEmpty.visible()
+        viewModel.listOrder.observe(this) { listOrder ->
+            if (listOrder.data[0].invoiceType == "IMPORT") {
+                mListOrder = listOrder.data
+            }
+            if (mListOrder.isEmpty()) {
+                binding.imgListEmpty.visible()
+            }
+            mOrderAdapter.setData(mListOrder)
+            Log.d(TAG, "setupObserver: $mListOrder")
         }
 
         viewModel.product.observe(this) {
@@ -166,7 +119,7 @@ class OrderActivity :
 
     override fun onResume() {
         super.onResume()
-//        viewModel.getAllOrder()
+        viewModel.getOrders(token)
         if (::codeScanner.isInitialized) {
             codeScanner.startPreview()
         }
@@ -194,18 +147,31 @@ class OrderActivity :
             binding.btnAdd -> {
                 val idProduct = binding.edId.text.toString()
                 val quantity = binding.edQuantity.text.toString()
-                val expiryDate = binding.edExpiryDate.toString()
+                val expiryDate = binding.edExpiryDate.text.toString()
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                val date: Date = sdf.parse(expiryDate)
+                val millis = date.time
                 if (validate()) {
                     val product =
-                        ProductByOrder(idProduct, 2000, Integer.parseInt(quantity), expiryDate)
+                        ProductByOrder(
+                            idProduct,
+                            2000,
+                            Integer.parseInt(quantity),
+                            (Integer.parseInt(quantity) * 2000).toLong(),
+                            millis,
+                        )
                     val order =
                         OrderParam(
-                            "640c20d2151e0d8e2339166b",
+                            "6430f5d453e6fa59a78d0ff9",
+                            "642d285acf62ee68ba804759",
                             listOf(product),
                             "IMPORT",
-                            expiryDate,
+                            Calendar.getInstance().getTime().time,
+                            (Integer.parseInt(quantity) * 2000).toLong(),
                         )
                     viewModel.insertOrder(order, token)
+                    viewModel.getOrders(token)
+                    mOrderAdapter.notifyDataSetChanged()
                     viewModel.newOrder.observe(this) {
                         if (it != null) {
                             binding.edId.setText("")
@@ -280,7 +246,7 @@ class OrderActivity :
                         clean = String.format("%02d%02d%02d", day, mon, year)
                     }
                     clean = String.format(
-                        "%s-%s-%s",
+                        "%s/%s/%s",
                         clean.substring(0, 2),
                         clean.substring(2, 4),
                         clean.substring(4, 8),
@@ -289,6 +255,7 @@ class OrderActivity :
                     current = clean
                     binding.edExpiryDate.setText(current)
                     binding.edExpiryDate.setSelection(if (sel < current.length) sel else current.length)
+                    Log.d(TAG, "onTextChanged: ${binding.edExpiryDate.text}")
                 }
             }
 
@@ -315,5 +282,12 @@ class OrderActivity :
             return false
         }
         return true
+    }
+
+    private fun initRecycleView() {
+        mOrderAdapter = OrderAdapter(this, mListOrder) {
+//            binding.rcvImportProduct.layoutManager = LinearLayoutManager(this)
+        }
+        binding.rcvImportProduct.adapter = mOrderAdapter
     }
 }

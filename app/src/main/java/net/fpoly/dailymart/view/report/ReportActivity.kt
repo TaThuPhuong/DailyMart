@@ -16,13 +16,15 @@ import com.github.mikephil.charting.listener.BarLineChartTouchListener
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.data.model.ReportData
 import net.fpoly.dailymart.databinding.ActivityReportBinding
+import net.fpoly.dailymart.extension.CustomBarChartRender
+import net.fpoly.dailymart.extension.CustomMarkerChartView
 import net.fpoly.dailymart.extention.CheckTimeUtils
-import net.fpoly.dailymart.extention.CustomBarChartRender
-import net.fpoly.dailymart.extention.CustomMarkerChartView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 data class DoanhThu(
     var soTien: Long = 0,
@@ -43,16 +45,23 @@ class ReportActivity :
     private var typeChart = ""
     private val formatter = SimpleDateFormat("dd/MM/yyyy")
 
-    private val listDoanhThu = ArrayList<DoanhThu>()
+    private var listReport = ArrayList<ReportData>()
+    private var token =
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzBmNWQ0NTNlNmZhNTlhNzhkMGZmOSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjgwOTMwMzU5LCJleHAiOjE3NjcyNDM5NTl9.bZqZ1ydZ-6QykLY78A8EmRUTsNZTTVUyLB-H56wbi7M"
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        fakeData()
-        initCharView(listDoanhThu)
+//        fakeData()
+        initCharView(listReport)
+        viewModel.initLoadDialog(this)
     }
 
     override fun setupObserver() {
+        viewModel.getReport(token, mMonth)
+        viewModel.listReport.observe(this) {
+            listReport = it!!.data
+        }
     }
 
     override fun setOnClickListener() {
@@ -68,16 +77,16 @@ class ReportActivity :
             binding.imvReportViewLastTimeChart -> {
                 Log.d(TAG, "onClick: click")
                 if (mMonth == 0) {
-                    setUpMonthlyChart(11, mYear - 1, listDoanhThu)
+                    setUpMonthlyChart(11, mYear - 1, listReport)
                 } else {
-                    setUpMonthlyChart(mMonth - 1, mYear, listDoanhThu)
+                    setUpMonthlyChart(mMonth - 1, mYear, listReport)
                 }
             }
             binding.imvReportViewNextTimeChart -> {
                 if (mMonth == 11) {
-                    setUpMonthlyChart(0, mYear + 1, listDoanhThu)
+                    setUpMonthlyChart(0, mYear + 1, listReport)
                 } else {
-                    setUpMonthlyChart(mMonth + 1, mYear, listDoanhThu)
+                    setUpMonthlyChart(mMonth + 1, mYear, listReport)
                 }
             }
         }
@@ -93,15 +102,8 @@ class ReportActivity :
         }
         return date.time
     }
-    private fun fakeData() {
-        listDoanhThu.add(DoanhThu(10000, getMilliFromDate("02/04/2023")))
-        listDoanhThu.add(DoanhThu(20000, getMilliFromDate("01/04/2023")))
-        listDoanhThu.add(DoanhThu(30000, getMilliFromDate("28/03/2023")))
-        listDoanhThu.add(DoanhThu(70000, getMilliFromDate("27/03/2023")))
-        listDoanhThu.add(DoanhThu(40000, getMilliFromDate("29/03/2023")))
-    }
 
-    private fun initCharView(listDoanhThu: ArrayList<DoanhThu>) {
+    private fun initCharView(listDoanhThu: ArrayList<ReportData>) {
         binding.barChart.setDrawBarShadow(false)
         binding.barChart.description.isEnabled = false
         binding.barChart.setDrawGridBackground(false)
@@ -152,10 +154,9 @@ class ReportActivity :
     private fun setUpMonthlyChart(
         month: Int,
         year: Int,
-        listDoanhThu: ArrayList<DoanhThu>,
+        listReport: List<ReportData>,
     ) {
         (binding.barChart.onTouchListener as BarLineChartTouchListener).stopDeceleration()
-//        tv_thong_ke.text = "Doanh thu tháng ${month + 1} năm $year"
         mMonth = month
         mYear = year
         typeChart = "MONTHLY"
@@ -179,9 +180,9 @@ class ReportActivity :
             val day = CheckTimeUtils.mDecimalFormat.format(i + 1)
                 .toString() + "/" + CheckTimeUtils.mDecimalFormat.format(month + 1) + "/" + year
             var valueMoney: Long = 0
-            for (doanhThu in listDoanhThu) {
-                if (formatter.format(doanhThu.time) == day) {
-                    valueMoney += doanhThu.soTien
+            for (doanhThu in listReport) {
+                if (formatter.format(doanhThu.date) == day) {
+                    valueMoney += doanhThu.data
                 }
             }
             dayOfMonthList[i] = (i + 1).toString() + ""

@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.data.model.OrderResponse
-import net.fpoly.dailymart.data.model.param.OrderParam
+import net.fpoly.dailymart.data.model.param.CategoryParam
 import net.fpoly.dailymart.databinding.ItemOrderBinding
 
 class OrderAdapter(
     val mContext: Context,
-    var mListOrder: List<OrderResponse> = ArrayList()
+    var mListOrder: List<OrderResponse> = ArrayList(),
+    val onClick: (CategoryParam) -> Unit,
 ) :
     RecyclerView.Adapter<OrderAdapter.ItemView>() {
     class ItemView(val binding: ItemOrderBinding) : ViewHolder(binding.root)
@@ -28,8 +29,8 @@ class OrderAdapter(
             ItemOrderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -39,8 +40,9 @@ class OrderAdapter(
             with(mListOrder[position]) {
 //                binding.tvExpiryDate.text = this.invoiceDetails[0].product
                 binding.tvProductName.text = this.invoiceDetails[0].product.productName
-                binding.tvQuantity.text = "SL: ${this.invoiceDetails[0].quantity}"
-                binding.tvTotalInvoice.text = "Đơn giá: ${this.invoiceDetails[0].price}"
+                binding.tvQuantity.text = "SL: ${this.invoiceDetails[0].quantityProduct}"
+                binding.tvTotalInvoice.text =
+                    "Đơn giá: ${this.invoiceDetails[0].totalPrice}"
             }
         }
     }

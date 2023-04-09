@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.extention;
+package net.fpoly.dailymart.extension;
 
 import android.content.Context;
 import android.widget.TextView;
