@@ -14,7 +14,9 @@ data class Product(
     @SerializedName("totalQuantity") var totalQuantity: Int = 0,
     @SerializedName("unit") var unit: String = "",
     @SerializedName("img_product") var img_product: String = "",
-) : Serializable {
+    @SerializedName("expires") var expires: ArrayList<String> = arrayListOf(),
+    @SerializedName("createdAt") var createdAt: String = "",
+    ) : Serializable {
     companion object {
         const val TABLE_NAME = "products"
     }

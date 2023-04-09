@@ -29,6 +29,10 @@ abstract class BaseDialog<B : ViewBinding>(
         wlp.gravity = Gravity.CENTER
         wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
         window.attributes = wlp
+        getWindow()?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
         setCancelable(true)
         setCanceledOnTouchOutside(true)
         initData()
