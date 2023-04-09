@@ -7,7 +7,8 @@
         <item name="android:windowShowAnimation">@anim/fade_in</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor" >@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
