@@ -32,12 +32,12 @@
         <!--            android:name=".view.splash.SplashActivity"-->
         <!--            android:exported="true">-->
 
-        <!--        <activity-->
-        <!--            android:name=".view.login.LoginActivity"-->
-        <!--            android:exported="true">-->
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.login.LoginActivity"
             android:exported="true">
+            <!--        <activity-->
+            <!--            android:name=".view.main.MainActivity"-->
+            <!--            android:exported="true">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +48,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!--        <activity-->
-        <!--            android:name=".view.main.MainActivity"-->
-        <!--            android:exported="false" />-->
+        <activity
+            android:name=".view.main.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".view.staff.details.DetailsStaffActivity"
             android:exported="false" />
@@ -98,7 +98,7 @@
         <activity android:name=".view.task.task_detail.TaskDetailActivity" />
         <activity android:name=".view.task.task_edit.TaskEditActivity" />
         <activity android:name=".view.task.detail_product.ProductDetailActivity" />
-        <activity android:name=".view.products.edit_product.ProductEditActivity"/>
+        <activity android:name=".view.products.edit_product.ProductEditActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />

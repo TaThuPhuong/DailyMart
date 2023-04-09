@@ -1,5 +1,7 @@
 package net.fpoly.dailymart.view.add_staff
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -11,6 +13,7 @@ import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.extension.blankException
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.login.LoginEvent
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -18,6 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddStaffViewModel(
+    private val app: Application,
 ) : ViewModel() {
     val TAG = "tuvm";
     private val _user = MutableLiveData<User>()
@@ -29,6 +33,8 @@ class AddStaffViewModel(
     private val _validateEmailUser = MutableLiveData("")
     val validateEmailUser: LiveData<String> = _validateEmailUser
     private val _userParam = MutableLiveData(RegisterParam())
+    private val mToken = SharedPref.getAccessToken(app)
+
 
     init {
         _validateName.value = ""
@@ -46,17 +52,19 @@ class AddStaffViewModel(
     fun postUser(userParam: RegisterParam, context: Context) {
         val server = ServerInstance.apiUser
         Log.d(TAG, "userParam: $userParam")
+        mLoadingDialog.showLoading()
         server.register(
             userParam,
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmVkNTkyM2Q2NTQ3M2IxZTQ3MmEyOSIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTY4MDc5MTUxOCwiZXhwIjoxNzY3MTA1MTE4fQ.YtEF4YwRwsX9owAVJcOwahgZ9TTjeEoqyBQyuteNy_8"
+            mToken
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    loginSuccess.value = true
+                    loginSuccess.postValue(true)
                     Log.d(TAG, "onResponse: " + response.body()?.string())
                     Log.d(TAG, "onResponse: " + response.body())
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                 } else {
+                    loginSuccess.postValue(false)
                     Log.d(TAG, "code: " + response.code())
                     Log.d(TAG, "message: " + response.message())
                     Log.d(TAG, "errorBody: " + response.errorBody()?.string())

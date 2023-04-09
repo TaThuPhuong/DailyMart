@@ -1,5 +1,6 @@
 package net.fpoly.dailymart
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -11,6 +12,7 @@ import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
+import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.message.MessageViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
@@ -41,6 +43,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
+            var activity = Activity()
             val context = app.context
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository
@@ -92,9 +95,9 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
                     ChangePasswordViewModel(app)
                 isAssignableFrom(StaffViewModel::class.java) ->
-                    StaffViewModel()
+                    StaffViewModel(app)
                 isAssignableFrom(AddStaffViewModel::class.java) ->
-                    AddStaffViewModel()
+                    AddStaffViewModel(app)
                 isAssignableFrom(ProfileViewModel::class.java) ->
                     ProfileViewModel()
                 isAssignableFrom(MessageViewModel::class.java) ->
@@ -114,7 +117,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     ProductDetailViewModel()
                 isAssignableFrom(ProductEditViewModel::class.java) ->
                     ProductEditViewModel(
-                        app,productRepository,
+                        app, productRepository,
                         categoryRepository,
                         supplierRepository
                     )

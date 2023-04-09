@@ -121,6 +121,7 @@
                 app:ccp_textSize="14dp" />
 
             <EditText
+                android:inputType="phone"
                 android:id="@+id/ed_number_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

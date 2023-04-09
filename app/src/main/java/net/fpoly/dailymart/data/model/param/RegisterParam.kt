@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import net.fpoly.dailymart.utils.ROLE
 
 data class RegisterParam(
+    @SerializedName("_id") val _id: String = "",
     @SerializedName("name") val name: String = "",
     @SerializedName("password") val password: String = "",
     @SerializedName("email") val email: String = "",

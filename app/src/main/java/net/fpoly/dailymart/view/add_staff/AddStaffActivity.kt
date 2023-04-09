@@ -39,6 +39,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
         binding.tvSave.setOnClickListener {
             viewModel.onEvent(AddStaffViewModel.UserEvent.ValidateForm, this)
             createUser()
+            finish()
         }
     }
 
@@ -57,7 +58,6 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
     private fun onValidateClick(name: String, email: String, phone: String) {
         if (name.trim().isEmpty()) {
             viewModel._validateName.value = "Không được để trống trường này"
-            return
         }
     }
 

@@ -7,9 +7,12 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
+import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UserModel
 import net.fpoly.dailymart.databinding.ActivityDetailsStaffBinding
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.profile.ChangeDisableDialog
 import net.fpoly.dailymart.view.profile.ChangeRoleDialog
 import net.fpoly.dailymart.view.staff.StaffViewModel
@@ -22,14 +25,16 @@ class DetailsStaffActivity :
     private var status: Boolean = true
 
     override fun setupData() {
+        onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.imvBack.setOnClickListener { finish() }
         setData()
         binding.tvUpdate.setOnClickListener {
             updateUser()
-            onBackPressed()
+            finish()
         }
+        viewModel.initLoadDialog(context = this)
         setupBtnChangeRole()
         setupBtnChangeStatus()
     }
@@ -42,14 +47,14 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        val user = Datum(
+        val user = RegisterParam(
             _id = mUser!!._id,
             name = name,
             email = email,
             phoneNumber = phone,
-            role = role.toString(),
+            role = role,
             status = status,
-            deviceID = "abcaaaa123111",
+            deviceId = "abcaaaa123111",
             linkAvt = "https//:android.com"
         )
         viewModel.updateUser(mUser!!._id, user, this)
@@ -61,6 +66,18 @@ class DetailsStaffActivity :
                 role = it
                 binding.edRole.setText(role.toString())
             }.show()
+        }
+    }
+
+    private fun onEditTextChange() {
+        binding.edName.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnNameUser(it), this)
+        }
+        binding.edNumber.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnPhoneNumberChange(it), this)
+        }
+        binding.edEmail.getTextOnChange {
+            viewModel.onEvent(StaffViewModel.UserEvent.OnEmail(it), this)
         }
     }
 

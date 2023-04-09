@@ -43,7 +43,7 @@ interface UserApi {
     fun updateUser2(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-        @Body userParam: Datum
+        @Body userParam: RegisterParam
     ): Call<ResponseBody>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
