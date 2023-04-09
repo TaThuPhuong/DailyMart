@@ -18,7 +18,10 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
     fun changePass(changePassParam: ChangePassParam) {
         Log.d(TAG, "Params : $changePassParam")
         Log.d(TAG, "token : $mToken")
-        server.changePassword(mToken, changePassParam)
+        server.changePassword(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmVkNTkyM2Q2NTQ3M2IxZTQ3MmEyOSIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTY4MDc5MTUxOCwiZXhwIjoxNzY3MTA1MTE4fQ.YtEF4YwRwsX9owAVJcOwahgZ9TTjeEoqyBQyuteNy_8",
+            changePassParam
+        )
             .enqueue(object : retrofit2.Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

@@ -31,6 +31,10 @@
         <!--        <activity-->
         <!--            android:name=".view.splash.SplashActivity"-->
         <!--            android:exported="true">-->
+
+        <!--        <activity-->
+        <!--            android:name=".view.login.LoginActivity"-->
+        <!--            android:exported="true">-->
         <activity
             android:name=".view.main.MainActivity"
             android:exported="true">
@@ -44,6 +48,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <!--        <activity-->
+        <!--            android:name=".view.main.MainActivity"-->
+        <!--            android:exported="false" />-->
         <activity
             android:name=".view.staff.details.DetailsStaffActivity"
             android:exported="false" />
@@ -54,9 +61,7 @@
         <activity
             android:name=".view.register.RegisterActivity"
             android:exported="false" />
-        <!--        <activity-->
-        <!--            android:name=".view.login.LoginActivity"-->
-        <!--            android:exported="false" />-->
+
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />

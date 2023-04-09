@@ -6,8 +6,12 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ActivityAddStaffBinding
+import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.extension.showToast
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.view.login.LoginEvent
+import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.profile.ChangeRoleDialog
 
 class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffBinding::inflate) {
@@ -16,10 +20,12 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
     private var role: ROLE = ROLE.staff
 
     override fun setupData() {
+        onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setupBtnChangeRole()
         setupBtnSave()
+        viewModel.initLoadDialog(context = this)
         binding.imvBack.setOnClickListener { finish() }
     }
 
@@ -31,8 +37,27 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
 
     private fun setupBtnSave() {
         binding.tvSave.setOnClickListener {
+            viewModel.onEvent(AddStaffViewModel.UserEvent.ValidateForm, this)
             createUser()
-            showToast(applicationContext, "Success");
+        }
+    }
+
+    private fun onEditTextChange() {
+        binding.edNameUser.getTextOnChange {
+            viewModel.onEvent(AddStaffViewModel.UserEvent.OnNameUser(it), this)
+        }
+        binding.edNumberUser.getTextOnChange {
+            viewModel.onEvent(AddStaffViewModel.UserEvent.OnPhoneNumberChange(it), this)
+        }
+        binding.edEmailUser.getTextOnChange {
+            viewModel.onEvent(AddStaffViewModel.UserEvent.OnEmail(it), this)
+        }
+    }
+
+    private fun onValidateClick(name: String, email: String, phone: String) {
+        if (name.trim().isEmpty()) {
+            viewModel._validateName.value = "Không được để trống trường này"
+            return
         }
     }
 
@@ -40,6 +65,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
         val name = binding.edNameUser.text.toString()
         val email = binding.edEmailUser.text.toString()
         val phone = binding.edNumberUser.text.toString()
+        onValidateClick(name, email, phone)
         val user = RegisterParam(
             name = name,
             password = phone,
@@ -49,7 +75,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
             deviceId = "124234",
             linkAvt = "https//:abc.com"
         )
-        viewModel.postUser(user)
+        viewModel.postUser(user, this)
     }
 
     private fun setupBtnChangeRole() {

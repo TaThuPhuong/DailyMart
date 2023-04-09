@@ -11,7 +11,10 @@ import retrofit2.http.*
 interface UserApi {
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("register")
-    fun register(@Body model: RegisterParam): Call<ResponseBody>
+    fun register(
+        @Body model: RegisterParam,
+        @Header("Authorization") token: String
+    ): Call<ResponseBody>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("login")

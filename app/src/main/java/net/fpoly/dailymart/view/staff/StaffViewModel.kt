@@ -62,6 +62,7 @@ class StaffViewModel(
                     Log.d(TAG, "Update user res : " + response.message())
                     Log.d(TAG, "Update user res : " + response.body().toString())
                     Log.d(TAG, "Update user res : " + response.errorBody())
+                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                 }
             }
 
