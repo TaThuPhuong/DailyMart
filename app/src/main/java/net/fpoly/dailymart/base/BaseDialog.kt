@@ -24,6 +24,7 @@ abstract class BaseDialog<B : ViewBinding>(
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(binding.root)
         window!!.decorView.setBackgroundResource(android.R.color.transparent)
+        window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         val window = window
         val wlp = window!!.attributes
         wlp.gravity = Gravity.CENTER

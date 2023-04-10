@@ -18,3 +18,7 @@ fun fromMillisToStringDateTime(time: Long): String {
 fun convertTotalInvoiceNumber(invoiceTotal: Long): String {
     return DecimalFormat("#,##0").format(invoiceTotal).replace(",", ".")
 }
+
+fun takeLastId(id: String) : String {
+    return id.takeLast(10)
+}

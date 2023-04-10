@@ -1,6 +1,5 @@
 package net.fpoly.dailymart
 
-import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -12,11 +11,10 @@ import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
-import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.message.MessageViewModel
 import net.fpoly.dailymart.view.order.OrderViewModel
-import net.fpoly.dailymart.view.pay.PayViewModel
+import net.fpoly.dailymart.view.pay.AddInvoiceExportViewModel
 import net.fpoly.dailymart.view.payment.PaymentViewModel
 import net.fpoly.dailymart.view.products.ProductsViewModel
 import net.fpoly.dailymart.view.task.detail_product.ProductDetailViewModel
@@ -25,7 +23,6 @@ import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
-import net.fpoly.dailymart.view.staff.StaffActivity
 import net.fpoly.dailymart.view.staff.StaffViewModel
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import net.fpoly.dailymart.view.stock.StockViewModel
@@ -85,8 +82,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     WorkSheetViewModel()
                 isAssignableFrom(CategoryViewModel::class.java) ->
                     CategoryViewModel(context)
-                isAssignableFrom(PayViewModel::class.java) ->
-                    PayViewModel()
+                isAssignableFrom(AddInvoiceExportViewModel::class.java) ->
+                    AddInvoiceExportViewModel()
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
                 isAssignableFrom(SupplierViewModel::class.java) ->
