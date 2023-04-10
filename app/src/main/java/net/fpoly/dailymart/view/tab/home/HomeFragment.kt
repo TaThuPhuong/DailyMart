@@ -45,7 +45,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         binding.lifecycleOwner = viewLifecycleOwner
         mUser = SharedPref.getUser(mContext)
         mUser?.let {
-            Glide.with(mContext).load(it.avatar).placeholder(R.drawable.ic_avatar_default)
+            Glide.with(mContext).load(it.avatar).placeholder(R.drawable.img_avatar_default)
                 .into(binding.imvAvatarToolbar)
             binding.tvName.text = "Chào, ${it.name}"
         }

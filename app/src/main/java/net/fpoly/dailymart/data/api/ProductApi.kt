@@ -2,6 +2,7 @@ package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
+import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.ProductResponse
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import okhttp3.ResponseBody
@@ -42,7 +43,7 @@ interface ProductApi {
     suspend fun updateProduct(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-        @Body productParam: ProductParam,
+        @Body productParam: ProductParamUpdate,
     ): ResponseResult<Product>
 
     @DELETE("product/{id}")

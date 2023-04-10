@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.Supplier
@@ -42,6 +43,9 @@ class ProductEditActivity :
 
     private lateinit var codeScanner: CodeScanner
 
+    private var onImageChange = false
+
+    private var mLoadingDialog: LoadingDialog? = null
     override fun setOnClickListener() {
         super.setOnClickListener()
         binding.imvBack.setOnClickListener(this)
@@ -63,10 +67,12 @@ class ProductEditActivity :
         }
         setEditTextChange()
         checkPermission()
+        mLoadingDialog = LoadingDialog(this)
     }
 
     override fun setupObserver() {
         viewModel.actionSuccess.observe(this) {
+            mLoadingDialog?.hideLoading()
             if (it) {
                 finish()
             }
@@ -125,18 +131,28 @@ class ProductEditActivity :
                     }.show()
                 }
             }
-            binding.imvAddImage,binding.imvImage -> {
+            binding.imvAddImage, binding.imvImage -> {
                 ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
                     binding.imvAddImage.hide()
+                    onImageChange = true
                 }
             }
             binding.btnAddProduct -> {
-                Images.uploadImage(binding.imvImage, Product.TABLE_NAME, mProduct?.barcode!!,
-                    onSuccess = {
+                if (onImageChange) {
+                    mLoadingDialog?.showLoading()
+                    Images.uploadImage(binding.imvImage, Product.TABLE_NAME, mProduct?.barcode!!,
+                        onSuccess = {
+                            viewModel.onEvent(ProductEvent.AddProduct(it))
+                        }, onFail = {
+                            mProduct?.img_product?.let {
+                                viewModel.onEvent(ProductEvent.AddProduct(it))
+                            }
+                        })
+                } else {
+                    mProduct?.img_product?.let {
                         viewModel.onEvent(ProductEvent.AddProduct(it))
-                    }, onFail = {
-                        viewModel.onEvent(ProductEvent.AddProduct(Constant.IMAGE_DEFAULT))
-                    })
+                    }
+                }
             }
         }
     }

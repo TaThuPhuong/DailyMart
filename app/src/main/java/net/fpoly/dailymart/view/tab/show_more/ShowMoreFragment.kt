@@ -40,15 +40,24 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
         binding.lifecycleOwner = viewLifecycleOwner
         mUser = SharedPref.getUser(mContext)
         mUser?.let {
-            Glide.with(mContext).load(it.avatar).placeholder(R.drawable.ic_avatar_default)
-                .into(binding.imvAvatar)
-            binding.tvName.text = it.name
-            binding.tvRole.text = it.role.value
+            loadUser(it)
         }
     }
 
     override fun setupObserver() {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mUser = SharedPref.getUser(mContext)
+    }
+
+    private fun loadUser(user: User) {
+        Glide.with(mContext).load(user.avatar).placeholder(R.drawable.ic_avatar_default)
+            .into(binding.imvAvatar)
+        binding.tvName.text = user.name
+        binding.tvRole.text = user.role.value
     }
 
     override fun onClick(v: View?) {

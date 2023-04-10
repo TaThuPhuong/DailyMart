@@ -20,6 +20,6 @@ class LoadingDialog(val context: Context) {
     }
 
     fun hideLoading() {
-        dialog!!.dismiss()
+        dialog?.dismiss()
     }
 }
