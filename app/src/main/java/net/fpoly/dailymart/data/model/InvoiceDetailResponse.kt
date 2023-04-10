@@ -1,7 +1,7 @@
 package net.fpoly.dailymart.data.model
 
 data class InvoiceDetailResponse(
-    val product: String,
-    val quantity: Int,
-    val price: Long,
+    val product: ProductResponseData,
+    val quantityProduct: Double,
+    val totalPrice: Double,
 )

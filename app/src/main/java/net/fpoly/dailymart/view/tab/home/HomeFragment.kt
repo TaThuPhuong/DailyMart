@@ -9,6 +9,7 @@ import net.fpoly.dailymart.databinding.HomeFragmentBinding
 import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.pay.PayActivity
+import net.fpoly.dailymart.view.profile.ProfileActivity
 import net.fpoly.dailymart.view.report.ReportActivity
 import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.task.TaskActivity
@@ -43,7 +44,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvAvatarToolbar -> {}
+            binding.imvAvatarToolbar -> openActivity(ProfileActivity::class.java)
             binding.imvNotification -> {}
             binding.layoutReport, binding.imvReport -> {
                 openActivity(ReportActivity::class.java)

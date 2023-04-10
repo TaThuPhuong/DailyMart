@@ -1,10 +1,14 @@
 package net.fpoly.dailymart.view.work_sheet
 
+import android.content.Intent
 import androidx.fragment.app.activityViewModels
 import net.fpoly.dailymart.base.BaseFragment
+import net.fpoly.dailymart.data.model.WorkSheet
 import net.fpoly.dailymart.databinding.FragmentDaySheetBinding
+import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.view.work_sheet.adapter.SheetAdapter
 
-class SheetDayFragment(private val sheet: Sheet) :
+class SheetDayFragment(private val sheet: WorkSheet) :
     BaseFragment<FragmentDaySheetBinding>(FragmentDaySheetBinding::inflate) {
 
     private val viewModel: WorkSheetViewModel by activityViewModels()
@@ -19,16 +23,14 @@ class SheetDayFragment(private val sheet: Sheet) :
         binding.rcvCa1.adapter = adapter1
         binding.rcvCa2.adapter = adapter2
         binding.rcvCa3.adapter = adapter3
-        sheet.shift1?.let {
-            adapter1.setData(it)
+        adapter1.setData(sheet.shift1)
+        adapter2.setData(sheet.shift2)
+        adapter3.setData(sheet.shift3)
+        binding.imvAdd.setOnClickListener {
+            val intent = Intent(mContext, EditWorkSheetActivity::class.java)
+            intent.putExtra(Constant.WORK_SHEET, sheet)
+            startActivity(intent)
         }
-        sheet.shift2?.let {
-            adapter2.setData(it)
-        }
-        sheet.shift3?.let {
-            adapter3.setData(it)
-        }
-
     }
 
     override fun setupObserver() {

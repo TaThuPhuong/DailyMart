@@ -21,7 +21,7 @@ data class User(
 ) : Serializable
 
 data class UserRes(
-    @SerializedName("id") var id: String = "",
+    @SerializedName("_id") var id: String = "",
     @SerializedName("name") var name: String = "",
     @SerializedName("phoneNumber") var phoneNumber: String = "",
     @SerializedName("status") var status: Boolean = true,

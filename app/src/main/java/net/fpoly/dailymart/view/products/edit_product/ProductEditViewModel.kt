@@ -126,6 +126,7 @@ class ProductEditViewModel(
                 checkValidate.value?.let {
                     if (it) {
                         viewModelScope.launch(Dispatchers.IO) {
+                            Log.d(TAG, "onEvent: ${_product.value}")
                             val res = productRepo.updateProduct(mToken, productId, _product.value!!)
                             if (res.isSuccess()) {
                                 message.postValue("Cập nhập thành công")

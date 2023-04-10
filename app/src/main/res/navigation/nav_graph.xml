@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/receipt_fragment"
-        android:name="net.fpoly.dailymart.view.tab.receipt.ReceiptFragment"
+        android:name="net.fpoly.dailymart.view.tab.invoice.InvoiceFragment"
         android:label="@string/receipt_fragment">
         <argument
             android:name="userMessage"

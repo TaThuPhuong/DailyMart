@@ -12,15 +12,42 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red_FF444C"
+            android:paddingTop="28dp">
+
+            <ImageView
+                android:id="@+id/imv_back"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:src="@drawable/ic_back_white"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:gravity="center_vertical"
+                android:text="Lịch làm tháng"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             style="@style/AppTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
+            android:layout_below="@+id/layout_toolbar"
             android:background="@color/red_FF444C"
             app:tabGravity="fill"
             app:tabMode="scrollable"

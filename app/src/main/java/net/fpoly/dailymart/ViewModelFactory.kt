@@ -32,12 +32,13 @@ import net.fpoly.dailymart.view.stock.StockViewModel
 import net.fpoly.dailymart.view.supplier.SupplierViewModel
 import net.fpoly.dailymart.view.tab.home.HomeViewModel
 import net.fpoly.dailymart.view.tab.goods.GoodsViewModel
-import net.fpoly.dailymart.view.tab.receipt.ReceiptViewModel
+import net.fpoly.dailymart.view.tab.invoice.InvoiceViewModel
 import net.fpoly.dailymart.view.tab.show_more.ShowMoreViewModel
 import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailViewModel
 import net.fpoly.dailymart.view.task.task_edit.TaskEditViewModel
+import net.fpoly.dailymart.view.work_sheet.EditWorkSheetViewModel
 import net.fpoly.dailymart.view.work_sheet.WorkSheetViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -64,12 +65,12 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     LoginViewModel(app, userRepository)
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()
-                isAssignableFrom(ReceiptViewModel::class.java) ->
-                    ReceiptViewModel(context)
+                isAssignableFrom(InvoiceViewModel::class.java) ->
+                    InvoiceViewModel(context)
                 isAssignableFrom(GoodsViewModel::class.java) ->
                     GoodsViewModel()
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
-                    ShowMoreViewModel()
+                    ShowMoreViewModel(app)
                 isAssignableFrom(TaskViewModel::class.java) ->
                     TaskViewModel(app, taskRepository)
                 isAssignableFrom(CheckDateViewModel::class.java) ->
@@ -123,6 +124,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         categoryRepository,
                         supplierRepository
                     )
+                isAssignableFrom(EditWorkSheetViewModel::class.java) ->
+                    EditWorkSheetViewModel(app, userRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

@@ -10,6 +10,7 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ItemStaffBinding
+import net.fpoly.dailymart.utils.ROLE
 import kotlin.math.log
 
 class StaffAdapter(
@@ -45,7 +46,7 @@ class StaffAdapter(
             with(mListStaff[position]) {
                 binding.tvName.text = this.name
                 binding.tvPhone.text = "SĐT: ${this.phoneNumber}"
-                binding.tvRole.text = this.role
+                binding.tvRole.text = getRole(this.role)
                 binding.root.setOnClickListener {
                     onClick(this)
                     Log.d("tuvm", "onBindViewHolder: onclick")
@@ -54,4 +55,13 @@ class StaffAdapter(
         }
     }
 
+    private fun getRole(role: String): String {
+        for (r in ROLE.values()) {
+            if (r.toString() == role) {
+                Log.e("YingMing", "getRole: ${r.name}")
+                return r.value
+            }
+        }
+        return role
+    }
 }
