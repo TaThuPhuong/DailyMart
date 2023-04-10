@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,11 +16,14 @@ class UserRepositoryImpl(
     private val api: UserApi = ServerInstance.apiUser,
     private val coroutineScope: CoroutineDispatcher = Dispatchers.IO
 ) : UserRepository {
+
+    private val TAG = "YingMing"
     override suspend fun login(login: LoginParam): ResponseResult<User> =
         withContext(coroutineScope) {
             try {
                 api.login(login)
             } catch (e: Exception) {
+                Log.e(TAG, "login Exception: $e", )
                 ResponseResult(0, "Đã xảy ra lỗi trong quá trình đăng nhập", null)
             }
         }
@@ -29,6 +33,7 @@ class UserRepositoryImpl(
             try {
                 api.getAllUser2(token)
             } catch (e: Exception) {
+                Log.e(TAG, "getAllUser2 Exception: $e", )
                 ResponseResult(0, "Đã xảy ra lỗi", null)
             }
         }
@@ -41,6 +46,7 @@ class UserRepositoryImpl(
         try {
             api.updateUser(token, id, userParam)
         } catch (e: Exception) {
+            Log.e(TAG, "login Exception: $e", )
             ResponseResult(0, "Đã xảy ra lỗi", null)
         }
     }

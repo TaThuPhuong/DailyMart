@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityProductsBinding
@@ -31,7 +32,11 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     private var mUser: User? = null
 
+    private var mLoadingDialog: LoadingDialog? = null
+
     override fun setupData() {
+        mLoadingDialog = LoadingDialog(this)
+        mLoadingDialog?.showLoading()
         mUser = SharedPref.getUser(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -78,6 +83,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
+            mLoadingDialog?.hideLoading()
             mProductAdapter.setData(it)
             mListProduct = it
         }

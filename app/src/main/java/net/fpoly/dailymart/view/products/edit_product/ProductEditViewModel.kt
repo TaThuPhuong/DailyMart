@@ -27,11 +27,11 @@ class ProductEditViewModel(
 ) : ViewModel() {
     private val TAG = "YingMing"
     private val mToken = SharedPref.getAccessToken(app)
-    private val _product = MutableLiveData(ProductParam())
-    val product: LiveData<ProductParam> = _product
+    private val _product = MutableLiveData(ProductParamUpdate())
+    val product: LiveData<ProductParamUpdate> = _product
     val actionSuccess = MutableLiveData(false)
     val message = MutableLiveData<String>()
-    val checkValidate = MutableLiveData(false)
+    val checkValidate = MutableLiveData(true)
     private var productId = ""
 
     private val _listCategory = MutableLiveData<List<Category>>(ArrayList())
@@ -61,7 +61,7 @@ class ProductEditViewModel(
 
     fun setProduct(product: Product) {
         productId = product.id
-        _product.value = ProductParam(product)
+        _product.value = ProductParamUpdate(product)
     }
 
     fun onEvent(event: ProductEvent) {
@@ -135,43 +135,6 @@ class ProductEditViewModel(
                                 message.postValue("Cập nhập thất bại")
                                 actionSuccess.postValue(false)
                             }
-//                            try {
-//                                ServerInstance.apiProduct.insertProduct(mToken, _product.value!!)
-//                                    .enqueue(object : Callback<ResponseBody> {
-//                                        override fun onResponse(
-//                                            call: Call<ResponseBody>,
-//                                            response: retrofit2.Response<ResponseBody>,
-//                                        ) {
-//                                            if (response.isSuccessful) {
-//                                                message.postValue("Thêm thành công")
-//                                                actionSuccess.postValue(true)
-//                                                Log.e(TAG, "body: ${response.body()?.string()}")
-//                                                Log.e(
-//                                                    TAG,
-//                                                    "errorBody: ${response.errorBody()?.string()}",
-//                                                )
-//                                            } else {
-//                                                message.postValue(response.message())
-//                                                actionSuccess.postValue(false)
-//                                                Log.e(TAG, "body: ${response.body()?.string()}")
-//                                                Log.e(
-//                                                    TAG,
-//                                                    "errorBody: ${response.errorBody()?.string()}",
-//                                                )
-//                                            }
-//                                        }
-//
-//                                        override fun onFailure(
-//                                            call: Call<ResponseBody>,
-//                                            t: Throwable,
-//                                        ) {
-//                                            Log.e(TAG, "onFailure: $t")
-//                                        }
-//                                    })
-//                            } catch (e: Exception) {
-//
-//                            }
-
                         }
                     } else {
                         message.postValue("Chưa nhập đủ dữ liệu")

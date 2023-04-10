@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.model.param
 
+import net.fpoly.dailymart.utils.Constant
 import java.io.Serializable
 
 data class UserModel (
@@ -16,7 +17,7 @@ data class Datum(
     val email: String,
     val phoneNumber: String,
     val deviceID: String,
-    val linkAvt: String
+    val linkAvt: String = Constant.AVATAR_DEFAULT
 ) : Serializable{
     override fun hashCode(): Int {
         val result = _id.hashCode()

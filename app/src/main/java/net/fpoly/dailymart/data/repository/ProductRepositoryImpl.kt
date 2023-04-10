@@ -8,6 +8,7 @@ import net.fpoly.dailymart.data.api.ProductApi
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
+import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.repository.ProductRepository
 
@@ -54,7 +55,7 @@ class ProductRepositoryImpl
     override suspend fun updateProduct(
         token: String,
         id: String,
-        productParam: ProductParam,
+        productParam: ProductParamUpdate,
     ): ResponseResult<Product> = withContext(coroutineScope) {
         try {
             api.updateProduct(token, id, productParam)

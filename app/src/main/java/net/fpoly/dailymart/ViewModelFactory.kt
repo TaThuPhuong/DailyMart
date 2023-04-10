@@ -71,7 +71,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(TaskViewModel::class.java) ->
                     TaskViewModel(app, taskRepository)
                 isAssignableFrom(CheckDateViewModel::class.java) ->
-                    CheckDateViewModel()
+                    CheckDateViewModel(app,productRepository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel()
                 isAssignableFrom(ReportViewModel::class.java) ->
@@ -99,7 +99,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(AddStaffViewModel::class.java) ->
                     AddStaffViewModel(app)
                 isAssignableFrom(ProfileViewModel::class.java) ->
-                    ProfileViewModel()
+                    ProfileViewModel(app, userRepository)
                 isAssignableFrom(MessageViewModel::class.java) ->
                     MessageViewModel()
                 isAssignableFrom(AddProductViewModel::class.java) ->
