@@ -21,10 +21,7 @@ import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.databinding.ActivityEditProductBinding
 import net.fpoly.dailymart.extension.showToast
-import net.fpoly.dailymart.extension.view_extention.getTextOnChange
-import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.hide
-import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.*
 import net.fpoly.dailymart.firbase.storege.Images
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ImagesUtils
@@ -65,6 +62,7 @@ class ProductEditActivity :
             setData(it)
         }
         setEditTextChange()
+        checkPermission()
     }
 
     override fun setupObserver() {
@@ -105,8 +103,11 @@ class ProductEditActivity :
         when (view) {
             binding.imvBack -> finish()
             binding.imvScan -> {
-                binding.cvScanner.visible()
-                checkPermission()
+                if (binding.cvScanner.isShowing()) {
+                    binding.cvScanner.gone()
+                } else {
+                    binding.cvScanner.visible()
+                }
             }
             binding.tvCategory -> {
                 if (mListCategory.isNotEmpty()) {
@@ -179,8 +180,10 @@ class ProductEditActivity :
         codeScanner.isAutoFocusEnabled = true
         codeScanner.isFlashEnabled = false
         codeScanner.decodeCallback = DecodeCallback {
-            binding.edId.setText(it.text)
-            binding.cvScanner.gone()
+            runOnUiThread {
+                binding.edId.setText(it.text)
+                codeScanner.startPreview()
+            }
         }
         codeScanner.errorCallback = ErrorCallback {
             runOnUiThread {

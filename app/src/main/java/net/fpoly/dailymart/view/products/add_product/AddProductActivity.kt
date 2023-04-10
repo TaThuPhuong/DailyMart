@@ -22,10 +22,7 @@ import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.databinding.ActivityAddProductBinding
 import net.fpoly.dailymart.extension.showToast
-import net.fpoly.dailymart.extension.view_extention.getTextOnChange
-import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.hide
-import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.*
 import net.fpoly.dailymart.firbase.storege.Images
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ImagesUtils
@@ -58,6 +55,7 @@ class AddProductActivity :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setEditTextChange()
+        checkPermission()
     }
 
     override fun setupObserver() {
@@ -83,8 +81,11 @@ class AddProductActivity :
         when (v) {
             binding.imvBack -> finish()
             binding.imvScan -> {
-                binding.cvScanner.visible()
-                checkPermission()
+                if (binding.cvScanner.isShowing()) {
+                    binding.cvScanner.gone()
+                } else {
+                    binding.cvScanner.visible()
+                }
             }
             binding.tvCategory -> {
                 if (mListCategory.isNotEmpty()) {
@@ -102,7 +103,7 @@ class AddProductActivity :
                     }.show()
                 }
             }
-            binding.imvAddImage,binding.imvImage -> {
+            binding.imvAddImage, binding.imvImage -> {
                 ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
                     binding.imvAddImage.hide()
                 }
@@ -169,9 +170,11 @@ class AddProductActivity :
         codeScanner.isAutoFocusEnabled = true
         codeScanner.isFlashEnabled = false
         codeScanner.decodeCallback = DecodeCallback {
-            id = it.text
-            binding.edId.setText(it.text)
-            binding.cvScanner.gone()
+            runOnUiThread {
+                id = it.text
+                binding.edId.setText(it.text)
+                codeScanner.startPreview()
+            }
         }
         codeScanner.errorCallback = ErrorCallback {
             runOnUiThread {
@@ -198,10 +201,10 @@ class AddProductActivity :
     }
 
     override fun onResume() {
-        super.onResume()
         if (::codeScanner.isInitialized) {
             codeScanner.startPreview()
         }
+        super.onResume()
     }
 
     override fun onPause() {

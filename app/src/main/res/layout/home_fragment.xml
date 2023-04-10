@@ -116,6 +116,7 @@
                                 android:id="@+id/imv_avatar_toolbar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:scaleType="center"
                                 android:src="@drawable/img_avatar_default" />
                         </androidx.cardview.widget.CardView>
 
@@ -127,6 +128,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/imbplexsans_regular"

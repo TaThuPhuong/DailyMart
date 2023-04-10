@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.view.tab.show_more
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import net.fpoly.dailymart.view.change_password.ChangePasswordActivity
 import net.fpoly.dailymart.view.message.MessageActivity
 import net.fpoly.dailymart.view.profile.ProfileActivity
 import net.fpoly.dailymart.view.report.ReportActivity
+import net.fpoly.dailymart.view.splash.SplashActivity
 import net.fpoly.dailymart.view.staff.StaffActivity
 
 class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentBinding::inflate),
@@ -29,7 +31,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
         binding.layoutMessage.setOnClickListener(this)
         binding.layoutReport.setOnClickListener(this)
         binding.layoutStaff.setOnClickListener(this)
-        binding.layoutUpdateData.setOnClickListener(this)
+        binding.layoutUpdateBankInfo.setOnClickListener(this)
         binding.layoutLogOut.setOnClickListener(this)
     }
 
@@ -56,12 +58,21 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
             binding.layoutMessage -> openActivity(MessageActivity::class.java)
             binding.layoutReport -> openActivity(ReportActivity::class.java)
             binding.layoutStaff -> openActivity(StaffActivity::class.java)
-            binding.layoutUpdateData -> {}
-            binding.layoutLogOut -> {}
+            binding.layoutUpdateBankInfo -> {}
+            binding.layoutLogOut -> logOut()
         }
     }
 
     private fun openActivity(c: Class<*>) {
         startActivity(Intent(mContext, c))
+    }
+
+    private fun logOut() {
+        LogOutConfirmDialog(mContext) {
+            SharedPref.setAccessToken(mContext, "")
+            SharedPref.insertUser(mContext, User())
+            startActivity(Intent(mContext, SplashActivity::class.java))
+            (mContext as Activity).finishAffinity()
+        }.show()
     }
 }
