@@ -94,31 +94,31 @@ class OrderViewModel() : ViewModel() {
         }
     }
 
-    fun getAllProduct(token: String) {
-        viewModelScope.launch {
-            mLoadingDialog.showLoading()
-            try {
-                productRepository.getAllProduct(token)
-                    .enqueue(object : Callback<ListProductResponse> {
-                        override fun onResponse(
-                            call: Call<ListProductResponse>,
-                            response: Response<ListProductResponse>,
-                        ) {
-                            Log.d(TAG, "onResponse: list product: ${response.body()}")
-                            mLoadingDialog.hideLoading()
-                        }
-
-                        override fun onFailure(call: Call<ListProductResponse>, t: Throwable) {
-                            Log.e(TAG, "onFailure: list product: $t")
-                            mLoadingDialog.hideLoading()
-                        }
-                    })
-            } catch (e: Exception) {
-                e.printStackTrace()
-                mLoadingDialog.hideLoading()
-            }
-        }
-    }
+//    fun getAllProduct(token: String) {
+//        viewModelScope.launch {
+//            mLoadingDialog.showLoading()
+//            try {
+//                productRepository.getAllProduct(token)
+//                    .enqueue(object : Callback<ListProductResponse> {
+//                        override fun onResponse(
+//                            call: Call<ListProductResponse>,
+//                            response: Response<ListProductResponse>,
+//                        ) {
+//                            Log.d(TAG, "onResponse: list product: ${response.body()}")
+//                            mLoadingDialog.hideLoading()
+//                        }
+//
+//                        override fun onFailure(call: Call<ListProductResponse>, t: Throwable) {
+//                            Log.e(TAG, "onFailure: list product: $t")
+//                            mLoadingDialog.hideLoading()
+//                        }
+//                    })
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                mLoadingDialog.hideLoading()
+//            }
+//        }
+//    }
 
     @SuppressLint("NullSafeMutableLiveData")
     fun getProduct(id: String, token: String) {

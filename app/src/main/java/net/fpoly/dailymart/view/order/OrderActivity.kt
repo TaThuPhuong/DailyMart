@@ -41,7 +41,6 @@ class OrderActivity :
         binding.lifecycleOwner = this
         viewModel.initLoadDialog(this)
         viewModel.getOrders(token)
-        viewModel.getAllProduct(token)
         setupProductName()
         setupExpiryDate()
         initRecycleView()
