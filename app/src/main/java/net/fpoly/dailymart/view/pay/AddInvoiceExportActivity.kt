@@ -6,7 +6,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.SurfaceHolder
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -27,16 +29,16 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     private val viewModel: AddInvoiceExportViewModel by viewModels { AppViewModelFactory }
     private lateinit var detector: BarcodeDetector
     private lateinit var cameraSource: CameraSource
+    private var barCodeScanner = true
 
-    val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                setupScanner()
-            }
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) setupScanner()
         }
 
     private val surfaceCallBack = object : SurfaceHolder.Callback {
         override fun surfaceCreated(holder: SurfaceHolder) {}
+
         @SuppressLint("MissingPermission")
         override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
             try {
@@ -55,10 +57,12 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     private val processor = object : Detector.Processor<Barcode> {
         override fun release() {}
         override fun receiveDetections(detections: Detector.Detections<Barcode>) {
-            if (detections.detectedItems.isNotEmpty()) {
+            if (detections.detectedItems.isNotEmpty() && barCodeScanner) {
                 val qrCode = detections.detectedItems
                 val code = qrCode.valueAt(0)
+                viewModel.getInvoiceDetail(code.displayValue)
                 viewModel.showSnackbar.postValue(code.displayValue)
+//                barCodeScanner = false
             }
         }
 
@@ -69,7 +73,13 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         binding.lifecycleOwner = this
         setupShowSnackbar()
         setupCheckPermission()
+        setupBtnPayment()
+    }
 
+    private fun setupBtnPayment() {
+        binding.btnPayment.setOnClickListener {
+            setupScanner()
+        }
     }
 
     private fun setupShowSnackbar() {
@@ -78,11 +88,14 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
 
     private fun setupCheckPermission() {
         when {
+            isShouldShowRequest() -> {
+                RequirePermission(requestPermissionLauncher).show(
+                    supportFragmentManager,
+                    TAG_DIALOG
+                )
+            }
             isPermissionDenied() -> {
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-            }
-            isShouldShowRequest() -> {
-                RequirePermission().show(supportFragmentManager, TAG_DIALOG)
             }
             else -> {
                 setupScanner()
@@ -117,14 +130,15 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         )
     }
 
-    inner class RequirePermission : DialogFragment() {
+    class RequirePermission(private val requestPermission: ActivityResultLauncher<String>) :
+        DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             return activity?.let {
                 val builder = AlertDialog.Builder(it)
                 builder.apply {
                     setTitle(DIALOG_TITLE)
                     setMessage(DIALOG_MESSAGE).setPositiveButton(DIALOG_ACCEPT) { dialog, _ ->
-                        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                        requestPermission.launch(Manifest.permission.CAMERA)
                         dialog.dismiss()
                     }
                     setNegativeButton(DIALOG_CANCEL) { dialog, _ ->
@@ -136,11 +150,15 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     }
 
     companion object {
+        const val TAG = "TAG11"
         const val TAG_DIALOG = "TAG1"
+
         const val DIALOG_TITLE = "Cấp quyền truy cập Camera"
         const val DIALOG_MESSAGE = "Daily Mart cần quyền truy cập Camera để quét mã Barcode"
+
         const val DIALOG_ACCEPT = "Cấp quyền"
         const val DIALOG_CANCEL = "Hủy bỏ"
+
         const val PERMISSION_DENIED = "Quyền Camera bị từ chối"
 
 

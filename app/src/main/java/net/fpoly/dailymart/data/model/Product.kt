@@ -66,6 +66,15 @@ data class ProductParamUpdate(
     }
 }
 
+data class ProductInvoiceParam(
+    @SerializedName("idProduct") val idProduct: String = "",
+    @SerializedName("unitPrice") val unitPrice: String = "",
+    @SerializedName("quantityPro") val quantity: Int = 0,
+    @SerializedName("totalPrice") val total : Int = 0,
+    @SerializedName("expiryDate") val expiryDate: Long = 0,
+)
+
+
 fun ProductParam.checkValidate(): Boolean {
     return name.trim().isNotEmpty() && barcode.trim().isNotEmpty() && supplier.trim()
         .isNotEmpty() && category.trim().isNotEmpty() && importPrice != 0 && sellPrice != 0

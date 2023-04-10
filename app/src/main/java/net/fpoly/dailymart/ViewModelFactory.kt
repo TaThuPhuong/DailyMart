@@ -83,7 +83,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(CategoryViewModel::class.java) ->
                     CategoryViewModel(context)
                 isAssignableFrom(AddInvoiceExportViewModel::class.java) ->
-                    AddInvoiceExportViewModel()
+                    AddInvoiceExportViewModel(context)
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel()
                 isAssignableFrom(SupplierViewModel::class.java) ->
