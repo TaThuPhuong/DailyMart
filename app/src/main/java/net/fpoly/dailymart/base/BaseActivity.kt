@@ -26,7 +26,6 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = bindingFactory(layoutInflater)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, windowInsets ->
             window.decorView.updatePadding(bottom = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom)
             windowInsets

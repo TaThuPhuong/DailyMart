@@ -6,18 +6,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.data.model.param.OrderParam
+import net.fpoly.dailymart.data.model.OrderResponse
+import net.fpoly.dailymart.data.model.param.CategoryParam
 import net.fpoly.dailymart.databinding.ItemOrderBinding
 
 class OrderAdapter(
     val mContext: Context,
-    var mListOrder: List<OrderParam> = ArrayList()
+    var mListOrder: List<OrderResponse> = ArrayList(),
+    val onClick: (CategoryParam) -> Unit,
 ) :
     RecyclerView.Adapter<OrderAdapter.ItemView>() {
     class ItemView(val binding: ItemOrderBinding) : ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<OrderParam>) {
+    fun setData(list: List<OrderResponse>) {
         mListOrder = list
         notifyDataSetChanged()
     }
@@ -27,8 +29,8 @@ class OrderAdapter(
             ItemOrderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -36,10 +38,11 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListOrder[position]) {
-//                binding.tvExpiryDate.text = this.dateCreate
-//                binding.tvProductName.text = this.name
-//                binding.tvQuantity.text = "SL: ${this.quantity}"
-//                binding.tvTotalInvoice.text = "Đơn giá: ${this.total}"
+//                binding.tvExpiryDate.text = this.invoiceDetails[0].product
+                binding.tvProductName.text = this.invoiceDetails[0].product.productName
+                binding.tvQuantity.text = "SL: ${this.invoiceDetails[0].quantityProduct}"
+                binding.tvTotalInvoice.text =
+                    "Đơn giá: ${this.invoiceDetails[0].totalPrice}"
             }
         }
     }
