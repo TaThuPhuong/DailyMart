@@ -65,7 +65,6 @@ class StaffViewModel(
                         mLoadingDialog.hideLoading()
                         _user.value = response.body()?.data;
                         Log.d(TAG, "onResponse: " + response.body()?.data)
-//                        Log.d(TAG, "onResponse: " + response.body())
                     } else {
                         Log.d(TAG, "code: " + response.code())
                         Log.d(TAG, "message: " + response.message())
@@ -99,9 +98,7 @@ class StaffViewModel(
                     Log.d(TAG, "Update user res : " + response.errorBody())
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                     mLoadingDialog.hideLoading()
-                    if (activity != null) {
-                        activity.finish()
-                    }
+                    activity?.finish()
                 }
             }
 
