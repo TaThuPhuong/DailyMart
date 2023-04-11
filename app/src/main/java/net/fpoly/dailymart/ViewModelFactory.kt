@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.data.model.param.ForgotPass
 import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
 import net.fpoly.dailymart.view.products.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
+import net.fpoly.dailymart.view.forget_password.ForgetPassViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.main.MainViewModel
@@ -24,6 +26,7 @@ import net.fpoly.dailymart.view.products.edit_product.ProductEditViewModel
 import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
+import net.fpoly.dailymart.view.reset_password.ResetPasswordViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
 import net.fpoly.dailymart.view.staff.StaffActivity
 import net.fpoly.dailymart.view.staff.StaffViewModel
@@ -124,6 +127,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         categoryRepository,
                         supplierRepository
                     )
+                isAssignableFrom(ForgetPassViewModel::class.java) ->
+                    ForgetPassViewModel(app)
+                isAssignableFrom(ResetPasswordViewModel::class.java) ->
+                    ResetPasswordViewModel(app)
                 isAssignableFrom(EditWorkSheetViewModel::class.java) ->
                     EditWorkSheetViewModel(app, userRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

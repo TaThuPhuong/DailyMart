@@ -38,6 +38,12 @@ interface UserApi {
     ): Call<ResponseResult<String>>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("forgot-pass")
+    fun sendOTP(
+        @Body params: SendOtpParam,
+    ): Call<ResponseBody>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")
     fun logout(@Header("Authorization") token: String)
 
