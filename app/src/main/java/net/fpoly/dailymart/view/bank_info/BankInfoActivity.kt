@@ -62,7 +62,7 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
             if (it.code == "00") {
                 it.data?.let { data ->
                     binding.tvAccountName.text = data.accountName
-                    mBankInfo.accountName = data.accountName
+                    mBankInfo.accountName = data.accountName.replace(" ", "%20")
                     mBankInfo.accountNumber = mAccountNumber
                     binding.tvCheckAccount.gone()
                 }
