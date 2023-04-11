@@ -159,7 +159,7 @@ class AddProductViewModel(
                                         }
                                     })
                             } catch (e: Exception) {
-
+                                Log.e(TAG, "Exception: $e", )
                             }
 
                         }

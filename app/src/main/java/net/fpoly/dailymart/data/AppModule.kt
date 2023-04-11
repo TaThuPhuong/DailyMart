@@ -1,5 +1,10 @@
 package net.fpoly.dailymart.data
 
+import android.content.Context
+import android.provider.ContactsContract.Data
+import androidx.annotation.VisibleForTesting
+import androidx.room.Room
+import net.fpoly.dailymart.data.database.Database
 import net.fpoly.dailymart.data.repository.*
 import net.fpoly.dailymart.repository.*
 
@@ -19,6 +24,9 @@ object AppModule {
     @Volatile
     var supplierRepository: SupplierRepository? = null
 
+    @Volatile
+    var notificationRepo: NotificationRepository? = null
+    private var database: Database? = null
     fun providerTaskRepository(): TaskRepository {
         synchronized(this) {
             return taskRepository ?: TaskRepositoryImpl()
@@ -42,9 +50,28 @@ object AppModule {
             return categoryRepository ?: CategoryRepositoryImpl()
         }
     }
+
     fun providerSupplierRepository(): SupplierRepository {
         synchronized(this) {
             return supplierRepository ?: SupplierRepositoryImpl()
         }
+    }
+    private fun createNotificationRepositoryImpl(context: Context): NotificationRepositoryImpl {
+        val database = database ?: createDatabase(context)
+        return NotificationRepositoryImpl(database.notificationDao)
+    }
+
+    fun providerNotificationRepository(context: Context): NotificationRepository {
+        synchronized(this) {
+            return notificationRepo ?:  createNotificationRepositoryImpl(context)
+        }
+    }
+    @VisibleForTesting
+    fun createDatabase(context: Context): Database {
+        return Room.databaseBuilder(
+            context,
+            Database::class.java,
+            Database.DATABASE_NAME
+        ).build()
     }
 }

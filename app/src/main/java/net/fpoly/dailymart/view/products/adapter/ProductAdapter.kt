@@ -50,6 +50,7 @@ class ProductAdapter(
                 binding.tvPrice.text = "Giá bán:\n${this.sellPrice.toMoney()}"
                 Glide.with(mContext).load(this.img_product)
                     .placeholder(R.drawable.img_default)
+                    .error(R.drawable.img_default)
                     .into(binding.imvImage)
                 binding.root.setOnClickListener {
                     onClick(this)

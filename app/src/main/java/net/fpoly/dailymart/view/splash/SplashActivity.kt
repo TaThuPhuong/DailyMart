@@ -33,10 +33,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     openActivity(OnBoardingActivity::class.java)
                 } else {
                     SharedPref.setTimeOnApp(this)
-                    if (SharedPref.getUser(this@SplashActivity)!!.id.isNotEmpty()) {
-                        openActivity(MainActivity::class.java)
-                    } else {
+                    if (SharedPref.getUser(this@SplashActivity).id.isEmpty()) {
                         openActivity(LoginActivity::class.java)
+                    } else {
+                        openActivity(MainActivity::class.java)
                     }
                 }
             }

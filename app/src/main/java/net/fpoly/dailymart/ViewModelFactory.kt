@@ -53,6 +53,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             val productRepository = app.productRepository
             val categoryRepository = app.categoryRepository
             val supplierRepository = app.supplierRepository
+            val notificationRepo = app.notificationRepo
 
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
@@ -64,7 +65,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(LoginViewModel::class.java) ->
                     LoginViewModel(app, userRepository)
                 isAssignableFrom(HomeViewModel::class.java) ->
-                    HomeViewModel()
+                    HomeViewModel(app, taskRepository, notificationRepo)
                 isAssignableFrom(InvoiceViewModel::class.java) ->
                     InvoiceViewModel(context)
                 isAssignableFrom(GoodsViewModel::class.java) ->
@@ -74,7 +75,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(TaskViewModel::class.java) ->
                     TaskViewModel(app, taskRepository)
                 isAssignableFrom(CheckDateViewModel::class.java) ->
-                    CheckDateViewModel(app,productRepository)
+                    CheckDateViewModel(app, productRepository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel()
                 isAssignableFrom(ReportViewModel::class.java) ->
@@ -113,7 +114,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         categoryRepository
                     )
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
-                    TaskDetailViewModel()
+                    TaskDetailViewModel(app,taskRepository)
                 isAssignableFrom(TaskEditViewModel::class.java) ->
                     TaskEditViewModel(app, taskRepository)
                 isAssignableFrom(ProductDetailViewModel::class.java) ->
