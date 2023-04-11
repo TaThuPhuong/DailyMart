@@ -32,6 +32,12 @@ interface UserApi {
     ): Call<ResponseBody>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("sendMail")
+    fun forgotPassword(
+        @Body forgotPass: ForgotPass,
+    ): Call<ResponseResult<String>>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")
     fun logout(@Header("Authorization") token: String)
 

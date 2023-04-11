@@ -74,13 +74,13 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
 
     fun onEvent(event: UserEvent, context: Context) {
         when (event) {
-            is UserEvent.OnNewPass -> {
+            is UserEvent.OnOldPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     oldPass = event.value
                 )
                 _validateOldPass.value = event.value.blankException()
             }
-            is UserEvent.OnOldPass -> {
+            is UserEvent.OnNewPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     newPass = event.value
                 )
@@ -88,7 +88,7 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
             }
             is UserEvent.OnConfirm -> {
                 _changeParam.value = _changeParam.value?.copy(
-                    newPass = event.value
+                    confirmPass = event.value
                 )
                 _validateNewPass.value = event.value.blankException()
             }
