@@ -11,6 +11,7 @@ import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ShowMoreFragmentBinding
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.bank_info.BankInfoActivity
 import net.fpoly.dailymart.view.change_password.ChangePasswordActivity
 import net.fpoly.dailymart.view.message.MessageActivity
 import net.fpoly.dailymart.view.profile.ProfileActivity
@@ -67,7 +68,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
             binding.layoutMessage -> openActivity(MessageActivity::class.java)
             binding.layoutReport -> openActivity(ReportActivity::class.java)
             binding.layoutStaff -> openActivity(StaffActivity::class.java)
-            binding.layoutUpdateBankInfo -> {}
+            binding.layoutUpdateBankInfo -> openActivity(BankInfoActivity::class.java)
             binding.layoutLogOut -> logOut()
         }
     }

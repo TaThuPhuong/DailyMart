@@ -10,6 +10,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivitySplashBinding
+import net.fpoly.dailymart.firbase.database.BankDao
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.login.LoginActivity
@@ -23,6 +24,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     override fun setupData() {
         viewModel.loadSplash()
+        BankDao.getBankInfo {
+            it?.let { bank ->
+                SharedPref.setBankInfo(this, bank)
+            }
+        }
     }
 
     override fun setupObserver() {
