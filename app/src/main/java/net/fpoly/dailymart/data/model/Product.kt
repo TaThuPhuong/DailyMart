@@ -1,5 +1,7 @@
 package net.fpoly.dailymart.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -73,7 +75,40 @@ data class ProductInvoiceParam(
     @SerializedName("quantityPro") var quantity: Int = 0,
     @SerializedName("totalPrice") var total : Int = 0,
     @SerializedName("expiryDate") var expiryDate: Long = 0,
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readLong()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(name)
+        parcel.writeInt(unitPrice)
+        parcel.writeInt(quantity)
+        parcel.writeInt(total)
+        parcel.writeLong(expiryDate)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ProductInvoiceParam> {
+        override fun createFromParcel(parcel: Parcel): ProductInvoiceParam {
+            return ProductInvoiceParam(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ProductInvoiceParam?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 
 fun ProductParam.checkValidate(): Boolean {

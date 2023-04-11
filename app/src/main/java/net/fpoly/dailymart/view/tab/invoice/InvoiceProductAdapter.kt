@@ -42,13 +42,6 @@ class InvoiceProductAdapter(private val viewModel: AddInvoiceExportViewModel) :
     }
 }
 
-@BindingAdapter("productInvoiceItems")
-fun setItems(listView: RecyclerView, items: List<ProductInvoiceParam>?) {
-    items?.let {
-        (listView.adapter as InvoiceProductAdapter).submitList(items)
-    }
-}
-
 class ProductInvoiceDiffCallback : DiffUtil.ItemCallback<ProductInvoiceParam>() {
     override fun areContentsTheSame(
         oldItem: ProductInvoiceParam,

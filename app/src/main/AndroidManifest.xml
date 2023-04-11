@@ -82,7 +82,10 @@
             android:name=".view.category.CategoryActivity"
             android:exported="true" />
         <activity android:name=".view.task.add_new.AddTaskActivity" />
-        <activity android:name=".view.pay.AddInvoiceExportActivity" />
+        <activity
+            android:name=".view.pay.AddInvoiceExportActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".view.payment.PaymentActivity" />
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity android:name=".view.products.ProductsActivity" />
@@ -120,8 +123,7 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"/>
-
+        android:required="false" />
 
 
 </manifest>

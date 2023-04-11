@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="net.fpoly.dailymart.view.pay.AddInvoiceExportViewModel" />
@@ -68,7 +68,10 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_remove_detail_invoice" />
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{() -> viewModel.minusProduct(product)}"
+                    android:src="@drawable/ic_remove_detail_invoice"
+                    tools:ignore="UnusedAttribute" />
 
                 <EditText
                     android:id="@+id/ed_quantity"
@@ -79,7 +82,7 @@
                     android:fontFamily="@font/imbplexsans_regular"
                     android:inputType="number"
                     android:minWidth="6dp"
-                    android:onTextChanged="@{() -> viewModel.onTextQualityProductChange(edQuantity, product)}"
+                    android:afterTextChanged="@{() -> viewModel.onTextQualityProductChange(edQuantity, product)}"
                     android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(product.quantity)}"
                     android:textColor="@color/gray_medium"
                     android:textSize="12sp" />
@@ -87,7 +90,10 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_add_detail_invoice" />
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{() -> viewModel.plusProduct(product)}"
+                    android:src="@drawable/ic_add_detail_invoice"
+                    tools:ignore="UnusedAttribute" />
             </LinearLayout>
 
             <TextView

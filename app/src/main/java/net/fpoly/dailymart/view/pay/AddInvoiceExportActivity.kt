@@ -23,6 +23,8 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.extension.view_extention.hideKeyboard
+import net.fpoly.dailymart.utils.convertTotalInvoiceNumber
 import net.fpoly.dailymart.view.tab.invoice.InvoiceProductAdapter
 
 class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate) {
@@ -64,6 +66,7 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
                 val code = qrCode.valueAt(0)
                 viewModel.getInvoiceDetail(code.displayValue)
                 viewModel.showSnackbar.postValue(code.displayValue)
+                this@AddInvoiceExportActivity.hideKeyboard()
                 barCodeScanner = false
             }
         }
@@ -78,6 +81,7 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
             .setAutoFocusEnabled(true)
             .build()
 
+        setupBtnBack()
         setupShowSnackbar()
         setupCheckPermission()
         setupBtnPayment()
@@ -85,17 +89,33 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         setupListInvoiceDetail()
     }
 
+    private fun setupBtnBack() {
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
     private fun setupListInvoiceDetail() {
         invoiceAdapter = InvoiceProductAdapter(viewModel)
         binding.listInvoiceDetail.adapter = invoiceAdapter
+        viewModel.invoiceDetails.observe(this) { params ->
+            val totalBill = params.sumOf { it.total }
+            viewModel.totalInvoice = totalBill.toLong()
+            binding.tvTotalBill.text = convertTotalInvoiceNumber(totalBill.toLong())
+            invoiceAdapter.submitList(params)
+            invoiceAdapter.notifyItemRangeChanged(0, params.size)
+        }
     }
 
     private fun setupSearchBarcode() {
         viewModel.listProductName.observe(this) {
             val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
             binding.edSearchBarcode.setAdapter(adapter)
-            binding.edSearchBarcode.setOnItemClickListener { parent, view, position, id ->
+            binding.edSearchBarcode.setOnItemClickListener { parent, _, position, _ ->
                 viewModel.getInvoiceDetail(parent.getItemAtPosition(position).toString())
+                binding.edSearchBarcode.setText("")
+                barCodeScanner = true
+                this.hideKeyboard()
             }
         }
     }
@@ -169,6 +189,10 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         }
     }
 
+    fun setScanBarcodeTrue() {
+        barCodeScanner = true
+    }
+
     companion object {
         const val TAG = "TAG11"
         const val TAG_DIALOG = "TAG1"
@@ -180,6 +204,7 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         const val DIALOG_CANCEL = "Hủy bỏ"
 
         const val PERMISSION_DENIED = "Quyền Camera bị từ chối"
+        const val TAG_FINAL_INVOICE = "TAG_FINAL_INVOICE"
 
 
     }
