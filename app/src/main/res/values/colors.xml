@@ -9,12 +9,16 @@
     <color name="pink_primary">#FF6E6A</color>
     <color name="mark_color">#5BFF6E6A</color>
 
+    <color name="gray_D6D6D6">#D6D6D6</color>
     <color name="gray_light">#9D9FA1</color>
     <color name="gray_medium">#505050</color>
     <color name="gray_primary">#282828</color>
 
     <color name="green_light">#A6D3A8</color>
+    <color name="blue">#85DBEE</color>
     <color name="blue_light">#A1C4FD</color>
+    <color name="blue_medium">#8DBBFF</color>
+    <color name="blue_primary">#7896FF</color>
     <color name="un_color">#00FFFFFF</color>
 
 

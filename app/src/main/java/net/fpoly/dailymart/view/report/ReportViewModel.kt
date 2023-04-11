@@ -34,9 +34,6 @@ class ReportViewModel : ViewModel() {
                         call: Call<ReportResponse>,
                         response: Response<ReportResponse>,
                     ) {
-                        response.body()!!.data.forEach {
-                            Log.d(TAG, "onResponse: data: ${it.data}")
-                        }
                         _listReport.value = response.body()
                         mLoadingDialog.hideLoading()
                     }
@@ -51,5 +48,9 @@ class ReportViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun showDialogFilter(context: Context){
+        FilterDialog(context, this).show()
     }
 }

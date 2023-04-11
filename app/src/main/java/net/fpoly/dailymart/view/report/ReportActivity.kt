@@ -16,20 +16,14 @@ import com.github.mikephil.charting.listener.BarLineChartTouchListener
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.model.ReportData
+import net.fpoly.dailymart.data.model.ReportPrice
 import net.fpoly.dailymart.databinding.ActivityReportBinding
 import net.fpoly.dailymart.extension.CustomBarChartRender
 import net.fpoly.dailymart.extension.CustomMarkerChartView
 import net.fpoly.dailymart.extention.CheckTimeUtils
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
-data class DoanhThu(
-    var soTien: Long = 0,
-    var time: Long = 0,
-)
 
 class ReportActivity :
     BaseActivity<ActivityReportBinding>(ActivityReportBinding::inflate),
@@ -45,65 +39,36 @@ class ReportActivity :
     private var typeChart = ""
     private val formatter = SimpleDateFormat("dd/MM/yyyy")
 
-    private var listReport = ArrayList<ReportData>()
+    private var mlistReport = ArrayList<ReportPrice>()
     private var token =
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzBmNWQ0NTNlNmZhNTlhNzhkMGZmOSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjgwOTMwMzU5LCJleHAiOjE3NjcyNDM5NTl9.bZqZ1ydZ-6QykLY78A8EmRUTsNZTTVUyLB-H56wbi7M"
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-//        fakeData()
-        initCharView(listReport)
         viewModel.initLoadDialog(this)
+        initCharView()
     }
 
     override fun setupObserver() {
-        viewModel.getReport(token, mMonth)
-        viewModel.listReport.observe(this) {
-            listReport = it!!.data
-        }
     }
 
     override fun setOnClickListener() {
         super.setOnClickListener()
         binding.imvBack.setOnClickListener(this)
-        binding.imvReportViewLastTimeChart.setOnClickListener(this)
-        binding.imvReportViewNextTimeChart.setOnClickListener(this)
+        binding.layoutFilter.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when (view) {
             binding.imvBack -> finish()
-            binding.imvReportViewLastTimeChart -> {
-                Log.d(TAG, "onClick: click")
-                if (mMonth == 0) {
-                    setUpMonthlyChart(11, mYear - 1, listReport)
-                } else {
-                    setUpMonthlyChart(mMonth - 1, mYear, listReport)
-                }
-            }
-            binding.imvReportViewNextTimeChart -> {
-                if (mMonth == 11) {
-                    setUpMonthlyChart(0, mYear + 1, listReport)
-                } else {
-                    setUpMonthlyChart(mMonth + 1, mYear, listReport)
-                }
+            binding.layoutFilter -> {
+
             }
         }
     }
 
-    private fun getMilliFromDate(dateFormat: String?): Long {
-        var date = Date()
-        val formatter = SimpleDateFormat("dd/MM/yyyy")
-        try {
-            date = formatter.parse(dateFormat)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return date.time
-    }
-
-    private fun initCharView(listDoanhThu: ArrayList<ReportData>) {
+    private fun initCharView() {
         binding.barChart.setDrawBarShadow(false)
         binding.barChart.description.isEnabled = false
         binding.barChart.setDrawGridBackground(false)
@@ -144,23 +109,31 @@ class ReportActivity :
         val rightAxis = binding.barChart.axisRight
         rightAxis.isEnabled = false
         val calendarToday = Calendar.getInstance()
-        setUpMonthlyChart(
-            calendarToday[Calendar.MONTH],
-            calendarToday[Calendar.YEAR],
-            listDoanhThu,
-        )
+        viewModel.getReport(token, calendarToday[Calendar.MONTH] + 1)
+        viewModel.listReport.observe(this) {
+            mlistReport = it!!.data.totalByDay
+            binding.tvTotalExport.text = "${it.data.totalMonth} VND"
+            setUpMonthlyChart(
+                calendarToday[Calendar.MONTH],
+                calendarToday[Calendar.YEAR],
+                mlistReport,
+            )
+        }
     }
 
     private fun setUpMonthlyChart(
         month: Int,
         year: Int,
-        listReport: List<ReportData>,
+        listReport: List<ReportPrice>,
     ) {
+        Log.d(TAG, "setUpMonthlyChart: $listReport")
+
         (binding.barChart.onTouchListener as BarLineChartTouchListener).stopDeceleration()
         mMonth = month
         mYear = year
+        Log.d(TAG, "setUpMonthlyChart: $mMonth")
         typeChart = "MONTHLY"
-        binding.txvReportViewTimeChart.text =
+        binding.tvFilter.text =
             CheckTimeUtils.mDecimalFormat.format(month + 1).toString() + "/" + year
         val calendar = Calendar.getInstance()
         calendar[Calendar.DAY_OF_MONTH] = 1
