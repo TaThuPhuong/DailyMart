@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.data.model.DetailInvoice
-import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.databinding.ItemDetailInvoiceBinding
 
 class DetailInvoiceAdapter(private val viewModel: InvoiceViewModel) :

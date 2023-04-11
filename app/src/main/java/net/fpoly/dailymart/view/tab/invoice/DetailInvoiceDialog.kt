@@ -1,7 +1,6 @@
 package net.fpoly.dailymart.view.tab.invoice
 
 import android.content.Context
-import android.content.DialogInterface
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.BaseDialog
 import net.fpoly.dailymart.data.model.Invoice

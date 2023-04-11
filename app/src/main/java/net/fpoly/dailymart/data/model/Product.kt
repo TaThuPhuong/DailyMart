@@ -67,11 +67,12 @@ data class ProductParamUpdate(
 }
 
 data class ProductInvoiceParam(
-    @SerializedName("idProduct") val idProduct: String = "",
-    @SerializedName("unitPrice") val unitPrice: String = "",
-    @SerializedName("quantityPro") val quantity: Int = 0,
-    @SerializedName("totalPrice") val total : Int = 0,
-    @SerializedName("expiryDate") val expiryDate: Long = 0,
+    @SerializedName("idProduct") val id: String = "",
+    @SerializedName("name") var name: String = "",
+    @SerializedName("unitPrice") var unitPrice: Int = 0,
+    @SerializedName("quantityPro") var quantity: Int = 0,
+    @SerializedName("totalPrice") var total : Int = 0,
+    @SerializedName("expiryDate") var expiryDate: Long = 0,
 )
 
 

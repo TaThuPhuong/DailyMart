@@ -1,17 +1,14 @@
 package net.fpoly.dailymart.view.tab.invoice
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Invoice
-import net.fpoly.dailymart.data.model.InvoiceDetail
 import net.fpoly.dailymart.data.model.InvoiceType
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.repository.InvoiceRepositoryImpl
 import net.fpoly.dailymart.repository.InvoiceRepository
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.main.MainActivity
 
 class InvoiceViewModel(context: Context) : ViewModel() {
 
@@ -71,10 +68,6 @@ class InvoiceViewModel(context: Context) : ViewModel() {
 
     fun detailInvoice(context: Context, invoice: Invoice) {
         DetailInvoiceDialog(context, this, invoice).show()
-    }
-
-    fun addNewInvoice(context: Context) {
-
     }
 
     private fun isShowEmptyList(): Boolean {

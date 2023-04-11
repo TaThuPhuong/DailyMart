@@ -6,8 +6,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.SurfaceHolder
+import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -23,6 +23,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.view.tab.invoice.InvoiceProductAdapter
 
 class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate) {
 
@@ -30,6 +31,7 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     private lateinit var detector: BarcodeDetector
     private lateinit var cameraSource: CameraSource
     private var barCodeScanner = true
+    private lateinit var invoiceAdapter: InvoiceProductAdapter
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -57,12 +59,12 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     private val processor = object : Detector.Processor<Barcode> {
         override fun release() {}
         override fun receiveDetections(detections: Detector.Detections<Barcode>) {
-            if (detections.detectedItems.isNotEmpty() && barCodeScanner) {
+            if (barCodeScanner && detections.detectedItems.isNotEmpty()) {
                 val qrCode = detections.detectedItems
                 val code = qrCode.valueAt(0)
                 viewModel.getInvoiceDetail(code.displayValue)
                 viewModel.showSnackbar.postValue(code.displayValue)
-//                barCodeScanner = false
+                barCodeScanner = false
             }
         }
 
@@ -71,9 +73,31 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        detector = BarcodeDetector.Builder(this).build()
+        cameraSource = CameraSource.Builder(this, detector)
+            .setAutoFocusEnabled(true)
+            .build()
+
         setupShowSnackbar()
         setupCheckPermission()
         setupBtnPayment()
+        setupSearchBarcode()
+        setupListInvoiceDetail()
+    }
+
+    private fun setupListInvoiceDetail() {
+        invoiceAdapter = InvoiceProductAdapter(viewModel)
+        binding.listInvoiceDetail.adapter = invoiceAdapter
+    }
+
+    private fun setupSearchBarcode() {
+        viewModel.listProductName.observe(this) {
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+            binding.edSearchBarcode.setAdapter(adapter)
+            binding.edSearchBarcode.setOnItemClickListener { parent, view, position, id ->
+                viewModel.getInvoiceDetail(parent.getItemAtPosition(position).toString())
+            }
+        }
     }
 
     private fun setupBtnPayment() {
@@ -104,10 +128,6 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
     }
 
     private fun setupScanner() {
-        detector = BarcodeDetector.Builder(this).build()
-        cameraSource = CameraSource.Builder(this, detector)
-            .setAutoFocusEnabled(true)
-            .build()
         binding.scannerZone.holder.addCallback(surfaceCallBack)
         detector.setProcessor(processor)
     }

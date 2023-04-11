@@ -27,4 +27,5 @@ interface InvoiceApi {
 
     @DELETE("invoice/{id}")
     suspend fun removeInvoice(@Header("Authorization") token: String, @Path("id") id: String): ResultData<Unit>
+
 }
