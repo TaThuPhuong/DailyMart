@@ -19,9 +19,12 @@ import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
 import net.fpoly.dailymart.view.task.TaskActivity
 
 @RequiresApi(Build.VERSION_CODES.M)
-fun createNotification(context: Context, title: String, message: String) {
+fun createNotification(context: Context, title: String, message: String, value: String?) {
 
     val intent = Intent(context, TaskActivity::class.java)
+    value?.let {
+        intent.putExtra(Constant.TASK, it)
+    }
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -38,10 +41,10 @@ fun createNotification(context: Context, title: String, message: String) {
     notificationManager.notify(SharedPref.getNotificationId(context), notification)
 }
 
-suspend fun sendNotification(title: String, message: String, to: String) =
+suspend fun sendNotification(title: String, message: String, value: String, to: String) =
     withContext(Dispatchers.IO) {
         try {
-            val data = NotificationData(Data(title, message), to)
+            val data = NotificationData(Data(title, message, value), to)
             RetrofitInstance.apiPutNotification.postNotification(data)
         } catch (e: Exception) {
             Log.e("YingMing", "sendNotification: $e")

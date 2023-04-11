@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="false"
         tools:targetApi="31">
         <activity
             android:name=".view.splash.SplashActivity"
@@ -101,7 +102,7 @@
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"
-            android:exported="false"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

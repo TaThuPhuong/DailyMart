@@ -99,7 +99,8 @@ class AddTaskViewModel(
                             sendNotification(
                                 "Bạn vừa giao 1 nhiệm vụ mới",
                                 _task.value!!.title,
-                                _deviceId.value!!
+                                _deviceId.value!!,
+                                res.data!!.id
                             )
                             message.postValue(res.message!!)
                             addSuccess.postValue(true)

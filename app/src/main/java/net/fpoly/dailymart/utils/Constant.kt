@@ -10,6 +10,7 @@ class Constant {
         const val CONTENT_TYPE = "application/json"
         const val CHANNEL_ID = "Daily mart"
         const val TASK = "task"
+        const val TASK_ID = "task_id"
         const val PRODUCT = "product"
         const val TIME = "time"
         const val WORK_SHEET = "work_sheet"

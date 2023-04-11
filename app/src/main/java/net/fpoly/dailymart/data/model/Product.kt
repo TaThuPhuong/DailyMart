@@ -23,13 +23,13 @@ data class Product(
 }
 
 data class ProductParam(
-    @SerializedName("name") var name: String = "",
+    @SerializedName("productName") var name: String = "",
     @SerializedName("barcode") var barcode: String = "",
     @SerializedName("supplier") var supplier: String = "",
     @SerializedName("industry") var category: String = "",
     @SerializedName("importPrice") var importPrice: Int = 0,
     @SerializedName("sellPrice") var sellPrice: Int = 0,
-    @SerializedName("imageProduct") var imageProduct: String = "",
+    @SerializedName("image_product") var imageProduct: String = "",
     @SerializedName("unit") var unit: String = "",
 ) {
     constructor(product: Product) : this() {
