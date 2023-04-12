@@ -109,7 +109,7 @@ class ReportActivity :
         val rightAxis = binding.barChart.axisRight
         rightAxis.isEnabled = false
         val calendarToday = Calendar.getInstance()
-        viewModel.getReport(token, calendarToday[Calendar.MONTH] + 1)
+        viewModel.getImport(token, calendarToday[Calendar.MONTH] + 1)
         viewModel.listReport.observe(this) {
             mlistReport = it!!.data.totalByDay
             binding.tvTotalExport.text = "${it.data.totalMonth} VND"

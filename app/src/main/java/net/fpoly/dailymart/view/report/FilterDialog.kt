@@ -1,7 +1,7 @@
 package net.fpoly.dailymart.view.report
 
 import android.content.Context
-import android.util.Log
+import androidx.core.view.isVisible
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseBottomDialog
 import net.fpoly.dailymart.databinding.DialogFilterReportBinding
@@ -20,7 +20,6 @@ class FilterDialog(
         var filterTime = ""
         var maxDayInMonths =
             getMaxDayInMonths(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR))
-        Log.d(TAG, "initData: max day: $maxDayInMonths")
 
         binding.pickerDate.minValue = 1
         binding.pickerDate.maxValue = maxDayInMonths
@@ -69,17 +68,19 @@ class FilterDialog(
             binding.pickerMonth.value = 0
         }
         binding.btnFilter.setOnClickListener {
-            if (binding.pickerDate.value != 0 && binding.pickerMonth.value != 0 && binding.pickerYear.value != 0) {
-                filterTime = "${binding.pickerDate.value} / ${binding.pickerMonth.value} / ${binding.pickerYear.value}"
-                Log.d(TAG, "initData: filterTime: $filterTime")
+            if (binding.pickerMonth.isVisible && binding.pickerDate.isVisible && binding.pickerYear.isVisible) {
+                filterTime =
+                    "${binding.pickerDate.value} / ${binding.pickerMonth.value} / ${binding.pickerYear.value}"
+                viewModel
+                dismiss()
             }
-            if (binding.pickerDate.value == 0) {
+            if (!binding.pickerDate.isVisible && binding.pickerMonth.isVisible && binding.pickerYear.isVisible) {
                 filterTime = "${binding.pickerMonth.value}"
-                Log.d(TAG, "initData: filterTime: $filterTime")
+                dismiss()
             }
-            if (binding.pickerDate.value == 0 && binding.pickerMonth.value == 0) {
+            if (!binding.pickerDate.isVisible && !binding.pickerMonth.isVisible && binding.pickerYear.isVisible) {
                 filterTime = "${binding.pickerYear.value}"
-                Log.d(TAG, "initData: filterTime: $filterTime")
+                dismiss()
             }
         }
         binding.imvClose.setOnClickListener {
