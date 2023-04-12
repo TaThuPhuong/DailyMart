@@ -4,6 +4,7 @@ import android.Manifest
 import net.fpoly.dailymart.R
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.view.SurfaceHolder
 import android.widget.ArrayAdapter
@@ -12,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
+import androidx.core.view.isVisible
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -20,9 +22,12 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityOrderBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.hideKeyboard
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
+import net.fpoly.dailymart.view.payment.PaymentActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +39,7 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
     private lateinit var cameraSource: CameraSource
     private var barCodeScanner = false
     private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var adapter: OrderAdapter
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -64,6 +70,8 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
             if (barCodeScanner && detections.detectedItems.isNotEmpty()) {
                 val qrCode = detections.detectedItems
                 val code = qrCode.valueAt(0)
+                viewModel.getProduct(code.displayValue)
+                barCodeScanner = true
                 this@OrderActivity.hideKeyboard()
             }
         }
@@ -82,6 +90,18 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
         setupBtnScan()
         setupSearchBarcode()
         setupCalenderPicker()
+        setupOrderList()
+    }
+
+    private fun setupOrderList() {
+        adapter = OrderAdapter(this, viewModel)
+        binding.listProducts.adapter = adapter
+        viewModel.invoiceProducts.observe(this) {
+            barCodeScanner = true
+            val new = it.toMutableList()
+            adapter.submitList(new)
+            this.hideKeyboard()
+        }
     }
 
     private fun setupCalenderPicker() {
@@ -96,7 +116,7 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
     }
 
     private fun onSelectedDate(calendar: Calendar, year: Int, month: Int, dayOfMonth: Int) {
-        calendar.set(year, month+1, dayOfMonth)
+        calendar.set(year, month + 1, dayOfMonth)
         val selectedDate =
             SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time)
         binding.edExpiry.setText(selectedDate)
@@ -104,6 +124,10 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
 
     private fun setupBtnScan() {
         binding.openScanner.setOnClickListener {
+            if (binding.cardScan.isVisible) {
+                binding.cardScan.gone()
+                return@setOnClickListener
+            }
             barCodeScanner = true
             binding.cardScan.visible()
         }
@@ -116,8 +140,14 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
     override fun setupObserver() {
         viewModel.currentProduct.observe(this) {
             binding.edName.setText(it.name)
-            binding.edBarcode.setText(it.barcode)
             binding.edQuantity.setText("1")
+        }
+        viewModel.eventDone.observe(this) {
+            Intent(this, MainActivity::class.java).also {
+                it.putExtra(MainActivity.MAIN_EVENT, PaymentActivity.NEW_INVOICE_CREATE)
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(it)
+            }
         }
     }
 
@@ -164,7 +194,6 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
             binding.edBarcode.setAdapter(adapter)
             binding.edBarcode.setOnItemClickListener { parent, _, position, _ ->
                 viewModel.getProduct(parent.getItemAtPosition(position).toString())
-                barCodeScanner = true
                 this.hideKeyboard()
             }
         }

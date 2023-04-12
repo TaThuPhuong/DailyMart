@@ -55,5 +55,10 @@
     <string name="name_customer">Khách lẻ</string>
 
     <string name="cover_vnd">%s VNĐ</string>
+    <string name="unit_price_cover_vnd">Đơn giá: %s VNĐ</string>
+    <string name="quantity_cover">SL: %d</string>
+    <string name="expiry_cover">HSD: %s</string>
+
+
 
 </resources>

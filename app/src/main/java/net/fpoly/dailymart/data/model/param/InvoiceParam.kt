@@ -8,7 +8,7 @@ import net.fpoly.dailymart.data.model.ProductInvoiceParam
 @Parcelize
 class InvoiceParam(
     @SerializedName("idUser") var idUser: String = "",
-    @SerializedName("idCustomer") var idCustomer: String = "",
+    @SerializedName("idCustomer") var idCustomer: String = "642d285acf62ee68ba804759",
     @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
     @SerializedName("invoiceType") var invoiceType: String = "",
     @SerializedName("totalBill") var totalBill: Long = 0,

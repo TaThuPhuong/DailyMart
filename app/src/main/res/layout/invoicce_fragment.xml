@@ -209,7 +209,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="@{viewModel.isShowEmptyList ? View.VISIBLE : View.GONE}">
+                set_visible="@{viewModel.isShowEmptyList}">
 
                 <ImageView
                     android:layout_width="200dp"

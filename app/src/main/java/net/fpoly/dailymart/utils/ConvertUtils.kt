@@ -38,3 +38,5 @@ fun convertTimeInMillisToLastTimeString(timeInMillis: Long): String {
 fun takeLastId(id: String) : String {
     return id.takeLast(10)
 }
+
+fun toString(number: Long) = number.toString()
