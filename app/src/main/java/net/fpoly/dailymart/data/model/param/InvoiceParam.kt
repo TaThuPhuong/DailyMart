@@ -1,4 +1,15 @@
 package net.fpoly.dailymart.data.model.param
 
-class InvoiceParam {
-}
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import net.fpoly.dailymart.data.model.ProductInvoiceParam
+
+@Parcelize
+class InvoiceParam(
+    @SerializedName("idUser") var idUser: String = "",
+    @SerializedName("idCustomer") var idCustomer: String = "",
+    @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
+    @SerializedName("invoiceType") var invoiceType: String = "",
+    @SerializedName("totalBill") var totalBill: Long = 0,
+) : Parcelable

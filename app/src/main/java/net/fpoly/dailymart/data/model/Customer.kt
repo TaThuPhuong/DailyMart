@@ -8,3 +8,9 @@ data class Customer(
     @SerializedName("customerName") val name: String = "",
     @SerializedName("customerPhone") val phoneNumber: String = "",
 )
+
+data class CustomerParam(
+    @SerializedName("customerName") val name: String = "",
+    @SerializedName("customerPhone") val phoneNumber: String = "",
+
+)

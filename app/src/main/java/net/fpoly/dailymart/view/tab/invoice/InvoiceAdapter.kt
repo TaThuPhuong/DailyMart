@@ -39,7 +39,7 @@ class InvoiceAdapter(private val viewModel: InvoiceViewModel) : ListAdapter<Invo
     }
 }
 
-@BindingAdapter("app:items")
+@BindingAdapter("items")
 fun setItems(listView: RecyclerView, items: List<Invoice>?) {
     items?.let {
         (listView.adapter as InvoiceAdapter).submitList(items)

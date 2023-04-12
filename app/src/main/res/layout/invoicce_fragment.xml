@@ -150,7 +150,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="@{()->viewModel.onOpenTab(InvoiceViewModel.TAB_DEDUCTION)}"
+                    android:onClick="@{()->viewModel.onOpenTab(InvoiceViewModel.TAB_REFUND)}"
                     android:orientation="vertical">
 
                     <TextView
@@ -159,8 +159,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="6dp"
                         android:fontFamily="@font/imbplexsans_medium"
-                        android:text="Trừ tiền"
-                        android:textColor="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? @color/pink_primary : @color/gray_medium}"
+                        android:text="Hoàn tiền"
+                        android:textColor="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_REFUND ? @color/pink_primary : @color/gray_medium}"
                         android:textSize="14sp" />
 
                     <View
@@ -168,7 +168,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginHorizontal="6dp"
-                        android:background="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? @drawable/bg_line_pink_primary : @drawable/bg_line_gray_medium }" />
+                        android:background="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_REFUND ? @drawable/bg_line_pink_primary : @drawable/bg_line_gray_medium }" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_filter"
                 android:layout_marginTop="14dp"
-                android:visibility="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_REFUND ? View.VISIBLE : View.GONE}"
                 app:items="@{viewModel.invoiceDeduction}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

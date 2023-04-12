@@ -4,13 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import java.io.Serializable
 
 data class User(
     @ColumnInfo(name = "id") @SerializedName("_id") val id: String = "",
     @ColumnInfo(name = "full_name") @SerializedName("name") var name: String = "",
-    @ColumnInfo(name = "avatar") @SerializedName("linkAvt") var avatar: String = "",
+    @ColumnInfo(name = "avatar") @SerializedName("linkAvt") var avatar: String = Constant.AVATAR_DEFAULT,
     @ColumnInfo(name = "email") @SerializedName("email") var email: String = "",
     @ColumnInfo(name = "phone") @SerializedName("phoneNumber") var phone: String = "",
     @ColumnInfo(name = "role") @SerializedName("role") var role: ROLE = ROLE.staff,
@@ -26,7 +27,7 @@ data class UserRes(
     @SerializedName("phoneNumber") var phoneNumber: String = "",
     @SerializedName("status") var status: Boolean = true,
     @SerializedName("role") var role: ROLE = ROLE.staff,
-    @SerializedName("linkAvt") var linkAvt: String = "",
+    @SerializedName("linkAvt") var linkAvt: String = Constant.AVATAR_DEFAULT,
     @SerializedName("deviceId") var deviceId: String = "",
 ) {
     constructor(user: User) : this() {

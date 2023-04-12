@@ -35,12 +35,6 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
     val loginSuccess = MutableLiveData(false)
     val message = MutableLiveData<String>()
 
-    private lateinit var mLoadingDialog: LoadingDialog
-
-    fun initLoadDialog(context: Context) {
-        mLoadingDialog = LoadingDialog(context)
-    }
-
     fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.ShowPassword -> {
@@ -61,7 +55,6 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
             is LoginEvent.Login -> {
                 _loginParam.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
                         login(it)
                     } else {
                         _validatePhone.value = it.phoneNumber.blankException()

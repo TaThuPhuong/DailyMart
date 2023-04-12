@@ -18,10 +18,6 @@ data class Invoice(
     fun typeToString(context: Context): String {
         return context.getString(InvoiceType.valueOf(type).value)
     }
-
-    fun createAtToDate() {
-
-    }
 }
 
 data class DetailInvoice(
@@ -49,7 +45,7 @@ data class DetailProductInvoice(
 enum class InvoiceType(val value: Int) {
     IMPORT(R.string.invoice_import),
     EXPORT(R.string.invoice_sell),
-    DEDUCTION(R.string.invoice_deduction)
+    REFUND(R.string.invoice_deduction)
 }
 
 enum class CustomerName(val value: Int) {

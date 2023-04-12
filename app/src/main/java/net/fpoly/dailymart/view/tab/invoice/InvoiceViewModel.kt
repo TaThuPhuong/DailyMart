@@ -23,11 +23,14 @@ class InvoiceViewModel(context: Context) : ViewModel() {
 
     val invoiceImport = invoices.switchMap { filterInvoice(it, InvoiceType.IMPORT) }
     val invoiceSell = invoices.switchMap { filterInvoice(it, InvoiceType.EXPORT) }
-    val invoiceDeduction = invoices.switchMap { filterInvoice(it, InvoiceType.DEDUCTION) }
+    val invoiceDeduction = invoices.switchMap { filterInvoice(it, InvoiceType.REFUND) }
 
     val showSnackbar = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
     val isShowEmptyList = MutableLiveData(false)
+    val isRefund = MutableLiveData(false)
+
+    private lateinit var invoiceRefund : Invoice
 
     init {
         viewModelScope.launch { getAllInvoice() }
@@ -67,25 +70,26 @@ class InvoiceViewModel(context: Context) : ViewModel() {
         DetailInvoiceDialog(context, this, invoice).show()
     }
 
-    fun addNewInvoice(context: Context) {
-
-    }
-
     private fun isShowEmptyList(): Boolean {
         val isShow = when {
             openTabReceipt.value == TAB_EXPORT && invoiceSell.value.isNullOrEmpty() -> true
             openTabReceipt.value == TAB_IMPORT && invoiceImport.value.isNullOrEmpty() -> true
-            openTabReceipt.value == TAB_DEDUCTION && invoiceDeduction.value.isNullOrEmpty() -> true
+            openTabReceipt.value == TAB_REFUND && invoiceDeduction.value.isNullOrEmpty() -> true
             else -> false
         }
         isShowEmptyList.value = isShow
         return isShow
     }
 
+    fun refundInvoice(invoice: Invoice){
+        isRefund.value = true
+        invoiceRefund = invoice
+    }
+
     companion object {
         const val TAG = "ReceiptViewModel"
         const val TAB_EXPORT = 1
         const val TAB_IMPORT = 2
-        const val TAB_DEDUCTION = 3
+        const val TAB_REFUND = 3
     }
 }

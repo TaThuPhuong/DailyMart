@@ -48,7 +48,7 @@ class SupplierDiffCallback : DiffUtil.ItemCallback<Supplier>() {
     }
 }
 
-@BindingAdapter("app:supplierItems")
+@BindingAdapter("supplierItems")
 fun setItemsSupplier(list: RecyclerView, items: List<Supplier>?){
     items?.let {
         (list.adapter as SupplierAdapter).submitList(items)

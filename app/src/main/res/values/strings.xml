@@ -54,5 +54,6 @@
     <string name="type_invoice">Kiểu hóa đơn: %s</string>
     <string name="name_customer">Khách lẻ</string>
 
+    <string name="cover_vnd">%s VNĐ</string>
 
 </resources>

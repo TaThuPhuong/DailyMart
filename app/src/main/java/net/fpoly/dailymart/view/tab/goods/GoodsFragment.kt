@@ -30,6 +30,9 @@ class GoodsFragment : BaseFragment<GoodsFragmentBinding>(GoodsFragmentBinding::i
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.imvBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     override fun setupObserver() {

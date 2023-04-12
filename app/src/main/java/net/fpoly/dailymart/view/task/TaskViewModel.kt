@@ -66,9 +66,9 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
                 message.postValue(res.message!!)
             }
             if (mUser!!.role == ROLE.staff) {
-                sendNotification("Đã hoàn thành", task.title, task.idCreator.deviceId)
-            }else{
-                sendNotification("Đã nhận xét", task.title, task.idReceiver.deviceId)
+                sendNotification("Đã hoàn thành", task.title, task.idCreator.deviceId, task.id)
+            } else {
+                sendNotification("Đã nhận xét", task.title, task.idReceiver.deviceId, task.id)
             }
         }
     }

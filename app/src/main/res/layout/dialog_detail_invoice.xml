@@ -23,11 +23,9 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             app:cardCornerRadius="5dp"
@@ -99,6 +97,7 @@
                     android:id="@+id/listInvoiceDetail"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
+                    app:invoiceDetailItems="@{invoice.invoiceDetails}"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical" />
@@ -126,7 +125,8 @@
                         android:background="@color/gray_light"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="center"
-                        android:text="Sửa"
+                        android:text="Hoàn Tiền"
+                        android:onClick="@{() -> viewmodel.refundInvoice(invoice)}"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
@@ -147,5 +147,7 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </layout>

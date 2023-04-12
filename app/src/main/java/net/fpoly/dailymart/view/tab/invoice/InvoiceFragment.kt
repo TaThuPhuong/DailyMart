@@ -1,11 +1,13 @@
 package net.fpoly.dailymart.view.tab.invoice
 
+import android.content.Intent
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.databinding.InvoicceFragmentBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
 
 class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBinding::inflate) {
 
@@ -14,6 +16,7 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
     private lateinit var invoiceImportAdapter: InvoiceAdapter
     private lateinit var invoiceDeductionAdapter: InvoiceAdapter
 
+
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -21,6 +24,14 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         setupBtnBack()
         setupAdapter()
         setupEditSearch()
+        setupBtnAdd()
+
+    }
+
+    private fun setupBtnAdd() {
+        binding.imvAdd.setOnClickListener {
+            startActivity(Intent(mContext, AddInvoiceExportActivity::class.java))
+        }
     }
 
     private fun setupSnackbar() {
@@ -33,7 +44,7 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
             if (text.isNotEmpty()) {
                 viewModel.invoicesResult.also { invoices ->
                     val result =
-                        invoices.filter { it.id.contains(text) || it.user.name.contains(text)}
+                        invoices.filter { it.id.contains(text) || it.user.name.contains(text) }
                             .toMutableList()
                     viewModel.invoices.value = result
                 }
@@ -59,10 +70,8 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         binding.rvDeduction.adapter = invoiceDeductionAdapter
     }
 
-//            startActivity(Intent(mContext, PayActivity::class.java))
 
     override fun setupObserver() {
-
     }
 
 }

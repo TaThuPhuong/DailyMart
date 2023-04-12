@@ -14,11 +14,16 @@ class TaskDetailActivity :
     private val viewModel by viewModels<TaskDetailViewModel> { AppViewModelFactory }
 
     private var mTask: Task? = null
+    private var mTaskId: String? = null
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        mTask = intent.getSerializableExtra(Constant.TASK) as Task
+        mTask = intent.getSerializableExtra(Constant.TASK) as Task?
+        mTaskId = intent.getStringExtra(Constant.TASK_ID)
+        mTaskId?.let {
+            viewModel.getTaskById(it)
+        }
         mTask?.let {
             viewModel.setTask(it)
         }

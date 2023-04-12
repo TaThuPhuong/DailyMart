@@ -14,16 +14,15 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permisstion.RECIEVE" />
 
-    <uses-feature android:name="android.hardware.camera" />
-
     <application
         android:name=".DailySmartApp"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fitsSystemWindows="true"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_application"
         android:label="@string/app_name"
-        android:fitsSystemWindows="true"
         android:roundIcon="@mipmap/ic_application"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
@@ -83,8 +82,15 @@
             android:name=".view.category.CategoryActivity"
             android:exported="true" />
         <activity android:name=".view.task.add_new.AddTaskActivity" />
-        <activity android:name=".view.pay.PayActivity" />
-        <activity android:name=".view.payment.PaymentActivity" />
+        <activity
+            android:name=".view.pay.AddInvoiceExportActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.payment.PaymentActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity android:name=".view.products.ProductsActivity" />
         <activity android:name=".view.change_password.ChangePasswordActivity" />
@@ -96,6 +102,7 @@
         <activity android:name=".view.task.detail_product.ProductDetailActivity" />
         <activity android:name=".view.products.edit_product.ProductEditActivity" />
         <activity android:name=".view.work_sheet.EditWorkSheetActivity" />
+        <activity android:name=".view.bank_info.BankInfoActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -103,13 +110,25 @@
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"
-            android:exported="false"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.goole.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
 
 </manifest>

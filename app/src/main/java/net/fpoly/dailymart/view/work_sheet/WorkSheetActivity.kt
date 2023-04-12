@@ -87,7 +87,7 @@ class WorkSheetActivity :
     }
 
     override fun onResume() {
-        viewModel.getListWorkSheet()
         super.onResume()
+        viewModel.getListWorkSheet()
     }
 }

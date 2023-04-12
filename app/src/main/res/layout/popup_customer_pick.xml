@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="58dp"
+        android:background="@drawable/bg_white_rd_8"
+        android:minHeight="250dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:paddingStart="26dp"
+                android:paddingTop="26dp"
+                android:text="Danh sách khách hàng"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/imv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:paddingTop="26dp"
+                android:paddingEnd="26dp"
+                android:src="@drawable/ic_close_square" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/search_bar"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_gray_r4"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="12dp"
+                    android:elevation="1dp"
+                    android:hint="Tên, SĐT,..."
+                    android:paddingHorizontal="12dp"
+                    android:textColor="@color/gray_medium" />
+
+                <TextView
+                    android:id="@+id/btn_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_pink_primary_rd_8"
+                    android:fontFamily="@font/imbplexsans_semibold"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Thêm mới"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nameCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:backgroundTint="@color/gray_medium"
+                android:layout_marginHorizontal="16dp"
+                android:hint="Tên khách hàng"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_primary"/>
+
+            <EditText
+                android:id="@+id/phoneCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:backgroundTint="@color/gray_medium"
+                android:layout_marginHorizontal="16dp"
+                android:hint="Số điện thoại"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_primary"/>
+
+            <TextView
+                android:id="@+id/btnCreate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_pink_primary_rd_8"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:gravity="center"
+                android:text="Thêm khách hàng"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
