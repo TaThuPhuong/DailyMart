@@ -18,7 +18,7 @@ open class FirebaseMessageService : FirebaseMessagingService() {
         val body = map["body"]
         val taskId = map["taskId"]?.toLong() ?: 0L
         if (title != null && body != null) {
-            createNotification(applicationContext, title, body, taskId)
+            createNotification(applicationContext, title, body)
         }
     }
 

@@ -2,6 +2,7 @@ package net.fpoly.dailymart.firbase.storege
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.widget.ImageView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -10,14 +11,15 @@ import java.io.ByteArrayOutputStream
 object Images {
 
     private val storage = Firebase.storage
-
+    private val TAG = "YingMing"
     fun uploadImage(
         imv: ImageView,
         tableName: String,
         id: String,
-        callback: ((String) -> Unit)? = null,
+        onSuccess: ((String) -> Unit)? = null,
+        onFail: () -> Unit,
     ) {
-
+        Log.e(TAG, "uploadImage: $storage")
         val storageRef = storage.reference
         val mountainsRef = storageRef.child("$tableName/$id")
         imv.isDrawingCacheEnabled = true
@@ -28,23 +30,18 @@ object Images {
         val data = baos.toByteArray()
 
         val uploadTask = mountainsRef.putBytes(data)
-
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener {
-
-        }
-        val urlTask = uploadTask.continueWithTask { task ->
+        uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
                 }
+                onFail()
             }
             mountainsRef.downloadUrl
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result.toString()
-                callback?.invoke(downloadUri)
+                onSuccess?.invoke(downloadUri)
             }
         }
     }

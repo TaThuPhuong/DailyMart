@@ -1,13 +1,13 @@
 package net.fpoly.dailymart.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class InvoiceDetail(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int? = null,
-    @ColumnInfo(name = "invoice_id") var invoiceId: String = "",
-    @ColumnInfo(name = "product_id") var productId: String = "",
-    @ColumnInfo(name = "quantity") var quantity: Int = 0,
-    @ColumnInfo(name = "into_money") var intoMoney: Double = 0.0,
+    @SerializedName("_id") val id: String = UUID.randomUUID().toString(),
+    @SerializedName("product") val product: Product = Product(),
+    @SerializedName("quantityProduct") val quantityProduct: Int = 0,
+    @SerializedName("totalPrice") val totalPrice: Int = 0,
+    @SerializedName("unitPrice") val unitPrice: Int = 0,
+    @SerializedName("createdAt") val createdAt: String = "",
 )

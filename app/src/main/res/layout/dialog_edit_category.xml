@@ -9,59 +9,68 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/imbplexsans_medium"
-        android:padding="20dp"
-        android:text="Sửa loại hàng"
+        android:paddingTop="26dp"
+        android:paddingStart="26dp"
+        android:text="Thêm Nghành Hàng"
         android:textSize="22sp"
         android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imv_close"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:padding="20dp"
+        android:paddingTop="26dp"
+        android:paddingEnd="26dp"
         android:src="@drawable/ic_close_square" />
 
-    <EditText
-        android:id="@+id/ed_category_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imv_close"
-        android:layout_marginHorizontal="16dp"
-        android:maxLines="1"
-        android:padding="8dp"
-        android:text="Sữa"
-        android:textSize="18sp" />
+        android:layout_marginTop="26dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ed_category_name"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bg_red_ff44c_rd_8"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="Xác nhận"
-        android:textColor="@color/red_FF444C"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/ed_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:hint="Tên nghành hàng"
+            android:maxLines="1"
+            android:layout_marginHorizontal="26dp"
+            android:backgroundTint="@color/gray_medium"
+            android:paddingBottom="18dp"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tv_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_confirm"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="46dp"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="Hủy bỏ"
-        android:textColor="@color/gray_light"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_add_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="26dp"
+            android:paddingVertical="16dp"
+            android:background="@drawable/bg_red_ff44c_rd_8"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:gravity="center_horizontal"
+            android:text="Xác nhận"
+            android:textColor="@color/red_FF444C"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:paddingVertical="12dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:gravity="center_horizontal"
+            android:text="Hủy bỏ"
+            android:layout_marginBottom="26dp"
+            android:textColor="@color/gray_light"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 </RelativeLayout>

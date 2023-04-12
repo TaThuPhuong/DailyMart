@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
@@ -37,6 +39,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,15 +64,15 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="50dp"-->
-<!--            android:fontFamily="@font/imbplexsans_semibold"-->
-<!--            android:text="@string/th_m_nh_n_vi_n"-->
-<!--            android:textColor="@color/gray_primary"-->
-<!--            android:textSize="24sp" />-->
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginTop="50dp"-->
+        <!--            android:fontFamily="@font/imbplexsans_semibold"-->
+        <!--            android:text="@string/th_m_nh_n_vi_n"-->
+        <!--            android:textColor="@color/gray_primary"-->
+        <!--            android:textSize="24sp" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -88,14 +91,16 @@
                 android:paddingVertical="8dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/imv_show_password"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:padding="10dp"/>
         </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_name_user"
+            android:layout_marginHorizontal="35dp"
+            android:text="@{viewModel.validateNameUser}"
+            android:textColor="@color/red_FF444C"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,6 +121,7 @@
                 app:ccp_textSize="14dp" />
 
             <EditText
+                android:inputType="phone"
                 android:id="@+id/ed_number_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,6 +130,15 @@
                 android:hint="Số điện thoại"
                 android:textSize="14sp" />
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_number_user"
+            android:layout_marginHorizontal="35dp"
+            android:text="@{viewModel.validatePhone}"
+            android:textColor="@color/red_FF444C"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <EditText
             android:id="@+id/ed_email_user"
@@ -139,6 +154,15 @@
             android:paddingVertical="8dp"
             android:textColor="@color/gray_primary"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_email_user"
+            android:layout_marginHorizontal="35dp"
+            android:text="@{viewModel.validateEmailUser}"
+            android:textColor="@color/red_FF444C"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <RelativeLayout
             android:id="@+id/layout_role"
@@ -159,16 +183,14 @@
 
             <EditText
                 android:id="@+id/ed_role_user"
-                android:backgroundTint="@color/gray_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray_medium"
                 android:enabled="false"
                 android:gravity="end"
                 android:maxLines="1"
                 android:paddingEnd="44dp"
-                android:textColor="@color/gray_medium"
-                />
-<!--            android:text="@{viewModel.newUser.role}"-->
+                android:textColor="@color/gray_medium" />
 
             <ImageView
                 android:id="@+id/imv_change_role"
@@ -178,6 +200,14 @@
                 android:padding="14dp"
                 android:rotation="180"
                 android:src="@drawable/ic_back_black" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ed_role_user"
+                android:layout_marginHorizontal="35dp"
+                android:textColor="@color/red_FF444C"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
         </RelativeLayout>
 
         <TextView
@@ -201,30 +231,30 @@
             android:layout_marginVertical="20dp"
             android:background="@color/gray_medium" />
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/layout_login"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="vertical"-->
-<!--            android:visibility="gone">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/layout_login"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:visibility="gone">-->
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/imbplexsans_medium"-->
-<!--                android:text="Bạn đã có tài khoản?"-->
-<!--                android:textColor="@color/gray_light"-->
-<!--                android:textSize="18sp" />-->
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:fontFamily="@font/imbplexsans_medium"-->
+        <!--                android:text="Bạn đã có tài khoản?"-->
+        <!--                android:textColor="@color/gray_light"-->
+        <!--                android:textSize="18sp" />-->
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/imbplexsans_medium"-->
-<!--                android:text="@string/ng_nh_p"-->
-<!--                android:textColor="@color/pink_primary"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textStyle="bold" />-->
-<!--        </LinearLayout>-->
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:fontFamily="@font/imbplexsans_medium"-->
+        <!--                android:text="@string/ng_nh_p"-->
+        <!--                android:textColor="@color/pink_primary"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:textStyle="bold" />-->
+        <!--        </LinearLayout>-->
     </LinearLayout>
 </layout>

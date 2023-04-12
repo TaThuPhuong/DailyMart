@@ -1,18 +1,19 @@
 package net.fpoly.dailymart.base
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import androidx.lifecycle.LifecycleObserver
 import androidx.viewbinding.ViewBinding
+import net.fpoly.dailymart.R
 
 abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater) -> B) :
     AppCompatActivity(),
@@ -25,12 +26,9 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = bindingFactory(layoutInflater)
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
-            view.updatePadding(0, 0, 0, 0)
-            WindowInsetsCompat.CONSUMED
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, windowInsets ->
+            window.decorView.updatePadding(bottom = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom)
+            windowInsets
         }
 
         setContentView(binding.root)
@@ -38,7 +36,5 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         setupData()
         setupObserver()
     }
-
-
 }
 

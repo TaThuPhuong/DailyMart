@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="net.fpoly.dailymart.data.model.Category"/>
+        <import type="net.fpoly.dailymart.view.category.CategoryViewModel"/>
+
+        <variable
+            name="viewmodel"
+            type="CategoryViewModel" />
+
+        <variable
+            name="category"
+            type="Category" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="10dp"
+        android:onClick="@{() -> viewmodel.moreOptionCategory(context, category)}"
+        android:background="@drawable/bg_ed_search_task"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_category_item" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:text="@{category.name}"
+                android:textAllCaps="true"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="@{@string/id_category(category.id)}"
+                android:textColor="@color/gray_light"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

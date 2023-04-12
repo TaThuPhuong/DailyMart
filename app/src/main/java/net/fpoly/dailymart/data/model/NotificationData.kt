@@ -8,5 +8,4 @@ data class NotificationData(
 data class Data(
     var title: String = "",
     var body: String = "",
-    var taskId: Long = 0L,
 )

@@ -20,10 +20,14 @@
     <color name="blue_medium">#8DBBFF</color>
     <color name="blue_primary">#7896FF</color>
     <color name="un_color">#00FFFFFF</color>
-
+    <color name="blue_04">#42C2FF</color>
 
     <color name="no_color">#00FFFFFF</color>
     <color name="red_FF444C">#FF444C</color>
     <color name="blue_002F22">#002F22</color>
+
+    <color name="color_btn_orange_state_false">#E65100</color>
+    <color name="colorTextTabBar">#8D9AB3</color>
+    <color name="colorTextGold">#FEB530</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

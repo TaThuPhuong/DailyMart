@@ -23,6 +23,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_application"
         android:label="@string/app_name"
+        android:fitsSystemWindows="true"
         android:roundIcon="@mipmap/ic_application"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
@@ -90,10 +91,15 @@
         <activity android:name=".view.staff.StaffActivity" />
         <activity android:name=".view.add_staff.AddStaffActivity" />
         <activity android:name=".view.profile.ProfileActivity" />
+        <activity android:name=".view.task.task_detail.TaskDetailActivity" />
+        <activity android:name=".view.task.task_edit.TaskEditActivity" />
+        <activity android:name=".view.task.detail_product.ProductDetailActivity" />
+        <activity android:name=".view.products.edit_product.ProductEditActivity" />
+        <activity android:name=".view.work_sheet.EditWorkSheetActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.add_product.AddProductActivity" /> <!-- activity -->
+        <activity android:name=".view.products.add_product.AddProductActivity" /> <!-- activity -->
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"

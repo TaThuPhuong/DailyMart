@@ -5,6 +5,8 @@
 
         <import type="net.fpoly.dailymart.view.category.CategoryViewModel" />
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="CategoryViewModel" />
@@ -40,63 +42,95 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/ed_search"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_tool_bar"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/bg_ed_search_task"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/imbplexsans_regular"
-            android:hint="Mã, tên..."
-            android:padding="10dp"
-            android:textSize="14sp" />
+            android:layout_marginTop="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ed_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginHorizontal="30dp"
+                    android:background="@drawable/bg_ed_search_task"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:hint="Mã, tên..."
+                    android:padding="10dp"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ed_search"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="Loại hàng"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/total_category(viewModel.totalCountCategory)}"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{() -> viewModel.clickAddNew(context)}"
+                    android:src="@drawable/ic_add_large" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imv_add"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"
+                    app:categoryItems="@{viewModel.listCategory}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <RelativeLayout
-            android:id="@+id/layout_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ed_search"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:onClick="@{() -> null}"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}">
 
-            <TextView
+            <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:text="Loại hàng"
-                android:textSize="22sp" />
+                android:layout_centerInParent="true" />
 
-            <TextView
-                android:id="@+id/tong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:text="Tổng số : "
-                android:textSize="16sp" />
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/imv_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_header"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_add_large" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imv_add"
-            android:layout_marginTop="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </RelativeLayout>
 </layout>
