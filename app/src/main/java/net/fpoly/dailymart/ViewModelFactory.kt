@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
 import net.fpoly.dailymart.view.products.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
+import net.fpoly.dailymart.view.bank_info.BankInfoViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
@@ -111,7 +112,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         categoryRepository
                     )
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
-                    TaskDetailViewModel(app,taskRepository)
+                    TaskDetailViewModel(app, taskRepository)
                 isAssignableFrom(TaskEditViewModel::class.java) ->
                     TaskEditViewModel(app, taskRepository)
                 isAssignableFrom(ProductDetailViewModel::class.java) ->
@@ -124,6 +125,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     )
                 isAssignableFrom(EditWorkSheetViewModel::class.java) ->
                     EditWorkSheetViewModel(app, userRepository)
+                isAssignableFrom(BankInfoViewModel::class.java) ->
+                    BankInfoViewModel(app)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

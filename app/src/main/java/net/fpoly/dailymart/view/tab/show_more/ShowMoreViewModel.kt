@@ -12,6 +12,6 @@ class ShowMoreViewModel(private val app: Application) : ViewModel() {
     val role = MutableLiveData(false)
 
     init {
-        role.value = mUser!!.role != ROLE.staff
+        role.value = mUser.role != ROLE.staff
     }
 }

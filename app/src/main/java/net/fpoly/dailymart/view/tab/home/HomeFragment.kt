@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.tab.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -28,6 +29,7 @@ import net.fpoly.dailymart.view.work_sheet.WorkSheetActivity
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate),
     View.OnClickListener {
 
+    private val TAG = "YingMing"
     private val viewModel: HomeViewModel by viewModels { AppViewModelFactory }
 
     private var mUser: User? = null
@@ -48,6 +50,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     @SuppressLint("SetTextI18n")
     override fun setupData() {
+        Log.e(TAG, "getBankInfo: ${SharedPref.getBankInfo(mContext)}")
         binding.layoutToolbar.setMarginsStatusBar(mContext)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
