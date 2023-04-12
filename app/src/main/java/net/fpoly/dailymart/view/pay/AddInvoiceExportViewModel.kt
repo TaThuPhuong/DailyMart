@@ -36,7 +36,7 @@ class AddInvoiceExportViewModel(context: Context) : ViewModel() {
     val invoiceDetails = MutableLiveData(mutableListOf<ProductInvoiceParam>())
 
     var totalInvoice: Long = 0
-    var currentBarcode: String = ""
+    private var currentBarcode: String = ""
 
     val listProductName = listProducts.switchMap { products ->
         MutableLiveData(products.map { it.barcode })
@@ -154,14 +154,15 @@ class AddInvoiceExportViewModel(context: Context) : ViewModel() {
     }
 
     fun btnPaymentClick(context: Context) {
-        if (listProductInvoices.isEmpty()) {
+        val productsFinal = listProductInvoices.filter { it.quantity > 0 }
+        if (listProductInvoices.isEmpty() || totalInvoice == 0L) {
             showSnackbar.value = NO_HAVE_BUY
             return
         }
         val invoiceParam = InvoiceParam().apply {
             idCustomer = CUSTOMER_ID_DEFAULT
-            idUser = user?.id.toString()
-            products = ArrayList(listProductInvoices)
+            idUser = user.id
+            products = ArrayList(productsFinal)
             invoiceType = InvoiceType.EXPORT.name
             totalBill = totalInvoice
         }

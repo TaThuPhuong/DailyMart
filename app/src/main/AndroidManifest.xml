@@ -20,13 +20,13 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fitsSystemWindows="true"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_application"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_application"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="false"
         tools:targetApi="31">
         <activity
             android:name=".view.splash.SplashActivity"
@@ -84,9 +84,13 @@
         <activity android:name=".view.task.add_new.AddTaskActivity" />
         <activity
             android:name=".view.pay.AddInvoiceExportActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".view.payment.PaymentActivity" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.payment.PaymentActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity android:name=".view.products.ProductsActivity" />
         <activity android:name=".view.change_password.ChangePasswordActivity" />
@@ -98,7 +102,7 @@
         <activity android:name=".view.task.detail_product.ProductDetailActivity" />
         <activity android:name=".view.products.edit_product.ProductEditActivity" />
         <activity android:name=".view.work_sheet.EditWorkSheetActivity" />
-        <activity android:name=".view.bank_info.BankInfoActivity"/>
+        <activity android:name=".view.bank_info.BankInfoActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
     <data>
-
-        <import type="net.fpoly.dailymart.view.payment.PaymentViewModel" />
-
+        <import type="android.view.View"/>
         <variable
-            name="viewModel"
-            type="PaymentViewModel" />
+            name="viewmodel"
+            type="net.fpoly.dailymart.view.payment.PaymentViewModel" />
+
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -45,12 +45,14 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="18dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -62,10 +64,69 @@
                     android:textColor="@color/gray_medium"
                     android:textSize="22sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:fontFamily="@font/imbplexsans_semibold"
+                        android:text="Sản phẩm"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="12sp" />
+
+
+                    <TextView
+                        android:id="@+id/ed_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center"
+                        android:minWidth="6dp"
+                        android:text="số lượng"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center"
+                        android:text="đơn giá"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical|end"
+                        android:text="tổng"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/productList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <LinearLayout
@@ -159,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Hình thức thanh toán"
                     android:textColor="@color/gray_medium"
@@ -169,33 +230,30 @@
                     android:id="@+id/checkBoxPayment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thanh toán chuyển khoản"
-                    android:fontFamily="@font/imbplexsans_regular"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="12dp"
-                    />
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:text="Thanh toán chuyển khoản" />
 
                 <EditText
                     android:id="@+id/ed_amount"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="56dp"
-                    android:background="@drawable/bg_gray_r4"
+                    android:layout_height="54dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gray_r4"
                     android:elevation="1dp"
                     android:hint="Số tiền khách thanh toán..."
                     android:inputType="number"
                     android:paddingHorizontal="12dp"
-                    android:textColor="@color/gray_medium"
-                    />
+                    android:textColor="@color/gray_medium" />
 
                 <LinearLayout
                     android:id="@+id/layout_banking"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:visibility="gone"
                     android:layout_marginTop="12dp"
                     android:orientation="vertical">
 
@@ -207,27 +265,25 @@
                         <EditText
                             android:id="@+id/ed_money_pay"
                             android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:layout_height="56dp"
-                            android:background="@drawable/bg_gray_r4"
+                            android:layout_height="54dp"
                             android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_gray_r4"
                             android:elevation="1dp"
                             android:hint="Số tiền thanh toán"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/gray_medium"
-                            />
+                            android:textColor="@color/gray_medium" />
 
                         <TextView
                             android:id="@+id/btn_createQR"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="Tạo mã"
-                            android:fontFamily="@font/imbplexsans_semibold"
-                            android:padding="12dp"
-                            android:gravity="center"
                             android:background="@drawable/bg_pink_primary_rd_8"
-                            android:textColor="@color/white"
-                            />
+                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="Tạo mã"
+                            android:textColor="@color/white" />
 
                     </LinearLayout>
 
@@ -237,11 +293,37 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="60dp"
                         android:layout_marginTop="16dp"
-                        android:src="@drawable/img_qr_placeholder"
                         android:adjustViewBounds="true"
-                        />
+                        android:src="@drawable/img_qr_placeholder" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/imbplexsans_medium"
+                    android:text="Khách hàng"
+                    android:textColor="@color/gray_medium"
+                    android:textSize="22sp" />
+
+                <EditText
+                    android:id="@+id/pickCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gray_r4"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawablePadding="8dp"
+                    android:elevation="1dp"
+                    android:focusable="false"
+                    android:hint="Chọn khách hàng"
+                    android:textAllCaps="true"
+                    android:paddingHorizontal="12dp"
+                    android:textColor="@color/gray_medium" />
 
                 <TextView
                     android:id="@+id/btnPayment"
@@ -263,6 +345,17 @@
 
         </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:gravity="center"
+            android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
+            android:orientation="vertical">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
 
+    </RelativeLayout>
 </layout>

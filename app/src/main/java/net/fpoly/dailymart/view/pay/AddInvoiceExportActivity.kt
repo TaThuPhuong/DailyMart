@@ -70,7 +70,6 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
                 barCodeScanner = false
             }
         }
-
     }
 
     override fun setupData() {

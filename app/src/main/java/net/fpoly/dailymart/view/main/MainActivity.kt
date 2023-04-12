@@ -1,19 +1,12 @@
 package net.fpoly.dailymart.view.main
 
-import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityMainBinding
-import net.fpoly.dailymart.utils.SharedPref
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -23,6 +16,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun setupData() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        viewModel.setupCheckEvent(this)
     }
 
     override fun setupObserver() {
@@ -41,5 +35,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             navController.popBackStack(R.id.home_fragment, false)
             viewModel.backToHomeTab()
         }
+    }
+    companion object {
+        const val MAIN_EVENT = "MAIN_EVENT"
     }
 }

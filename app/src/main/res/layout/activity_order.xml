@@ -15,226 +15,212 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <RelativeLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:paddingTop="52dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_gradient_tool_bar"
-            android:paddingTop="58dp">
+            android:layout_alignParentTop="true"
+            android:background="@color/pink_primary">
 
-            <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="16dp"
-                android:src="@drawable/ic_back_white"
-                tools:ignore="ContentDescription" />
-
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
-                android:text="Nhập hàng"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_arrow_back_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:text="Nhập hàng"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnBack"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_toolbar">
+            android:layout_below="@id/toolbar"
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Thông tin sản phẩm"
                     android:textColor="@color/gray_medium"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
 
-                <RelativeLayout
-                    android:id="@+id/layout_id"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_title">
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/ed_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginVertical="10dp"
-                        android:layout_marginStart="26dp"
-                        android:layout_marginEnd="14dp"
-                        android:layout_toStartOf="@+id/imv_scan"
-                        android:background="@drawable/bg_white_rd_8"
-                        android:elevation="5dp"
-                        android:hint="Mã sản phẩm "
-                        android:padding="10dp"
-                        android:textColor="@color/gray_medium"
-                        android:textColorHint="@color/gray_light" />
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_scanner"
-                        android:layout_width="match_parent"
+                    <AutoCompleteTextView
+                        android:id="@+id/edBarcode"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ed_id"
-                        android:layout_marginHorizontal="26dp"
-                        android:visibility="gone"
-                        app:cardCornerRadius="10dp">
-
-                        <com.budiyev.android.codescanner.CodeScannerView
-                            android:id="@+id/scanner_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:background="@drawable/bg_btn"
-                            android:visibility="visible"
-                            app:autoFocusButtonColor="@color/white"
-                            app:autoFocusButtonVisible="true"
-                            app:flashButtonColor="@color/white"
-                            app:flashButtonVisible="true"
-                            app:frameAspectRatioHeight="2"
-                            app:frameAspectRatioWidth="6"
-                            app:frameColor="@color/white"
-                            app:frameCornersRadius="10dp"
-                            app:frameCornersSize="20dp"
-                            app:frameSize="0.75"
-                            app:frameThickness="2dp"
-                            app:maskColor="@color/mark_color" />
-                    </androidx.cardview.widget.CardView>
+                        android:background="@drawable/bg_gray_r4"
+                        android:padding="12dp"
+                        android:layout_weight="1"
+                        android:hint="Mã sản phẩm"
+                        android:textColor="@color/gray_primary"/>
 
                     <ImageView
-                        android:id="@+id/imv_scan"
+                        android:id="@+id/openScanner"
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_alignTop="@+id/ed_id"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="26dp"
-                        android:background="@drawable/bg_white_rd_8"
-                        android:elevation="5dp"
-                        android:src="@drawable/ic_scanner" />
-                </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:src="@drawable/ic_scanner"/>
 
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_name"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_scan"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_below="@+id/layout_id"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_white_rd_8"
-                    android:elevation="5dp"
-                    android:hint="Tên sản phẩm "
-                    android:padding="10dp"
-                    android:textColor="@color/gray_medium"
-                    android:textColorHint="@color/gray_light"
-                    android:textSize="18sp" />
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ed_search_barcode">
+
+                    <SurfaceView
+                        android:id="@+id/scannerZone"
+                        android:layout_width="match_parent"
+                        android:layout_height="580dp"
+                        android:layout_gravity="center" />
+
+                </androidx.cardview.widget.CardView>
 
                 <EditText
-                    android:id="@+id/ed_quantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_below="@+id/tv_name"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@drawable/bg_white_rd_8"
-                    android:elevation="5dp"
-                    android:hint="Số lượng"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp"
-                    android:textColor="@color/gray_medium"
-                    android:textColorHint="@color/gray_light" />
-
-                <EditText
-                    android:id="@+id/ed_expiry_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_below="@+id/ed_quantity"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_white_rd_8"
-                    android:drawableStart="@drawable/ic_calander_gray"
-                    android:drawablePadding="10dp"
-                    android:elevation="5dp"
-                    android:hint="Hạn sử dụng (30-02-2023)"
-                    android:padding="10dp"
-                    android:textColor="@color/gray_medium"
-                    android:textColorHint="@color/gray_light"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/btn_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_below="@+id/ed_expiry_date"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_btn"
-                    android:elevation="5dp"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:gravity="center"
-                    android:text="Thêm"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_title_2"
+                    android:id="@+id/edName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_add"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_gray_r4"
+                    android:padding="12dp"
+                    android:focusable='false'
+                    android:cursorVisible='false'
+                    android:hint="Tên sản phẩm"
+                    android:textColor="@color/gray_primary"/>
+
+                <EditText
+                    android:id="@+id/edQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_gray_r4"
+                    android:padding="12dp"
+                    android:inputType="number"
+                    android:hint="Số lượng"
+                    android:textColor="@color/gray_primary"/>
+
+                <EditText
+                    android:id="@+id/edExpiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_gray_r4"
+                    android:padding="12dp"
+                    android:textIsSelectable="true"
+                    android:focusable='false'
+                    android:cursorVisible='false'
+                    android:drawableStart="@drawable/ic_calander_gray"
+                    android:drawablePadding="12dp"
+                    android:hint="Hạn sử dụng"
+                    android:textColor="@color/gray_primary"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnPayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="24dp"
+                        android:background="@drawable/bg_pink_primary_rd_8"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center"
+                        android:text="Thanh toán"
+                        android:layout_marginEnd="8dp"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/btnProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginVertical="24dp"
+                        android:background="@drawable/bg_line_pink_rd_8"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:text="Thêm hàng"
+                        android:textColor="@color/pink_primary"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Danh sách hàng nhập"
                     android:textColor="@color/gray_medium"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/img_list_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/img_list_empty"
-                    android:layout_below="@id/tv_title_2"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"/>
+                    android:textSize="22sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_import_product"
+                    android:id="@+id/listProducts"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_title_2"
-                    android:layout_marginTop="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
+
+            </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_btn"
-            android:fontFamily="@font/imbplexsans_medium"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="Lưu"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
     </RelativeLayout>
 </layout>

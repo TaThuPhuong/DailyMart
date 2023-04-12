@@ -20,7 +20,7 @@ interface InvoiceApi {
     suspend fun getInvoice(@Header("Authorization") token: String, @Path("id") id: String): ResultData<Invoice>
 
     @POST("invoice")
-    suspend fun insertInvoice(@Header("Authorization") token: String,@Body invoice: InvoiceParam): ResultData<Invoice>
+    suspend fun insertInvoice(@Header("Authorization") token: String,@Body invoice: InvoiceParam): ResultData<Unit>
 
     @PUT("invoice/{id}")
     suspend fun updateInvoice(@Header("Authorization") token: String,@Path("id") id: String ,@Body invoice: InvoiceParam): ResultData<Invoice>

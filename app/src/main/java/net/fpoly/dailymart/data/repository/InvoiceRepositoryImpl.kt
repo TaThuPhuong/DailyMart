@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.data.model.Response
+import net.fpoly.dailymart.data.model.param.InvoiceParam
 import net.fpoly.dailymart.repository.InvoiceRepository
 
 class InvoiceRepositoryImpl : InvoiceRepository {
@@ -44,12 +45,41 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             }
         }
 
-    override suspend fun insertInvoice(token: String): Response<Invoice> {
-        TODO("Not yet implemented")
+    override suspend fun insertInvoice(
+        token: String,
+        invoiceParam: InvoiceParam
+    ) = withContext(ioDispatcher) {
+        try {
+            val res = remoteDataInvoice.insertInvoice(token, invoiceParam)
+            if (res.isSuccess()) {
+                Response.Success(Unit)
+            } else {
+                Response.Error(res.message)
+            }
+        } catch (ex: Exception) {
+            Response.Error(ex.message.toString())
+        }
     }
 
     override suspend fun deleteInvoice(token: String, id: String): Response<Unit> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun updateInvoice(
+        token: String,
+        id: String,
+        invoiceParam: InvoiceParam
+    ) = withContext(Dispatchers.IO) {
+        try {
+            val res = remoteDataInvoice.updateInvoice(token, id, invoiceParam)
+            if (res.isSuccess()) {
+                Response.Success(Unit)
+            } else {
+                Response.Error(res.message)
+            }
+        } catch (ex: Exception) {
+            Response.Error(ex.message.toString())
+        }
     }
 
     companion object {
