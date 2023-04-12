@@ -6,66 +6,58 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.base.LoadingDialog
-import net.fpoly.dailymart.data.model.ReportResponse
+import net.fpoly.dailymart.data.model.*
+import net.fpoly.dailymart.data.repository.ReportRepositoryImpl
 import net.fpoly.dailymart.repository.ReportRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import net.fpoly.dailymart.utils.SharedPref
 
-class ReportViewModel : ViewModel() {
+class ReportViewModel(context: Context) : ViewModel() {
     private val TAG = "ReportViewModel"
-    private val reportRepository = ReportRepository()
-    private val _listImport = MutableLiveData<ReportResponse?>()
-    val listImport: LiveData<ReportResponse?> = _listImport
-    private val _listExport = MutableLiveData<ReportResponse?>()
-    val listExport: LiveData<ReportResponse?> = _listExport
-    private val _listRevenue = MutableLiveData<ReportResponse?>()
-    val listRevenue: LiveData<ReportResponse?> = _listRevenue
+    private val reportRepository: ReportRepository = ReportRepositoryImpl()
+    private val _listImport = MutableLiveData<ReportDataByMonth?>()
+    val listImport: LiveData<ReportDataByMonth?> = _listImport
+    private val _listExport = MutableLiveData<ReportDataByMonth?>()
+    val listExport: LiveData<ReportDataByMonth?> = _listExport
+    private val _listRevenue = MutableLiveData<ReportDataByMonth?>()
+    val listRevenue: LiveData<ReportDataByMonth?> = _listRevenue
     private val _totalRevenue = MutableLiveData<ReportResponse?>()
     val totalRevenue: LiveData<ReportResponse?> = _totalRevenue
-    private val _totalImport = MutableLiveData<ReportResponse?>()
-    val totalImport: LiveData<ReportResponse?> = _totalImport
-    private val _totalExport = MutableLiveData<ReportResponse?>()
-    val totalExport: LiveData<ReportResponse?> = _totalExport
-    private val _quantityImport = MutableLiveData<ReportResponse?>()
-    val quantityImport: LiveData<ReportResponse?> = _quantityImport
-    private val _quantityExport = MutableLiveData<ReportResponse?>()
-    val quantityExport: LiveData<ReportResponse?> = _quantityExport
+    private val _totalImport = MutableLiveData<Long?>()
+    val totalImport: LiveData<Long?> = _totalImport
+    private val _totalExport = MutableLiveData<Long?>()
+    val totalExport: LiveData<Long?> = _totalExport
+    private val _quantityImport = MutableLiveData<Long?>()
+    val quantityImport: LiveData<Long?> = _quantityImport
+    private val _quantityExport = MutableLiveData<Long?>()
+    val quantityExport: LiveData<Long?> = _quantityExport
     private lateinit var mLoadingDialog: LoadingDialog
+    private val token = SharedPref.getAccessToken(context)
+    val showSnackbar = MutableLiveData<String>()
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context = context)
     }
 
-    fun getImport(token: String, month: Int) {
+    fun getReportImportByMonth(month: Int) {
         viewModelScope.launch {
-//            mLoadingDialog.showLoading()
-            try {
-                reportRepository.getReportByMonth(token, month).enqueue(object :
-                    Callback<ReportResponse> {
-                    override fun onResponse(
-                        call: Call<ReportResponse>,
-                        response: Response<ReportResponse>,
-                    ) {
-//                        _listReport.value = response.body()
-//                        mLoadingDialog.hideLoading()
-                    }
-                    override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
-//                        _listReport.value = null
-                        Log.e(TAG, "onFailure: data: $t")
-//                        mLoadingDialog.hideLoading()
-                    }
-                })
-            } catch (e: Exception) {
-//                _listReport.value = null
-                e.printStackTrace()
+            when (val res = reportRepository.getReportByMonth(token, month)) {
+                is Response.Success -> {
+                    _listImport.postValue(res.data)
+                    _totalImport.postValue(res.data.totalMonth)
+                    Log.d(TAG, "getReportImportByMonth: res: $res")
+                }
+                is Response.Error -> {
+                    Log.d(TAG, "getReportImportByMonth: error: ${res.message}")
+//                    showSnackbar.postValue(res.message)
+                }
             }
         }
     }
 
-    fun showDialogFilter(context: Context){
+    fun showDialogFilter(context: Context) {
         FilterDialog(context, this).show()
     }
 }

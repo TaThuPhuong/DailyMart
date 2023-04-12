@@ -1,13 +1,12 @@
 package net.fpoly.dailymart.repository
 
-import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.ReportResponse
-import retrofit2.Call
+import net.fpoly.dailymart.data.model.*
 
-class ReportRepository {
-    private val reportService = ServerInstance.apiReport
 
-    suspend fun getReportByMonth(token: String, month: Int): Call<ReportResponse> {
-        return reportService.revenueMonth(token, month)
-    }
+interface ReportRepository {
+
+    suspend fun getReportByMonth(token: String, month: Int): Response<ReportDataByMonth>
+    suspend fun getReportByDate(token: String, date: String, type: ReportType): Response<ReportDataByDay>
+
+    suspend fun getReportByYear(token: String, year: String, type: ReportType): Response<ReportDataByYear>
 }
