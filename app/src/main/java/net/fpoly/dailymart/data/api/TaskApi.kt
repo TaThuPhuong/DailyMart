@@ -4,30 +4,22 @@ import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.TaskParam
 import net.fpoly.dailymart.data.model.TaskSuccess
 import net.fpoly.dailymart.data.model.response.ResponseResult
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface TaskApi {
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("task")
     suspend fun insertTask(
         @Header("Authorization") token: String,
         @Body taskParam: TaskParam,
     ): ResponseResult<TaskSuccess>
-
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @PUT("task/{id}")
     suspend fun updateTask(
         @Header("Authorization") token: String,
         @Body taskParam: TaskParam, @Path("id") id: String,
     ): ResponseResult<Unit>
-
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @DELETE("task/{id}")
     suspend fun deleteTask(
         @Header("Authorization") token: String,

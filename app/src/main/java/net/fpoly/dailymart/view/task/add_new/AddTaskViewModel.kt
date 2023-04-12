@@ -54,7 +54,7 @@ class AddTaskViewModel(
 
     init {
         _task.value = _task.value?.copy(
-            idCreator = mUser!!.id,
+            idCreator = mUser.id,
         )
     }
 
@@ -129,7 +129,7 @@ class AddTaskViewModel(
 
     private fun checkValidate() {
         _taskValidate.value =
-            !(_task.value?.title?.trim() == null || _task.value?.idReceiver == null || _task.value?.deadline == 0L)
+            !(_task.value?.title?.trim() == "" || _task.value?.idReceiver == null || _task.value?.deadline == 0L || _task.value?.description?.trim() == "")
     }
 }
 

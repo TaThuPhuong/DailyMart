@@ -53,6 +53,7 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
+            binding.pbLoading.gone()
         }
     }
 

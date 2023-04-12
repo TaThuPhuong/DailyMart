@@ -34,7 +34,7 @@ interface UserApi {
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")
     fun logout(@Header("Authorization") token: String)
-
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @GET("getAllNameUser")
     suspend fun getAllUser2(@Header("Authorization") token: String): ResponseResult<List<UserRes>>
 
@@ -52,5 +52,5 @@ interface UserApi {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body userParam: UserRes
-    ): ResponseResult<Unit>
+    ): Call<ResponseBody>
 }

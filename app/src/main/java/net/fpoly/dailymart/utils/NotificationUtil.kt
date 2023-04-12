@@ -17,6 +17,10 @@ import net.fpoly.dailymart.data.model.Data
 import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
 import net.fpoly.dailymart.view.task.TaskActivity
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @RequiresApi(Build.VERSION_CODES.M)
 fun createNotification(context: Context, title: String, message: String, value: String?) {
@@ -45,7 +49,24 @@ suspend fun sendNotification(title: String, message: String, value: String, to: 
     withContext(Dispatchers.IO) {
         try {
             val data = NotificationData(Data(title, message, value), to)
-            RetrofitInstance.apiPutNotification.postNotification(data)
+            val notificationApi = RetrofitInstance.apiPutNotification
+            notificationApi.postNotification(data).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
+                ) {
+                    response.body()?.string()?.let {
+                        Log.e("YingMing", "sendNotification body: $it")
+                    }
+                    response.errorBody()?.string()?.let {
+                        Log.e("YingMing", "sendNotification error: $it")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("YingMing", "sendNotification onFailure: $t")
+                }
+            })
         } catch (e: Exception) {
             Log.e("YingMing", "sendNotification: $e")
         }

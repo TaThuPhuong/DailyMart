@@ -34,20 +34,20 @@ class UserRepositoryImpl(
                 api.getAllUser2(token)
             } catch (e: Exception) {
                 Log.e(TAG, "getAllUser2 Exception: $e", )
-                ResponseResult(0, "Đã xảy ra lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 
-    override suspend fun updateUser(
-        token: String,
-        id: String,
-        userParam: UserRes
-    ): ResponseResult<Unit> = withContext(coroutineScope) {
-        try {
-            api.updateUser(token, id, userParam)
-        } catch (e: Exception) {
-            Log.e(TAG, "login Exception: $e", )
-            ResponseResult(0, "Đã xảy ra lỗi", null)
-        }
-    }
+//    override suspend fun updateUser(
+//        token: String,
+//        id: String,
+//        userParam: UserRes
+//    ): ResponseResult<Unit> = withContext(coroutineScope) {
+//        try {
+//            api.updateUser(token, id, userParam)
+//        } catch (e: Exception) {
+//            Log.e(TAG, "updateUser Exception: $e", )
+//            ResponseResult(0, "Máy chủ không phản hồi", null)
+//        }
+//    }
 }
