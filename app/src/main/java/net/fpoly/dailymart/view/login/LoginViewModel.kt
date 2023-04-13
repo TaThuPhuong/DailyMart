@@ -1,7 +1,6 @@
 package net.fpoly.dailymart.view.login
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,14 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.base.LoadingDialog
+import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.data.model.param.LoginParam
 import net.fpoly.dailymart.extension.blankException
-import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.security.AESUtils
 import net.fpoly.dailymart.utils.SharedPref
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginViewModel(private val app: Application, private val repo: UserRepository) : ViewModel() {
 
@@ -35,11 +37,7 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
     val loginSuccess = MutableLiveData(false)
     val message = MutableLiveData<String>()
 
-    private lateinit var mLoadingDialog: LoadingDialog
-
-    fun initLoadDialog(context: Context) {
-        mLoadingDialog = LoadingDialog(context)
-    }
+    private val mDeviceId = SharedPref.getTokenNotification(app)
 
     fun onEvent(event: LoginEvent) {
         when (event) {
@@ -61,7 +59,6 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
             is LoginEvent.Login -> {
                 _loginParam.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
                         login(it)
                     } else {
                         _validatePhone.value = it.phoneNumber.blankException()
@@ -77,15 +74,48 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
         viewModelScope.launch(Dispatchers.IO) {
             val res = repo.login(loginParam)
             if (res.isSuccess()) {
-                res.data?.let {
-                    it.deviceId = SharedPref.getTokenNotification(app)
-                    it.accessToken = AESUtils.encrypt(it.accessToken)
-                    SharedPref.setAccessToken(app, it.accessToken)
-                    SharedPref.insertUser(app, it)
-                    repo.updateUser(SharedPref.getAccessToken(app), it.id, UserRes(it))
-                    loginSuccess.postValue(true)
-                    Log.d(TAG, "UserRes: ${UserRes(it)}")
+                var user = res.data
+                user = user?.copy(
+                    deviceId = mDeviceId,
+                    accessToken = AESUtils.encrypt(user.accessToken)
+                )
+                SharedPref.setAccessToken(app, user!!.accessToken)
+                SharedPref.insertUser(app, user)
+                val token = SharedPref.getAccessToken(app)
+                val api = ServerInstance.apiUser
+                try {
+                    api.updateUser(token, user.id, UserRes(user))
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onResponse(
+                                call: Call<ResponseBody>,
+                                response: Response<ResponseBody>,
+                            ) {
+                                response.body()?.string()?.let {
+                                    Log.e(TAG, "body: $it")
+                                }
+                                response.errorBody()?.string()?.let {
+                                    Log.e(TAG, "errorBody: $it")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                            }
+
+                        })
+                } catch (e: Exception) {
+
                 }
+                if (user.disable) {
+                    loginSuccess.postValue(true)
+                } else {
+                    message.postValue("Tài khoản đã bị khóa. Hãy liên hệ với quản lý")
+                }
+
+                Log.e(TAG, "deviceId: ${user.deviceId}")
+                Log.e(TAG, "user: $user")
+                Log.e(TAG, "getTokenNotification: ${SharedPref.getTokenNotification(app)}")
+                Log.e(TAG, "UserRes: ${UserRes(user)}")
                 message.postValue(res.message!!)
             } else {
                 message.postValue(res.message!!)

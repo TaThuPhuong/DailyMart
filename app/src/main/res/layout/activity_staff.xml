@@ -12,7 +12,9 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:id="@+id/layout_toolbar"
@@ -24,7 +26,7 @@
                 android:id="@+id/imv_back"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_back_black" />
 
             <TextView

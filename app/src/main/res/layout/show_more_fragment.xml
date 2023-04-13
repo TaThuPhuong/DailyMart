@@ -161,6 +161,7 @@
 
                 <TextView
                     android:id="@+id/tv_manage"
+                    set_visible="@{viewModel.role}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_account"
@@ -173,6 +174,7 @@
 
                 <LinearLayout
                     android:id="@+id/layout_manage"
+                    set_visible="@{viewModel.role}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_manage"
@@ -184,13 +186,13 @@
 
                     <RelativeLayout
                         android:id="@+id/layout_report"
+                        set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="18dp">
 
                         <TextView
-                            set_visible="@{viewModel.role}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_report"
@@ -212,13 +214,13 @@
 
                     <RelativeLayout
                         android:id="@+id/layout_staff"
+                        set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="18dp">
 
                         <TextView
-                            set_visible="@{viewModel.role}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_staff"
@@ -239,7 +241,8 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/layout_update_data"
+                        android:id="@+id/layout_update_bank_info"
+                        set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="18dp">
@@ -251,7 +254,7 @@
                             android:drawablePadding="10dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
-                            android:text="Cập nhật dữ liệu"
+                            android:text="Thông tin ngân hàng"
                             android:textColor="@color/gray_medium"
                             android:textSize="16sp" />
 

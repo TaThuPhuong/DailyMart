@@ -28,6 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="false"
         tools:targetApi="31">
         <activity
             android:name=".view.reset_password.ResetPasswordActivity"
@@ -99,7 +100,8 @@
         <activity android:name=".view.task.task_edit.TaskEditActivity" />
         <activity android:name=".view.task.detail_product.ProductDetailActivity" />
         <activity android:name=".view.products.edit_product.ProductEditActivity" />
-        <activity android:name=".view.work_sheet.EditWorkSheetActivity" />
+        <activity android:name=".view.work_sheet.edit_work_sheet.EditWorkSheetActivity" />
+        <activity android:name=".view.bank_info.BankInfoActivity"/>
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -107,7 +109,7 @@
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"
-            android:exported="false"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

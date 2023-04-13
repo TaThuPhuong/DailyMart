@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.databinding.ItemNameOnlyBinding
+import net.fpoly.dailymart.databinding.ItemStaffDialogBinding
 
 class UserAdapter(
     private var mList: List<UserRes> = ArrayList(),
@@ -13,7 +14,7 @@ class UserAdapter(
 ) :
     RecyclerView.Adapter<UserAdapter.ItemView>() {
 
-    class ItemView(val binding: ItemNameOnlyBinding) : RecyclerView.ViewHolder(binding.root)
+    class ItemView(val binding: ItemStaffDialogBinding) : RecyclerView.ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<UserRes>) {
@@ -23,7 +24,7 @@ class UserAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemView {
         return ItemView(
-            ItemNameOnlyBinding.inflate(
+            ItemStaffDialogBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -38,7 +39,8 @@ class UserAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mList[position]) {
-                binding.name.text = this.name
+                binding.tvName.text = this.name
+                binding.tvPhone.text = this.phoneNumber
                 binding.root.setOnClickListener {
                     onChose(this)
                 }
