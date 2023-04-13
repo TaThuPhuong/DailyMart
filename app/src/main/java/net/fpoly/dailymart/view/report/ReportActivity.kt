@@ -55,7 +55,7 @@ class ReportActivity :
     }
 
     override fun setupObserver() {
-        viewModel.getReportImportByMonth(4)
+//        viewModel.getReportImportByMonth(4)
         viewModel.totalImport.observe(this) {
 //            mlistReport = it!!.data.totalByDay
             binding.tvTotalExport.text = "${it} VND"

@@ -1,39 +1,23 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.*
-import net.fpoly.dailymart.data.model.response.ResponseResult
-import retrofit2.Call
+import net.fpoly.dailymart.data.model.ReportDataByDay
+import net.fpoly.dailymart.data.model.ReportDataByMonth
+import net.fpoly.dailymart.data.model.ReportDataByYear
+import net.fpoly.dailymart.data.model.ResultData
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 
+
 interface ReportApi {
-    @GET("stats/revenue/month/{month}&EXPORT")
-    fun revenueMonthWithType(
-        @Header("Authorization") token: String,
-        @Path("month") month: Int,
-//        @Path("type") type: ReportType,
-    ): ResultData<ReportDataByMonth>
 
     @GET("stats/revenue/date/{date}&{type}")
-    fun revenueDateWithType(
-        @Header("Authorization") token: String,
-        @Path("date") date: String,
-        @Path("type") type: ReportType,
-    ): ResultData<ReportDataByDay>
+    suspend fun getRevenueDate(@Header("Authorization") token: String,@Path("date") date: String, @Path("type") type: String) : ResultData<ReportDataByDay>
+
+    @GET("stats/revenue/month/{month}&{type}")
+    suspend fun getRevenueMonth(@Header("Authorization") token: String,@Path("month") month: String, @Path("type") type: String) : ResultData<ReportDataByMonth>
 
     @GET("stats/revenue/year/{year}&{type}")
-    fun revenueYearWithType(
-        @Header("Authorization") token: String,
-        @Path("year") year: String,
-        @Path("type") type: ReportType,
-    ): ResultData<ReportDataByYear>
+    suspend fun getRevenueYear(@Header("Authorization") token: String,@Path("year") year: String, @Path("type") type: String) : ResultData<ReportDataByYear>
 
-    @GET("stats/revenueByCustomDate/{startDate}&{endDate}&{type}")
-    fun revenueCustomDateWithType(
-        @Header("Authorization") token: String,
-        @Path("startDate") startDate: String,
-        @Path("endDate") endDate: String,
-        @Path("type") type: ReportType,
-    ): ResultData<ReportDataByCustomDate>
 }

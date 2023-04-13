@@ -13,10 +13,11 @@ import net.fpoly.dailymart.data.model.*
 import net.fpoly.dailymart.data.repository.ReportRepositoryImpl
 import net.fpoly.dailymart.repository.ReportRepository
 import net.fpoly.dailymart.utils.SharedPref
+import kotlin.math.log
 
 class ReportViewModel(context: Context) : ViewModel() {
     private val TAG = "ReportViewModel"
-    private val reportRepository: ReportRepository = ReportRepositoryImpl()
+    private val reportRepo = ReportRepositoryImpl()
     private val _listImport = MutableLiveData<ReportDataByMonth?>()
     val listImport: LiveData<ReportDataByMonth?> = _listImport
     private val _listExport = MutableLiveData<ReportDataByMonth?>()
@@ -37,25 +38,55 @@ class ReportViewModel(context: Context) : ViewModel() {
     private val token = SharedPref.getAccessToken(context)
     val showSnackbar = MutableLiveData<String>()
 
+
+    init {
+        viewModelScope.launch {
+            getReportDate("2023-04-06")
+            getReportMonth("4")
+            getReportYear("2023")
+        }
+    }
+
+    private suspend fun getReportDate(date : String) {
+        when (val res = reportRepo.getReportByDate(token, date, ReportType.IMPORT)) {
+            is Response.Success -> Log.e(TAG, "getReportDate: ${res.data}")
+            is Response.Error -> Log.e(TAG, "getReportDate: ${res.message}")
+        }
+    }
+
+    private suspend fun getReportMonth(month: String) {
+        when (val res = reportRepo.getReportByMonth(token, month, ReportType.IMPORT)) {
+            is Response.Success -> Log.e(TAG, "getReportMonth: ${res.data}")
+            is Response.Error -> Log.e(TAG, "getReportMonth: ${res.message}")
+        }
+    }
+
+    private suspend fun getReportYear(year: String) {
+        when (val res = reportRepo.getReportByYear(token, year, ReportType.IMPORT)) {
+            is Response.Success -> Log.e(TAG, "getReportYear: ${res.data}")
+            is Response.Error -> Log.e(TAG, "getReportYear: ${res.message}")
+        }
+    }
+
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context = context)
     }
 
-    fun getReportImportByMonth(month: Int) {
-        viewModelScope.launch {
-            when (val res = reportRepository.getReportByMonth(token, month)) {
-                is Response.Success -> {
-                    _listImport.postValue(res.data)
-                    _totalImport.postValue(res.data.totalMonth)
-                    Log.d(TAG, "getReportImportByMonth: res: $res")
-                }
-                is Response.Error -> {
-                    Log.d(TAG, "getReportImportByMonth: error: ${res.message}")
-//                    showSnackbar.postValue(res.message)
-                }
-            }
-        }
-    }
+//    fun getReportImportByMonth(month: Int) {
+//        viewModelScope.launch {
+//            when (val res = reportRepository.getReportByMonth(token, month)) {
+//                is Response.Success -> {
+//                    _listImport.postValue(res.data)
+//                    _totalImport.postValue(res.data.totalMonth)
+//                    Log.d(TAG, "getReportImportByMonth: res: $res")
+//                }
+//                is Response.Error -> {
+//                    Log.d(TAG, "getReportImportByMonth: error: ${res.message}")
+////                    showSnackbar.postValue(res.message)
+//                }
+//            }
+//        }
+//    }
 
     fun showDialogFilter(context: Context) {
         FilterDialog(context, this).show()

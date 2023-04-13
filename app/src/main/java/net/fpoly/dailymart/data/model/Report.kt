@@ -1,14 +1,7 @@
 package net.fpoly.dailymart.data.model
 
-data class ReportDataByMonth(
-    val totalMonth: Long,
-    val totalByDay: List<ReportDataByDayInMonth>,
-)
+import com.google.gson.annotations.SerializedName
 
-data class ReportDataByDayInMonth(
-    val date: Long,
-    val data: Long,
-)
 
 data class ReportDataByDay(
     val type: String,
@@ -16,22 +9,27 @@ data class ReportDataByDay(
     val total: Long,
 )
 
-data class ReportDataByYear(
-    val type: String,
-    val totalAmountYear: Long,
-    val dataByMonth: List<ReportDataByMonthInYear>,
-)
-
-data class ReportDataByMonthInYear(
-    val month: Long,
-    val data: Long,
-)
-
-data class ReportDataByCustomDate(
-    val time: Long,
-    val data: Long,
-)
-
 enum class ReportType {
     IMPORT, EXPORT
 }
+
+data class ReportDataByMonth(
+    @SerializedName("totalMonth") val total: Long = 0,
+    @SerializedName("totalByDay") val days: List<DayReport> = listOf()
+)
+
+data class ReportDataByYear(
+    @SerializedName("type") val type: String = "",
+    @SerializedName("totalAmountYear") val total: Long = 0,
+    @SerializedName("dataByMonth") val months: List<MonthReport> = listOf()
+)
+
+data class MonthReport(
+    val month: Long = 0,
+    val data: Long = 0
+)
+
+data class DayReport(
+    val date: Long = 0,
+    val data: Long = 0
+)
