@@ -24,7 +24,7 @@ class UserRepositoryImpl(
                 api.login(login)
             } catch (e: Exception) {
                 Log.e(TAG, "login Exception: $e", )
-                ResponseResult(0, "Đã xảy ra lỗi trong quá trình đăng nhập", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 

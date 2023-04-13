@@ -80,15 +80,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/imbplexsans_regular"
-                            android:text="Đơn hàng:"
+                            android:text="Tổng hóa đơn hôm nay:"
                             android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/imbplexsans_medium"
-                            android:text="12.000"
+                            android:text="@{viewModel.totalInvoice}"
                             android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -268,14 +268,28 @@
                     android:textColor="@color/gray_medium"
                     android:textSize="22sp" />
 
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_recent_task"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <View
+            set_visible="@{viewModel.isShowNotification()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="76dp"
+            android:background="#85CCCCCC"
+            android:onClick="@{()->viewModel.onClickNotification()}" />
 
         <RelativeLayout
             set_visible="@{viewModel.isShowNotification()}"
@@ -285,6 +299,7 @@
             android:layout_marginTop="76dp"
             android:layout_marginEnd="60dp"
             android:background="@drawable/bg_notification"
+            android:elevation="10dp"
             android:padding="10dp">
 
             <TextView
@@ -305,6 +320,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_delete"
+                android:layout_marginVertical="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
@@ -315,15 +331,6 @@
                 android:gravity="center_horizontal"
                 android:text="Không có thông báo mới"
                 android:textColor="@color/gray_light" />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/rcv_notification"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:onClick="@{()->viewModel.onClickNotification()}"
-                android:src="@drawable/ic_close_square" />
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

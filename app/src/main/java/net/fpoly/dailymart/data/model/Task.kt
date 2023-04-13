@@ -43,7 +43,7 @@ data class TaskParam(
     @SerializedName("deadline") var deadline: Long = 0,
     @SerializedName("finish") var finish: Boolean = false,
     @SerializedName("finish_time") var finishTime: Long = 0,
-    @SerializedName("task_comment") var comment: String = " ",
+    @SerializedName("task_comment") var comment: String = "",
 ) {
     constructor(task: Task) : this() {
         this.idCreator = task.idCreator.id

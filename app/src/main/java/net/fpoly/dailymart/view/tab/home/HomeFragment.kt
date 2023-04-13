@@ -10,9 +10,12 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.data.model.RecentNotification
+import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.HomeFragmentBinding
+import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
@@ -22,6 +25,7 @@ import net.fpoly.dailymart.view.profile.ProfileActivity
 import net.fpoly.dailymart.view.report.ReportActivity
 import net.fpoly.dailymart.view.stock.StockActivity
 import net.fpoly.dailymart.view.tab.home.adapter.NotificationAdapter
+import net.fpoly.dailymart.view.tab.home.adapter.TaskRecentAdapter
 import net.fpoly.dailymart.view.task.TaskActivity
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
 import net.fpoly.dailymart.view.work_sheet.WorkSheetActivity
@@ -36,6 +40,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     private var mListNotification: List<RecentNotification> = ArrayList()
     private lateinit var mNotificationAdapter: NotificationAdapter
+
+    private var mListTask: List<Task> = ArrayList()
+    private lateinit var mTaskRecentAdapter: TaskRecentAdapter
     override fun setOnClickListener() {
         binding.imvAvatarToolbar.setOnClickListener(this)
         binding.imvNotification.setOnClickListener(this)
@@ -50,7 +57,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     @SuppressLint("SetTextI18n")
     override fun setupData() {
-        Log.e(TAG, "getBankInfo: ${SharedPref.getBankInfo(mContext)}")
         binding.layoutToolbar.setMarginsStatusBar(mContext)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -59,9 +65,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
             Glide.with(mContext).load(it.avatar).placeholder(R.drawable.img_avatar_default)
                 .into(binding.imvAvatarToolbar)
             binding.tvName.text = "Chào, ${it.name}"
+            initTaskRecent()
         }
         initNotification()
         viewModel.getAllNotification()
+        viewModel.getAllTask()
+        viewModel.getInvoiceToday()
     }
 
     override fun setupObserver() {
@@ -69,6 +78,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
             mListNotification = it
             mNotificationAdapter.setData(it)
             binding.tvNumNotification.text = it.size.toString()
+        }
+        viewModel.listTask.observe(this) {
+            Log.e(TAG, "mListTask: $it")
+            mListTask = it
+            mTaskRecentAdapter.setData(it)
+            binding.pbLoading.gone()
         }
     }
 
@@ -101,6 +116,15 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         startActivity(Intent(mContext, c))
     }
 
+    private fun initTaskRecent() {
+        mTaskRecentAdapter = TaskRecentAdapter(mUser!!, mListTask) {
+            val intent = Intent(mContext, TaskDetailActivity::class.java)
+            intent.putExtra(Constant.TASK, it)
+            startActivity(intent)
+        }
+        binding.rcvRecentTask.adapter = mTaskRecentAdapter
+    }
+
     private fun initNotification() {
         mNotificationAdapter = NotificationAdapter(mListNotification) {
             if (it.isNotEmpty()) {
@@ -119,5 +143,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
     override fun onResume() {
         super.onResume()
         viewModel.getAllNotification()
+        viewModel.getAllTask()
     }
 }

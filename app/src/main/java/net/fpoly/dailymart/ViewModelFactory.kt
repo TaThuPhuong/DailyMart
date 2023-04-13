@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.data.repository.InvoiceRepositoryImpl
 import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
 import net.fpoly.dailymart.view.products.add_product.AddProductViewModel
 import net.fpoly.dailymart.view.add_staff.AddStaffViewModel
@@ -18,7 +19,7 @@ import net.fpoly.dailymart.view.order.OrderViewModel
 import net.fpoly.dailymart.view.pay.PayViewModel
 import net.fpoly.dailymart.view.payment.PaymentViewModel
 import net.fpoly.dailymart.view.products.ProductsViewModel
-import net.fpoly.dailymart.view.task.detail_product.ProductDetailViewModel
+import net.fpoly.dailymart.view.products.detail_product.ProductDetailViewModel
 import net.fpoly.dailymart.view.products.edit_product.ProductEditViewModel
 import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
@@ -44,7 +45,6 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
-            var activity = DetailsStaffActivity()
             val context = app.context
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository
@@ -63,7 +63,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(LoginViewModel::class.java) ->
                     LoginViewModel(app, userRepository)
                 isAssignableFrom(HomeViewModel::class.java) ->
-                    HomeViewModel(app, taskRepository, notificationRepo)
+                    HomeViewModel(app, taskRepository, notificationRepo, InvoiceRepositoryImpl())
                 isAssignableFrom(InvoiceViewModel::class.java) ->
                     InvoiceViewModel(context)
                 isAssignableFrom(GoodsViewModel::class.java) ->

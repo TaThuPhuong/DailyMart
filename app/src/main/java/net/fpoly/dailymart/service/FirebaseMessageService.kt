@@ -20,6 +20,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
         val title = map["title"] ?: ""
         val body = map["body"] ?: ""
         val value = map["value"] ?: ""
+        Log.e("YingMing", "onMessageReceived: $title - $body -$value" )
         createNotification(applicationContext, title, body, value)
         notificationRepo.insertNotification(
             RecentNotification(
