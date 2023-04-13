@@ -17,6 +17,7 @@ import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.task.PickTimeDialog
 import net.fpoly.dailymart.view.task.adapter.StaffAdapter
+import net.fpoly.dailymart.view.work_sheet.ChoseUserDialog
 import java.text.SimpleDateFormat
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBinding::inflate),
@@ -28,8 +29,6 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
 
     private var mListUser: List<UserRes> = ArrayList()
 
-    private lateinit var mStaffAdapter: StaffAdapter
-
     @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
 
@@ -38,7 +37,8 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
         binding.btnAddTask.setOnClickListener(this)
-        binding.layoutTimeEnd.setOnClickListener(this)
+        binding.tvTimeEnd.setOnClickListener(this)
+        binding.tvName.setOnClickListener(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -48,16 +48,12 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
         binding.lifecycleOwner = this
         binding.tvTimeStart.text = "Bắt đầu: ${timeFormat.format(System.currentTimeMillis())}"
         viewModel.getAllUser()
-        initRecycleView()
         setOnTextChange()
     }
 
     override fun setupObserver() {
         viewModel.listUser.observe(this) { users ->
-            if (users != null) {
-                mListUser = users
-                mStaffAdapter.setUserData(users)
-            }
+            users?.let { mListUser = it }
         }
         viewModel.addSuccess.observe(this) {
             if (it != null) {
@@ -71,7 +67,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     override fun onClick(v: View?) {
         when (v) {
             binding.imvBack -> finish()
-            binding.layoutTimeEnd -> {
+            binding.tvTimeEnd -> {
                 PickTimeDialog(this) { time ->
                     binding.tvTimeEnd.text = "Kết thúc: ${timeFormat.format(time)}"
                     viewModel.onEvent(AddTaskEvent.TimeEndChange(time))
@@ -81,36 +77,19 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
                 mLoadingDialog!!.showLoading()
                 viewModel.onEvent(AddTaskEvent.AddNew)
             }
+            binding.tvName -> {
+                ChoseUserDialog(this, mListUser) {
+                    binding.tvName.text = it.name
+                    viewModel.onEvent(AddTaskEvent.ReceiverChange(it))
+                }.show()
+            }
         }
-    }
-
-    private fun initRecycleView() {
-        mStaffAdapter = StaffAdapter(mListUser) { user ->
-            viewModel.onEvent(AddTaskEvent.ReceiverChange(user))
-            binding.edName.setText(user.name)
-            binding.rcvListUser.gone()
-        }
-        binding.rcvListUser.adapter = mStaffAdapter
     }
 
     private fun setOnTextChange() {
 
         binding.edTitle.getTextOnChange {
             viewModel.onEvent(AddTaskEvent.TitleChange(it))
-        }
-        binding.edName.getTextOnChange {
-            val listFilter =
-                mListUser.filter { user ->
-                    user.id.contains(it, true)
-                            || user.name.contains(it, true)
-                }
-            if (listFilter.isNotEmpty()) {
-                mStaffAdapter.setUserData(listFilter)
-                binding.rcvListUser.visible()
-            } else {
-                mStaffAdapter.setUserData(ArrayList())
-                binding.rcvListUser.gone()
-            }
         }
         binding.edDescription.getTextOnChange {
             viewModel.onEvent(AddTaskEvent.DescriptionChange(it))

@@ -13,6 +13,7 @@ import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.task.adapter.TaskAdapter
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
 import net.fpoly.dailymart.view.task.task_edit.TaskEditActivity
@@ -27,6 +28,7 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
     private lateinit var mTaskAdapter: TaskAdapter
 
     private var mListTask: List<Task> = ArrayList()
+
 
     override fun setupData() {
         initRecycleView()
@@ -48,8 +50,9 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView() {
+        val user = SharedPref.getUser(mContext)
         mTaskAdapter = TaskAdapter(mListTask) { task ->
-            OptionTaskDialog(mContext, task.finish,
+            OptionTaskDialog(mContext, task.finish, user.id == task.idReceiver.id,
                 onShowDetail = {
                     Intent(mContext, TaskDetailActivity::class.java).also {
                         it.putExtra(Constant.TASK, task)
@@ -57,9 +60,10 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
                     }
                 },
                 onFinish = {
-                    FinishTaskConfirmDialog(mContext) { comment, time ->
+                    FinishTaskConfirmDialog(mContext = mContext) { comment, time ->
                         task.comment = comment ?: ""
-                        if (time != 0L) {
+                        task.finish = true
+                        if (task.finishTime == 0L) {
                             task.finishTime = time
                         }
                         viewModel.onFinish(task)

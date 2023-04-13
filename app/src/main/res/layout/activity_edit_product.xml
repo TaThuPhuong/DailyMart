@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ed_id"
                         android:layout_marginHorizontal="26dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:cardCornerRadius="10dp">
 
                         <com.budiyev.android.codescanner.CodeScannerView

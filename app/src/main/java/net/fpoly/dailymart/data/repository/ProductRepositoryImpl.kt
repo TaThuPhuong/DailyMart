@@ -8,6 +8,7 @@ import net.fpoly.dailymart.data.api.ProductApi
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
+import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.repository.ProductRepository
 
@@ -37,7 +38,7 @@ class ProductRepositoryImpl
                 api.getAllProduct(token)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 
@@ -47,20 +48,20 @@ class ProductRepositoryImpl
                 api.getProductById(token, id)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 
     override suspend fun updateProduct(
         token: String,
         id: String,
-        productParam: ProductParam,
+        productParam: ProductParamUpdate,
     ): ResponseResult<Product> = withContext(coroutineScope) {
         try {
             api.updateProduct(token, id, productParam)
         } catch (e: Exception) {
             Log.e(TAG, "Exception: $e")
-            ResponseResult(0, "Lỗi", null)
+            ResponseResult(0, "Máy chủ không phản hồi", null)
         }
     }
 
@@ -70,7 +71,7 @@ class ProductRepositoryImpl
                 api.deleteProduct(token, id)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 }

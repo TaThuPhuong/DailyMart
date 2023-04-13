@@ -1,13 +1,28 @@
 package net.fpoly.dailymart.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+import java.text.SimpleDateFormat
 
 data class Expiry(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int? = null,
-    @ColumnInfo(name = "product_id") var productId: String = "",
-    @ColumnInfo(name = "expiry_date") var expiryDate: String = "",
-    @ColumnInfo(name = "quantity") var quantity: Int = 0,
+    @SerializedName("_id") val id: String = "",
+    @SerializedName("product") var productId: String = "",
+    @SerializedName("expiryDate") var expiryDate: String = "",
+    @SerializedName("quantityExp") var quantity: Int = 0,
+) : Serializable
+
+data class ExpiryRes(
+    @SerializedName("_id") val id: String = "",
+    @SerializedName("product") var productId: String = "",
+    @SerializedName("expiryDate") var expiryDate: Long = 0,
+    @SerializedName("quantityExp") var quantity: Int = 0,
+) : Serializable
+
+data class ExpiryCheck(
+    val id: String = "",
+    var productId: String = "",
+    var productName: String = "",
+    var expiryDate: Long = 0,
+    var quantity: Int = 0,
+    var image: String = "",
 )

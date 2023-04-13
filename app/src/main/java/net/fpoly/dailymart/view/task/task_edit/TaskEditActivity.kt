@@ -26,7 +26,7 @@ class TaskEditActivity :
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun setOnClickListener() {
-        binding.layoutTimeEnd.setOnClickListener {
+        binding.tvTimeEnd.setOnClickListener {
             PickTimeDialog(this) { time ->
                 binding.tvTimeEnd.text = "Kết thúc: ${SimpleDateFormat("HH:mm").format(time)}"
                 viewModel.onEvent(EditEvent.OnChangeEndTime(time))

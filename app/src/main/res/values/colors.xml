@@ -26,4 +26,6 @@
     <color name="colorTextTabBar">#8D9AB3</color>
     <color name="colorTextGold">#FEB530</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="start_text">#1A85F8</color>
+    <color name="end_text">#16EAD3</color>
 </resources>

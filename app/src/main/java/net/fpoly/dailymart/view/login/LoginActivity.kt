@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.databinding.ActivityLoginBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
@@ -20,6 +21,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModels { AppViewModelFactory }
 
+    private  var mLoadingDialog: LoadingDialog ? =null
     override fun setOnClickListener() {
         binding.imvShowPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
@@ -30,11 +32,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.initLoadDialog(this)
+        mLoadingDialog = LoadingDialog(this)
     }
 
     override fun setupObserver() {
         viewModel.loginSuccess.observe(this) {
+            mLoadingDialog?.hideLoading()
             if (it) {
                 openActivity(MainActivity::class.java)
                 finishAffinity()
@@ -50,7 +53,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override fun onClick(v: View?) {
         when (v) {
             binding.imvShowPassword -> viewModel.onEvent(LoginEvent.ShowPassword)
-            binding.btnLogin -> viewModel.onEvent(LoginEvent.Login)
+            binding.btnLogin -> {
+                mLoadingDialog?.showLoading()
+                viewModel.onEvent(LoginEvent.Login)
+            }
             binding.tvForgetPassword -> openActivity(ForgetPasswordActivity::class.java)
         }
     }

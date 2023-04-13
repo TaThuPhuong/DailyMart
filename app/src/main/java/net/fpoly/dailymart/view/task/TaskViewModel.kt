@@ -56,19 +56,18 @@ class TaskViewModel(private val app: Application, private val repo: TaskReposito
     }
 
     fun onFinish(task: Task) {
-        task.finish = task.finishTime != 0L
         viewModelScope.launch(Dispatchers.Default) {
             val res = repo.updateTask(mToken, TaskParam(task), task.id)
             if (res.isSuccess()) {
                 message.postValue(res.message!!)
                 getAllTask(mViewPosition)
+                if (mUser!!.role == ROLE.staff) {
+                    sendNotification("Đã hoàn thành", task.title, task.id, task.idCreator.deviceId)
+                } else {
+                    sendNotification("Đã nhận xét", task.title, task.id, task.idReceiver.deviceId)
+                }
             } else {
                 message.postValue(res.message!!)
-            }
-            if (mUser!!.role == ROLE.staff) {
-                sendNotification("Đã hoàn thành", task.title, task.idCreator.deviceId)
-            }else{
-                sendNotification("Đã nhận xét", task.title, task.idReceiver.deviceId)
             }
         }
     }

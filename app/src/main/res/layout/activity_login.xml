@@ -78,7 +78,7 @@
             android:drawableStart="@drawable/ic_person_gray"
             android:drawablePadding="10dp"
             android:fontFamily="@font/imbplexsans_regular"
-            android:hint="@string/email_s_i_n_tho_i"
+            android:hint="Số điện thoại"
             android:maxLines="1"
             android:paddingVertical="8dp"
             android:textColor="@color/gray_primary"

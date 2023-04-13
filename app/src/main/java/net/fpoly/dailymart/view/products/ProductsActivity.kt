@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityProductsBinding
@@ -17,7 +18,7 @@ import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.products.add_product.AddProductActivity
 import net.fpoly.dailymart.view.products.adapter.ProductAdapter
 import net.fpoly.dailymart.view.products.edit_product.ProductEditActivity
-import net.fpoly.dailymart.view.task.detail_product.ProductDetailActivity
+import net.fpoly.dailymart.view.products.detail_product.ProductDetailActivity
 
 class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsBinding::inflate) {
 
@@ -36,34 +37,6 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getListProducts()
-        mProductAdapter = ProductAdapter(this, mListProduct) {
-            if (mUser!!.role != ROLE.staff) {
-                ProductOptionDialog(this,
-                    onDetail = {
-                        val intent = Intent(this, ProductDetailActivity::class.java)
-                        intent.putExtra(Constant.PRODUCT, it)
-                        startActivity(intent)
-                    }, onEdit = {
-                        val intent = Intent(this, ProductEditActivity::class.java)
-                        intent.putExtra(Constant.PRODUCT, it)
-                        startActivity(intent)
-                    }, onDelete = {
-                        DeleteProductConfirmDialog(this) {
-                            viewModel.onDelete(it) {
-                                val snack =
-                                    Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
-                                snack.setAction("Hoàn tác") {
-                                    viewModel.onRestore()
-                                }
-                                snack.show()
-                            }
-                        }.show()
-                    }).show()
-            } else {
-
-            }
-        }
-        binding.rcvProducts.adapter = mProductAdapter
         binding.imvBack.setOnClickListener { finish() }
         binding.imvClear.setOnClickListener {
             binding.edSearch.setText("")
@@ -73,14 +46,43 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.tvAddNew.setOnClickListener {
             startActivity(Intent(this, AddProductActivity::class.java))
         }
+        initRecycleProducts()
         setSearch()
     }
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
+            binding.pbLoading.gone()
             mProductAdapter.setData(it)
             mListProduct = it
         }
+    }
+
+    private fun initRecycleProducts() {
+        mProductAdapter = ProductAdapter(this, mListProduct) {
+            ProductOptionDialog(this, mUser!!.role != ROLE.staff,
+                onDetail = {
+                    val intent = Intent(this, ProductDetailActivity::class.java)
+                    intent.putExtra(Constant.PRODUCT, it)
+                    startActivity(intent)
+                }, onEdit = {
+                    val intent = Intent(this, ProductEditActivity::class.java)
+                    intent.putExtra(Constant.PRODUCT, it)
+                    startActivity(intent)
+                }, onDelete = {
+                    DeleteProductConfirmDialog(this) {
+                        viewModel.onDelete(it) {
+                            val snack =
+                                Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+                            snack.setAction("Hoàn tác") {
+                                viewModel.onRestore()
+                            }
+                            snack.show()
+                        }
+                    }.show()
+                }).show()
+        }
+        binding.rcvProducts.adapter = mProductAdapter
     }
 
     private fun setSearch() {

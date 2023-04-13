@@ -19,14 +19,11 @@ class FinishTaskConfirmDialog(
     private val mUser = SharedPref.getUser(mContext)
 
     override fun initData() {
-        binding.edComment.setVisibility(mUser!!.role != ROLE.staff)
+        binding.edComment.setVisibility(mUser.role != ROLE.staff)
         binding.imvClose.setOnClickListener { dismiss() }
         binding.btnCancel.setOnClickListener { dismiss() }
         binding.btnConfirm.setOnClickListener {
-            var time = 0L
-            if (mUser.role == ROLE.staff) {
-                time = System.currentTimeMillis()
-            }
+            val time = System.currentTimeMillis()
             onConfirm(binding.edComment.text.toString(), time)
             dismiss()
         }

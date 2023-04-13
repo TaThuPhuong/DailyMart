@@ -23,8 +23,6 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
-    private lateinit var mLoadingDialog: LoadingDialog
-
     override fun setOnClickListener() {
         binding.imvBack.setOnClickListener(this)
         binding.imvAdd.setOnClickListener(this)
@@ -32,7 +30,6 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     }
 
     override fun setupData() {
-        mLoadingDialog = LoadingDialog(this)
         binding.layoutToolbar.setMarginsStatusBar(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -49,15 +46,17 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                mLoadingDialog.showLoading()
                 viewModel.getAllTask(binding.viewPager.currentItem)
+                binding.pbLoading.visible()
+                binding.viewPager.gone()
             }
         })
     }
 
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
-            mLoadingDialog.hideLoading()
+            binding.pbLoading.gone()
+            binding.viewPager.visible()
         }
     }
 

@@ -14,10 +14,10 @@ class PickTimeDialog(
 ) :
     BaseBottomDialog<DialogPickTimeBinding>(mContext, DialogPickTimeBinding::inflate) {
 
-    var listMinute = arrayOfNulls<String>(60)
-    var listHour: Array<String?> = arrayOf(
-        "01", "02", "03", "04", "05", "06", "07", "08", "09",
-        "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "00"
+    private var listMinute = arrayOfNulls<String>(60)
+    private var listHour: Array<String?> = arrayOf(
+        "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+        "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"
     )
 
     var currentHour = 7
@@ -32,15 +32,15 @@ class PickTimeDialog(
             listMinute[i] = i.toStrDecimal()
         }
 
-        binding.npvPopupPick1.minValue = 1
+        binding.npvPopupPick1.minValue = 0
         binding.npvPopupPick1.setDisplayedValues(listHour, false)
-        binding.npvPopupPick1.maxValue = listHour.size
+        binding.npvPopupPick1.maxValue = listHour.size - 1
         binding.npvPopupPick1.value = currentHour
 
-        binding.npvPopupPick2.minValue = 1
+        binding.npvPopupPick2.minValue = 0
         binding.npvPopupPick2.setDisplayedValues(listMinute, false)
-        binding.npvPopupPick2.maxValue = listMinute.size
-        binding.npvPopupPick2.value = currentMinute + 1
+        binding.npvPopupPick2.maxValue = listMinute.size - 1
+        binding.npvPopupPick2.value = currentMinute
 
         binding.npvPopupPick1.setOnValueChangedListener(object :
             NumberPickView.OnValueChangeListener {
