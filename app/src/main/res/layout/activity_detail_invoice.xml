@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.detailinvoice.DetailInvoiceActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="net.fpoly.dailymart.utils.ConvertUtilsKt" />
+
+        <variable
+            name="viewmodel"
+            type="net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pink_primary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Thêm Hóa Đơn"
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:text="Chi Tiết Đơn Hàng"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="26dp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/id_category(viewmodel.invoice.id)}"
+                        android:textColor="@color/gray_medium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="8sp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/nhan_vien(viewmodel.invoice.user.name)}"
+                        android:textColor="@color/gray_medium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="8sp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/type_invoice(viewmodel.invoice.typeToString(context))}"
+                        android:textColor="@color/gray_medium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="8sp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/date_create(ConvertUtilsKt.fromMillisToStringDateTime(viewmodel.invoice.createAt))}"
+                        android:textColor="@color/gray_medium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="8sp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@{@string/customer_name(viewmodel.invoice.customer.name)}"
+                        android:textColor="@color/gray_medium" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/listInvoiceDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        app:invoiceDetailItems="@{viewmodel.invoice.invoiceDetails}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="8sp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="end"
+                        android:text="@{@string/total_invoice(ConvertUtilsKt.convertTotalInvoiceNumber(viewmodel.invoice.totalBill))}"
+                        android:textColor="@color/gray_medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="36dp">
+
+                        <TextView
+                            android:id="@+id/tv_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/gray_light"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:gravity="center"
+                            android:onClick="@{() -> viewmodel.refundInvoice()}"
+                            android:text="Hoàn Tiền"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tv_confirm"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/pink_primary"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:gravity="center"
+                            android:text="Xóa"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

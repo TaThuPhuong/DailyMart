@@ -3,8 +3,6 @@
 
     <data>
 
-        <import type="net.fpoly.dailymart.view.tab.invoice.InvoiceViewModel" />
-
         <import type="net.fpoly.dailymart.data.model.Product" />
 
         <import type="android.view.View" />
@@ -13,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="InvoiceViewModel" />
+            type="net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel" />
 
         <variable
             name="invoice"

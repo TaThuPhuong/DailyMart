@@ -11,6 +11,7 @@ import net.fpoly.dailymart.view.bank_info.BankInfoViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
+import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainViewModel
 import net.fpoly.dailymart.view.message.MessageViewModel
@@ -127,6 +128,9 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     EditWorkSheetViewModel(app, userRepository)
                 isAssignableFrom(BankInfoViewModel::class.java) ->
                     BankInfoViewModel(app)
+                isAssignableFrom(DetailInvoiceViewModel::class.java) -> {
+                    DetailInvoiceViewModel(app)
+                }
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

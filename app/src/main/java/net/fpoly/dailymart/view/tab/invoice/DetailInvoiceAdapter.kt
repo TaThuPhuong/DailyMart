@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.data.model.DetailInvoice
 import net.fpoly.dailymart.databinding.ItemDetailInvoiceBinding
+import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel
 
-class DetailInvoiceAdapter(private val viewModel: InvoiceViewModel) :
+class DetailInvoiceAdapter(private val viewModel: DetailInvoiceViewModel) :
     ListAdapter<DetailInvoice, DetailInvoiceAdapter.DetailInvoiceViewHolder>(
         InVoiceDetailDiffCallback()
     ) {
 
     class DetailInvoiceViewHolder(val binding: ItemDetailInvoiceBinding) :
         ViewHolder(binding.root) {
-        fun bind(item: DetailInvoice, viewModel: InvoiceViewModel) {
+        fun bind(item: DetailInvoice, viewModel: DetailInvoiceViewModel) {
             binding.invoice = item
             binding.viewModel = viewModel
             binding.executePendingBindings()

@@ -14,8 +14,6 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
     private val viewModel: InvoiceViewModel by viewModels { AppViewModelFactory }
     private lateinit var invoiceSellAdapter: InvoiceAdapter
     private lateinit var invoiceImportAdapter: InvoiceAdapter
-    private lateinit var invoiceDeductionAdapter: InvoiceAdapter
-
 
     override fun setupData() {
         binding.viewModel = viewModel
@@ -25,7 +23,6 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         setupAdapter()
         setupEditSearch()
         setupBtnAdd()
-
     }
 
     private fun setupBtnAdd() {
@@ -63,11 +60,9 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
     private fun setupAdapter() {
         invoiceSellAdapter = InvoiceAdapter(viewModel)
         invoiceImportAdapter = InvoiceAdapter(viewModel)
-        invoiceDeductionAdapter = InvoiceAdapter(viewModel)
 
         binding.rvSell.adapter = invoiceSellAdapter
         binding.rvImport.adapter = invoiceImportAdapter
-        binding.rvDeduction.adapter = invoiceDeductionAdapter
     }
 
 
