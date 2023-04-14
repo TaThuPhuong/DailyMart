@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. --><style name="AppTheme" parent="Base.AppTheme" />
 
-    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorAccent">@color/pink_primary</item>
         <item name="android:windowHideAnimation">@anim/fade_out</item>
         <item name="android:windowShowAnimation">@anim/fade_in</item>

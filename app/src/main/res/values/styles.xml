@@ -35,11 +35,12 @@
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="DatePickerTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+    <style name="DatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorAccent">@color/pink_primary</item>
+        <item name="background">@color/white</item>
         <item name="colorPrimary">@color/pink_primary</item>
-        <!-- Thay đổi màu của nút Cancel -->
+
         <item name="colorOnPrimary">@color/gray_medium</item>
-        <!-- Thay đổi màu của nút OK -->
         <item name="colorSecondary">@color/pink_primary</item>
     </style>
 </resources>
