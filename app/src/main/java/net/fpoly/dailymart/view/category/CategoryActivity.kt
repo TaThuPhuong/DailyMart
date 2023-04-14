@@ -29,7 +29,7 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
             if (text.isNotEmpty()) {
                 viewModel.listCategory.value?.also { invoices ->
                     val result =
-                        invoices.filter { it.id.contains(text) || it.name.contains(text) }
+                        invoices.filter { it.id.lowercase().contains(text) || it.name.lowercase().contains(text) }
                             .toMutableList()
                     viewModel.listCategory.value = result
                 }

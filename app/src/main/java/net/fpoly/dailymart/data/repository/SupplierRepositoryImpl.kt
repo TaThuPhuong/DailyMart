@@ -49,7 +49,7 @@ class SupplierRepositoryImpl(
         withContext(ioDispatcher) {
             try {
                 remoteData.removeSuppliers(token, supplier.id)
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 ResultData(result = Unit)
             }
         }

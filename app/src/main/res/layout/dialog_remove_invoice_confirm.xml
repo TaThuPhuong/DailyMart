@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="18dp"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_confirm_remove"
+                android:layout_marginTop="26dp"
+                android:adjustViewBounds="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/gray_medium"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:layout_marginTop="28dp"
+                android:text="Xóa hóa đơn"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/gray_medium"
+                android:layout_marginHorizontal="70dp"
+                android:fontFamily="@font/imbplexsans_medium"
+                android:layout_marginTop="28dp"
+                android:gravity="center_horizontal"
+                android:text="Bạn chắc chắn muốn xóa hóa đơn này không?"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="36dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Xác Nhận"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@color/pink_primary"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/imbplexsans_medium"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Hủy"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@color/gray_light"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/imbplexsans_medium"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

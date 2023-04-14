@@ -42,7 +42,7 @@ class AddStaffViewModel(
         _validateEmailUser.value = ""
     }
 
-    val loginSuccess = MutableLiveData(false)
+    val addStaffSuccess = MutableLiveData(false)
     private lateinit var mLoadingDialog: LoadingDialog
 
     fun initLoadDialog(context: Context) {
@@ -61,19 +61,19 @@ class AddStaffViewModel(
                     Log.d(TAG, "onResponse: " + response.body()?.string())
                     Log.d(TAG, "onResponse: " + response.body())
                     Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
-                    loginSuccess.postValue(true)
+                    addStaffSuccess.postValue(true)
                     activity?.finish()
                 } else {
                     Log.d(TAG, "code: " + response.code())
                     Log.d(TAG, "message: " + response.message())
                     Log.d(TAG, "errorBody: " + response.errorBody()?.string())
-                    loginSuccess.postValue(false)
+                    addStaffSuccess.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 print(t.message)
-                loginSuccess.postValue(false)
+                addStaffSuccess.postValue(false)
                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                 activity?.finish()
             }
@@ -111,7 +111,7 @@ class AddStaffViewModel(
                         _validatePhone.value = it.phoneNumber.blankException()
                         _validateName.value = it.name.blankException()
                         _validateEmailUser.value = it.email.blankException()
-                        loginSuccess.value = false
+                        addStaffSuccess.value = false
                     }
                 }
             }

@@ -47,7 +47,7 @@ class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
     }
 }
 
-@BindingAdapter("app:categoryItems")
+@BindingAdapter("categoryItems")
 fun setItemsCategory(list: RecyclerView, items: List<Category>?){
     items?.let {
         (list.adapter as CategoryAdapter).submitList(items)

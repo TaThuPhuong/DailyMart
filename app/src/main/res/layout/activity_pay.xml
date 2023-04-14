@@ -1,217 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="net.fpoly.dailymart.view.pay.PayViewModel" />
+        <import type="net.fpoly.dailymart.view.pay.AddInvoiceExportViewModel" />
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="PayViewModel" />
+            type="AddInvoiceExportViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:background="#FFFDFD"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="50dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
+                android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingVertical="20dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:src="@drawable/ic_back_black"
-                tools:ignore="RtlSymmetry" />
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Thêm Hóa Đơn"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_scanner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_toolbar"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="36dp"
-            app:cardCornerRadius="10dp">
-
-            <com.budiyev.android.codescanner.CodeScannerView
-                android:id="@+id/scanner_view"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/bg_btn"
-                android:visibility="visible"
-                app:autoFocusButtonColor="@color/white"
-                app:autoFocusButtonVisible="true"
-                app:flashButtonColor="@color/white"
-                app:flashButtonVisible="true"
-                app:frameAspectRatioHeight="2"
-                app:frameAspectRatioWidth="6"
-                app:frameColor="@color/white"
-                app:frameCornersRadius="10dp"
-                app:frameCornersSize="20dp"
-                app:frameSize="0.75"
-                app:frameThickness="2dp"
-                app:maskColor="@color/mark_color" />
-        </androidx.cardview.widget.CardView>
-
-        <RelativeLayout
-            android:id="@+id/layout_search"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/cv_scanner"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_red_ff44c_rd_8">
-
-            <EditText
-                android:id="@+id/ed_product_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toStartOf="@id/imv_clear"
-                android:background="@color/no_color"
-                android:hint="Nhập mã sản phẩm"
-                android:paddingStart="12dp"
-                android:textColor="@color/gray_medium"
-                android:textColorHint="@color/gray_light"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/imv_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:src="@drawable/ic_clear_black_24dp" />
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_search"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/imbplexsans_regular"
-            android:text="Tổng hàng hóa"
-            android:layout_marginTop="26dp"
-            android:textColor="@color/gray_medium"
-            android:textSize="22sp" />
-
-        <LinearLayout
-            android:id="@+id/layout_row"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.4"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:text="Tên SP"
-                android:textColor="@color/pink_primary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:gravity="center_horizontal"
-                android:text="Số lượng"
-                android:textColor="@color/pink_primary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:gravity="end"
-                android:text="Đơn giá"
-                android:textColor="@color/pink_primary"
-                android:textSize="14sp" />
-        </LinearLayout>
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_row">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_item"
+                <AutoCompleteTextView
+                    android:id="@+id/ed_search_barcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_gray_r4"
+                    android:elevation="1dp"
+                    android:hint="Barcode..."
+                    android:paddingHorizontal="12dp"
+                    android:textColor="@color/gray_medium"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ed_search_barcode">
+
+                    <SurfaceView
+                        android:id="@+id/scannerZone"
+                        android:layout_width="match_parent"
+                        android:layout_height="580dp"
+                        android:layout_gravity="center" />
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                    app:layout_constraintTop_toBottomOf="@id/card_scan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/rv_item"
-                    android:layout_marginHorizontal="20dp">
+                    <LinearLayout
+                        android:id="@+id/layout_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_pink_primary_rd_8"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="8dp"
+                        android:visibility="@{viewModel.productInBarcode != null ? View.VISIBLE: View.GONE}">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="6dp"
+                                android:fontFamily="@font/imbplexsans_regular"
+                                android:text="@{viewModel.productBarCode}"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/imbplexsans_regular"
+                                android:text="@{viewModel.productInBarcode.name}"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/ibmplexsans_bold"
+                                android:gravity="center"
+                                android:onClick="@{() -> viewModel.addInvoiceDetail(context)}"
+                                android:padding="8dp"
+                                android:text="Thêm"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/ibmplexsans_bold"
+                                android:gravity="center"
+                                android:onClick="@{() -> viewModel.cancelInvoiceDetail(context)}"
+                                android:padding="8dp"
+                                android:text="Hủy"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/title_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="18dp"
                         android:fontFamily="@font/imbplexsans_regular"
-                        android:text="Thành tiền"
-                        android:textColor="@color/gray_medium"
-                        android:textSize="14sp" />
+                        android:text="Tổng hàng hóa"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="22dp"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/imbplexsans_medium"
-                        android:text="300.000 đ"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_product" />
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@id/title_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:gravity="start"
+                            android:text="Tên SP"
+                            android:textColor="@color/gray_primary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:gravity="center"
+                            android:text="Số lượng"
+                            android:textColor="@color/gray_primary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:gravity="center"
+                            android:text="Đơn giá"
+                            android:textColor="@color/gray_primary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:gravity="end"
+                            android:text="Tổng (VNĐ)"
+                            android:textColor="@color/gray_primary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listInvoiceDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="12dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="120dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_1"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/btn_pay"
+        <LinearLayout
+            android:id="@+id/paymentTotal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnPayment"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/btnPayment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="start"
+                android:text="Thành tiền"
+                android:textColor="@color/gray_medium" />
+
+            <TextView
+                android:id="@+id/tvTotalBill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_semibold"
+                android:gravity="end"
+                android:textColor="@color/gray_medium" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnPayment"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_btn"
+            android:background="@drawable/bg_pink_primary_rd_8"
             android:fontFamily="@font/imbplexsans_medium"
             android:gravity="center"
-            android:text="Thanh toán"
+            android:text="Thanh Toán"
+            android:onClick="@{() -> viewModel.btnPaymentClick(context)}"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

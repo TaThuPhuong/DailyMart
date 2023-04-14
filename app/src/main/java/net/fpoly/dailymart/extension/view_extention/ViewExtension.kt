@@ -1,11 +1,13 @@
 package net.fpoly.dailymart.extension.view_extention
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
 
@@ -62,4 +64,14 @@ fun View.setMarginsStatusBar(context: Context) {
         p.setMargins(0, getStatusBarHeight(context), 0, 0)
         requestLayout()
     }
+}
+
+fun Context.hideKeyboard() {
+    val activity = this as Activity
+    val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    var view = activity.currentFocus
+    if (view == null) {
+        view = View(activity)
+    }
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

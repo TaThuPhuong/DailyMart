@@ -20,8 +20,8 @@ import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
+import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
 import net.fpoly.dailymart.view.message.MessageActivity
-import net.fpoly.dailymart.view.pay.PayActivity
 import net.fpoly.dailymart.view.profile.ProfileActivity
 import net.fpoly.dailymart.view.report.ReportActivity
 import net.fpoly.dailymart.view.stock.StockActivity
@@ -129,7 +129,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
                 openActivity(TaskActivity::class.java)
             }
             binding.imvPay -> {
-                openActivity(PayActivity::class.java)
+                openActivity(AddInvoiceExportActivity::class.java)
             }
         }
     }
