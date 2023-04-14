@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.tab.invoice
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Invoice
@@ -9,6 +10,8 @@ import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.repository.InvoiceRepositoryImpl
 import net.fpoly.dailymart.repository.InvoiceRepository
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceActivity
+import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceActivity.Companion.INVOICE
 
 class InvoiceViewModel(context: Context) : ViewModel() {
 
@@ -23,11 +26,13 @@ class InvoiceViewModel(context: Context) : ViewModel() {
 
     val invoiceImport = invoices.switchMap { filterInvoice(it, InvoiceType.IMPORT) }
     val invoiceSell = invoices.switchMap { filterInvoice(it, InvoiceType.EXPORT) }
-    val invoiceDeduction = invoices.switchMap { filterInvoice(it, InvoiceType.DEDUCTION) }
 
     val showSnackbar = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
     val isShowEmptyList = MutableLiveData(false)
+    val isRefund = MutableLiveData(false)
+
+    private lateinit var invoiceRefund : Invoice
 
     init {
         viewModelScope.launch { getAllInvoice() }
@@ -57,35 +62,36 @@ class InvoiceViewModel(context: Context) : ViewModel() {
         return MutableLiveData(invoicesImport)
     }
 
-
     fun onOpenTab(id: Int) {
         _openTabReceipt.value = id
         isShowEmptyList()
     }
 
     fun detailInvoice(context: Context, invoice: Invoice) {
-        DetailInvoiceDialog(context, this, invoice).show()
-    }
-
-    fun addNewInvoice(context: Context) {
-
+        Intent(context, DetailInvoiceActivity::class.java).also {
+            it.putExtra(INVOICE, invoice)
+            context.startActivity(it)
+        }
     }
 
     private fun isShowEmptyList(): Boolean {
         val isShow = when {
             openTabReceipt.value == TAB_EXPORT && invoiceSell.value.isNullOrEmpty() -> true
             openTabReceipt.value == TAB_IMPORT && invoiceImport.value.isNullOrEmpty() -> true
-            openTabReceipt.value == TAB_DEDUCTION && invoiceDeduction.value.isNullOrEmpty() -> true
             else -> false
         }
         isShowEmptyList.value = isShow
         return isShow
     }
 
+    fun refundInvoice(invoice: Invoice){
+        isRefund.value = true
+        invoiceRefund = invoice
+    }
+
     companion object {
         const val TAG = "ReceiptViewModel"
         const val TAB_EXPORT = 1
         const val TAB_IMPORT = 2
-        const val TAB_DEDUCTION = 3
     }
 }

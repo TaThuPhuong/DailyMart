@@ -31,6 +31,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.detailinvoice.DetailInvoiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -84,8 +87,14 @@
             android:name=".view.category.CategoryActivity"
             android:exported="true" />
         <activity android:name=".view.task.add_new.AddTaskActivity" />
-        <activity android:name=".view.pay.PayActivity" />
-        <activity android:name=".view.payment.PaymentActivity" />
+        <activity
+            android:name=".view.pay.AddInvoiceExportActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.payment.PaymentActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity android:name=".view.products.ProductsActivity" />
         <activity android:name=".view.change_password.ChangePasswordActivity" />
@@ -97,7 +106,7 @@
         <activity android:name=".view.products.detail_product.ProductDetailActivity" />
         <activity android:name=".view.products.edit_product.ProductEditActivity" />
         <activity android:name=".view.work_sheet.edit_work_sheet.EditWorkSheetActivity" />
-        <activity android:name=".view.bank_info.BankInfoActivity" />
+        <activity android:name=".view.bank_info.BankInfoActivity"/>
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />

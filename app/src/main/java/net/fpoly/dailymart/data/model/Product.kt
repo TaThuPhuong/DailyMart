@@ -1,6 +1,9 @@
 package net.fpoly.dailymart.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 data class Product(
@@ -65,6 +68,58 @@ data class ProductParamUpdate(
         this.unit = product.unit
     }
 }
+
+data class ProductInvoiceParam(
+    @SerializedName("idProduct") val id: String = "",
+    @SerializedName("name") var name: String = "",
+    @SerializedName("unitPrice") var unitPrice: Int = 0,
+    @SerializedName("quantityPro") var quantity: Int = 0,
+    @SerializedName("totalPrice") var total : Int = 0,
+    @SerializedName("expiryDate") var expiryDate: Long = 0,
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readLong()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(name)
+        parcel.writeInt(unitPrice)
+        parcel.writeInt(quantity)
+        parcel.writeInt(total)
+        parcel.writeLong(expiryDate)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ProductInvoiceParam> {
+        override fun createFromParcel(parcel: Parcel): ProductInvoiceParam {
+            return ProductInvoiceParam(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ProductInvoiceParam?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+@Parcelize
+data class InvoiceRefund(
+    @SerializedName("idUser") var idUser: String = "",
+    @SerializedName("idInvoice") val id: String = "",
+    @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
+    @SerializedName("invoiceType") var invoiceType: String = "REFUND",
+    @SerializedName("totalBill") var total : Long = 0,
+) : Parcelable
+
 
 fun ProductParam.checkValidate(): Boolean {
     return name.trim().isNotEmpty() && barcode.trim().isNotEmpty() && supplier.trim()

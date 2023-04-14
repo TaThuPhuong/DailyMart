@@ -8,10 +8,11 @@
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
 
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor" >@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
+
 
     <style name="ActivityAnimation" parent="@style/ActivityAnimation" tools:ignore="ResourceCycle">
         <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>

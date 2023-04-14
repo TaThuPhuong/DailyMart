@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="net.fpoly.dailymart.data.model.Product" />
+
+        <import type="android.view.View" />
+
+        <import type="net.fpoly.dailymart.utils.ConvertUtilsKt" />
+
+        <variable
+            name="viewModel"
+            type="net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel" />
+
+        <variable
+            name="invoice"
+            type="net.fpoly.dailymart.data.model.ProductInvoiceParam" />
+
+        <variable
+            name="index"
+            type="java.lang.Integer" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="@{() -> viewModel.productClick(invoice)}"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/imbplexsans_medium"
+                    android:text="@{invoice.name}"
+                    android:textColor="@color/gray_medium"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="center"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.quantity)}"
+                android:textColor="@color/gray_medium"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="center"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.unitPrice)}"
+                android:textColor="@color/gray_medium"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_semibold"
+                android:gravity="center_vertical|end"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.total)}"
+                android:textColor="@color/gray_medium"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="6dp"
+            android:contentDescription="@string/imagedescription"
+            android:src="@drawable/line_dash_invoice" />
+    </LinearLayout>
+
+</layout>

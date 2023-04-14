@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import net.fpoly.dailymart.R
+import net.fpoly.dailymart.view.main.MainActivity.Companion.MAIN_EVENT
+import net.fpoly.dailymart.view.payment.PaymentActivity.Companion.NEW_INVOICE_CREATE
 
 class MainViewModel : ViewModel() {
 
@@ -28,5 +30,14 @@ class MainViewModel : ViewModel() {
     fun backToHomeTab() {
         _tabCount.value = 0
         _openTabEvent.value = R.id.home_fragment
+    }
+
+    fun setupCheckEvent(activity: MainActivity) {
+        with(activity) {
+            val event = intent.getStringExtra(MAIN_EVENT)
+            if (event == NEW_INVOICE_CREATE) {
+                openTab(1)
+            }
+        }
     }
 }

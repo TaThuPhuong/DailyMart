@@ -144,32 +144,6 @@
                         android:background="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_IMPORT ? @drawable/bg_line_pink_primary : @drawable/bg_line_gray_medium}" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout_deduction"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="@{()->viewModel.onOpenTab(InvoiceViewModel.TAB_DEDUCTION)}"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_deduction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="6dp"
-                        android:fontFamily="@font/imbplexsans_medium"
-                        android:text="Trừ tiền"
-                        android:textColor="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? @color/pink_primary : @color/gray_medium}"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:id="@+id/line_deduction"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginHorizontal="6dp"
-                        android:background="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? @drawable/bg_line_pink_primary : @drawable/bg_line_gray_medium }" />
-                </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -192,16 +166,6 @@
                 app:items="@{viewModel.invoiceImport}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_deduction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_filter"
-                android:layout_marginTop="14dp"
-                android:visibility="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_DEDUCTION ? View.VISIBLE : View.GONE}"
-                app:items="@{viewModel.invoiceDeduction}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -209,7 +173,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="@{viewModel.isShowEmptyList ? View.VISIBLE : View.GONE}">
+                set_visible="@{viewModel.isShowEmptyList}">
 
                 <ImageView
                     android:layout_width="200dp"

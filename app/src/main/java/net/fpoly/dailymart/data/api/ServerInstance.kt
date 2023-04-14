@@ -38,5 +38,9 @@ class ServerInstance {
         val apiReport: ReportApi by lazy {
             retrofit.create(ReportApi::class.java)
         }
+
+        val apiCustomer: CustomerApi by lazy {
+            retrofit.create(CustomerApi::class.java)
+        }
     }
 }
