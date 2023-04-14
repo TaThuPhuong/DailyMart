@@ -8,32 +8,21 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface ReportApi {
-    @GET("stats/revenue/month/{month}&EXPORT")
-    fun revenueMonthWithType(
+    @GET("stats/revenue/month/{month}")
+    suspend fun revenueMonth(
         @Header("Authorization") token: String,
         @Path("month") month: Int,
-//        @Path("type") type: ReportType,
     ): ResultData<ReportDataByMonth>
 
-    @GET("stats/revenue/date/{date}&{type}")
-    fun revenueDateWithType(
+    @GET("stats/revenue/date/{date}")
+    suspend fun revenueDate(
         @Header("Authorization") token: String,
         @Path("date") date: String,
-        @Path("type") type: ReportType,
     ): ResultData<ReportDataByDay>
 
-    @GET("stats/revenue/year/{year}&{type}")
-    fun revenueYearWithType(
+    @GET("stats/revenue/year/{year}")
+    suspend fun revenueYear(
         @Header("Authorization") token: String,
-        @Path("year") year: String,
-        @Path("type") type: ReportType,
+        @Path("year") year: Int,
     ): ResultData<ReportDataByYear>
-
-    @GET("stats/revenueByCustomDate/{startDate}&{endDate}&{type}")
-    fun revenueCustomDateWithType(
-        @Header("Authorization") token: String,
-        @Path("startDate") startDate: String,
-        @Path("endDate") endDate: String,
-        @Path("type") type: ReportType,
-    ): ResultData<ReportDataByCustomDate>
 }
