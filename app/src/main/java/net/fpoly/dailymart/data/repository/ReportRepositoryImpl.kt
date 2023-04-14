@@ -14,62 +14,49 @@ class ReportRepositoryImpl : ReportRepository {
     private val reportApi = ServerInstance.apiReport
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     private val TAG = "ReportRepositoryImpl"
-    override suspend fun getReportByMonth(
-        token: String,
-        month: Int,
-//        type: ReportType
-    ): Response<ReportDataByMonth> =
+
+    override suspend fun getReportByMonth(token: String, month: Int) =
         withContext(ioDispatcher) {
             try {
-                val res = reportApi.revenueMonthWithType(token, month)
-                if (res.isSuccess()) {
-                    Log.d(TAG, "getReportByMonth: res: ${res}")
+                val res = reportApi.revenueMonth(token, month)
+                if (res.isSuccess()){
                     Response.Success(res.result)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception) {
+            } catch (e: Exception){
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
         }
 
-    override suspend fun getReportByDate(
-        token: String,
-        date: String,
-        type: ReportType
-    ): Response<ReportDataByDay> =
+    override suspend fun getReportByDay(token: String, date: String) =
         withContext(ioDispatcher) {
             try {
-                val res = reportApi.revenueDateWithType(token, date, type)
-                if (res.isSuccess()) {
+                val res = reportApi.revenueDate(token, date)
+                if (res.isSuccess()){
                     Response.Success(res.result)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception) {
+            } catch (e: Exception){
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
-        }
+    }
 
-    override suspend fun getReportByYear(
-        token: String,
-        year: String,
-        type: ReportType
-    ): Response<ReportDataByYear> =
+    override suspend fun getReportByYear(token: String, year: Int) =
         withContext(ioDispatcher) {
             try {
-                val res = reportApi.revenueYearWithType(token, year, type)
-                if (res.isSuccess()) {
+                val res = reportApi.revenueYear(token, year)
+                if (res.isSuccess()){
                     Response.Success(res.result)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception) {
+            } catch (e: Exception){
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
-        }
-
+    }
 }

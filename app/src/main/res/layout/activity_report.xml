@@ -68,7 +68,6 @@
 
                     <LinearLayout
                         android:id="@+id/layout_filter"
-                        android:onClick="@{() -> viewModel.showDialogFilter(context)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
@@ -80,6 +79,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="05/04/2023"
+                            android:textAlignment="textEnd"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -118,6 +118,7 @@
                         android:textSize="@dimen/_16sdp" />
 
                     <TextView
+                        android:id="@+id/tv_total_revenue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ic_revenue"
@@ -200,7 +201,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_stats_import"
+                            android:id="@+id/tv_quantity_import"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -242,7 +243,7 @@
                             android:layout_toRightOf="@id/ic_export"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
-                            android:text="Tiền nhập"
+                            android:text="Tiền bán"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16sdp" />
 
@@ -274,13 +275,13 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
-                            android:text="Hóa đơn nhập"
+                            android:text="Hóa đơn bán"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_stats_export"
+                            android:id="@+id/tv_quantity_export"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"

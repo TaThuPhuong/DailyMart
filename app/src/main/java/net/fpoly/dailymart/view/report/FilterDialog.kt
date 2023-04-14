@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.report
 
 import android.content.Context
+import android.util.Log
 import androidx.core.view.isVisible
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseBottomDialog
@@ -11,7 +12,8 @@ import java.util.*
 
 class FilterDialog(
     context: Context,
-    private val viewModel: ReportViewModel,
+//    private val viewModel: ReportViewModel,
+    val filter: (String) -> Unit
 ) :
     BaseBottomDialog<DialogFilterReportBinding>(context, DialogFilterReportBinding::inflate) {
     override fun initData() {
@@ -70,16 +72,19 @@ class FilterDialog(
         binding.btnFilter.setOnClickListener {
             if (binding.pickerMonth.isVisible && binding.pickerDate.isVisible && binding.pickerYear.isVisible) {
                 filterTime =
-                    "${binding.pickerDate.value} / ${binding.pickerMonth.value} / ${binding.pickerYear.value}"
-                viewModel
+                    "${binding.pickerYear.value} / ${binding.pickerMonth.value} / ${binding.pickerDate.value}"
+                Log.d(TAG, "initData: filterTime: $filterTime")
+                filter(filterTime)
                 dismiss()
             }
             if (!binding.pickerDate.isVisible && binding.pickerMonth.isVisible && binding.pickerYear.isVisible) {
                 filterTime = "${binding.pickerMonth.value}"
+                filter(filterTime)
                 dismiss()
             }
             if (!binding.pickerDate.isVisible && !binding.pickerMonth.isVisible && binding.pickerYear.isVisible) {
                 filterTime = "${binding.pickerYear.value}"
+                filter(filterTime)
                 dismiss()
             }
         }

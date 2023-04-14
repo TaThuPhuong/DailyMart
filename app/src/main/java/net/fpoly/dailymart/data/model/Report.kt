@@ -1,37 +1,39 @@
 package net.fpoly.dailymart.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ReportDataByMonth(
-    val totalMonth: Long,
-    val totalByDay: List<ReportDataByDayInMonth>,
+    @SerializedName("tongDoanhThu") val revenue: Long,
+    @SerializedName("tienNhap") val totalImport: Long,
+    @SerializedName("tienBan") val totalExport: Long,
+    @SerializedName("soHoaDonNhap") val quantityImport: Long,
+    @SerializedName("soHoaDonBan") val quantityExport: Long,
+    @SerializedName("dataNgay") val totalByDay: List<ReportDataByDayInMonth>,
 )
 
 data class ReportDataByDayInMonth(
-    val date: Long,
-    val data: Long,
+    @SerializedName("time") val date: Long,
+    @SerializedName("data") val data: Long,
 )
 
 data class ReportDataByDay(
-    val type: String,
-    val date: String,
-    val total: Long,
+    @SerializedName("tongDoanhThu") val revenue: Long,
+    @SerializedName("tienNhap") val totalImport: Long,
+    @SerializedName("tienBan") val totalExport: Long,
+    @SerializedName("soHoaDonNhap") val quantityImport: Long,
+    @SerializedName("soHoDonBan") val quantityExport: Long,
 )
 
 data class ReportDataByYear(
-    val type: String,
-    val totalAmountYear: Long,
-    val dataByMonth: List<ReportDataByMonthInYear>,
+    @SerializedName("tongDoanhThu") val revenue: Long,
+    @SerializedName("tienNhap") val totalImport: Long,
+    @SerializedName("tienBan") val totalExport: Long,
+    @SerializedName("soHoaDonNhap") val quantityImport: Long,
+    @SerializedName("soHoaDonBan") val quantityExport: Long,
+    @SerializedName("dataThang") val totalByMonth: List<ReportDataByMonthInYear>,
 )
 
 data class ReportDataByMonthInYear(
-    val month: Long,
-    val data: Long,
+    @SerializedName("month") val month: Long,
+    @SerializedName("data") val data: Long,
 )
-
-data class ReportDataByCustomDate(
-    val time: Long,
-    val data: Long,
-)
-
-enum class ReportType {
-    IMPORT, EXPORT
-}
