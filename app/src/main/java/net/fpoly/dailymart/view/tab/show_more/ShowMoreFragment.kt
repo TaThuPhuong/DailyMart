@@ -55,7 +55,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
     }
 
     private fun loadUser(user: User) {
-        Glide.with(mContext).load(user.avatar).placeholder(R.drawable.ic_avatar_default)
+        Glide.with(mContext).load(user.avatar).placeholder(R.drawable.img_avatar_default)
             .into(binding.imvAvatar)
         binding.tvName.text = user.name
         binding.tvRole.text = user.role.value

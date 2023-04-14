@@ -47,9 +47,15 @@ fun createNotification(context: Context, title: String, message: String, value: 
     notificationManager.notify(SharedPref.getNotificationId(context), notification)
 }
 
-suspend fun sendNotification(title: String, message: String, value: String, to: String) =
+suspend fun sendNotification(
+    title: String,
+    message: String,
+    value: String,
+    user: String,
+    to: String,
+) =
     try {
-        val data = NotificationData(Data(title, message, value), to)
+        val data = NotificationData(Data(title, message, user, value), to)
         val notificationApi = RetrofitInstance.apiPutNotification
         Log.e("YingMing", "data: $data")
         Log.e("YingMing", "notificationApi: $notificationApi")

@@ -90,6 +90,7 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
                             sendNotification(
                                 "Đã chỉnh sửa",
                                 mTask?.title ?: "",
+                                mTask?.idCreator?.id ?: "",
                                 mTask?.id!!, it
                             )
                         }

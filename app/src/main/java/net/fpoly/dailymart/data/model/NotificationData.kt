@@ -8,5 +8,6 @@ data class NotificationData(
 data class Data(
     var title: String = "",
     var body: String = "",
-    var value: String = ""
+    var user: String = "",
+    var value: String = "",
 )

@@ -19,6 +19,7 @@ class Constant {
         const val AVATAR_DEFAULT =
             "https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/8e/cf/03/8ecf03d8-9e2f-84f8-b13a-e39ba9f217bd/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
         const val SEVEN_DAY = 604800000L
+        const val MESSAGE = "message"
 
     }
 }

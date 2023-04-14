@@ -20,15 +20,15 @@
         android:name=".DailySmartApp"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fitsSystemWindows="true"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_application"
         android:label="@string/app_name"
-        android:fitsSystemWindows="true"
         android:roundIcon="@mipmap/ic_application"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="false"
         tools:targetApi="31">
         <activity
             android:name=".view.splash.SplashActivity"
@@ -97,7 +97,7 @@
         <activity android:name=".view.products.detail_product.ProductDetailActivity" />
         <activity android:name=".view.products.edit_product.ProductEditActivity" />
         <activity android:name=".view.work_sheet.edit_work_sheet.EditWorkSheetActivity" />
-        <activity android:name=".view.bank_info.BankInfoActivity"/>
+        <activity android:name=".view.bank_info.BankInfoActivity" />
         <activity
             android:name=".view.message.MessageActivity"
             android:windowSoftInputMode="adjustPan" />
