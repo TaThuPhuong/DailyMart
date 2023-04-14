@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import net.fpoly.dailymart.data.model.param.ForgotPass
 import net.fpoly.dailymart.data.repository.InvoiceRepositoryImpl
 import net.fpoly.dailymart.data.repository.SupplierRepositoryImpl
 import net.fpoly.dailymart.view.products.add_product.AddProductViewModel
@@ -12,6 +13,7 @@ import net.fpoly.dailymart.view.bank_info.BankInfoViewModel
 import net.fpoly.dailymart.view.category.CategoryViewModel
 import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.check_date.CheckDateViewModel
+import net.fpoly.dailymart.view.forget_password.ForgetPassViewModel
 import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel
 import net.fpoly.dailymart.view.login.LoginViewModel
 import net.fpoly.dailymart.view.main.MainViewModel
@@ -25,7 +27,9 @@ import net.fpoly.dailymart.view.products.edit_product.ProductEditViewModel
 import net.fpoly.dailymart.view.profile.ProfileViewModel
 import net.fpoly.dailymart.view.register.RegisterViewModel
 import net.fpoly.dailymart.view.report.ReportViewModel
+import net.fpoly.dailymart.view.reset_password.ResetPasswordViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
+import net.fpoly.dailymart.view.staff.StaffActivity
 import net.fpoly.dailymart.view.staff.StaffViewModel
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import net.fpoly.dailymart.view.stock.StockViewModel
@@ -38,7 +42,7 @@ import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailViewModel
 import net.fpoly.dailymart.view.task.task_edit.TaskEditViewModel
-import net.fpoly.dailymart.view.work_sheet.edit_work_sheet.EditWorkSheetViewModel
+import net.fpoly.dailymart.view.work_sheet.EditWorkSheetViewModel
 import net.fpoly.dailymart.view.work_sheet.WorkSheetViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -46,6 +50,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val app = checkNotNull(extras[APPLICATION_KEY]) as DailySmartApp
+            var activity = DetailsStaffActivity()
             val context = app.context
             val taskRepository = app.taskRepository
             val userRepository = app.userRepository
@@ -124,6 +129,10 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         categoryRepository,
                         supplierRepository
                     )
+                isAssignableFrom(ForgetPassViewModel::class.java) ->
+                    ForgetPassViewModel(app)
+                isAssignableFrom(ResetPasswordViewModel::class.java) ->
+                    ResetPasswordViewModel(app)
                 isAssignableFrom(EditWorkSheetViewModel::class.java) ->
                     EditWorkSheetViewModel(app, userRepository)
                 isAssignableFrom(BankInfoViewModel::class.java) ->

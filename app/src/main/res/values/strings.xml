@@ -18,8 +18,8 @@
     <string name="ng_ky">Đăng ký</string>
     <string name="qu_n_m_t_kh_u">Quên mật khẩu</string>
     <string name="vui_l_ng_nh_p_email_i_n_tho_i_ng_k_c_a_b_n">Vui lòng nhập Email/điện thoại đã đăng ký của bạn.</string>
-    <string name="ch_ng_t_i_s_g_i_m_x_c_minh_n_email_i_n_tho_i_ng_k_c_a_b_n">Chúng tôi sẽ gửi mã xác minh đến Email/điện thoại đã đăng ký của bạn.</string>
-    <string name="email_s_i_n_tho_i">Email/Số điện thoại</string>
+    <string name="ch_ng_t_i_s_g_i_m_x_c_minh_n_email_i_n_tho_i_ng_k_c_a_b_n">Chúng tôi sẽ gửi mã xác minh đến Email đã đăng ký của bạn.</string>
+    <string name="email_s_i_n_tho_i">Email</string>
     <string name="g_i_m">Gửi mã</string>
     <string name="m_t_kh_u">Mật khẩu</string>
     <string name="qu_n_m_t_kh">Quên mật khẩu?</string>

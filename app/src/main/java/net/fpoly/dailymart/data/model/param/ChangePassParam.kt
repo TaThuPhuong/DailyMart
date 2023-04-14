@@ -7,4 +7,9 @@ data class ChangePassParam(
     @SerializedName("phoneNumber") val phoneNumber: String = "",
     @SerializedName("oldPass") val oldPass: String = "",
     @SerializedName("newPass") val newPass: String = "",
-)
+    @SerializedName("confirmPass") val confirmPass: String = "",
+) {
+    fun checkValidate(): Boolean =
+        !(oldPass.trim().isEmpty() || newPass.trim().isEmpty() || phoneNumber.trim()
+            .isEmpty() || confirmPass.trim().isEmpty())
+}
