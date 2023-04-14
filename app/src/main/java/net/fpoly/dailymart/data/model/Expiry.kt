@@ -21,6 +21,7 @@ data class ExpiryRes(
 data class ExpiryCheck(
     val id: String = "",
     var productId: String = "",
+    var barcode: String = "",
     var productName: String = "",
     var expiryDate: Long = 0,
     var quantity: Int = 0,

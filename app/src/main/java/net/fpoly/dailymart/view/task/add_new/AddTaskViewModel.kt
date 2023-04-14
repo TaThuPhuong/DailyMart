@@ -100,6 +100,7 @@ class AddTaskViewModel(
                                 title = "Bạn vừa nhận được 1 nhiệm vụ mới",
                                 message = _task.value!!.title,
                                 value = res.data!!.id,
+                                user = "",
                                 to = _deviceId.value!!
                             )
                             message.postValue(res.message!!)
