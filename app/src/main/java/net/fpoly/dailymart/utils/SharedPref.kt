@@ -46,12 +46,12 @@ object SharedPref {
 
     fun getTokenNotification(context: Context): String {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return sharedPref.getString("token", "")!!
+        return sharedPref.getString("token_notification", "")!!
     }
 
     fun setTokenNotification(context: Context, value: String) {
         val sharedPref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
-        sharedPref.putString("token", value).apply()
+        sharedPref.putString("token_notification", value).apply()
     }
 
     fun setAccessToken(context: Context, token: String) {

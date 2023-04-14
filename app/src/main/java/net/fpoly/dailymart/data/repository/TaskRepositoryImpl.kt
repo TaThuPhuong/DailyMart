@@ -39,6 +39,7 @@ class TaskRepositoryImpl(
         id: String
     ): ResponseResult<Unit> =
         withContext(coroutineScope) {
+            Log.e(TAG, "updateTask: $taskParam")
             try {
                 api.updateTask(token, taskParam, id).apply {
                     Log.e(TAG, "updateTask: ${this.message}")

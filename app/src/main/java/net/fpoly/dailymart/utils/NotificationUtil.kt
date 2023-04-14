@@ -17,13 +17,19 @@ import net.fpoly.dailymart.data.model.Data
 import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
 import net.fpoly.dailymart.view.task.TaskActivity
+import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.coroutines.coroutineContext
 
 @RequiresApi(Build.VERSION_CODES.M)
 fun createNotification(context: Context, title: String, message: String, value: String?) {
 
-    val intent = Intent(context, TaskActivity::class.java)
+    val intent = Intent(context, TaskDetailActivity::class.java)
     value?.let {
-        intent.putExtra(Constant.TASK, it)
+        intent.putExtra(Constant.TASK_ID, it)
     }
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
@@ -42,11 +48,24 @@ fun createNotification(context: Context, title: String, message: String, value: 
 }
 
 suspend fun sendNotification(title: String, message: String, value: String, to: String) =
-    withContext(Dispatchers.IO) {
-        try {
-            val data = NotificationData(Data(title, message, value), to)
-            RetrofitInstance.apiPutNotification.postNotification(data)
-        } catch (e: Exception) {
-            Log.e("YingMing", "sendNotification: $e")
-        }
+    try {
+        val data = NotificationData(Data(title, message, value), to)
+        val notificationApi = RetrofitInstance.apiPutNotification
+        Log.e("YingMing", "data: $data")
+        Log.e("YingMing", "notificationApi: $notificationApi")
+        notificationApi.postNotification(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>,
+            ) {
+                Log.e("YingMing", "sendNotification body: ${response.body()?.string()}")
+                Log.e("YingMing", "sendNotification error: ${response.errorBody()?.string()}")
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("YingMing", "sendNotification onFailure: $t")
+            }
+        })
+    } catch (e: Exception) {
+        Log.e("YingMing", "sendNotification: $e")
     }

@@ -12,15 +12,15 @@ import net.fpoly.dailymart.utils.createNotification
 
 class FirebaseMessageService : FirebaseMessagingService() {
 
-    private val notificationRepo = AppModule.providerNotificationRepository(this)
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        val notificationRepo = AppModule.providerNotificationRepository(applicationContext)
         val map: Map<String, String> = message.data
         val title = map["title"] ?: ""
         val body = map["body"] ?: ""
         val value = map["value"] ?: ""
+        Log.e("YingMing", "onMessageReceived: $title - $body -$value" )
         createNotification(applicationContext, title, body, value)
         notificationRepo.insertNotification(
             RecentNotification(

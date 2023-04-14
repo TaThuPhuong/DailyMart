@@ -38,7 +38,7 @@ class ProductRepositoryImpl
                 api.getAllProduct(token)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 
@@ -48,7 +48,7 @@ class ProductRepositoryImpl
                 api.getProductById(token, id)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 
@@ -61,7 +61,7 @@ class ProductRepositoryImpl
             api.updateProduct(token, id, productParam)
         } catch (e: Exception) {
             Log.e(TAG, "Exception: $e")
-            ResponseResult(0, "Lỗi", null)
+            ResponseResult(0, "Máy chủ không phản hồi", null)
         }
     }
 
@@ -71,7 +71,7 @@ class ProductRepositoryImpl
                 api.deleteProduct(token, id)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, "Máy chủ không phản hồi", null)
             }
         }
 }

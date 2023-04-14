@@ -25,6 +25,7 @@ data class User(
 data class UserRes(
     @SerializedName("_id") var id: String = "",
     @SerializedName("name") var name: String = "",
+    @SerializedName("email") var email: String = "",
     @SerializedName("phoneNumber") var phoneNumber: String = "",
     @SerializedName("status") var status: Boolean = true,
     @SerializedName("role") var role: ROLE = ROLE.staff,
@@ -34,6 +35,7 @@ data class UserRes(
     constructor(user: User) : this() {
         this.id = user.id
         this.name = user.name
+        this.email = user.email
         this.role = user.role
         this.deviceId = user.deviceId
         this.status = user.disable

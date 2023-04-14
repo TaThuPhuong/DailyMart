@@ -1,4 +1,4 @@
-package net.fpoly.dailymart.view.task.detail_product
+package net.fpoly.dailymart.view.products.detail_product
 
 import androidx.lifecycle.ViewModel
 
