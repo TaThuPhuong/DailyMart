@@ -29,7 +29,7 @@ data class ProductParam(
     @SerializedName("industry") var category: String = "",
     @SerializedName("importPrice") var importPrice: Int = 0,
     @SerializedName("sellPrice") var sellPrice: Int = 0,
-    @SerializedName("image_product") var imageProduct: String = "",
+    @SerializedName("img_product") var imageProduct: String = "",
     @SerializedName("unit") var unit: String = "",
 ) {
     constructor(product: Product) : this() {
