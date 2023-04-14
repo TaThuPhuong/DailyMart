@@ -2,6 +2,8 @@ package net.fpoly.dailymart.view.tab.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -15,7 +17,6 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.HomeFragmentBinding
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
-import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
@@ -43,6 +44,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
 
     private var mListTask: List<Task> = ArrayList()
     private lateinit var mTaskRecentAdapter: TaskRecentAdapter
+
+    private var mReloadData: Runnable? = null
+    private var isRunning = false
+    private val mHandlerLoopTime = Handler(Looper.myLooper()!!)
     override fun setOnClickListener() {
         binding.imvAvatarToolbar.setOnClickListener(this)
         binding.imvNotification.setOnClickListener(this)
@@ -71,6 +76,23 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         viewModel.getAllNotification()
         viewModel.getAllTask()
         viewModel.getInvoiceToday()
+        mReloadData = Runnable {
+            Log.e(TAG, "auto load data")
+            viewModel.getAllTask()
+            viewModel.getAllNotification()
+            viewModel.getInvoiceToday()
+            if (isRunning) {
+                autoReload()
+            }
+        }
+        autoReload()
+    }
+
+    private fun autoReload() {
+        isRunning = true
+        mReloadData?.let {
+            mHandlerLoopTime.postDelayed(it, 30000)
+        }
     }
 
     override fun setupObserver() {
@@ -144,5 +166,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         super.onResume()
         viewModel.getAllNotification()
         viewModel.getAllTask()
+    }
+
+    override fun onDestroy() {
+        isRunning = false
+        mReloadData?.let {
+            mHandlerLoopTime.removeCallbacks(it)
+        }
+        super.onDestroy()
     }
 }

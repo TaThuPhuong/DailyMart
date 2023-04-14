@@ -16,20 +16,24 @@ class FirebaseMessageService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         val notificationRepo = AppModule.providerNotificationRepository(applicationContext)
+        val user = SharedPref.getUser(applicationContext)
         val map: Map<String, String> = message.data
         val title = map["title"] ?: ""
         val body = map["body"] ?: ""
         val value = map["value"] ?: ""
-        Log.e("YingMing", "onMessageReceived: $title - $body -$value" )
-        createNotification(applicationContext, title, body, value)
-        notificationRepo.insertNotification(
-            RecentNotification(
-                time = System.currentTimeMillis(),
-                title = title,
-                value = value,
-                message = body,
+        val userId = map["user"] ?: ""
+        Log.e("YingMing", "onMessageReceived: $title - $body -$value")
+        if (userId != user.id || userId == "") {
+            createNotification(applicationContext, title, body, value)
+            notificationRepo.insertNotification(
+                RecentNotification(
+                    time = System.currentTimeMillis(),
+                    title = title,
+                    value = value,
+                    message = body,
+                )
             )
-        )
+        }
     }
 
     override fun onNewToken(token: String) {

@@ -4,6 +4,7 @@ import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
 import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.ProductResponse
+import net.fpoly.dailymart.data.model.param.DeleteExpiryParam
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -52,4 +53,9 @@ interface ProductApi {
         @Path("id") id: String,
     ): ResponseResult<Unit>
 
+    @POST("expiry/removeProductExpiry")
+    fun deleteExpiry(
+        @Header("Authorization") token: String,
+        @Body param: DeleteExpiryParam,
+    ): Call<ResponseBody>
 }

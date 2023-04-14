@@ -31,7 +31,7 @@
                 android:id="@+id/imv_back"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_back_white" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:background="@color/no_color"
                 android:drawableStart="@drawable/ic_search_white"
                 android:drawablePadding="10dp"
-                android:hint="Tên, sdt"
+                android:hint="Tên, mã"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -111,11 +111,25 @@
             android:layout_below="@+id/tv_filter"
             android:background="@color/white">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_list_products"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:visibility="visible"
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="5dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_list_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 </layout>

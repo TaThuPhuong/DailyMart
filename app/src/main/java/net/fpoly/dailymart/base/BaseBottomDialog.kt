@@ -1,6 +1,8 @@
 package net.fpoly.dailymart.base
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,6 +23,7 @@ abstract class BaseBottomDialog<B : ViewBinding>(
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(binding.root)
         window!!.decorView.setBackgroundResource(android.R.color.transparent)
+        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val window = window
         val wlp = window!!.attributes
         wlp.gravity = Gravity.CENTER
