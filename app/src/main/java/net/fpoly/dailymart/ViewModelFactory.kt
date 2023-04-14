@@ -77,7 +77,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel()
                 isAssignableFrom(ReportViewModel::class.java) ->
-                    ReportViewModel()
+                    ReportViewModel(context)
                 isAssignableFrom(StockViewModel::class.java) ->
                     StockViewModel()
                 isAssignableFrom(WorkSheetViewModel::class.java) ->
