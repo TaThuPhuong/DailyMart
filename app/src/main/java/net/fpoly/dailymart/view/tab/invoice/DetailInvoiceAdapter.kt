@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.view.tab.invoice
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
@@ -7,22 +8,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.data.model.DetailInvoice
+import net.fpoly.dailymart.data.model.ProductInvoiceParam
 import net.fpoly.dailymart.databinding.ItemDetailInvoiceBinding
+import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceActivity
 import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceViewModel
 
-class DetailInvoiceAdapter(private val viewModel: DetailInvoiceViewModel) :
-    ListAdapter<DetailInvoice, DetailInvoiceAdapter.DetailInvoiceViewHolder>(
+class DetailInvoiceAdapter(
+    private val activity: DetailInvoiceActivity,
+    private val viewModel: DetailInvoiceViewModel
+) :
+    ListAdapter<ProductInvoiceParam, DetailInvoiceAdapter.DetailInvoiceViewHolder>(
         InVoiceDetailDiffCallback()
     ) {
 
     class DetailInvoiceViewHolder(val binding: ItemDetailInvoiceBinding) :
         ViewHolder(binding.root) {
-        fun bind(item: DetailInvoice, viewModel: DetailInvoiceViewModel) {
+        fun bind(
+            activity: DetailInvoiceActivity,
+            item: ProductInvoiceParam,
+            viewModel: DetailInvoiceViewModel
+        ) {
             binding.invoice = item
             binding.viewModel = viewModel
+            binding.lifecycleOwner = activity
             binding.executePendingBindings()
-
         }
 
         companion object {
@@ -40,23 +49,41 @@ class DetailInvoiceAdapter(private val viewModel: DetailInvoiceViewModel) :
 
     override fun onBindViewHolder(holder: DetailInvoiceViewHolder, position: Int) {
         val invoiceDetail = getItem(position)
-        holder.bind(invoiceDetail, viewModel)
+        holder.bind(activity, invoiceDetail, viewModel)
     }
 }
 
-@BindingAdapter("invoiceDetailItems")
-fun setItems(listView: RecyclerView, items: List<DetailInvoice>?) {
-    items?.let {
-        (listView.adapter as DetailInvoiceAdapter).submitList(items)
+@BindingAdapter("productDetailItems")
+fun setItems(listView: RecyclerView, items: List<ProductInvoiceParam>?) {
+    items?.let { params ->
+        val new = params.filter { it.quantity > 0 }.toMutableList()
+        (listView.adapter as DetailInvoiceAdapter).submitList(new)
+        (listView.adapter as DetailInvoiceAdapter).notifyItemRangeChanged(0, new.size)
     }
 }
 
-class InVoiceDetailDiffCallback : DiffUtil.ItemCallback<DetailInvoice>() {
-    override fun areContentsTheSame(oldItem: DetailInvoice, newItem: DetailInvoice): Boolean {
+@BindingAdapter("productDetailItemsRefund")
+fun setRefundItems(listView: RecyclerView, items: List<ProductInvoiceParam>?) {
+    items?.let { params ->
+        val new = params.filter { it.quantity < 0 }.toMutableList()
+        (listView.adapter as DetailInvoiceAdapter).submitList(new)
+        (listView.adapter as DetailInvoiceAdapter).notifyItemRangeChanged(0, new.size)
+    }
+}
+
+class InVoiceDetailDiffCallback : DiffUtil.ItemCallback<ProductInvoiceParam>() {
+    override fun areContentsTheSame(
+        oldItem: ProductInvoiceParam,
+        newItem: ProductInvoiceParam
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areItemsTheSame(oldItem: DetailInvoice, newItem: DetailInvoice): Boolean {
+    override fun areItemsTheSame(
+        oldItem: ProductInvoiceParam,
+        newItem: ProductInvoiceParam
+    ): Boolean {
         return oldItem.id == newItem.id
     }
+
 }

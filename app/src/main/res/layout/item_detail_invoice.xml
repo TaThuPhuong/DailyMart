@@ -15,7 +15,7 @@
 
         <variable
             name="invoice"
-            type="net.fpoly.dailymart.data.model.DetailInvoice" />
+            type="net.fpoly.dailymart.data.model.ProductInvoiceParam" />
 
         <variable
             name="index"
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
+        android:onClick="@{() -> viewModel.productClick(invoice)}"
         android:orientation="vertical">
 
         <LinearLayout
@@ -45,53 +46,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/imbplexsans_semibold"
-                    android:text="@{ConvertUtilsKt.takeLastId(invoice.product.id)}"
-
-                    android:textColor="@color/gray_medium"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:fontFamily="@font/imbplexsans_medium"
-                    android:text="@{invoice.product.name}"
+                    android:text="@{invoice.name}"
                     android:textColor="@color/gray_medium"
                     android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_remove_detail_invoice"
-                    android:visibility="@{viewModel.isRefund() == true ? View.VISIBLE : View.GONE}" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@android:color/transparent"
-                    android:enabled="@{viewModel.isRefund()}"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:inputType="number"
-                    android:minWidth="6dp"
-                    android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.quantityProduct)}"
-                    android:textColor="@color/gray_medium"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_add_detail_invoice"
-                    android:visibility="@{viewModel.isRefund() == true ? View.VISIBLE : View.GONE}" />
 
             </LinearLayout>
 
@@ -100,11 +58,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:gravity="end|center_vertical"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.unitPrice)}"
+                android:gravity="center"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.quantity)}"
                 android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:gravity="center"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.unitPrice)}"
+                android:textColor="@color/gray_medium"
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -112,10 +79,9 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/imbplexsans_semibold"
                 android:gravity="center_vertical|end"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.totalPrice)}"
+                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.total)}"
                 android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
-
 
         </LinearLayout>
 

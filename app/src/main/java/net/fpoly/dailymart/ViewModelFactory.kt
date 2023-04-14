@@ -42,8 +42,8 @@ import net.fpoly.dailymart.view.task.add_new.AddTaskViewModel
 import net.fpoly.dailymart.view.task.TaskViewModel
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailViewModel
 import net.fpoly.dailymart.view.task.task_edit.TaskEditViewModel
-import net.fpoly.dailymart.view.work_sheet.EditWorkSheetViewModel
 import net.fpoly.dailymart.view.work_sheet.WorkSheetViewModel
+import net.fpoly.dailymart.view.work_sheet.edit_work_sheet.EditWorkSheetViewModel
 
 @Suppress("UNCHECKED_CAST")
 val AppViewModelFactory = object : ViewModelProvider.Factory {

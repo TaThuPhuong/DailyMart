@@ -18,12 +18,12 @@ data class Invoice(
     @SerializedName("invoiceDetails") val invoiceDetails: ArrayList<DetailInvoice> = arrayListOf(),
     @SerializedName("dateCreated") val createAt: Long = System.currentTimeMillis(),
     @SerializedName("totalBill") val totalBill: Long = 0
-): Parcelable{
+) : Parcelable {
     fun typeToString(context: Context): String {
         return context.getString(InvoiceType.valueOf(type).value)
     }
 
-    fun toParam() : InvoiceParam {
+    fun toParam(): InvoiceParam {
         return InvoiceParam(
             idUser = user.id,
             idCustomer = customer.id,
@@ -35,7 +35,16 @@ data class Invoice(
 }
 
 fun ArrayList<DetailInvoice>.detailInvoiceToParam(): ArrayList<ProductInvoiceParam> {
-    val result = this.map { ProductInvoiceParam(id = it.id, name = it.product.name, unitPrice = it.unitPrice, total = it.totalPrice , expiryDate = it.expiry) }
+    val result = this.map {
+        ProductInvoiceParam(
+            id = it.product.id,
+            name = it.product.name,
+            unitPrice = it.unitPrice,
+            total = it.totalPrice,
+            expiryDate = it.expiry,
+            quantity = it.quantityProduct
+        )
+    }
     return ArrayList(result)
 }
 
@@ -43,12 +52,12 @@ fun ArrayList<DetailInvoice>.detailInvoiceToParam(): ArrayList<ProductInvoicePar
 data class DetailInvoice(
     @SerializedName("_id") val id: String = UUID.randomUUID().toString(),
     @SerializedName("product") val product: DetailProductInvoice = DetailProductInvoice(),
-    @SerializedName("quantityProduct") val quantityProduct: Int = 0,
     @SerializedName("totalPrice") val totalPrice: Int = 0,
     @SerializedName("unitPrice") val unitPrice: Int = 0,
     @SerializedName("createdAt") val createdAt: String = "",
     @SerializedName("expiryDate") val expiry: Long = 0,
-) : java.io.Serializable, Parcelable
+    @SerializedName("quantityProduct") val quantityProduct: Int = 0,
+    ) : java.io.Serializable, Parcelable
 
 @Parcelize
 data class DetailProductInvoice(

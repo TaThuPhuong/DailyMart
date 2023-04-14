@@ -13,11 +13,8 @@ import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.ForgotPass
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.extension.blankException
-import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.login.LoginActivity
 import net.fpoly.dailymart.view.reset_password.ResetPasswordActivity
-import net.fpoly.dailymart.view.task.detail_product.ProductDetailActivity
 
 class ForgetPassViewModel(app: Application) : ViewModel() {
     private val TAG = "Tuvm"

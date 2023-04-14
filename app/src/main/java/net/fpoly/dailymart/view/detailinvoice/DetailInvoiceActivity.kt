@@ -11,6 +11,7 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
 
     private val viewModel : DetailInvoiceViewModel by viewModels { AppViewModelFactory }
     private lateinit var adapter : DetailInvoiceAdapter
+    private lateinit var adapterRefund : DetailInvoiceAdapter
 
     override fun setupData() {
         binding.viewmodel = viewModel
@@ -22,8 +23,10 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
     }
 
     private fun setupListInvoiceDetail() {
-        adapter = DetailInvoiceAdapter(viewModel)
+        adapter = DetailInvoiceAdapter(this,viewModel)
         binding.listInvoiceDetail.adapter = adapter
+        adapterRefund = DetailInvoiceAdapter(this, viewModel)
+        binding.listInvoiceDetailRefund.adapter = adapterRefund
     }
 
     private fun setupSnackbar() {
@@ -37,5 +40,4 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
     companion object {
         const val INVOICE = "INVOICE"
     }
-
 }

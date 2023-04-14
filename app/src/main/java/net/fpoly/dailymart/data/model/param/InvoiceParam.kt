@@ -12,4 +12,6 @@ class InvoiceParam(
     @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
     @SerializedName("invoiceType") var invoiceType: String = "",
     @SerializedName("totalBill") var totalBill: Long = 0,
-) : Parcelable
+) : Parcelable {
+    fun isRefundEmpty() = this.products.any{it.quantity < 0}
+}

@@ -3,6 +3,7 @@ package net.fpoly.dailymart.data.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 data class Product(
@@ -109,6 +110,15 @@ data class ProductInvoiceParam(
         }
     }
 }
+
+@Parcelize
+data class InvoiceRefund(
+    @SerializedName("idUser") var idUser: String = "",
+    @SerializedName("idInvoice") val id: String = "",
+    @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
+    @SerializedName("invoiceType") var invoiceType: String = "REFUND",
+    @SerializedName("totalBill") var total : Long = 0,
+) : Parcelable
 
 
 fun ProductParam.checkValidate(): Boolean {

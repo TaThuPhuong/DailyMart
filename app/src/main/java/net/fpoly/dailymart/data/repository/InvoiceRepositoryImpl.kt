@@ -1,11 +1,11 @@
 package net.fpoly.dailymart.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.Invoice
+import net.fpoly.dailymart.data.model.InvoiceRefund
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.model.param.InvoiceParam
 import net.fpoly.dailymart.repository.InvoiceRepository
@@ -26,7 +26,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
                 }
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                Response.Error(ex.message.toString())
+                Response.Error(ERROR_CONNECTED)
             }
         }
 
@@ -41,7 +41,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
                 }
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                Response.Error(ex.message.toString())
+                Response.Error(ERROR_CONNECTED)
             }
         }
 
@@ -57,12 +57,21 @@ class InvoiceRepositoryImpl : InvoiceRepository {
                 Response.Error(res.message)
             }
         } catch (ex: Exception) {
-            Response.Error(ex.message.toString())
+            Response.Error(ERROR_CONNECTED)
         }
     }
 
-    override suspend fun deleteInvoice(token: String, id: String): Response<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun deleteInvoice(token: String, id: String): Response<Unit> = withContext(ioDispatcher) {
+        try {
+            val res = remoteDataInvoice.removeInvoice(token, id)
+            if (res.isSuccess()) {
+                Response.Success(Unit)
+            } else {
+                Response.Error(res.message)
+            }
+        } catch (ex: Exception) {
+            Response.Error(ERROR_CONNECTED)
+        }
     }
 
     override suspend fun updateInvoice(
@@ -78,11 +87,26 @@ class InvoiceRepositoryImpl : InvoiceRepository {
                 Response.Error(res.message)
             }
         } catch (ex: Exception) {
-            Response.Error(ex.message.toString())
+            Response.Error(ERROR_CONNECTED)
         }
     }
 
+    override suspend fun refundInvoice(token: String, invoiceParam: InvoiceRefund): Response<Unit> =
+        withContext(ioDispatcher) {
+            try {
+                val res = remoteDataInvoice.refundInvoice(token, invoiceParam)
+                if (res.isSuccess()) {
+                    Response.Success(Unit)
+                } else {
+                    Response.Error(res.message)
+                }
+            } catch (ex: Exception) {
+                Response.Error(ERROR_CONNECTED)
+            }
+        }
+
     companion object {
         const val TAG = "BT"
+        const val ERROR_CONNECTED = "Kết nối thất bại"
     }
 }
