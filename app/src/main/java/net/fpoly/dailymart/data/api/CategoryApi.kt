@@ -13,7 +13,7 @@ import retrofit2.http.Path
 
 interface CategoryApi {
 
-    @GET("industry")
+    @GET("industry/getAll")
     suspend fun getAllCategory(@Header("Authorization") token: String): ResultData<List<Category>>
 
     @POST("industry")

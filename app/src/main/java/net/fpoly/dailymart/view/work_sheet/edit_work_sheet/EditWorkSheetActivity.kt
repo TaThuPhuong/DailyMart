@@ -68,8 +68,6 @@ class EditWorkSheetActivity :
             if (it) {
                 showToast(this, "Thêm lịch thành công")
                 finish()
-            } else {
-                showToast(this, "Lưu thất bại")
             }
         }
     }

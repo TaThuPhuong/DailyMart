@@ -18,13 +18,13 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="58dp">
+            android:layout_marginTop="38dp">
 
             <ImageView
                 android:id="@+id/imv_back"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_back_black" />
 
             <TextView
@@ -34,8 +34,8 @@
                 android:fontFamily="@font/imbplexsans_medium"
                 android:gravity="center_vertical"
                 android:text="Thông tin"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/gray_medium"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_update"
@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:text="Lưu"
                 android:textColor="@color/pink_primary"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -64,6 +64,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
+                    android:elevation="5dp"
                     android:src="@drawable/img_avatar_default" />
 
                 <RelativeLayout
@@ -72,14 +73,17 @@
                     android:layout_height="match_parent"
                     android:layout_below="@+id/imv_avatar"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="50dp">
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/bg_ed_search_task">
 
                     <TextView
+                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
+                        android:padding="8dp"
                         android:text="Họ tên"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
@@ -88,12 +92,19 @@
                         android:id="@+id/ed_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_name"
+                        android:background="@color/un_color"
                         android:gravity="end"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ed_name"
+                        android:layout_marginTop="6dp"
                         android:gravity="end"
                         android:text="@{viewModel.validateNameUser}"
                         android:textColor="@color/red_FF444C"
@@ -104,16 +115,20 @@
                 <RelativeLayout
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_name"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_ed_search_task">
 
                     <TextView
+                        android:id="@+id/tv_email"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
+                        android:padding="8dp"
                         android:text="Email"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
@@ -122,8 +137,14 @@
                         android:id="@+id/ed_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_email"
+                        android:background="@color/un_color"
                         android:gravity="end"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -138,16 +159,20 @@
                 <RelativeLayout
                     android:id="@+id/layout_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_email"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_ed_search_task">
 
                     <TextView
+                        android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
+                        android:padding="8dp"
                         android:text="Số điện thoại"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
@@ -156,9 +181,15 @@
                         android:id="@+id/ed_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_phone"
+                        android:background="@color/un_color"
                         android:gravity="end"
                         android:inputType="number"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,29 +204,36 @@
                 <RelativeLayout
                     android:id="@+id/layout_role"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_phone"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_ed_search_task">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
+                        android:padding="8dp"
                         android:text="Chức vụ"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/ed_role"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/imv_change_role"
                         android:enabled="false"
                         android:gravity="end"
                         android:maxLines="1"
-                        android:paddingEnd="44dp"
+                        android:padding="8dp"
+                        android:text="Nhân viên"
                         android:textColor="@color/gray_primary"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <ImageView
@@ -208,44 +246,50 @@
                         android:src="@drawable/ic_back_black" />
                 </RelativeLayout>
 
-                                <RelativeLayout
-                                    android:id="@+id/layout_disable"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_below="@+id/layout_role"
-                                    android:layout_marginHorizontal="24dp"
-                                    android:layout_marginTop="10dp">
+                <RelativeLayout
+                    android:id="@+id/layout_disable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_role"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_ed_search_task">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:fontFamily="@font/imbplexsans_regular"
-                                        android:gravity="center"
-                                        android:text="Trạng thái"
-                                        android:textColor="@color/gray_primary"
-                                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Trạng thái"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp" />
 
-                                    <EditText
-                                        android:id="@+id/ed_status"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:gravity="end"
-                                        android:maxLines="1"
-                                        android:paddingEnd="44dp"
-                                        android:text="Đang hoạt động"
-                                        android:textColor="@color/gray_primary"
-                                        tools:ignore="RtlSymmetry" />
+                    <TextView
+                        android:id="@+id/ed_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/imv_change_status"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:text="Đang hoạt động"
+                        android:textColor="@color/gray_primary"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
 
-                                    <ImageView
-                                        android:id="@+id/imv_change_status"
-                                        android:layout_width="40dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_alignParentEnd="true"
-                                        android:padding="14dp"
-                                        android:rotation="180"
-                                        android:src="@drawable/ic_back_black" />
-                                </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/imv_change_status"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:padding="14dp"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_black" />
+                </RelativeLayout>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 
