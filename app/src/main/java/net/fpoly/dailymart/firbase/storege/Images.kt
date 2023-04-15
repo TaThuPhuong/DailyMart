@@ -19,7 +19,6 @@ object Images {
         onSuccess: ((String) -> Unit)? = null,
         onFail: () -> Unit,
     ) {
-        Log.e(TAG, "uploadImage: $storage")
         val storageRef = storage.reference
         val mountainsRef = storageRef.child("$tableName/$id")
         imv.isDrawingCacheEnabled = true

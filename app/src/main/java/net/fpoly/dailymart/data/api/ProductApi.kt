@@ -25,7 +25,7 @@ interface ProductApi {
         @Body productParam: ProductParam,
     ): Call<ResponseBody>
 
-    @GET("product")
+    @GET("product/getAll")
     suspend fun getAllProduct(@Header("Authorization") token: String): ResponseResult<List<Product>>
 
     @GET("product/{id}")

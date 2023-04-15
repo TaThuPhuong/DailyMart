@@ -108,15 +108,10 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
                 }
                 if (user.disable) {
                     loginSuccess.postValue(true)
+                    message.postValue("Đăng nhập thành công")
                 } else {
                     message.postValue("Tài khoản đã bị khóa. Hãy liên hệ với quản lý")
                 }
-
-                Log.e(TAG, "deviceId: ${user.deviceId}")
-                Log.e(TAG, "user: $user")
-                Log.e(TAG, "getTokenNotification: ${SharedPref.getTokenNotification(app)}")
-                Log.e(TAG, "UserRes: ${UserRes(user)}")
-                message.postValue(res.message!!)
             } else {
                 message.postValue(res.message!!)
                 loginSuccess.postValue(false)
