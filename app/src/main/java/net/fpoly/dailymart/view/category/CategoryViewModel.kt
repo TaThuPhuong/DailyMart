@@ -76,7 +76,6 @@ class CategoryViewModel(context: Context) : ViewModel() {
                 }
             }
             isLoading.postValue(false)
-
         }
     }
 

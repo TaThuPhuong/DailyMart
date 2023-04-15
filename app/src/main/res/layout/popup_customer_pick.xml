@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:paddingStart="26dp"
+                android:paddingStart="18dp"
                 android:paddingTop="26dp"
                 android:text="Danh sách khách hàng"
                 android:textSize="22sp" />
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingTop="26dp"
-                android:paddingEnd="26dp"
+                android:paddingEnd="18dp"
                 android:src="@drawable/ic_close_square" />
         </RelativeLayout>
 
@@ -56,7 +56,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:layout_height="54dp"
+                    android:layout_height="52dp"
                     android:background="@drawable/bg_gray_r4"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="12dp"
@@ -98,20 +98,22 @@
             <EditText
                 android:id="@+id/nameCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="52dp"
                 android:backgroundTint="@color/gray_medium"
                 android:layout_marginHorizontal="16dp"
                 android:hint="Tên khách hàng"
+                android:textSize="14dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:textColor="@color/gray_primary"/>
 
             <EditText
                 android:id="@+id/phoneCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="52dp"
                 android:backgroundTint="@color/gray_medium"
                 android:layout_marginHorizontal="16dp"
                 android:hint="Số điện thoại"
+                android:textSize="14dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:textColor="@color/gray_primary"/>
 

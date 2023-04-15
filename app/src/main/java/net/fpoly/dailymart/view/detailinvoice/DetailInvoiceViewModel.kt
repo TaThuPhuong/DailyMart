@@ -20,7 +20,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
 
     val token = SharedPref.getAccessToken(context)
     val user = SharedPref.getUser(context)
-    val invoiceRepo = InvoiceRepositoryImpl()
+    private val invoiceRepo = InvoiceRepositoryImpl()
 
     val showSnackbar = MutableLiveData<String>()
     val invoice = MutableLiveData<Invoice>()
@@ -37,8 +37,14 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     var isShowLoading = MutableLiveData(false)
 
     fun refundInvoice() {
-        isRefund.value?.also {
-            isRefund.value = !it
+        isRefund.value?.also { isRefund ->
+            this.isRefund.value = !isRefund
+            changeProducts.removeAll(rootProductsRefund)
+            invoiceParam.value?.also {
+                it.products = ArrayList(changeProducts)
+                getTotalInvoice(it)
+                invoiceParam.postValue(it)
+            }
         }
     }
 
@@ -63,7 +69,8 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     }
 
     private fun checkShowBtnRefund(invoice1: Invoice) {
-        isShowRefund.value = invoice1.type == InvoiceType.EXPORT.name && user.role == ROLE.manager
+        isShowRefund.value =
+            (invoice1.type == InvoiceType.EXPORT.name && user.role == ROLE.manager) || (invoice1.type == InvoiceType.REFUND.name && user.role == ROLE.manager)
     }
 
     private fun checkShowBtnDelete() {
@@ -71,6 +78,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     }
 
     fun productClick(product: ProductInvoiceParam) {
+        Log.e(TAG, "productClick: ${Gson().toJson(product)}")
         if (isRefund.value != true) return
         val isBuyItemClick = product.quantity > 0
         if (isBuyItemClick) {
@@ -84,6 +92,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
         val productIndex = changeProducts.indexOfFirst { product.id == it.id && it.quantity > 0 }
         val rootProduct = changeProducts.indexOf(product)
 
+        if (rootProduct == -1) return
         if (productIndex < 0) {
             val productChange = ProductInvoiceParam(
                 id = product.id,
@@ -169,8 +178,8 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     private fun getFinalInvoice(context: Context) {
         viewModelScope.launch {
             isShowLoading.postValue(true)
-            val changeProduct = changeProducts.filter { it.quantity != 0 }.toMutableList()
-            changeProduct.addAll(rootProductsRefund)
+            val changeProduct = changeProducts.filter { it.quantity < 0 }.toMutableList()
+//            changeProduct.addAll(rootProductsRefund)
 
             val final = InvoiceRefund(
                 idUser = invoiceRoot.idUser,
@@ -178,7 +187,6 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
                 products = ArrayList(changeProduct),
                 total = totalInvoice.value ?: 0L
             )
-
             Log.e(TAG, "getFinalInvoice: ${Gson().toJson(final)}")
             when (val res = invoiceRepo.refundInvoice(token, final)) {
                 is Response.Success -> starInvoiceNewLoad(context)
@@ -196,6 +204,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
             context.startActivity(it)
         }
     }
+
     fun removeInvoice(context: Context) {
         viewModelScope.launch {
             isShowLoading.postValue(true)

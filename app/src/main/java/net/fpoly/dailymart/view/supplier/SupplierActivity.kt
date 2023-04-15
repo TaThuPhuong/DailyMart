@@ -25,7 +25,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     }
 
     private fun setupBtnBack() {
-        binding.imvBack.setOnClickListener{
+        binding.btnBack.setOnClickListener{
             onBackPressedDispatcher.onBackPressed()
         }
     }

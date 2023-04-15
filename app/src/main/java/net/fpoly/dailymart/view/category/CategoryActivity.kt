@@ -1,7 +1,13 @@
 package net.fpoly.dailymart.view.category
 
+import android.os.Build
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityCategoryBinding
@@ -21,6 +27,7 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
         setupEdSearch()
         setupListCategory()
         setupSnackbar()
+
     }
 
     private fun setupEdSearch() {
@@ -40,7 +47,7 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
     }
 
     private fun setupBtnBack() {
-        binding.imvBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -54,6 +61,10 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
 
     private fun setupSnackbar() {
         binding.root.setupSnackbar(this, viewModel.showSnackbar)
+    }
+
+    companion object {
+        const val TAG = "Senior"
     }
 
 }

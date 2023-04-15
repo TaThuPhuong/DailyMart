@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="52dp">
+            android:layout_marginTop="36dp">
 
             <ImageView
                 android:id="@+id/btnBack"
@@ -59,19 +59,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:fontFamily="@font/imbplexsans_medium"
                     android:text="Hóa đơn"
+                    android:fontFamily="@font/imbplexsans_medium"
                     android:textColor="@color/gray_medium"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginBottom="6dp"
                     android:orientation="horizontal">
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -143,7 +142,7 @@
                         android:fontFamily="@font/imbplexsans_regular"
                         android:text="Tổng thanh toán:"
                         android:textColor="@color/gray_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/total_invoice"
@@ -172,7 +171,7 @@
                         android:fontFamily="@font/imbplexsans_regular"
                         android:text="Khách trả:"
                         android:textColor="@color/gray_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/amountPaid"
@@ -201,7 +200,7 @@
                         android:fontFamily="@font/imbplexsans_regular"
                         android:text="Trả lại:"
                         android:textColor="@color/gray_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/amountReturn"
@@ -216,29 +215,47 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:text="Hình thức thanh toán"
-                    android:textColor="@color/gray_medium"
-                    android:textSize="22sp" />
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hình thức thanh toán"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/send_invoice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/send_invoice_underline"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:textColor="@color/pink_primary"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
                 <CheckBox
                     android:id="@+id/checkBoxPayment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/imbplexsans_regular"
                     android:text="Thanh toán chuyển khoản" />
 
                 <EditText
                     android:id="@+id/ed_amount"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="52dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="6dp"
                     android:layout_weight="1"
@@ -247,6 +264,7 @@
                     android:hint="Số tiền khách thanh toán..."
                     android:inputType="number"
                     android:paddingHorizontal="12dp"
+                    android:textSize="14sp"
                     android:textColor="@color/gray_medium" />
 
                 <LinearLayout
@@ -264,12 +282,13 @@
 
                         <EditText
                             android:id="@+id/ed_money_pay"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
                             android:layout_marginEnd="12dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_gray_r4"
                             android:elevation="1dp"
+                            android:textSize="14sp"
                             android:hint="Số tiền thanh toán"
                             android:paddingHorizontal="12dp"
                             android:textColor="@color/gray_medium" />
@@ -279,9 +298,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/bg_pink_primary_rd_8"
-                            android:fontFamily="@font/imbplexsans_semibold"
+                            android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center"
-                            android:padding="12dp"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="16dp"
                             android:text="Tạo mã"
                             android:textColor="@color/white" />
 
@@ -303,22 +323,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="24dp"
-                    android:fontFamily="@font/imbplexsans_medium"
                     android:text="Khách hàng"
+                    android:fontFamily="@font/imbplexsans_medium"
                     android:textColor="@color/gray_medium"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/pickCustomer"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="52dp"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_gray_r4"
                     android:drawableStart="@drawable/ic_user"
                     android:drawablePadding="8dp"
                     android:elevation="1dp"
+                    android:textSize="14sp"
                     android:focusable="false"
                     android:hint="Chọn khách hàng"
                     android:textAllCaps="true"

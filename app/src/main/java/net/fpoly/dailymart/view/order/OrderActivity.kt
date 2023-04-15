@@ -85,12 +85,19 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
             .setAutoFocusEnabled(true)
             .build()
 
+        setupBtnBack()
         setupSnackbar()
         setupCheckPermission()
         setupBtnScan()
         setupSearchBarcode()
         setupCalenderPicker()
         setupOrderList()
+    }
+
+    private fun setupBtnBack() {
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun setupOrderList() {
@@ -139,6 +146,7 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
 
     override fun setupObserver() {
         viewModel.currentProduct.observe(this) {
+            binding.edUnitPrice.setText(it.importPrice.toString())
             binding.edName.setText(it.name)
             binding.edQuantity.setText("1")
         }

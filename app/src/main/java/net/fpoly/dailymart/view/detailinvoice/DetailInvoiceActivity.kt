@@ -18,8 +18,15 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
         binding.lifecycleOwner = this
         viewModel.getInvoice(this)
 
+        setupBtnBack()
         setupSnackbar()
         setupListInvoiceDetail()
+    }
+
+    private fun setupBtnBack() {
+        binding.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun setupListInvoiceDetail() {

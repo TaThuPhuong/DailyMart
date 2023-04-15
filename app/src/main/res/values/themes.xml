@@ -3,15 +3,18 @@
 
     <style name="Base.AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorAccent">@color/pink_primary</item>
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryDark">@color/pink_primary</item>
         <item name="android:windowHideAnimation">@anim/fade_out</item>
         <item name="android:windowShowAnimation">@anim/fade_in</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
 
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
 
-        <item name="android:statusBarColor">@color/pink_primary</item>
-        <item name="android:navigationBarColor">@color/pink_primary</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
 
     <style name="Base.Splash" parent="Theme.Material3.Light.NoActionBar">
