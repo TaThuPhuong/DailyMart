@@ -19,7 +19,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.getInvoices(token)
                 if (res.isSuccess()) {
-                    Response.Success(res.result)
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
@@ -34,7 +34,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.getInvoice(token, id)
                 if (res.isSuccess()) {
-                    Response.Success(res.result)
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }

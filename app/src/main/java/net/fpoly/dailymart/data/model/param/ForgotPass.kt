@@ -10,3 +10,12 @@ data class ForgotPass(
     fun checkValidate(): Boolean =
         mail.trim().isNotEmpty()
 }
+
+data class ResponseForgot(
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message: String = "",
+    @SerializedName("data")
+    val data: String = "",
+) : Serializable

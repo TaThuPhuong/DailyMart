@@ -17,7 +17,7 @@ class CategoryRepositoryImpl : CategoryRepository {
             try {
                 val result = remoteData.getAllCategory(token)
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
-                Response.Success(result.result)
+                Response.Success(result.result,result.message)
             } catch (ex: Exception) {
                 Response.Error(ex.message.toString())
             }
@@ -28,7 +28,7 @@ class CategoryRepositoryImpl : CategoryRepository {
             try {
                 val result = remoteData.addCategory(category, token)
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
-                Response.Success(result.result)
+                Response.Success(result.result,result.message)
             } catch (ex: Exception) {
                 Response.Error(ex.message.toString())
             }
@@ -42,7 +42,7 @@ class CategoryRepositoryImpl : CategoryRepository {
         try {
             val result = remoteData.updateCategory(idCategory, category, token)
             if (!result.isSuccess()) return@withContext Response.Error(result.message)
-            Response.Success(result.result)
+            Response.Success(result.result,result.message)
         } catch (ex: Exception) {
             Response.Error(ex.message.toString())
         }
@@ -53,7 +53,7 @@ class CategoryRepositoryImpl : CategoryRepository {
             try {
                 val result = remoteData.removeCategory(idCategory, token)
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
-                Response.Success(result.result)
+                Response.Success(result.result,result.message)
             } catch (ex: Exception) {
                 Response.Error(ex.message.toString())
             }

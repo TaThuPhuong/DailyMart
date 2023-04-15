@@ -47,7 +47,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
 //            mStaffAdapter.setUserData(users)
 //            mListUser = users
 //        }
-        viewModel.loginSuccess.observe(this) {
+        viewModel.updateSuccess.observe(this) {
 
         }
         viewModel.getUser()

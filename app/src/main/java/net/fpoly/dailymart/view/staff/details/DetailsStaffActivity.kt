@@ -8,6 +8,7 @@ import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.data.model.param.RegisterParam
+import net.fpoly.dailymart.data.model.param.UpdateParam
 import net.fpoly.dailymart.data.model.param.UserModel
 import net.fpoly.dailymart.databinding.ActivityDetailsStaffBinding
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
@@ -46,7 +47,7 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        val user = RegisterParam(
+        val user = UpdateParam(
             _id = mUser!!._id,
             name = name,
             email = email,

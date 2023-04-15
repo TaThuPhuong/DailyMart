@@ -127,7 +127,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         supplierRepository
                     )
                 isAssignableFrom(ForgetPassViewModel::class.java) ->
-                    ForgetPassViewModel(app)
+                    ForgetPassViewModel()
                 isAssignableFrom(ResetPasswordViewModel::class.java) ->
                     ResetPasswordViewModel(app)
                 isAssignableFrom(EditWorkSheetViewModel::class.java) ->

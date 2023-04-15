@@ -3,7 +3,8 @@ package net.fpoly.dailymart.data.model.param
 import com.google.gson.annotations.SerializedName
 import net.fpoly.dailymart.utils.ROLE
 
-data class RegisterParam(
+data class UpdateParam(
+    @SerializedName("_id") val _id: String? = "",
     @SerializedName("name") val name: String = "",
     @SerializedName("password") val password: String = "",
     @SerializedName("email") val email: String = "",
@@ -15,14 +16,14 @@ data class RegisterParam(
 ) {
     fun checkValidate(): Boolean =
         !(name.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim()
-            .isEmpty() || role.value.trim().isEmpty() || status.not())
-}
+            .isEmpty() || role.value.trim().isEmpty())
 
-sealed class ResponseUser<out R> {
-    data class Success<T>(val data: T) : ResponseUser<T>()
-    data class Error(val message: String) : ResponseUser<Nothing>()
-}
+    sealed class ResponseUser<out R> {
+        data class Success<T>(val data: T) : ResponseUser<T>()
+        data class Error(val message: String) : ResponseUser<Nothing>()
+    }
 
-val ResponseUser<*>.succeeded
-    get() = this is ResponseUser.Success && data != null
+    val ResponseUser<*>.succeeded
+        get() = this is ResponseUser.Success && data != null
+}
 
