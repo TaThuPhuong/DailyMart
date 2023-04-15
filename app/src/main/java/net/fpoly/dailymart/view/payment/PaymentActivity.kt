@@ -39,6 +39,13 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
         setupListInvoice()
         setupChoseCustomer()
         setupBtnCreateInvoice()
+        setupBtnCreateSend()
+    }
+
+    private fun setupBtnCreateSend() {
+        binding.sendInvoice.setOnClickListener {
+            viewModel.sendInvoice(this)
+        }
     }
 
     private fun setupBtnCreateInvoice() {

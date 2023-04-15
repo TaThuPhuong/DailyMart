@@ -16,6 +16,7 @@ data class Invoice(
     @SerializedName("customer") val customer: Customer = Customer(),
     @SerializedName("invoiceType") val type: String = "",
     @SerializedName("invoiceDetails") val invoiceDetails: ArrayList<DetailInvoice> = arrayListOf(),
+    @SerializedName("numberId") val numberID: String = "",
     @SerializedName("dateCreated") val createAt: Long = System.currentTimeMillis(),
     @SerializedName("totalBill") val totalBill: Long = 0
 ) : Parcelable {
@@ -77,7 +78,7 @@ data class DetailProductInvoice(
 enum class InvoiceType(val value: Int) {
     IMPORT(R.string.invoice_import),
     EXPORT(R.string.invoice_sell),
-    REFUND(R.string.invoice_deduction)
+    REFUND(R.string.invoice_sell)
 }
 
 enum class CustomerName(val value: Int) {

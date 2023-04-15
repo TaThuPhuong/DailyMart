@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,244 +10,294 @@
             type="GoodsViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:src="@drawable/ic_back_black"
-                android:visibility="invisible" />
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Hàng hóa"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:textColor="@color/gray_primary"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_toolbar"
             android:layout_marginHorizontal="16dp"
-            android:orientation="vertical">
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_category"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_category_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_category_item" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Loại hàng hóa"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Nghành hàng"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic2"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_supplier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_supplier"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_supplier_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="26dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_supplier" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Nhà cung cấp"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Nhà cung cấp"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic1"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_products"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_product_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="26dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_products" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Danh sách sản phẩm"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Sản phẩm"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic6"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_import_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_import_goods"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_impport_product_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_import_goods" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Nhập hàng"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Nhập hàng"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic3"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_check_stock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_check_stock"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_stock_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_check_stock" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Kiểm tra tồn kho"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Kiểm tra tồn kho"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic4"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_check_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp">
 
-            <LinearLayout
-                android:id="@+id/layout_check_date"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="10">
+            <ImageView
+                android:id="@+id/ic5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_check_date_tab"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_check_date" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_right_pink_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:fontFamily="@font/imbplexsans_regular"
-                    android:paddingStart="30dp"
-                    android:text="Kiểm tra HSD"
-                    android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_medium"
+                android:text="Kiểm tra HSD"
+                android:textSize="16sp"
+                android:fontFamily="@font/imbplexsans_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic5"
+                android:layout_marginStart="16dp"/>
 
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_arrow_right_pink_primary" />
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/bg_line_pink_light" />
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -14,7 +14,7 @@ import retrofit2.http.Path
 
 interface InvoiceApi {
 
-    @GET("invoice")
+    @GET("invoice/getAll")
     suspend fun getInvoices(@Header("Authorization") token: String): ResultData<ArrayList<Invoice>>
 
     @GET("invoice/{id}")

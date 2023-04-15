@@ -68,13 +68,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:text="Thông tin sản phẩm"
                     android:textColor="@color/gray_medium"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,6 +90,7 @@
                         android:padding="12dp"
                         android:layout_weight="1"
                         android:hint="Mã sản phẩm"
+                        android:textSize="14sp"
                         android:textColor="@color/gray_primary"/>
 
                     <ImageView
@@ -133,6 +134,7 @@
                     android:padding="12dp"
                     android:focusable='false'
                     android:cursorVisible='false'
+                    android:textSize="14sp"
                     android:hint="Tên sản phẩm"
                     android:textColor="@color/gray_primary"/>
 
@@ -141,10 +143,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:focusable='false'
+                    android:cursorVisible='false'
                     android:background="@drawable/bg_gray_r4"
                     android:padding="12dp"
                     android:inputType="number"
                     android:hint="Đơn giá"
+                    android:textSize="14sp"
                     android:textColor="@color/gray_primary"/>
 
                 <EditText
@@ -156,6 +161,7 @@
                     android:padding="12dp"
                     android:inputType="number"
                     android:hint="Số lượng"
+                    android:textSize="14sp"
                     android:textColor="@color/gray_primary"/>
 
                 <EditText
@@ -171,6 +177,7 @@
                     android:drawableStart="@drawable/ic_calander_gray"
                     android:drawablePadding="12dp"
                     android:hint="Hạn sử dụng"
+                    android:textSize="14sp"
                     android:textColor="@color/gray_primary"/>
 
                 <LinearLayout
@@ -191,7 +198,7 @@
                         android:onClick="@{() -> viewModel.paymentClick()}"
                         android:layout_marginEnd="8dp"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -209,7 +216,7 @@
                         android:onClick="@{() -> viewModel.addNewProductInvoice(edBarcode, edName, edQuantity, edExpiry, edUnitPrice)}"
                         android:text="Thêm hàng"
                         android:textColor="@color/pink_primary"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -222,13 +229,13 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:text="Danh sách hàng nhập"
                         android:textColor="@color/gray_medium"
-                        android:textSize="22sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"

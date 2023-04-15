@@ -5,9 +5,7 @@
     tools:context=".view.detailinvoice.DetailInvoiceActivity">
 
     <data>
-
         <import type="android.view.View" />
-
         <import type="net.fpoly.dailymart.utils.ConvertUtilsKt" />
 
         <variable
@@ -29,7 +27,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="36dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -97,7 +95,7 @@
                             android:layout_marginHorizontal="18dp"
                             android:layout_marginTop="26dp"
                             android:fontFamily="@font/imbplexsans_regular"
-                            android:text="@{@string/id_category(viewmodel.invoice.id)}"
+                            android:text="@{@string/id_category(viewmodel.invoice.numberID)}"
                             android:textColor="@color/gray_medium" />
 
                         <TextView

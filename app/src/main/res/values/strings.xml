@@ -58,6 +58,8 @@
     <string name="unit_price_cover_vnd">Đơn giá: %s VNĐ</string>
     <string name="quantity_cover">SL: %d</string>
     <string name="expiry_cover">HSD: %s</string>
+    <string name="send_invoice_underline"><u>Gửi hóa đơn</u></string>
+    <string name="get_invoice_underline"><u>Nhận hóa đơn</u></string>
 
 
 </resources>

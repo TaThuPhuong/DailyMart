@@ -7,6 +7,7 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.databinding.InvoicceFragmentBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.view.getinvoice.GetInvoiceActivity
 import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
 
 class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBinding::inflate) {
@@ -23,6 +24,13 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         setupAdapter()
         setupEditSearch()
         setupBtnAdd()
+        setupBtnGetInvoice()
+    }
+
+    private fun setupBtnGetInvoice() {
+        binding.getInvoice.setOnClickListener {
+            startActivity(Intent(mContext, GetInvoiceActivity::class.java))
+        }
     }
 
     private fun setupBtnAdd() {
@@ -41,9 +49,13 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
             if (text.isNotEmpty()) {
                 viewModel.invoicesResult.also { invoices ->
                     val result =
-                        invoices.filter { it.id.contains(text) || it.user.name.contains(text) }
+                        invoices.filter {
+                            it.id.lowercase().contains(text) || it.user.name.lowercase()
+                                .contains(text)
+                        }
                             .toMutableList()
                     viewModel.invoices.value = result
+                    viewModel.checkShowEmptyList()
                 }
             } else {
                 viewModel.invoices.value = viewModel.invoicesResult
@@ -52,7 +64,7 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
     }
 
     private fun setupBtnBack() {
-        binding.imvBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
