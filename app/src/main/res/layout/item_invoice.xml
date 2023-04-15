@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_medium"
                 android:maxLength="20"
-                android:text="@{@string/hoa_don(invoice.id)}"
+                android:text="@{@string/hoa_don(invoice.numberID)}"
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"

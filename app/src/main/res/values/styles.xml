@@ -54,7 +54,7 @@
     </style>
 
     <style name="BaseThemeDialog" parent="Theme.Material3.Light.Dialog" >
-
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
     <style name="Animation.BottomSheetDialog" parent="Animation.AppCompat.Dialog">

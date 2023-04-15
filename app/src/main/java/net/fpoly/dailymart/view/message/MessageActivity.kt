@@ -2,13 +2,17 @@ package net.fpoly.dailymart.view.message
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
+import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Message
+import net.fpoly.dailymart.databinding.ActivityAddProductBinding
 import net.fpoly.dailymart.databinding.ActivityMessageBinding
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.setVisibility
@@ -17,7 +21,7 @@ import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 
-class MessageActivity : BaseActivity<ActivityMessageBinding>(ActivityMessageBinding::inflate) {
+class MessageActivity : AppCompatActivity() {
 
     private val TAG = "YingMing"
     private val viewModel: MessageViewModel by viewModels { AppViewModelFactory }
@@ -25,15 +29,29 @@ class MessageActivity : BaseActivity<ActivityMessageBinding>(ActivityMessageBind
     private var mListMessage: List<Message> = ArrayList()
     private lateinit var mMessageAdapter: MessageAdapter
 
+    private lateinit var binding: ActivityMessageBinding
+
     private var mMessage: String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMessageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        WindowCompat.getInsetsController(window, binding.root).let {
+            it.isAppearanceLightNavigationBars = false
+            it.isAppearanceLightStatusBars= false
+        }
+        setupData()
+        setupObserver()
+    }
+
     @SuppressLint("NotifyDataSetChanged")
-    override fun setupData() {
+    fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         mMessage = intent.getStringExtra(Constant.MESSAGE)
         mMessage?.let { binding.edMessage.setText(it) }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
 
         binding.edMessage.getTextOnChange {
             viewModel.onMessageChange(it)
@@ -60,7 +78,7 @@ class MessageActivity : BaseActivity<ActivityMessageBinding>(ActivityMessageBind
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setupObserver() {
+    fun setupObserver() {
         viewModel.listMessage.observe(this) {
             if (it.isNotEmpty()) {
                 mMessageAdapter.setData(it)

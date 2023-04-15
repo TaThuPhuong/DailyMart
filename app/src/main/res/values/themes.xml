@@ -2,6 +2,7 @@
     <!-- Base application theme. --><style name="AppTheme" parent="Base.AppTheme" />
 
     <style name="Base.AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="colorAccent">@color/pink_primary</item>
         <item name="colorPrimary">@color/pink_primary</item>
         <item name="colorPrimaryDark">@color/pink_primary</item>
@@ -11,8 +12,6 @@
 
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
     </style>
@@ -23,11 +22,27 @@
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
 
         <item name="android:windowHideAnimation">@anim/fade_out</item>
         <item name="android:windowShowAnimation">@anim/fade_in</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
 
+    </style>
+
+
+    <style name="Base.AppChatTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorAccent">@color/pink_primary</item>
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowHideAnimation">@anim/fade_out</item>
+        <item name="android:windowShowAnimation">@anim/fade_in</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">@color/pink_primary</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
 
 
