@@ -12,7 +12,7 @@ data class RegisterParam(
     @SerializedName("status") val status: Boolean = true,
     @SerializedName("role") val role: ROLE = ROLE.staff,
     @SerializedName("deviceId") val deviceId: String = "",
-    @SerializedName("linkAvt") val linkAvt: String = "",
+    @SerializedName("linkAvt") var linkAvt: String = "",
 ) {
     fun checkValidate(): Boolean =
         !(name.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim()

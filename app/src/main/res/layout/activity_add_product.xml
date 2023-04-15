@@ -130,7 +130,7 @@
                 <EditText
                     android:id="@+id/ed_name"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_id"
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginTop="10dp"
@@ -144,7 +144,7 @@
                 <TextView
                     android:id="@+id/tv_supplier"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_name"
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginTop="10dp"
@@ -160,7 +160,7 @@
                 <TextView
                     android:id="@+id/tv_category"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_supplier"
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginTop="10dp"
@@ -183,7 +183,7 @@
                     <EditText
                         android:id="@+id/ed_import_price"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginVertical="10dp"
                         android:layout_marginStart="26dp"
                         android:layout_marginEnd="10dp"
@@ -199,7 +199,7 @@
                     <EditText
                         android:id="@+id/ed_sell_price"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginVertical="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="26dp"
@@ -216,7 +216,7 @@
                 <EditText
                     android:id="@+id/ed_unit"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_price"
                     android:layout_marginHorizontal="26dp"
                     android:layout_marginBottom="20dp"

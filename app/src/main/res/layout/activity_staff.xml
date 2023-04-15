@@ -20,7 +20,7 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="58dp">
+            android:layout_marginTop="38dp">
 
             <ImageView
                 android:id="@+id/imv_back"
@@ -35,8 +35,8 @@
                 android:fontFamily="@font/imbplexsans_medium"
                 android:gravity="center_vertical"
                 android:text="Nhân viên"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textColor="@color/gray_medium"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -69,7 +69,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_clear_black_24dp" />
+                android:src="@drawable/ic_clear_black_24dp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView

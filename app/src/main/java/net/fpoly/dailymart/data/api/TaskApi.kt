@@ -32,6 +32,6 @@ interface TaskApi {
         @Path("id") id: String,
     ): ResponseResult<Task>
 
-    @GET("task")
+    @GET("task/getAll")
     suspend fun getAllTask(@Header("Authorization") token: String): ResponseResult<List<Task>>
 }

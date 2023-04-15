@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,7 +12,7 @@
             type="AddStaffViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -20,13 +21,13 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="58dp">
+            android:layout_marginTop="38dp">
 
             <ImageView
                 android:id="@+id/imv_back"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_back_black" />
 
             <TextView
@@ -36,14 +37,14 @@
                 android:fontFamily="@font/imbplexsans_medium"
                 android:gravity="center_vertical"
                 android:text="Thêm Nhân Viên"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/gray_medium"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -64,34 +65,37 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_gravity="center_horizontal"-->
-        <!--            android:layout_marginTop="50dp"-->
-        <!--            android:fontFamily="@font/imbplexsans_semibold"-->
-        <!--            android:text="@string/th_m_nh_n_vi_n"-->
-        <!--            android:textColor="@color/gray_primary"-->
-        <!--            android:textSize="24sp" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center_horizontal"-->
+        <!--                    android:layout_marginTop="50dp"-->
+        <!--                    android:fontFamily="@font/imbplexsans_semibold"-->
+        <!--                    android:text="@string/th_m_nh_n_vi_n"-->
+        <!--                    android:textColor="@color/gray_primary"-->
+        <!--                    android:textSize="24sp" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/ed_name_user"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_search_task"
                 android:drawableStart="@drawable/ic_person_gray"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="Họ Tên"
-                android:paddingVertical="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="12dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
         </RelativeLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -114,6 +118,7 @@
                 android:id="@+id/ccp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_search_task"
                 app:ccpDialog_textColor="@color/gray_light"
                 app:ccp_arrowSize="14dp"
                 app:ccp_contentColor="@color/gray_medium"
@@ -121,15 +126,19 @@
                 app:ccp_textSize="14dp" />
 
             <EditText
-                android:inputType="phone"
                 android:id="@+id/ed_number_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_ed_search_task"
                 android:backgroundTint="@color/gray_medium"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="Số điện thoại"
+                android:inputType="phone"
+                android:padding="8dp"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,17 +152,20 @@
         <EditText
             android:id="@+id/ed_email_user"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/bg_ed_search_task"
             android:backgroundTint="@color/gray_medium"
             android:drawableStart="@drawable/ic_mail"
             android:drawablePadding="10dp"
             android:fontFamily="@font/imbplexsans_regular"
             android:hint="Email"
-            android:paddingVertical="8dp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="12dp"
             android:textColor="@color/gray_primary"
             android:textSize="14sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,47 +179,47 @@
         <RelativeLayout
             android:id="@+id/layout_role"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/layout_phone"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_ed_search_task">
 
             <TextView
+                android:id="@+id/tv_role"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:gravity="center"
+                android:padding="6dp"
                 android:text="Chức vụ"
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/ed_role_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/imv_change_role"
+                android:layout_toEndOf="@+id/tv_role"
                 android:backgroundTint="@color/gray_medium"
-                android:enabled="false"
                 android:gravity="end"
                 android:maxLines="1"
-                android:paddingEnd="44dp"
+                android:padding="6dp"
+                android:text="Nhân viên"
                 android:textColor="@color/gray_medium" />
 
             <ImageView
                 android:id="@+id/imv_change_role"
                 android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:padding="14dp"
                 android:rotation="180"
                 android:src="@drawable/ic_back_black" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ed_role_user"
-                android:layout_marginHorizontal="35dp"
-                android:textColor="@color/red_FF444C"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
         </RelativeLayout>
 
         <TextView
@@ -230,31 +242,5 @@
             android:layout_marginHorizontal="110dp"
             android:layout_marginVertical="20dp"
             android:background="@color/gray_medium" />
-
-        <!--        <LinearLayout-->
-        <!--            android:id="@+id/layout_login"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:gravity="center"-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:visibility="gone">-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:fontFamily="@font/imbplexsans_medium"-->
-        <!--                android:text="Bạn đã có tài khoản?"-->
-        <!--                android:textColor="@color/gray_light"-->
-        <!--                android:textSize="18sp" />-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:fontFamily="@font/imbplexsans_medium"-->
-        <!--                android:text="@string/ng_nh_p"-->
-        <!--                android:textColor="@color/pink_primary"-->
-        <!--                android:textSize="18sp"-->
-        <!--                android:textStyle="bold" />-->
-        <!--        </LinearLayout>-->
     </LinearLayout>
 </layout>
