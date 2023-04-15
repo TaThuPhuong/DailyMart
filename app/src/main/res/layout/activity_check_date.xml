@@ -103,7 +103,7 @@
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="Sắp hết hạn"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

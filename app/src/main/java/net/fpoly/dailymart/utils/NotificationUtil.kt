@@ -16,6 +16,7 @@ import net.fpoly.dailymart.data.api.RetrofitInstance
 import net.fpoly.dailymart.data.model.Data
 import net.fpoly.dailymart.data.model.NotificationData
 import net.fpoly.dailymart.utils.Constant.Companion.CHANNEL_ID
+import net.fpoly.dailymart.view.message.MessageActivity
 import net.fpoly.dailymart.view.task.TaskActivity
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
 import okhttp3.ResponseBody
@@ -27,10 +28,14 @@ import kotlin.coroutines.coroutineContext
 @RequiresApi(Build.VERSION_CODES.M)
 fun createNotification(context: Context, title: String, message: String, value: String?) {
 
-    val intent = Intent(context, TaskDetailActivity::class.java)
-    value?.let {
-        intent.putExtra(Constant.TASK_ID, it)
+    val intent = if (value != "") {
+        Intent(context, TaskDetailActivity::class.java).also {
+            it.putExtra(Constant.TASK_ID, value)
+        }
+    } else {
+        Intent(context, MessageActivity::class.java)
     }
+
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)

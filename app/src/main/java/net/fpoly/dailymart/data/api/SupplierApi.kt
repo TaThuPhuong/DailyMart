@@ -10,7 +10,7 @@ interface SupplierApi {
     @POST("supplier")
     suspend fun insertSupplier(@Header("Authorization") token: String, @Body supplier: SupplierParam): ResultData<Supplier>
 
-    @GET("supplier")
+    @GET("supplier/getAll")
     suspend fun getSuppliers(@Header("Authorization") token: String) : ResultData<ArrayList<Supplier>>
 
     @DELETE("supplier/{id}")

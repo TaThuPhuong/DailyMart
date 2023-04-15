@@ -175,7 +175,6 @@
 
                 <TextView
                     android:id="@+id/tv_manage"
-                    set_visible="@{viewModel.role}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_account"
@@ -234,7 +233,6 @@
 
                     <RelativeLayout
                         android:id="@+id/layout_staff"
-                        set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
