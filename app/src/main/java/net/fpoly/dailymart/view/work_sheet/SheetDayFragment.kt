@@ -5,7 +5,10 @@ import androidx.fragment.app.activityViewModels
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.data.model.WorkSheet
 import net.fpoly.dailymart.databinding.FragmentDaySheetBinding
+import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.work_sheet.adapter.SheetAdapter
 import net.fpoly.dailymart.view.work_sheet.edit_work_sheet.EditWorkSheetActivity
 
@@ -17,6 +20,8 @@ class SheetDayFragment(private val sheet: WorkSheet) :
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val user = SharedPref.getUser(mContext)
+        binding.imvAdd.setVisibility(user.role != ROLE.staff)
 
         val adapter1 = SheetAdapter(ArrayList())
         val adapter2 = SheetAdapter(ArrayList())

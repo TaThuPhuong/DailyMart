@@ -159,7 +159,7 @@ class AddProductViewModel(
                                         }
                                     })
                             } catch (e: Exception) {
-                                Log.e(TAG, "Exception: $e", )
+                                Log.e(TAG, "Exception: $e")
                             }
 
                         }
@@ -171,6 +171,9 @@ class AddProductViewModel(
         }
     }
 
+    private fun checkBarcode(barcode: String) {
+
+    }
 }
 
 sealed class ProductEvent {

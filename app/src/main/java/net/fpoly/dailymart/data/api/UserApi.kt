@@ -14,8 +14,15 @@ interface UserApi {
     @POST("register")
     suspend fun register(
         @Body model: RegisterParam,
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
     ): ResultData<RegisterParam>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("register")
+    fun createUser(
+        @Body model: RegisterParam,
+        @Header("Authorization") token: String,
+    ): Call<ResponseBody>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("login")
@@ -57,7 +64,7 @@ interface UserApi {
     suspend fun updateUser2(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-        @Body userParam: UpdateParam
+        @Body userParam: UpdateParam,
     ): ResultData<UpdateParam>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
@@ -65,6 +72,6 @@ interface UserApi {
     fun updateUser(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-        @Body userParam: UserRes
+        @Body userParam: UserRes,
     ): Call<ResponseBody>
 }

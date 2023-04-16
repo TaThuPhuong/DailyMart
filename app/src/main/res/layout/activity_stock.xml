@@ -25,7 +25,8 @@
         <LinearLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp">
 
             <ImageView
                 android:id="@+id/imv_back"

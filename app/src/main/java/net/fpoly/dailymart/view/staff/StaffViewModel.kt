@@ -9,19 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.data.model.param.Datum
-import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.data.model.param.UpdateParam
 import net.fpoly.dailymart.data.model.param.UserModel
-import net.fpoly.dailymart.data.model.succeeded
 import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +27,7 @@ class StaffViewModel(
     val TAG = "tuvm";
     private val userRepo = UserRepositoryImpl()
     private val _user = MutableLiveData<List<Datum>>()
-    val user: LiveData<List<Datum>> = _user
+    val mListUser: LiveData<List<Datum>> = _user
     private val mToken = SharedPref.getAccessToken(app)
     private val _validateName = MutableLiveData("")
     val validateNameUser: LiveData<String> = _validateName
@@ -44,12 +39,6 @@ class StaffViewModel(
     private val _userParam = MutableLiveData(UpdateParam())
 
     val updateSuccess = MutableLiveData(false)
-    private lateinit var mLoadingDialog: LoadingDialog
-
-    fun initLoadDialog(context: Context) {
-        mLoadingDialog = LoadingDialog(context)
-    }
-
     init {
         _validateName.value = ""
         _validatePhone.value = ""
@@ -59,7 +48,6 @@ class StaffViewModel(
     fun getUser() {
         val server = ServerInstance.apiUser
         Log.d(TAG, "start ")
-        mLoadingDialog.showLoading()
         server.getAllUser(mToken)
             .enqueue(object : Callback<UserModel> {
                 override fun onResponse(
@@ -68,7 +56,6 @@ class StaffViewModel(
                 ) {
                     if (response.isSuccessful) {
                         updateSuccess.postValue(true)
-                        mLoadingDialog.hideLoading()
                         _user.value = response.body()?.data;
                         Log.d(TAG, "onResponse: " + response.body()?.data)
                     } else {
@@ -80,7 +67,6 @@ class StaffViewModel(
 
                 override fun onFailure(call: Call<UserModel>, t: Throwable) {
                     Log.d(TAG, "message: " + t.message)
-                    mLoadingDialog.hideLoading()
                     updateSuccess.postValue(false)
                 }
 
@@ -94,7 +80,6 @@ class StaffViewModel(
         activity: DetailsStaffActivity?
     ) {
         viewModelScope.launch {
-            mLoadingDialog.showLoading()
             val res = userRepo.updateUser(mToken, id, updateParam = userParams)
             when (res) {
                 is net.fpoly.dailymart.data.model.Response.Success -> {
@@ -103,7 +88,6 @@ class StaffViewModel(
                 }
                 is net.fpoly.dailymart.data.model.Response.Error -> {
                     Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
-                    mLoadingDialog.hideLoading()
                 }
             }
         }

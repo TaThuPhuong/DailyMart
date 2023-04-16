@@ -23,7 +23,8 @@ class FirebaseMessageService : FirebaseMessagingService() {
         val value = map["value"] ?: ""
         val userId = map["user"] ?: ""
         Log.e("YingMing", "onMessageReceived: $title - $body -$value")
-        if (userId != user.id || userId == "") {
+
+        if (userId != user.id && user.id != "") {
             createNotification(applicationContext, title, body, value)
             notificationRepo.insertNotification(
                 RecentNotification(
