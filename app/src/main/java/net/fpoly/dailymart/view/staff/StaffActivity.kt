@@ -11,10 +11,9 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ActivityStaffBinding
-import net.fpoly.dailymart.extension.view_extention.OnSwipeTouchListener
-import net.fpoly.dailymart.extension.view_extention.getTextOnChange
-import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.*
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.add_staff.AddStaffActivity
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
@@ -25,32 +24,29 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
     private val viewModel: StaffViewModel by viewModels { AppViewModelFactory }
     private lateinit var mStaffAdapter: StaffAdapter
     private var mListUser: List<Datum> = ArrayList()
+    private lateinit var mUser: User
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
+        mUser = SharedPref.getUser(this)
         binding.imvBack.setOnClickListener { finish() }
         binding.tvAddNew.setOnClickListener {
             startActivity(Intent(this, AddStaffActivity::class.java))
         }
+        binding.tvAddNew.setVisibility(mUser.role != ROLE.staff)
         binding.imvClear.setOnClickListener {
+            binding.imvClear.gone()
             binding.edSearch.setText("")
+            mStaffAdapter.setUserData(mListUser)
         }
         viewModel.initLoadDialog(context = this)
         setUserSearch()
+        viewModel.getUser()
         initRecycleView()
     }
 
     override fun setupObserver() {
-//        viewModel.listUser.observe(this) { users ->
-//            mStaffAdapter.setUserData(users)
-//            mListUser = users
-//        }
-        viewModel.updateSuccess.observe(this) {
-
-        }
-        viewModel.getUser()
         viewModel.user.observe(this) { user ->
             mStaffAdapter.setUserData(user)
             mListUser = user
@@ -65,6 +61,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView() {
         mStaffAdapter = StaffAdapter(this, mListUser) { user ->
+            if (mUser.role == ROLE.staff) return@StaffAdapter
             val intent = Intent(this, DetailsStaffActivity::class.java)
             intent.putExtra("user", user)
             startActivity(intent)

@@ -11,6 +11,7 @@ import net.fpoly.dailymart.databinding.ActivityAddStaffBinding
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.view.login.LoginEvent
 import net.fpoly.dailymart.view.main.MainActivity
@@ -83,14 +84,14 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
             email = email,
             phoneNumber = phone,
             role = role,
-            deviceId = "124234",
-            linkAvt = "https//:abc.com"
+            deviceId = "",
+            linkAvt = Constant.AVATAR_DEFAULT
         )
         viewModel.postUser(user, this, this)
     }
 
     private fun setupBtnChangeRole() {
-        binding.imvChangeRole.setOnClickListener {
+        binding.layoutRole.setOnClickListener {
             ChangeRoleDialog(this, ROLE.staff) {
                 role = it
                 binding.edRoleUser.setText(it.value)

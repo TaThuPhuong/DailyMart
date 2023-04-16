@@ -3,7 +3,7 @@ package net.fpoly.dailymart.utils
 class Constant {
 
     companion object {
-        const val BASE_URL = "https://fcm.googleapis.com"
+        const val BASE_URL = "https://fcm.googleapis.com/"
         const val BASE_API = "https://serverdatn-production.up.railway.app/api/"
         const val SERVER_KEY =
             "AAAA6O-N_sk:APA91bFoWt30PPdi-OAsIS8WzkmiqQY5p-1l2WOxIpxBK2ib2sYtQYWRh9eXRaZcS9wwtKWk5Wkp2xLEhFDMMiBN-9pUCs9bl2yvzGhMGtBeQATS5reNnNPF-QNdIqh77dWvhXmZ8ATJ"
@@ -19,6 +19,7 @@ class Constant {
         const val AVATAR_DEFAULT =
             "https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/8e/cf/03/8ecf03d8-9e2f-84f8-b13a-e39ba9f217bd/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"
         const val SEVEN_DAY = 604800000L
+        const val MESSAGE = "message"
 
     }
 }

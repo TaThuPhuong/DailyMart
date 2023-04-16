@@ -47,6 +47,8 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 viewModel.getAllTask(binding.viewPager.currentItem)
+                binding.pbLoading.visible()
+                binding.viewPager.gone()
             }
         })
     }
@@ -54,6 +56,7 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
             binding.pbLoading.gone()
+            binding.viewPager.visible()
         }
     }
 

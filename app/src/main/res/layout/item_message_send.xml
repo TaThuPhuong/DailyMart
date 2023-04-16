@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:text="Phạm Văn Hiển"
+        android:textColor="@color/gray_medium"
+        android:textSize="10sp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/tv_name"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/img_avatar_default"
+        app:civ_border_color="#FF9A9A"
+        app:civ_border_width="1dp" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imv_avatar"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/imv_avatar"
+        android:background="@drawable/bg_message_send"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="."
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_message"
+        android:layout_alignEnd="@+id/tv_message"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:text="2 phút trước"
+        android:textColor="@color/gray_light"
+        android:textSize="8sp"
+        tools:ignore="SmallSp" />
+
+</RelativeLayout>

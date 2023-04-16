@@ -25,7 +25,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     }
 
     private fun setupBtnBack() {
-        binding.imvBack.setOnClickListener{
+        binding.btnBack.setOnClickListener{
             onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -48,7 +48,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
                 binding.imvClear.visibility = View.VISIBLE
                 viewModel.listSupplier.value?.also { invoices ->
                     val result =
-                        invoices.filter { it.id.contains(text) || it.supplierName.contains(text) }
+                        invoices.filter { it.id.lowercase().contains(text) || it.supplierName.lowercase().contains(text) }
                             .toMutableList()
                     viewModel.listSupplier.value = result
                 }

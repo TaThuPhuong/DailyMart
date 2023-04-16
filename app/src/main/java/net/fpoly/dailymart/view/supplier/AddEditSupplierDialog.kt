@@ -1,11 +1,13 @@
 package net.fpoly.dailymart.view.supplier
 
 import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
 import net.fpoly.dailymart.base.BaseBottomDialog
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
 import net.fpoly.dailymart.databinding.DialogAddSupplierBinding
+import net.fpoly.dailymart.extension.view_extention.hideKeyboard
 
 class AddEditSupplierDialog(context: Context, private val supplier: Supplier? = null, private val viewModel: SupplierViewModel) :
     BaseBottomDialog<DialogAddSupplierBinding>(context, DialogAddSupplierBinding::inflate) {
@@ -30,6 +32,11 @@ class AddEditSupplierDialog(context: Context, private val supplier: Supplier? = 
                 dismiss()
             }
         }
+    }
+
+    override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
+        super.setOnDismissListener(listener)
+        context.hideKeyboard()
     }
 
     private fun getSupplierParam(): SupplierParam {

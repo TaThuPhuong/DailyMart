@@ -31,9 +31,10 @@ class ChoseUserDialog(
             mAdapter.setData(mList)
         }
         binding.edSearch.getTextOnChange {
-            val listFilter = mList.filter { category ->
-                category.name.contains(it, true)
+            val listFilter = mList.filter { user ->
+                user.name.contains(it, true) || user.phoneNumber.contains(it, true)
             }
+            if (it.isEmpty()) mAdapter.setData(mList)
             mAdapter.setData(listFilter)
         }
     }

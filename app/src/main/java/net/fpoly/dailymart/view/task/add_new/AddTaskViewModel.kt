@@ -97,10 +97,11 @@ class AddTaskViewModel(
                         Log.e(TAG, "_task: $it")
                         if (res.isSuccess()) {
                             sendNotification(
-                                "Bạn vừa giao 1 nhiệm vụ mới",
-                                _task.value!!.title,
-                                _deviceId.value!!,
-                                res.data!!.id
+                                title = "Bạn vừa nhận được 1 nhiệm vụ mới",
+                                message = _task.value!!.title,
+                                value = res.data!!.id,
+                                user = "",
+                                to = _deviceId.value!!
                             )
                             message.postValue(res.message!!)
                             addSuccess.postValue(true)
@@ -129,7 +130,18 @@ class AddTaskViewModel(
 
     private fun checkValidate() {
         _taskValidate.value =
-            !(_task.value?.title?.trim() == "" || _task.value?.idReceiver == null || _task.value?.deadline == 0L || _task.value?.description?.trim() == "")
+            !(_task.value?.title?.trim() == ""
+                    || _task.value?.idReceiver == null
+                    || _task.value?.deadline == 0L
+                    || _task.value?.description?.trim() == "")
+        if ((_task.value?.description?.length ?: 0) <= 5) {
+            _taskValidate.value = false
+            message.postValue("Nhập mô tả > 5 ký tự")
+        }
+        if ((_task.value?.title?.length ?: 0) <= 5) {
+            _taskValidate.value = false
+            message.postValue("Nhập tiêu đề công việc > 5 ký tự")
+        }
     }
 }
 

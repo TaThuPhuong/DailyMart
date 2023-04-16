@@ -49,7 +49,7 @@ interface UserApi {
     fun logout(@Header("Authorization") token: String)
 
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @GET("getAllNameUser")
+    @GET("getAll")
     suspend fun getAllUser2(@Header("Authorization") token: String): ResponseResult<List<UserRes>>
 
     @Headers("Content-Type: application/json;charset=UTF-8")

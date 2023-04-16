@@ -111,11 +111,18 @@
                         android:layout_marginVertical="18dp"
                         android:paddingHorizontal="18dp">
 
+                        <ImageView
+                            android:id="@+id/imv_change_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_change_password" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_change_password"
-                            android:drawablePadding="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/imv_change_password"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
                             android:text="Đổi mật khẩu"
@@ -138,10 +145,17 @@
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="18dp">
 
+                        <ImageView
+                            android:id="@+id/imv_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_message" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_message"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/imv_message"
                             android:drawablePadding="10dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
@@ -161,7 +175,6 @@
 
                 <TextView
                     android:id="@+id/tv_manage"
-                    set_visible="@{viewModel.role}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout_account"
@@ -192,11 +205,17 @@
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="18dp">
 
+                        <ImageView
+                            android:id="@+id/imv_report"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_report" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_report"
-                            android:drawablePadding="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/imv_report"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
                             android:text="Báo cáo"
@@ -214,17 +233,22 @@
 
                     <RelativeLayout
                         android:id="@+id/layout_staff"
-                        set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="18dp">
 
+                        <ImageView
+                            android:id="@+id/imv_staff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_staff" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_staff"
-                            android:drawablePadding="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/imv_staff"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
                             android:text="Nhân viên"
@@ -247,11 +271,17 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="18dp">
 
+                        <ImageView
+                            android:id="@+id/imv_update_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_update_data" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_update_data"
-                            android:drawablePadding="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/imv_update_data"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="center_vertical"
                             android:text="Thông tin ngân hàng"

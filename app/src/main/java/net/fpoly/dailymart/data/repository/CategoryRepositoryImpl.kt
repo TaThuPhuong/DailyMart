@@ -19,7 +19,7 @@ class CategoryRepositoryImpl : CategoryRepository {
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
                 Response.Success(result.result,result.message)
             } catch (ex: Exception) {
-                Response.Error(ex.message.toString())
+                Response.Error(ERROR_CONNECTED)
             }
         }
 
@@ -30,7 +30,7 @@ class CategoryRepositoryImpl : CategoryRepository {
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
                 Response.Success(result.result,result.message)
             } catch (ex: Exception) {
-                Response.Error(ex.message.toString())
+                Response.Error(ERROR_CONNECTED)
             }
         }
 
@@ -44,7 +44,7 @@ class CategoryRepositoryImpl : CategoryRepository {
             if (!result.isSuccess()) return@withContext Response.Error(result.message)
             Response.Success(result.result,result.message)
         } catch (ex: Exception) {
-            Response.Error(ex.message.toString())
+            Response.Error(ERROR_CONNECTED)
         }
     }
 
@@ -55,7 +55,11 @@ class CategoryRepositoryImpl : CategoryRepository {
                 if (!result.isSuccess()) return@withContext Response.Error(result.message)
                 Response.Success(result.result,result.message)
             } catch (ex: Exception) {
-                Response.Error(ex.message.toString())
+                Response.Error(ERROR_CONNECTED)
             }
         }
+
+    companion object {
+        const val ERROR_CONNECTED = "Kết nối thất bại"
+    }
 }

@@ -58,7 +58,6 @@ class StaffAdapter(
     private fun getRole(role: String): String {
         for (r in ROLE.values()) {
             if (r.toString() == role) {
-                Log.e("YingMing", "getRole: ${r.name}")
                 return r.value
             }
         }

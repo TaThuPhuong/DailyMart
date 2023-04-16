@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="net.fpoly.dailymart.view.task.detail_product.ProductDetailViewModel" />
+        <import type="net.fpoly.dailymart.view.products.detail_product.ProductDetailViewModel" />
 
         <variable
             name="viewModel"
-            type="net.fpoly.dailymart.view.task.detail_product.ProductDetailViewModel" />
+            type="net.fpoly.dailymart.view.products.detail_product.ProductDetailViewModel" />
     </data>
 
     <RelativeLayout

@@ -31,7 +31,12 @@ fun convertTimeInMillisToLastTimeString(timeInMillis: Long): String {
     } else if (timePassed < 3600L * 24L) {
         "${(timePassed.toInt() / 3600L)} giờ trước"
     } else {
-        SimpleDateFormat("dd/MM/yyyy").format(timeInMillis)
+        SimpleDateFormat("HH:mm dd/MM/yyyy").format(timeInMillis)
     }
     return timePassedText
 }
+fun takeLastId(id: String) : String {
+    return id.takeLast(10)
+}
+
+fun toString(number: Long) = number.toString()

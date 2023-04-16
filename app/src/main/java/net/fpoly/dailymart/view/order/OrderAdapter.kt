@@ -1,53 +1,51 @@
 package net.fpoly.dailymart.view.order
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.data.model.OrderResponse
-import net.fpoly.dailymart.data.model.param.CategoryParam
+import net.fpoly.dailymart.data.model.ProductInvoiceParam
 import net.fpoly.dailymart.databinding.ItemOrderBinding
 
-class OrderAdapter(
-    val mContext: Context,
-    var mListOrder: List<OrderResponse> = ArrayList(),
-    val onClick: (CategoryParam) -> Unit,
-) :
-    RecyclerView.Adapter<OrderAdapter.ItemView>() {
-    class ItemView(val binding: ItemOrderBinding) : ViewHolder(binding.root)
+class OrderAdapter(private val activity: OrderActivity, private val viewModel: OrderViewModel) :
+    ListAdapter<ProductInvoiceParam, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
+    class OrderViewHolder(val binding: ItemOrderBinding) : ViewHolder(binding.root) {
+        fun bind(product: ProductInvoiceParam, position: Int, viewModel: OrderViewModel, activity: OrderActivity) {
+            binding.product = product
+            binding.viewmodel = viewModel
+            binding.position = position
+            binding.lifecycleOwner = activity
+            binding.executePendingBindings()
+        }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<OrderResponse>) {
-        mListOrder = list
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemView {
-        return ItemView(
-            ItemOrderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false,
-            ),
-        )
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ItemView, position: Int) {
-        with(holder) {
-            with(mListOrder[position]) {
-//                binding.tvExpiryDate.text = this.invoiceDetails[0].product
-                binding.tvProductName.text = this.invoiceDetails[0].product.productName
-                binding.tvQuantity.text = "SL: ${this.invoiceDetails[0].quantityProduct}"
-                binding.tvTotalInvoice.text =
-                    "Đơn giá: ${this.invoiceDetails[0].totalPrice}"
+        companion object {
+            fun from(parent: ViewGroup): OrderViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemOrderBinding.inflate(layoutInflater, parent, false)
+                return OrderViewHolder(binding)
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return mListOrder.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = OrderViewHolder.from(parent)
+
+    override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
+        val product = getItem(position)
+        holder.bind(product, position, viewModel, activity)
     }
+
+}
+
+
+class OrderDiffCallback : DiffUtil.ItemCallback<ProductInvoiceParam>() {
+    override fun areItemsTheSame(
+        oldItem: ProductInvoiceParam,
+        newItem: ProductInvoiceParam
+    ) = oldItem == newItem
+
+    override fun areContentsTheSame(
+        oldItem: ProductInvoiceParam,
+        newItem: ProductInvoiceParam
+    ) = oldItem == newItem
 }
