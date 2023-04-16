@@ -81,6 +81,19 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
+            android:id="@+id/tv_make_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/btn_done_button"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Gửi tin nhắn"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +103,7 @@
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:text="Thêm hàng thất thoát"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>
