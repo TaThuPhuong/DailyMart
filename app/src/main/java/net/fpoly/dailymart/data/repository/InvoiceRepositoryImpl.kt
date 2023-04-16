@@ -20,7 +20,8 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.getInvoices(token)
                 if (res.isSuccess()) {
-                    Response.Success(res.result, res.message)
+                    val sort = res.result.sortedByDescending { it.createAt }
+                    Response.Success(ArrayList(sort), res.message)
                 } else {
                     Response.Error(res.message)
                 }

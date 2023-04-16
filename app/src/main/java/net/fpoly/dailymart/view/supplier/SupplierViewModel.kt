@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
 import net.fpoly.dailymart.repository.SupplierRepository
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 
 class SupplierViewModel(context: Context ,val repository: SupplierRepository) : ViewModel() {
@@ -21,6 +22,8 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
 
     val showSnackbar = MutableLiveData<String>()
     val token = SharedPref.getAccessToken(context)
+    val user = SharedPref.getUser(context)
+
 
     init {
         getAllSuppliers()
@@ -99,6 +102,10 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
     }
 
     fun clickItems(context: Context, supplier: Supplier) {
+        if (user.role == ROLE.staff) {
+            showSnackbar.value = "Nhân viên không được sử dụng chức năng này"
+            return
+        }
         MoreSupplierPopup(context, supplier, this).show()
     }
 

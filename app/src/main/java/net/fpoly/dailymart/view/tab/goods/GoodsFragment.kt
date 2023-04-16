@@ -5,7 +5,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseFragment
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.GoodsFragmentBinding
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.category.CategoryActivity
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.order.OrderActivity
@@ -33,6 +37,7 @@ class GoodsFragment : BaseFragment<GoodsFragmentBinding>(GoodsFragmentBinding::i
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
     }
 
     override fun setupObserver() {

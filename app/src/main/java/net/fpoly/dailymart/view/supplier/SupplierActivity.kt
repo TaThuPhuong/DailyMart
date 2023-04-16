@@ -7,6 +7,9 @@ import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivitySupplierBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 
 class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierBinding::inflate) {
 
@@ -22,6 +25,13 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
         setupBtnClear()
         setupSnackbar()
         setupBtnBack()
+        setupCheckRole()
+    }
+
+    private fun setupCheckRole() {
+        if (SharedPref.getUser(this).role == ROLE.staff) {
+            binding.tvAdd.gone()
+        }
     }
 
     private fun setupBtnBack() {

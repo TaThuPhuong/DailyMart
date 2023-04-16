@@ -1,17 +1,14 @@
 package net.fpoly.dailymart.view.category
 
-import android.os.Build
-import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityCategoryBinding
 import net.fpoly.dailymart.extension.setupSnackbar
+import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 
 
 class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryBinding::inflate) {
@@ -27,7 +24,13 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
         setupEdSearch()
         setupListCategory()
         setupSnackbar()
+        setupCheckRole()
+    }
 
+    private fun setupCheckRole() {
+        if (SharedPref.getUser(this).role == ROLE.staff) {
+            binding.imvAdd.gone()
+        }
     }
 
     private fun setupEdSearch() {

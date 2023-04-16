@@ -10,11 +10,13 @@ import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.CategoryParam
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.repository.CategoryRepositoryImpl
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 
 class CategoryViewModel(context: Context) : ViewModel() {
 
     val repository = CategoryRepositoryImpl()
+    val user = SharedPref.getUser(context)
 
     var listCategoryRemoteData = listOf<Category>()
     val listCategory = MutableLiveData(listOf<Category>())
@@ -60,6 +62,10 @@ class CategoryViewModel(context: Context) : ViewModel() {
     }
 
     fun moreOptionCategory(context: Context, category: Category) {
+        if (user.role == ROLE.staff) {
+            showSnackbar.value = "Nhân viên không được sử dụng chức năng này"
+            return
+        }
         MoreCategoryPopup(context, category, this).show()
     }
 
