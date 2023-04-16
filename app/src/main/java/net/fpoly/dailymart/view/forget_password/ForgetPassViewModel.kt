@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,12 +21,17 @@ class ForgetPassViewModel : ViewModel() {
     private val TAG = "Tuvm"
     private val forgotPassRepo = UserRepositoryImpl()
     private val _validateEmail = MutableLiveData("")
+    val validateEmail: LiveData<String> = _validateEmail
     private val _forgotPass = MutableLiveData(ForgotPass())
     private lateinit var mLoadingDialog: LoadingDialog
     var resSend = String()
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context)
+    }
+
+    init {
+        _validateEmail.value = ""
     }
 
     fun sendOTP(
@@ -35,7 +41,7 @@ class ForgetPassViewModel : ViewModel() {
     ) {
 
         Log.d(TAG, "Params : $forgotPass")
-        mLoadingDialog.hideLoading()
+        mLoadingDialog.showLoading()
         viewModelScope.launch {
             when (val forgot = forgotPassRepo.forgotPass(forgotPass)) {
                 is Success -> {
@@ -71,12 +77,11 @@ class ForgetPassViewModel : ViewModel() {
             is ForgotEvent.ValidateForm -> {
                 _forgotPass.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
-                        sendOTP(
-                            forgotPass = it,
-                            context = context,
-                            activity = null
-                        )
+//                        sendOTP(
+//                            forgotPass = it,
+//                            context = context,
+//                            activity = null
+//                        )
                     } else {
                         mLoadingDialog.hideLoading()
                     }

@@ -108,7 +108,7 @@ class DetailsStaffActivity :
         binding.layoutDisable.setOnClickListener {
             ChangeDisableDialog(this, mStatus = false) {
                 status = it
-                binding.edStatus.setText(status.toString())
+                binding.edStatus.text = getStatus(status)
             }.show()
         }
     }
@@ -119,8 +119,8 @@ class DetailsStaffActivity :
             binding.edName.setText(it.name)
             binding.edEmail.setText(it.email)
             binding.edNumber.setText(it.phoneNumber)
-            binding.edRole.setText(getRole(it.role))
-            binding.edStatus.setText(getStatus(it.status))
+            binding.edRole.text = getRole(it.role)
+            binding.edStatus.text = getStatus(it.status)
             Log.e("tuvm", "setupObserver: $it");
         }
     }
@@ -135,7 +135,7 @@ class DetailsStaffActivity :
     }
 
     private fun getStatus(status: Boolean): String = if (status) "Đang hoạt đông" else "Vô hiệu hóa"
-//    override fun setupObserver() {
+    //    override fun setupObserver() {
 //        viewModel.listUser
 //    }
 

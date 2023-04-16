@@ -94,7 +94,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
         binding.layoutRole.setOnClickListener {
             ChangeRoleDialog(this, ROLE.staff) {
                 role = it
-                binding.edRoleUser.setText(it.value)
+                binding.edRoleUser.text = it.value
             }.show()
         }
     }

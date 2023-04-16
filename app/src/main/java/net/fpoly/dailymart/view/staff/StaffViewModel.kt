@@ -115,19 +115,37 @@ class StaffViewModel(
                 _userParam.value = _userParam.value?.copy(
                     name = event.value
                 )
-                _validateName.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validateName.value = event.value.blankException()
+                } else if (event.value.length < 3) {
+                    _validateName.value = "Tên không được bé hơn 3 kí tự"
+                } else {
+                    _validateName.value = ""
+                }
             }
             is UserEvent.OnPhoneNumberChange -> {
                 _userParam.value = _userParam.value?.copy(
                     phoneNumber = event.value
                 )
-                _validatePhone.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validatePhone.value = event.value.blankException()
+                } else if (!isPhoneNumberValid(event.value)) {
+                    _validatePhone.value = "Số điện thoại không hợp lệ!"
+                } else {
+                    _validatePhone.value = ""
+                }
             }
             is UserEvent.OnEmail -> {
                 _userParam.value = _userParam.value?.copy(
                     email = event.value
                 )
-                _validateEmailUser.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validateEmailUser.value = event.value.blankException()
+                } else if (!isEmailValid(event.value)) {
+                    _validateEmailUser.value = "Email không hợp lệ!"
+                } else {
+                    _validateEmailUser.value = ""
+                }
             }
 
             is UserEvent.ValidateForm -> {
@@ -146,5 +164,16 @@ class StaffViewModel(
         data class OnEmail(val value: String) : UserEvent()
         data class OnPhoneNumberChange(val value: String) : UserEvent()
         object ValidateForm : UserEvent()
+    }
+
+    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
+        val regex =
+            Regex("^\\+?(0)([3|5|7|8|9]\\d{8})$")  // Biểu thức chính quy kiểm tra số điện thoại
+        return regex.matches(phoneNumber)
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val regex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$")
+        return regex.matches(email)
     }
 }
