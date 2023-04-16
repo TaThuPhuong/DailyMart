@@ -108,7 +108,7 @@ class DetailsStaffActivity :
         binding.layoutDisable.setOnClickListener {
             ChangeDisableDialog(this, mStatus = false) {
                 status = it
-                binding.edStatus.text = getStatus(status)
+                binding.edStatus.text = getStatus(it)
             }.show()
         }
     }
@@ -116,6 +116,7 @@ class DetailsStaffActivity :
     private fun setData() {
         mUser = intent.getSerializableExtra("user") as? Datum
         mUser?.let {
+            status = it.status
             binding.edName.setText(it.name)
             binding.edEmail.setText(it.email)
             binding.edNumber.setText(it.phoneNumber)
@@ -135,7 +136,7 @@ class DetailsStaffActivity :
     }
 
     private fun getStatus(status: Boolean): String = if (status) "Đang hoạt đông" else "Vô hiệu hóa"
-    //    override fun setupObserver() {
+//    override fun setupObserver() {
 //        viewModel.listUser
 //    }
 

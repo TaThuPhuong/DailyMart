@@ -16,23 +16,23 @@ class ChangeDisableDialog(
 
     override fun initData() {
         if (mStatus) {
-            setSelected(binding.tvDisable)
-            setUnSelected(binding.tvAble)
-        } else {
             setSelected(binding.tvAble)
             setUnSelected(binding.tvDisable)
+        } else {
+            setSelected(binding.tvDisable)
+            setUnSelected(binding.tvAble)
         }
         binding.imvClose.setOnClickListener { dismiss() }
 
         binding.tvAble.setOnClickListener {
             setSelected(binding.tvAble)
             setUnSelected(binding.tvDisable)
-            mStatus = false
+            mStatus = true
         }
         binding.tvDisable.setOnClickListener {
             setSelected(binding.tvDisable)
             setUnSelected(binding.tvAble)
-            mStatus = true
+            mStatus = false
         }
         binding.tvSelect.setOnClickListener {
             onSelected(mStatus)

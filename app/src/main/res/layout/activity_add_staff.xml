@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/imbplexsans_medium"
                 android:gravity="center_vertical"
-                android:text="Thêm Nhân Viên"
+                android:text="Thêm nhân viên"
                 android:textColor="@color/gray_medium"
                 android:textSize="20sp" />
         </LinearLayout>

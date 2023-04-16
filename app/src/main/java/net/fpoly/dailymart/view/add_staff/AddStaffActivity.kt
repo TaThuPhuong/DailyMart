@@ -34,16 +34,12 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
     }
 
     override fun setupObserver() {
-        viewModel.user.observe(this, { user ->
-
-        })
-        viewModel.addStaffSuccess.observe(this, {
+        viewModel.addStaffSuccess.observe(this) {
             mLoadingDialog?.hideLoading()
             if (it) {
-//                openActivity(MainActivity::class.java)
-                finishAffinity()
+                finish()
             }
-        })
+        }
     }
 
     private fun setupBtnSave() {
@@ -97,9 +93,5 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
                 binding.edRoleUser.text = it.value
             }.show()
         }
-    }
-
-    private fun openActivity(c: Class<*>) {
-        startActivity(Intent(this, c))
     }
 }

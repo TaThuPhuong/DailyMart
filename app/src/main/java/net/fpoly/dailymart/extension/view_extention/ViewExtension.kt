@@ -23,6 +23,10 @@ fun View.hide() {
     visibility = View.INVISIBLE
 }
 
+fun View.hide(b: Boolean) {
+    visibility = if (b) View.INVISIBLE else View.VISIBLE
+}
+
 fun View.isShowing(): Boolean {
     return visibility == View.VISIBLE
 }
@@ -68,7 +72,8 @@ fun View.setMarginsStatusBar(context: Context) {
 
 fun Context.hideKeyboard() {
     val activity = this as Activity
-    val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm: InputMethodManager =
+        activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     var view = activity.currentFocus
     if (view == null) {
         view = View(activity)

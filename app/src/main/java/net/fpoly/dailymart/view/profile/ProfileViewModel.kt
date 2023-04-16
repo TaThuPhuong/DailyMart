@@ -37,6 +37,9 @@ class ProfileViewModel(private val app: Application) :
                             call: Call<ResponseBody>,
                             response: Response<ResponseBody>,
                         ) {
+                            if (response.isSuccessful) {
+                                updateSuccess.postValue(true)
+                            }
                             response.body()?.string()?.let {
                                 Log.e(TAG, "body: $it")
                             }
@@ -46,12 +49,12 @@ class ProfileViewModel(private val app: Application) :
                         }
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            Log.e(TAG, "updateUser onFailure: $t", )
+                            Log.e(TAG, "updateUser onFailure: $t")
                         }
 
                     })
             } catch (e: Exception) {
-                Log.e(TAG, "updateUser Exception: $e", )
+                Log.e(TAG, "updateUser Exception: $e")
             }
         }
     }

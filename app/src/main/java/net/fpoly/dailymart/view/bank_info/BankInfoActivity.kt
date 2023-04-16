@@ -50,13 +50,15 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
         binding.imvDrop.setOnClickListener {
             binding.rcvListBank.visible()
         }
+        binding.imvBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun setupObserver() {
         viewModel.mListBank.observe(this) {
             mBankAdapter.setData(it)
             mListBank = it
-            Log.e(TAG, "setupObserver: $it")
         }
         viewModel.mBankAccountRequest.observe(this) {
             if (it.code == "00") {
@@ -91,13 +93,10 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
     }
 
     private fun setSearchBank(value: String) {
-        Log.e(TAG, "value: $value")
         binding.rcvListBank.visible()
         val listFilter = mListBank.filter { it.name.contains(value, true) }
         if (value.isNotEmpty()) mBankAdapter.setData(listFilter)
         if (value.isEmpty()) mBankAdapter.setData(mListBank)
-        Log.e(TAG, "listFilter: $listFilter")
-        Log.e(TAG, "mListBank: $mListBank")
     }
 
     private fun setBankInfo(bankInfo: BankInfo) {
@@ -105,7 +104,7 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
         binding.tvCheckAccount.gone()
         Glide.with(this).load(bankInfo.logo).placeholder(R.drawable.img_default)
             .error(R.drawable.img_default).into(binding.imvLogo)
-        binding.edBankName.setText(bankInfo.bankName)
+        binding.edBankName.setText(bankInfo.bankName.replace("%20", " "))
         binding.edAccountNumber.setText(bankInfo.accountNumber)
         binding.tvAccountName.text = bankInfo.accountName
     }

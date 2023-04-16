@@ -1,9 +1,6 @@
 package net.fpoly.dailymart.data.api
 
-import net.fpoly.dailymart.data.model.Product
-import net.fpoly.dailymart.data.model.ProductParam
-import net.fpoly.dailymart.data.model.ProductParamUpdate
-import net.fpoly.dailymart.data.model.ProductResponse
+import net.fpoly.dailymart.data.model.*
 import net.fpoly.dailymart.data.model.param.DeleteExpiryParam
 import net.fpoly.dailymart.data.model.response.ResponseResult
 import okhttp3.ResponseBody
@@ -58,4 +55,11 @@ interface ProductApi {
         @Header("Authorization") token: String,
         @Body param: DeleteExpiryParam,
     ): Call<ResponseBody>
+
+    @PUT("expiry/{id}")
+    fun updateExpiry(
+        @Header("Authorization") token: String,
+        @Body param: ExpiryUpdate,
+    ): Call<ResponseBody>
+
 }

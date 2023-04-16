@@ -122,7 +122,8 @@ class CheckDateActivity :
                             productName = product.name,
                             expiryDate = it.expiryDate,
                             quantity = it.quantity,
-                            image = product.img_product
+                            image = product.img_product,
+                            sellPrice = product.sellPrice
                         )
                     )
                 }
