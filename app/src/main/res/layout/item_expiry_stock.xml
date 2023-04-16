@@ -72,7 +72,8 @@
         android:paddingVertical="8dp"
         android:text="Lưu"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"

@@ -11,12 +11,17 @@ import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.ExpiryRes
 import net.fpoly.dailymart.databinding.ItemExpiryStockBinding
 import net.fpoly.dailymart.extension.time_extention.date2String
+import net.fpoly.dailymart.extension.view_extention.setVisibility
+import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.ROLE
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ExpiryAdapter(
     private val mContext: Context,
+    private val mRole: ROLE,
     private var mListExpiry: ArrayList<ExpiryRes> = ArrayList(),
+    private val onChange: (expiry: ExpiryRes) -> Unit,
     private val onSave: (ExpiryRes) -> Unit,
 ) : RecyclerView.Adapter<ExpiryAdapter.ItemView>() {
 
@@ -52,12 +57,15 @@ class ExpiryAdapter(
                     datePicker(this.expiryDate) {
                         this.expiryDate = it
                         binding.tvDate.text = "Hạn sử dụng: ${it.date2String()}"
+                        binding.tvSave.setVisibility(mRole == ROLE.manager)
                     }
                 }
                 binding.layoutQuantity.setOnClickListener {
                     ChangeQuantityDialog(mContext, this.quantity) {
                         this.quantity = it
                         binding.tvQuantity.text = "Số lượng: $it"
+                        onChange(this)
+                        binding.tvSave.setVisibility(mRole == ROLE.manager)
                     }.show()
                 }
                 binding.tvSave.setOnClickListener { onSave(this) }

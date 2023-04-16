@@ -3,6 +3,7 @@ package net.fpoly.dailymart.view.stock
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,10 +15,15 @@ import net.fpoly.dailymart.data.model.ExpiryRes
 import net.fpoly.dailymart.data.model.ExpiryUpdate
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemStockBinding
+import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.hide
+import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.message.MessageActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +43,7 @@ class StockAdapter(
     private var isShowExpiry = false
     private lateinit var mExpiryAdapter: ExpiryAdapter
     private val mToken = SharedPref.getAccessToken(mContext)
-
+    private val mRole = SharedPref.getUser(mContext).role
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Product>) {
@@ -61,13 +67,44 @@ class StockAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewStock, position: Int) {
+        var message = ""
         with(holder) {
             with(mListProduct[position]) {
                 mExpiryAdapter =
                     ExpiryAdapter(
-                        mContext, onSave = {
-                            onUpdate(it)
+                        mContext, mRole,
+                        onChange = {
+                            val newTotal = this.expires.sumOf { e -> e.quantity }
+                            if (newTotal < this.totalQuantity) {
+                                binding.tvMakeMessage.setVisibility(mRole == ROLE.staff)
+                                binding.tvMakeMessage.text =
+                                    "Gửi hàng thất thoát tới nhóm"
+                                message =
+                                    "${this.name} - HSD: ${it.expiryDate.date2String()} thiếu ${totalQuantity - newTotal} ${this.unit}"
+                            } else {
+                                binding.tvMakeMessage.gone()
+                            }
+                        }, onSave = {
+                            onUpdate(it) {
+                                val newTotal = this.expires.sumOf { e -> e.quantity }
+                                if (newTotal < this.totalQuantity) {
+                                    binding.tvAdd.setVisibility(mRole == ROLE.manager)
+                                    binding.tvAdd.text =
+                                        "Thêm ${this.totalQuantity - newTotal} vào hàng thất thoát"
+                                }
+                                binding.tvQuantity.text =
+                                    "Tổng số lượng: $newTotal"
+                            }
                         })
+                binding.tvMakeMessage.setOnClickListener {
+                    val intent = Intent(mContext, MessageActivity::class.java)
+                    intent.putExtra(Constant.MESSAGE, message)
+                    mContext.startActivity(intent)
+                    message = ""
+                }
+                binding.tvAdd.setOnClickListener {
+
+                }
                 binding.imvArrow.hide(this.expires.isEmpty())
                 binding.tvName.text = this.name
                 binding.tvBarcode.text = "Barcode: ${this.barcode}"
@@ -88,15 +125,18 @@ class StockAdapter(
         }
     }
 
-    private fun onUpdate(expiry: ExpiryRes) {
+    private fun onUpdate(expiry: ExpiryRes, onSuccess: () -> Unit) {
         val api = ServerInstance.apiProduct
         try {
-            api.updateExpiry(mToken, ExpiryUpdate(expiry.expiryDate, expiry.quantity))
+            api.updateExpiry(mToken, expiry.id, ExpiryUpdate(expiry.expiryDate, expiry.quantity))
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
                         call: Call<ResponseBody>,
                         response: Response<ResponseBody>,
                     ) {
+                        if (response.isSuccessful) {
+                            onSuccess()
+                        }
                         Log.e(TAG, "onUpdate expiry: ${response.body()?.string()}")
                         Log.e(TAG, "onUpdate expiry : ${response.errorBody()?.string()}")
                     }
