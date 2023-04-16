@@ -113,11 +113,11 @@ class CategoryViewModel(context: Context) : ViewModel() {
 
     companion object {
         const val GET_ALL_FAILED = "Cập nhật danh sách thất bại"
-        const val ADD_SUCCESS = "Thêm loại hàng thành công"
-        const val ADD_FAILED = "Thêm loại hàng thất bại"
-        const val EDIT_SUCCESS = "Sửa loại hàng thành công"
-        const val EDIT_FAILED = "Sửa loại hàng thất bại"
-        const val REMOVE_SUCCESS = "Xóa loại hàng thành công"
-        const val REMOVE_FAILED = "Xóa loại hàng thất bại"
+        const val ADD_SUCCESS = "Thêm ngành hàng thành công"
+        const val ADD_FAILED = "Thêm ngành hàng thất bại"
+        const val EDIT_SUCCESS = "Sửa ngành hàng thành công"
+        const val EDIT_FAILED = "Sửa ngành hàng thất bại"
+        const val REMOVE_SUCCESS = "Xóa ngành hàng thành công"
+        const val REMOVE_FAILED = "Xóa ngành hàng thất bại"
     }
 }

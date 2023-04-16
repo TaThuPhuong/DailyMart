@@ -156,6 +156,10 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
     }
 
     override fun setupObserver() {
+        viewModel.invoice.observe(this) {
+            binding.edMoneyPay.setText(it.totalBill.toString())
+            binding.edAmount.setText(it.totalBill.toString())
+        }
     }
 
     companion object {

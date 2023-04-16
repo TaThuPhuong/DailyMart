@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_medium"
-                android:text="Nghành hàng"
+                android:text="Ngành hàng"
                 android:textSize="16sp"
                 android:fontFamily="@font/imbplexsans_medium"
                 app:layout_constraintTop_toTopOf="parent"

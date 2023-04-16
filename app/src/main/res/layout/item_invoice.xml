@@ -45,6 +45,7 @@
                 android:fontFamily="@font/imbplexsans_medium"
                 android:maxLength="20"
                 android:text="@{@string/hoa_don(invoice.numberID)}"
+                android:textAllCaps="true"
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"

@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/imbplexsans_semibold"
                 android:gravity="center_vertical|end"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.total)}"
+                android:text="@{ConvertUtilsKt.convertTotalInvoice(invoice)}"
                 android:textColor="@color/gray_medium"
                 android:textSize="12sp" />
 

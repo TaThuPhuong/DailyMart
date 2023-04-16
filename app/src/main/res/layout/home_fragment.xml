@@ -113,7 +113,7 @@
                             android:elevation="5dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_avatar_default"
-                            app:civ_border_color="@color/gray_light"
+                            app:civ_border_color="@color/white"
                             app:civ_border_width="1dp" />
 
                         <LinearLayout
@@ -129,7 +129,7 @@
                                 android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/imbplexsans_regular"
+                                android:fontFamily="@font/imbplexsans_medium"
                                 android:text="Chào, User"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
@@ -138,7 +138,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/imbplexsans_regular"
-                                android:text="Welcome back"
+                                android:text="Chào mừng trở lại"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -149,7 +149,6 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="20dp"
-                            android:layout_weight="0.5"
                             android:onClick="@{()->viewModel.onClickNotification()}"
                             android:padding="10dp"
                             android:src="@drawable/ic_notification" />
@@ -191,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:fontFamily="@font/imbplexsans_regular"
+                    android:fontFamily="@font/imbplexsans_medium"
                     android:text="Danh mục"
                     android:textColor="@color/gray_medium"
                     android:textSize="22sp" />
@@ -199,63 +198,158 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <ImageView
+                    <LinearLayout
                         android:id="@+id/imv_pay"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_pay" />
+                        android:background="@drawable/bg_btn_home1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Thanh toán"
+                            android:textSize="12sp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/imv_check_date"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_check_date" />
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@drawable/bg_btn_home2"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Kiểm tra HSD"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/imv_report"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_report" />
+                        android:background="@drawable/bg_btn_home3"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Nhắn tin"
+                            android:textSize="12sp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <ImageView
+                    <LinearLayout
                         android:id="@+id/imv_task"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_task" />
+                        android:background="@drawable/bg_btn_home4"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Công việc"
+                            android:textSize="12sp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/imv_stock"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_stock" />
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@drawable/bg_btn_home5"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Kiểm tồn"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/imv_work_sheet"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_work_sheet" />
+                        android:background="@drawable/bg_btn_home6"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home6" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Lịch Làm Việc"
+                            android:textSize="12sp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -263,7 +357,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:fontFamily="@font/imbplexsans_regular"
+                    android:fontFamily="@font/imbplexsans_medium"
                     android:text="Công việc gần đây"
                     android:textColor="@color/gray_medium"
                     android:textSize="22sp" />
@@ -271,6 +365,7 @@
                 <ProgressBar
                     android:id="@+id/pb_loading"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:layout_height="wrap_content" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -288,16 +383,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="76dp"
-            android:background="#85CCCCCC"
             android:onClick="@{()->viewModel.onClickNotification()}" />
 
         <RelativeLayout
             set_visible="@{viewModel.isShowNotification()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/bg_notification"
             android:elevation="10dp"
             android:padding="10dp">
@@ -308,7 +401,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/bg_blue_light_rd_8"
+                android:background="@drawable/bg_pink_primary_rd_8"
                 android:onClick="@{()->viewModel.onClickDelete()}"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="6dp"

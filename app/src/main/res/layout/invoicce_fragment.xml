@@ -85,7 +85,7 @@
                     android:background="@drawable/bg_ed_search_task"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"
-                    android:hint="Mã hóa đơn,nhân viên..."
+                    android:hint="Mã hóa đơn, nhân viên..."
                     android:paddingHorizontal="10dp"
                     android:textSize="14sp" />
 

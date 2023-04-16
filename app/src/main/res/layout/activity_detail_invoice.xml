@@ -126,6 +126,7 @@
                             android:textColor="@color/gray_medium" />
 
                         <TextView
+                            android:id="@+id/customer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="18dp"

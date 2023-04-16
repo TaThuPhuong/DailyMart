@@ -126,7 +126,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_white_rd_8"
                     android:elevation="5dp"
-                    android:hint="Loại hàng "
+                    android:hint="Ngành hàng "
                     android:padding="10dp"
                     android:textColor="@color/gray_medium"
                     android:textColorHint="@color/gray_light"

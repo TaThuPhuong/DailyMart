@@ -75,7 +75,7 @@ class CheckDateActivity :
         return when (type) {
             CheckDateFilter.SOON -> "Sắp hết hạn"
             CheckDateFilter.SEVEN_DAY -> "Hết hạn 7 ngày tới"
-            CheckDateFilter.CATEGORY -> "Loại hàng"
+            CheckDateFilter.CATEGORY -> "ngành hàng"
         }
     }
 
