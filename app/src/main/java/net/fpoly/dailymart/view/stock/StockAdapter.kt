@@ -13,13 +13,16 @@ import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.ExpiryRes
 import net.fpoly.dailymart.data.model.ExpiryUpdate
+import net.fpoly.dailymart.data.model.Losses
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemStockBinding
+import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.hide
 import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.firbase.database.LossesDao
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
@@ -70,30 +73,27 @@ class StockAdapter(
         var message = ""
         with(holder) {
             with(mListProduct[position]) {
+                var lossProduct = 0L
                 mExpiryAdapter =
                     ExpiryAdapter(
-                        mContext, mRole,
-                        onChange = {
+                        mContext,
+                        onChangeQuantity = {
                             val newTotal = this.expires.sumOf { e -> e.quantity }
                             if (newTotal < this.totalQuantity) {
                                 binding.tvMakeMessage.setVisibility(mRole == ROLE.staff)
+                                binding.tvAdd.setVisibility(mRole == ROLE.manager)
                                 binding.tvMakeMessage.text =
                                     "Gửi hàng thất thoát tới nhóm"
                                 message =
                                     "${this.name} - HSD: ${it.expiryDate.date2String()} thiếu ${totalQuantity - newTotal} ${this.unit}"
+                                binding.tvAdd.text =
+                                    "Thêm ${this.totalQuantity - newTotal} vào hàng thất thoát"
+                                lossProduct =
+                                    ((this.totalQuantity - newTotal) * this.sellPrice).toLong()
                             } else {
+                                binding.tvQuantity.text = "Tổng số lượng: $newTotal"
                                 binding.tvMakeMessage.gone()
-                            }
-                        }, onSave = {
-                            onUpdate(it) {
-                                val newTotal = this.expires.sumOf { e -> e.quantity }
-                                if (newTotal < this.totalQuantity) {
-                                    binding.tvAdd.setVisibility(mRole == ROLE.manager)
-                                    binding.tvAdd.text =
-                                        "Thêm ${this.totalQuantity - newTotal} vào hàng thất thoát"
-                                }
-                                binding.tvQuantity.text =
-                                    "Tổng số lượng: $newTotal"
+                                binding.tvAdd.gone()
                             }
                         })
                 binding.tvMakeMessage.setOnClickListener {
@@ -101,9 +101,28 @@ class StockAdapter(
                     intent.putExtra(Constant.MESSAGE, message)
                     mContext.startActivity(intent)
                     message = ""
+                    binding.tvMakeMessage.text = "Đã gửi thông báo"
                 }
                 binding.tvAdd.setOnClickListener {
-
+                    val cal = Calendar.getInstance()
+                    LossesDao.insert(
+                        Losses(
+                            cal.timeInMillis,
+                            cal[Calendar.MONTH] + 1,
+                            cal[Calendar.YEAR],
+                            lossProduct
+                        )
+                    ) { b ->
+                        if (b) {
+                            this.totalQuantity = this.expires.sumOf { it.quantity }
+                            binding.tvQuantity.text =
+                                "Tổng số lượng: ${this.totalQuantity}"
+                            binding.tvAdd.text = "Đã thêm vào hàng thất thoát"
+                            lossProduct = 0L
+                        } else {
+                            showToast(mContext, "Đã thêm thất bại")
+                        }
+                    }
                 }
                 binding.imvArrow.hide(this.expires.isEmpty())
                 binding.tvName.text = this.name
@@ -122,32 +141,6 @@ class StockAdapter(
                     }
                 }
             }
-        }
-    }
-
-    private fun onUpdate(expiry: ExpiryRes, onSuccess: () -> Unit) {
-        val api = ServerInstance.apiProduct
-        try {
-            api.updateExpiry(mToken, expiry.id, ExpiryUpdate(expiry.expiryDate, expiry.quantity))
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>,
-                    ) {
-                        if (response.isSuccessful) {
-                            onSuccess()
-                        }
-                        Log.e(TAG, "onUpdate expiry: ${response.body()?.string()}")
-                        Log.e(TAG, "onUpdate expiry : ${response.errorBody()?.string()}")
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.e(TAG, "onUpdate expiry Throwable: $t")
-                    }
-
-                })
-        } catch (e: Exception) {
-            Log.e(TAG, "onUpdate expiry Exception: $e")
         }
     }
 }
