@@ -8,15 +8,11 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import net.fpoly.dailymart.AppViewModelFactory
-import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Message
-import net.fpoly.dailymart.databinding.ActivityAddProductBinding
 import net.fpoly.dailymart.databinding.ActivityMessageBinding
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.setVisibility
-import net.fpoly.dailymart.firbase.real_time.MessageDao
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref

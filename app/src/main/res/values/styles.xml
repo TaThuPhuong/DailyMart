@@ -54,7 +54,9 @@
     </style>
 
     <style name="BaseThemeDialog" parent="Theme.Material3.Light.Dialog" >
+        <item name="background">@color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Animation.BottomSheetDialog" parent="Animation.AppCompat.Dialog">

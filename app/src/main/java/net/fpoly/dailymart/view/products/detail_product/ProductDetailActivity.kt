@@ -38,7 +38,7 @@ class ProductDetailActivity :
         binding.tvId.text = "Barcode: ${product.barcode}"
         binding.tvName.text = "Tên: ${product.name}"
         binding.tvQuantity.text = "Số lượng: ${product.totalQuantity}"
-        binding.tvCategory.text = "Loại hàng: ${product.category.name}"
+        binding.tvCategory.text = "Ngành hàng: ${product.category.name}"
         binding.tvSupplier.text = "Nhà CC: ${product.supplier.supplierName}"
         binding.tvUnit.text = "ĐVT: ${product.unit}"
         binding.tvImportPrice.text = "Nhập: ${product.importPrice.toMoney()}"

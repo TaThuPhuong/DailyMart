@@ -29,8 +29,7 @@
             android:layout_height="wrap_content"
             android:shadowDy="-5"
             android:onClick="@{() -> viewmodel.clickItems(context, supplier)}"
-            android:paddingVertical="16dp"
-            android:paddingStart="12dp"
+            android:padding="12dp"
             >
 
             <TextView
@@ -42,7 +41,7 @@
                 android:maxLines="1"
                 android:text="@{supplier.supplierName}"
                 android:textColor="@color/gray_primary"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView

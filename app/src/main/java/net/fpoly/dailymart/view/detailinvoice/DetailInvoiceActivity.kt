@@ -1,8 +1,10 @@
 package net.fpoly.dailymart.view.detailinvoice
 
+import android.view.View
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
+import net.fpoly.dailymart.data.model.InvoiceType
 import net.fpoly.dailymart.databinding.ActivityDetailInvoiceBinding
 import net.fpoly.dailymart.extension.setupSnackbar
 import net.fpoly.dailymart.view.tab.invoice.DetailInvoiceAdapter
@@ -41,7 +43,11 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
     }
 
     override fun setupObserver() {
-
+        viewModel.invoice.observe(this) {
+            if (it.type == InvoiceType.IMPORT.name) {
+                binding.customer.visibility = View.GONE
+            }
+        }
     }
 
     companion object {

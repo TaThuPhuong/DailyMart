@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
             val windowInsetsController = WindowCompat.getInsetsController(window, view)
             val navBarHeight = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom

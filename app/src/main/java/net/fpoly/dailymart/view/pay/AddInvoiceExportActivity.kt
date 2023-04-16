@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.pay
 
 import android.Manifest
+import android.R
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -25,6 +26,7 @@ import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extension.setupSnackbar
 import net.fpoly.dailymart.extension.view_extention.hideKeyboard
 import net.fpoly.dailymart.utils.convertTotalInvoiceNumber
+import net.fpoly.dailymart.view.order.OrderActivity
 import net.fpoly.dailymart.view.tab.invoice.InvoiceProductAdapter
 
 class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBinding::inflate) {
@@ -108,7 +110,7 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
 
     private fun setupSearchBarcode() {
         viewModel.listProductName.observe(this) {
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+            val adapter = OrderActivity.FilterAdapter(this, it)
             binding.edSearchBarcode.setAdapter(adapter)
             binding.edSearchBarcode.setOnItemClickListener { parent, _, position, _ ->
                 viewModel.getInvoiceDetail(parent.getItemAtPosition(position).toString())

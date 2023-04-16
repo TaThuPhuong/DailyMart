@@ -4,10 +4,13 @@ import android.Manifest
 import net.fpoly.dailymart.R
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import android.view.SurfaceHolder
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -30,6 +33,7 @@ import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
 import net.fpoly.dailymart.view.payment.PaymentActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::inflate) {
 
@@ -146,6 +150,7 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
 
     override fun setupObserver() {
         viewModel.currentProduct.observe(this) {
+            binding.edBarcode.setText(it.barcode)
             binding.edUnitPrice.setText(it.importPrice.toString())
             binding.edName.setText(it.name)
             binding.edQuantity.setText("1")
@@ -167,9 +172,11 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
                     AddInvoiceExportActivity.TAG_DIALOG
                 )
             }
+
             isPermissionDenied() -> {
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
+
             else -> {
                 setupScanner()
             }
@@ -196,9 +203,10 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
     }
 
     private fun setupSearchBarcode() {
-        viewModel.products.observe(this) { products ->
-            val barcodes = products.map { it.barcode }
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, barcodes)
+        viewModel.products.observe(this) { list ->
+            val barcodes = list.map { it.barcode }.toList()
+
+            val adapter = FilterAdapter(this, barcodes)
             binding.edBarcode.setAdapter(adapter)
             binding.edBarcode.setOnItemClickListener { parent, _, position, _ ->
                 viewModel.getProduct(parent.getItemAtPosition(position).toString())
@@ -207,4 +215,50 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
         }
     }
 
+    class FilterAdapter(context: Context, private val list: List<String>) :
+        ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, list) {
+
+        private val listRoot = ArrayList(list)
+
+        override fun getFilter(): Filter {
+            return filterCustom()
+        }
+
+        private fun filterCustom(): Filter {
+            return object : Filter() {
+                override fun performFiltering(constraint: CharSequence?): FilterResults {
+                    val filterResults = FilterResults()
+                    val results = ArrayList<String>()
+                    if (constraint.isNullOrEmpty()) {
+                        results.addAll(listRoot)
+                    } else {
+                        for (item in list) {
+                            if (item.contains(constraint.toString())) {
+                                results.add(item)
+                            }
+                        }
+                    }
+                    filterResults.values = results
+                    filterResults.count = results.size
+                    return filterResults
+                }
+
+                override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                    clear()
+                    if (results != null && results.count > 0) {
+                        setNotifyOnChange(false)
+                        addAll(results.values as MutableList<String>)
+                        notifyDataSetChanged()
+                    } else {
+                        notifyDataSetInvalidated()
+                    }
+                }
+
+                override fun convertResultToString(resultValue: Any?): CharSequence {
+                    return resultValue as String
+                }
+            }
+        }
+    }
 }
+

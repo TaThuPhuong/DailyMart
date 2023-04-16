@@ -2,9 +2,13 @@ package net.fpoly.dailymart.utils
 
 import android.annotation.SuppressLint
 import android.app.Application
+import net.fpoly.dailymart.data.model.Invoice
+import net.fpoly.dailymart.data.model.ProductInvoiceParam
+import net.fpoly.dailymart.data.model.param.InvoiceParam
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.absoluteValue
 
 fun fromMillisToStringDate(time: Long, divided: String = "/"): String {
     val dateFormat = SimpleDateFormat("dd${divided}MM${divided}yyyy", Locale.getDefault())
@@ -21,6 +25,11 @@ fun convertTotalInvoiceNumber(invoiceTotal: Long): String {
     return DecimalFormat("#,##0").format(invoiceTotal).replace(",", ".")
 }
 
+fun convertTotalInvoice(invoice: ProductInvoiceParam): String {
+    val value = DecimalFormat("#,##0").format(invoice.total.absoluteValue).replace(",", ".")
+    return if (invoice.quantity <= 0) "-$value" else value
+}
+
 @SuppressLint("SimpleDateFormat")
 fun convertTimeInMillisToLastTimeString(timeInMillis: Long): String {
     val timePassed = (System.currentTimeMillis() - timeInMillis) / 1000L
@@ -35,7 +44,8 @@ fun convertTimeInMillisToLastTimeString(timeInMillis: Long): String {
     }
     return timePassedText
 }
-fun takeLastId(id: String) : String {
+
+fun takeLastId(id: String): String {
     return id.takeLast(10)
 }
 

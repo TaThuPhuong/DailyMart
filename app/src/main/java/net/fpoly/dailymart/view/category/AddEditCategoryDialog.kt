@@ -52,7 +52,7 @@ class AddEditCategoryDialog(
     }
 
     companion object {
-        const val TITLE_EDIT = "Sửa loại hàng"
-        const val NAME_UN_VALIDATE = "Tên loại hàng không hợp lệ"
+        const val TITLE_EDIT = "Sửa ngành hàng"
+        const val NAME_UN_VALIDATE = "Tên ngành hàng không hợp lệ"
     }
 }

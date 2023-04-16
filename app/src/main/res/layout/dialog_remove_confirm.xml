@@ -27,7 +27,7 @@
             android:textColor="@color/gray_medium"
             android:fontFamily="@font/imbplexsans_medium"
             android:layout_marginTop="28dp"
-            android:text="Xóa Nghành Hàng"/>
+            android:text="Xóa ngành Hàng"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:fontFamily="@font/imbplexsans_medium"
             android:layout_marginTop="28dp"
             android:gravity="center_horizontal"
-            android:text="Bạn chắc chắn muốn xóa nghành hàng này không?"/>
+            android:text="Bạn chắc chắn muốn xóa ngành hàng này không?"/>
 
         <LinearLayout
             android:layout_width="match_parent"

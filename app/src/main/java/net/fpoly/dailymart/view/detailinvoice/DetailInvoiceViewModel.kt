@@ -15,6 +15,7 @@ import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.payment.PaymentActivity
+import kotlin.time.Duration.Companion.days
 
 class DetailInvoiceViewModel(context: Context) : ViewModel() {
 
@@ -37,14 +38,24 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     var isShowLoading = MutableLiveData(false)
 
     fun refundInvoice() {
+        val timeInvoice = invoice.value?.createAt ?: return
+        val now = System.currentTimeMillis()
+        val oneDay = 1.days.inWholeMilliseconds
+
+        if (now - timeInvoice > oneDay) {
+            showSnackbar.value = "Đơn hàng này đã quá thời gian hoàn tiền"
+            return
+        }
+
         isRefund.value?.also { isRefund ->
-            this.isRefund.value = !isRefund
             changeProducts.removeAll(rootProductsRefund)
             invoiceParam.value?.also {
                 it.products = ArrayList(changeProducts)
                 getTotalInvoice(it)
                 invoiceParam.postValue(it)
             }
+
+            this.isRefund.value = !isRefund
         }
     }
 
@@ -69,8 +80,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     }
 
     private fun checkShowBtnRefund(invoice1: Invoice) {
-        isShowRefund.value =
-            (invoice1.type == InvoiceType.EXPORT.name && user.role == ROLE.manager) || (invoice1.type == InvoiceType.REFUND.name && user.role == ROLE.manager)
+        isShowRefund.value = invoice1.type != InvoiceType.IMPORT.name && user.role == ROLE.manager
     }
 
     private fun checkShowBtnDelete() {
@@ -206,6 +216,15 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     }
 
     fun removeInvoice(context: Context) {
+        val timeInvoice = invoice.value?.createAt ?: return
+        val now = System.currentTimeMillis()
+        val oneDay = 1.days.inWholeMilliseconds
+
+        if (now - timeInvoice > oneDay) {
+            showSnackbar.value = "Đơn hàng này đã quá thời gian xóa"
+            return
+        }
+
         viewModelScope.launch {
             isShowLoading.postValue(true)
             val idInvoice = invoice.value?.id ?: return@launch
