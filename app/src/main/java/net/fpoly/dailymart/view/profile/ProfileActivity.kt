@@ -64,9 +64,11 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
         viewModel.updateSuccess.observe(this) {
             if (it) {
                 SharedPref.insertUser(this, mUser!!)
+                showToast(this, "Đã lưu")
             }
         }
     }
+
 
     override fun onClick(v: View?) {
         when (v) {

@@ -14,7 +14,7 @@ import net.fpoly.dailymart.utils.convertTimeInMillisToLastTimeString
 class TaskRecentAdapter(
     val mUser: User,
     var mListTask: List<Task>,
-    private val onClick: (Task) -> Unit
+    private val onClick: (Task) -> Unit,
 ) :
     RecyclerView.Adapter<TaskRecentAdapter.ItemView>() {
 
@@ -69,7 +69,11 @@ class TaskRecentAdapter(
             when (mUser.id) {
                 task.idCreator.id -> {
                     if (task.finish) {
-                        "Bạn đã nhận xét về task ${task.title}"
+                        if (task.comment.isNotEmpty()) {
+                            "Bạn đã nhận xét về task ${task.title}"
+                        } else {
+                            "${task.idReceiver.name} đã hoàn thành ${task.title}"
+                        }
                     } else {
                         "Bạn đã chỉnh sửa task ${task.title}"
                     }

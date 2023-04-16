@@ -52,6 +52,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
     override fun onResume() {
         super.onResume()
         mUser = SharedPref.getUser(mContext)
+        loadUser(mUser!!)
     }
 
     private fun loadUser(user: User) {

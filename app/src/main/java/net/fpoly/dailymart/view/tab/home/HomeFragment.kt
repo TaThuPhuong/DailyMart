@@ -77,7 +77,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         viewModel.getAllTask()
         viewModel.getInvoiceToday()
         mReloadData = Runnable {
-            Log.e(TAG, "auto load data")
             viewModel.getAllTask()
             viewModel.getAllNotification()
             viewModel.getInvoiceToday()
@@ -102,7 +101,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
             binding.tvNumNotification.text = it.size.toString()
         }
         viewModel.listTask.observe(this) {
-            Log.e(TAG, "mListTask: $it")
             mListTask = it
             mTaskRecentAdapter.setData(it)
             binding.pbLoading.gone()
