@@ -7,13 +7,15 @@ import net.fpoly.dailymart.data.model.Losses
 
 object LossesDao {
     private val TAG = "YingMing"
-    fun insert(losses: Losses) {
+    fun insert(losses: Losses, onSuccess: (b: Boolean) -> Unit) {
         val db = Firebase.firestore
         db.collection("Losses").document(losses.time.toString())
             .set(losses)
             .addOnSuccessListener {
+                onSuccess(true)
             }
             .addOnFailureListener {
+                onSuccess(false)
                 Log.e(TAG, "addOnFailureListener: $it")
             }
     }
