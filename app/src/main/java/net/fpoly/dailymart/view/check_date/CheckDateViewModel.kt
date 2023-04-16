@@ -63,10 +63,16 @@ class CheckDateViewModel(private val app: Application, private val productRepo: 
                                         year = year,
                                         money = (expiry.quantity * expiry.sellPrice).toLong()
                                     )
-                                )
+                                ) { b ->
+                                    if (b) {
+                                        message.postValue("Đã hủy thành công")
+                                    }
+                                }
                                 Log.e(TAG, "body: ${response.body()?.string()}")
                                 Log.e(TAG, "errorBody: ${response.errorBody()?.string()}")
                                 getListProduct()
+                            } else {
+                                message.postValue("Máy chủ không phản hồi")
                             }
                         }
 
