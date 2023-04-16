@@ -59,6 +59,7 @@ interface ProductApi {
     @PUT("expiry/{id}")
     fun updateExpiry(
         @Header("Authorization") token: String,
+        @Path("id") id: String,
         @Body param: ExpiryUpdate,
     ): Call<ResponseBody>
 
