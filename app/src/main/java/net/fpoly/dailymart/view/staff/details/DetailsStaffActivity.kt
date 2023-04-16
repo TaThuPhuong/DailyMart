@@ -8,6 +8,7 @@ import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.data.model.param.RegisterParam
+import net.fpoly.dailymart.data.model.param.UpdateParam
 import net.fpoly.dailymart.data.model.param.UserModel
 import net.fpoly.dailymart.databinding.ActivityDetailsStaffBinding
 import net.fpoly.dailymart.extension.showToast
@@ -68,7 +69,7 @@ class DetailsStaffActivity :
         val name = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
         val phone = binding.edNumber.text.toString()
-        val user = RegisterParam(
+        val user = UpdateParam(
             _id = mUser!!._id,
             name = name,
             email = email,
@@ -107,7 +108,7 @@ class DetailsStaffActivity :
         binding.layoutDisable.setOnClickListener {
             ChangeDisableDialog(this, mStatus = false) {
                 status = it
-                binding.edStatus.setText(status.toString())
+                binding.edStatus.text = getStatus(status)
             }.show()
         }
     }
@@ -118,8 +119,8 @@ class DetailsStaffActivity :
             binding.edName.setText(it.name)
             binding.edEmail.setText(it.email)
             binding.edNumber.setText(it.phoneNumber)
-            binding.edRole.setText(getRole(it.role))
-            binding.edStatus.setText(getStatus(it.status))
+            binding.edRole.text = getRole(it.role)
+            binding.edStatus.text = getStatus(it.status)
             Log.e("tuvm", "setupObserver: $it");
         }
     }
@@ -134,7 +135,7 @@ class DetailsStaffActivity :
     }
 
     private fun getStatus(status: Boolean): String = if (status) "Đang hoạt đông" else "Vô hiệu hóa"
-//    override fun setupObserver() {
+    //    override fun setupObserver() {
 //        viewModel.listUser
 //    }
 

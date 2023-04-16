@@ -12,6 +12,7 @@ class ResetPasswordActivity :
     BaseActivity<ActivityResetPasswordBinding>(ActivityResetPasswordBinding::inflate) {
     private val viewModel: ResetPasswordViewModel by viewModels { AppViewModelFactory }
     private var id: String? = null
+    val TAG = "Tuvm"
 
     override fun setupData() {
         id = intent.getStringExtra("id")

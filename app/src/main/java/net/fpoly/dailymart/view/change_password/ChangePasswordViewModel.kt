@@ -7,22 +7,23 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.ChangePassParam
-import net.fpoly.dailymart.data.model.param.RegisterParam
+import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
+import net.fpoly.dailymart.data.model.Response.Success
+import net.fpoly.dailymart.data.model.Response.Error
 
 class ChangePasswordViewModel(app: Application) : ViewModel() {
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
     private val server = ServerInstance.apiUser
 
+    private val changePassRepo = UserRepositoryImpl()
     private val _validateOldPass = MutableLiveData("")
     val validateOldPass: LiveData<String> = _validateOldPass
     private val _validateNewPass = MutableLiveData("")
@@ -41,35 +42,20 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
         context: Context,
         activity: ChangePasswordActivity?
     ) {
-        Log.d(TAG, "Params : $changePassParam")
-        Log.d(TAG, "token : $mToken")
         mLoadingDialog.showLoading()
-        server.changePassword(
-            mToken,
-            changePassParam
-        )
-            .enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(context, "Đổi mật khẩu thành công !", Toast.LENGTH_LONG)
-                            .show()
-                        Log.d(TAG, "Response : " + response.body().toString())
-                        Log.d(TAG, "code: " + response.code())
-                        Log.d(TAG, "message: " + response.message())
-                        Log.d(TAG, "errorBody: " + response.errorBody()?.string())
-                        activity?.finish()
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e(TAG, "Response : " + t.message)
-                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+        viewModelScope.launch {
+            when (val resPass = changePassRepo.changePass(mToken, changePassParam)) {
+                is Success -> {
+                    Log.e(TAG, "changePassViewModel: ${resPass.data}")
+                    Toast.makeText(context, resPass.message, Toast.LENGTH_SHORT).show()
                     activity?.finish()
                 }
-            })
+                is Error -> {
+                    _validateOldPass.value = resPass.message
+                    mLoadingDialog.hideLoading()
+                }
+            }
+        }
     }
 
     fun onEvent(event: UserEvent, context: Context) {
@@ -78,19 +64,35 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
                 _changeParam.value = _changeParam.value?.copy(
                     oldPass = event.value
                 )
-                _validateOldPass.value = event.value.blankException()
+                if (event.value.isEmpty()) {
+                    _validateOldPass.value = event.value.blankException()
+                } else {
+                    _validateOldPass.value = ""
+                }
             }
             is UserEvent.OnNewPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     newPass = event.value
                 )
-                _validateNewPass.value = event.value.blankException()
+                if (event.value.isEmpty()) {
+                    _validateNewPass.value = event.value.blankException()
+                } else if (event.value == _changeParam.value?.oldPass) {
+                    _validateNewPass.value = "Mật khẩu mới không được trùng với mật khẩu cũ"
+                } else if (!validatePassword(event.value)) {
+                    _validateNewPass.value =
+                        "Mật khẩu tối thiểu 8 kí tự có chữ hoa chữ thường, số và kí tự đặc biệt"
+                } else {
+                    _validateNewPass.value = ""
+                }
             }
             is UserEvent.OnConfirm -> {
-                _changeParam.value = _changeParam.value?.copy(
-                    confirmPass = event.value
-                )
-                _validateNewPass.value = event.value.blankException()
+                if (event.value.isEmpty()) {
+                    _validateConfirm.value = event.value.blankException()
+                } else if (event.value != _changeParam.value?.newPass) {
+                    _validateConfirm.value = "Mật khẩu không khớp !"
+                } else {
+                    _validateConfirm.value = ""
+                }
             }
 
             is UserEvent.ValidateForm -> {
@@ -101,7 +103,7 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
                             changePassParam = it,
                             context = context,
                             activity = null
-                        );
+                        )
                     } else {
                         mLoadingDialog.hideLoading()
                     }
@@ -115,5 +117,11 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
         data class OnNewPass(val value: String) : UserEvent()
         data class OnConfirm(val value: String) : UserEvent()
         object ValidateForm : UserEvent()
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        val pattern =
+            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[,.!@#\\/\\$&*~\"|:]).{8,}".toRegex()
+        return pattern.matches(password)
     }
 }

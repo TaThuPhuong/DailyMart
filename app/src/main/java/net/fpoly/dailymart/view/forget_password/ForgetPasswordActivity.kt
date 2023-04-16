@@ -18,6 +18,9 @@ class ForgetPasswordActivity :
         send()
         viewModel.initLoadDialog(this)
         onEditTextChange()
+        binding.imvBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun setupObserver() {

@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.api
 
+import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.data.model.param.*
@@ -11,10 +12,10 @@ import retrofit2.http.*
 interface UserApi {
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("register")
-    fun register(
+    suspend fun register(
         @Body model: RegisterParam,
         @Header("Authorization") token: String
-    ): Call<ResponseBody>
+    ): ResultData<RegisterParam>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("login")
@@ -26,16 +27,16 @@ interface UserApi {
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("change-pass")
-    fun changePassword(
+    suspend fun changePassword(
         @Header("Authorization") token: String,
         @Body model: ChangePassParam,
-    ): Call<ResponseBody>
+    ): ResultData<ChangePassParam>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("sendMail")
-    fun forgotPassword(
+    suspend fun forgotPassword(
         @Body forgotPass: ForgotPass,
-    ): Call<ResponseResult<String>>
+    ): ResultData<ResponseForgot>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("forgot-pass")
@@ -46,17 +47,18 @@ interface UserApi {
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")
     fun logout(@Header("Authorization") token: String)
+
     @Headers("Content-Type: application/json;charset=UTF-8")
     @GET("getAll")
     suspend fun getAllUser2(@Header("Authorization") token: String): ResponseResult<List<UserRes>>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @PUT("updateUser/{id}")
-    fun updateUser2(
+    suspend fun updateUser2(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-        @Body userParam: RegisterParam
-    ): Call<ResponseBody>
+        @Body userParam: UpdateParam
+    ): ResultData<UpdateParam>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @PUT("updateUser/{id}")

@@ -14,7 +14,7 @@ class CustomerRepositoryImpl : CustomerRepository {
         return try {
             val res = remoteData.getCustomers(token)
             if (res.isSuccess()) {
-                Response.Success(res.result)
+                Response.Success(res.result, res.message)
             } else {
                 Response.Error(res.message)
             }
@@ -28,7 +28,7 @@ class CustomerRepositoryImpl : CustomerRepository {
         return try {
             val res = remoteData.addCustomer(token, customer)
             if (res.isSuccess()) {
-                Response.Success(res.result)
+                Response.Success(res.result, res.message)
             } else {
                 Response.Error(res.message)
             }

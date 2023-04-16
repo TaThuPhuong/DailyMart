@@ -19,12 +19,12 @@ class ReportRepositoryImpl : ReportRepository {
         withContext(ioDispatcher) {
             try {
                 val res = reportApi.revenueMonth(token, month)
-                if (res.isSuccess()){
-                    Response.Success(res.result)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
@@ -34,29 +34,29 @@ class ReportRepositoryImpl : ReportRepository {
         withContext(ioDispatcher) {
             try {
                 val res = reportApi.revenueDate(token, date)
-                if (res.isSuccess()){
-                    Response.Success(res.result)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
-    }
+        }
 
     override suspend fun getReportByYear(token: String, year: Int) =
         withContext(ioDispatcher) {
             try {
                 val res = reportApi.revenueYear(token, year)
-                if (res.isSuccess()){
-                    Response.Success(res.result)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 Response.Error(e.message.toString())
             }
-    }
+        }
 }

@@ -7,12 +7,17 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.UserRes
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.data.model.param.RegisterParam
+import net.fpoly.dailymart.data.model.param.UpdateParam
 import net.fpoly.dailymart.data.model.param.UserModel
+import net.fpoly.dailymart.data.model.succeeded
+import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
@@ -25,6 +30,7 @@ class StaffViewModel(
     private val app: Application,
 ) : ViewModel() {
     val TAG = "tuvm";
+    private val userRepo = UserRepositoryImpl()
     private val _user = MutableLiveData<List<Datum>>()
     val user: LiveData<List<Datum>> = _user
     private val mToken = SharedPref.getAccessToken(app)
@@ -35,9 +41,9 @@ class StaffViewModel(
     private val _validateEmailUser = MutableLiveData("")
     val validateEmailUser: LiveData<String> = _validateEmailUser
 
-    private val _userParam = MutableLiveData(RegisterParam())
+    private val _userParam = MutableLiveData(UpdateParam())
 
-    val loginSuccess = MutableLiveData(false)
+    val updateSuccess = MutableLiveData(false)
     private lateinit var mLoadingDialog: LoadingDialog
 
     fun initLoadDialog(context: Context) {
@@ -61,7 +67,7 @@ class StaffViewModel(
                     response: Response<UserModel>
                 ) {
                     if (response.isSuccessful) {
-                        loginSuccess.postValue(true)
+                        updateSuccess.postValue(true)
                         mLoadingDialog.hideLoading()
                         _user.value = response.body()?.data;
                         Log.d(TAG, "onResponse: " + response.body()?.data)
@@ -75,40 +81,32 @@ class StaffViewModel(
                 override fun onFailure(call: Call<UserModel>, t: Throwable) {
                     Log.d(TAG, "message: " + t.message)
                     mLoadingDialog.hideLoading()
-                    loginSuccess.postValue(false)
+                    updateSuccess.postValue(false)
                 }
 
             })
     }
 
-    fun updateUser(id: String?, userParams: RegisterParam, context: Context, activity: DetailsStaffActivity?) {
-        val serverInstance = ServerInstance.apiUser
-        mLoadingDialog.showLoading()
-        serverInstance.updateUser2(
-            mToken,
-            id!!,
-            userParams
-        ).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    loginSuccess.postValue(true)
-                    Toast.makeText(context, "Thanh Cong", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Update user res : " + response.message())
-                    Log.d(TAG, "Update user res : " + response.body().toString())
-                    Log.d(TAG, "Update user res : " + response.errorBody())
-                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
-                    mLoadingDialog.hideLoading()
+    fun updateUser(
+        id: String,
+        userParams: UpdateParam,
+        context: Context,
+        activity: DetailsStaffActivity?
+    ) {
+        viewModelScope.launch {
+            mLoadingDialog.showLoading()
+            val res = userRepo.updateUser(mToken, id, updateParam = userParams)
+            when (res) {
+                is net.fpoly.dailymart.data.model.Response.Success -> {
+                    Log.e(TAG, "updateUser: ${res.data}")
                     activity?.finish()
                 }
+                is net.fpoly.dailymart.data.model.Response.Error -> {
+                    Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
+                    mLoadingDialog.hideLoading()
+                }
             }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "Update user error : " + t.message)
-                loginSuccess.postValue(false)
-                mLoadingDialog.hideLoading()
-            }
-
-        })
+        }
     }
 
     fun onEvent(event: UserEvent, context: Context) {
@@ -117,28 +115,44 @@ class StaffViewModel(
                 _userParam.value = _userParam.value?.copy(
                     name = event.value
                 )
-                _validateName.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validateName.value = event.value.blankException()
+                } else if (event.value.length < 3) {
+                    _validateName.value = "Tên không được bé hơn 3 kí tự"
+                } else {
+                    _validateName.value = ""
+                }
             }
             is UserEvent.OnPhoneNumberChange -> {
                 _userParam.value = _userParam.value?.copy(
                     phoneNumber = event.value
                 )
-                _validatePhone.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validatePhone.value = event.value.blankException()
+                } else if (!isPhoneNumberValid(event.value)) {
+                    _validatePhone.value = "Số điện thoại không hợp lệ!"
+                } else {
+                    _validatePhone.value = ""
+                }
             }
             is UserEvent.OnEmail -> {
                 _userParam.value = _userParam.value?.copy(
                     email = event.value
                 )
-                _validateEmailUser.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validateEmailUser.value = event.value.blankException()
+                } else if (!isEmailValid(event.value)) {
+                    _validateEmailUser.value = "Email không hợp lệ!"
+                } else {
+                    _validateEmailUser.value = ""
+                }
             }
 
             is UserEvent.ValidateForm -> {
                 _userParam.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
-                        updateUser(userParams = it, context = context, id = it._id, activity = null);
                     } else {
-                        loginSuccess.value = false
+                        updateSuccess.value = false
                     }
                 }
             }
@@ -150,5 +164,16 @@ class StaffViewModel(
         data class OnEmail(val value: String) : UserEvent()
         data class OnPhoneNumberChange(val value: String) : UserEvent()
         object ValidateForm : UserEvent()
+    }
+
+    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
+        val regex =
+            Regex("^\\+?(0)([3|5|7|8|9]\\d{8})$")  // Biểu thức chính quy kiểm tra số điện thoại
+        return regex.matches(phoneNumber)
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val regex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$")
+        return regex.matches(email)
     }
 }

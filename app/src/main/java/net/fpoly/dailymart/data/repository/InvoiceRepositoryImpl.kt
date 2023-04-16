@@ -20,7 +20,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.getInvoices(token)
                 if (res.isSuccess()) {
-                    Response.Success(res.result)
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
@@ -35,7 +35,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.getInvoice(token, id)
                 if (res.isSuccess()) {
-                    Response.Success(res.result)
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }
@@ -52,7 +52,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
         try {
             val res = remoteDataInvoice.insertInvoice(token, invoiceParam)
             if (res.isSuccess()) {
-                Response.Success(Unit)
+                Response.Success(Unit, res.message)
             } else {
                 Response.Error(res.message)
             }
@@ -61,18 +61,19 @@ class InvoiceRepositoryImpl : InvoiceRepository {
         }
     }
 
-    override suspend fun deleteInvoice(token: String, id: String): Response<Unit> = withContext(ioDispatcher) {
-        try {
-            val res = remoteDataInvoice.removeInvoice(token, id)
-            if (res.isSuccess()) {
-                Response.Success(Unit)
-            } else {
-                Response.Error(res.message)
+    override suspend fun deleteInvoice(token: String, id: String): Response<Unit> =
+        withContext(ioDispatcher) {
+            try {
+                val res = remoteDataInvoice.removeInvoice(token, id)
+                if (res.isSuccess()) {
+                    Response.Success(Unit, res.message)
+                } else {
+                    Response.Error(res.message)
+                }
+            } catch (ex: Exception) {
+                Response.Error(ERROR_CONNECTED)
             }
-        } catch (ex: Exception) {
-            Response.Error(ERROR_CONNECTED)
         }
-    }
 
     override suspend fun updateInvoice(
         token: String,
@@ -82,7 +83,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
         try {
             val res = remoteDataInvoice.updateInvoice(token, id, invoiceParam)
             if (res.isSuccess()) {
-                Response.Success(Unit)
+                Response.Success(Unit, res.message)
             } else {
                 Response.Error(res.message)
             }
@@ -96,7 +97,7 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             try {
                 val res = remoteDataInvoice.refundInvoice(token, invoiceParam)
                 if (res.isSuccess()) {
-                    Response.Success(Unit)
+                    Response.Success(Unit, res.message)
                 } else {
                     Response.Error(res.message)
                 }
