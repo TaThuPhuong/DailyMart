@@ -4,19 +4,28 @@ import com.google.gson.annotations.SerializedName
 import net.fpoly.dailymart.utils.ROLE
 
 data class UpdateParam(
-    @SerializedName("_id") val _id: String? = "",
-    @SerializedName("name") val name: String = "",
-    @SerializedName("password") val password: String = "",
-    @SerializedName("email") val email: String = "",
-    @SerializedName("phoneNumber") val phoneNumber: String = "",
-    @SerializedName("status") val status: Boolean = true,
-    @SerializedName("role") val role: ROLE = ROLE.staff,
-    @SerializedName("deviceId") val deviceId: String = "",
+    @SerializedName("_id") var _id: String = "",
+    @SerializedName("name") var name: String = "",
+    @SerializedName("email") var email: String = "",
+    @SerializedName("phoneNumber") var phoneNumber: String = "",
+    @SerializedName("status") var status: Boolean = true,
+    @SerializedName("role") var role: ROLE = ROLE.staff,
+    @SerializedName("deviceId") var deviceId: String = "",
     @SerializedName("linkAvt") var linkAvt: String = "",
 ) {
+    constructor(user: Datum) : this() {
+        this._id = user._id
+        this.name = user.name
+        this.email = user.email
+        this.phoneNumber = user.phoneNumber
+        this.status = user.status
+        this.role = user.role
+        this.deviceId = user.deviceId
+        this.linkAvt = user.linkAvt
+    }
+
     fun checkValidate(): Boolean =
-        !(name.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim()
-            .isEmpty() || role.value.trim().isEmpty())
+        !(name.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim().isEmpty())
 
     sealed class ResponseUser<out R> {
         data class Success<T>(val data: T) : ResponseUser<T>()

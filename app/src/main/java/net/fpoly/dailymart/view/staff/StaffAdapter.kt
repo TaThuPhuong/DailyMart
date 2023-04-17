@@ -46,21 +46,12 @@ class StaffAdapter(
             with(mListStaff[position]) {
                 binding.tvName.text = this.name
                 binding.tvPhone.text = "SĐT: ${this.phoneNumber}"
-                binding.tvRole.text = getRole(this.role)
+                binding.tvRole.text = this.role.value
                 binding.root.setOnClickListener {
                     onClick(this)
                     Log.d("tuvm", "onBindViewHolder: onclick")
                 }
             }
         }
-    }
-
-    private fun getRole(role: String): String {
-        for (r in ROLE.values()) {
-            if (r.toString() == role) {
-                return r.value
-            }
-        }
-        return role
     }
 }
