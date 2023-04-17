@@ -18,7 +18,9 @@ import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.data.model.Response.Error
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.staff.details.UpdateEvent
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -87,7 +89,11 @@ class AddStaffViewModel(
                     _validateEmailUser.value = ""
                 }
             }
-
+            is UserEvent.OnChangeRole -> {
+                _userParam.value = _userParam.value?.copy(
+                    role = event.role
+                )
+            }
             is UserEvent.CreateUser -> {
                 _userParam.value?.let {
                     if (it.checkValidate()) {
@@ -129,5 +135,6 @@ sealed class UserEvent {
     data class OnNameChange(val name: String) : UserEvent()
     data class OnEmailChange(val email: String) : UserEvent()
     data class OnPhoneNumberChange(val phone: String) : UserEvent()
+    data class OnChangeRole(val role: ROLE) : UserEvent()
     object CreateUser : UserEvent()
 }
