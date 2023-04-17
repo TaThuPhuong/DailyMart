@@ -17,7 +17,9 @@ import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.HomeFragmentBinding
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
+import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.check_date.CheckDateActivity
 import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
@@ -71,6 +73,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
                 .into(binding.imvAvatarToolbar)
             binding.tvName.text = "Chào, ${it.name}"
             initTaskRecent()
+            binding.imvReport.setVisibility(it.role == ROLE.manager)
+            binding.imvMessage.setVisibility(it.role == ROLE.staff)
         }
         initNotification()
         viewModel.getAllNotification()
@@ -103,7 +107,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         viewModel.listTask.observe(this) {
             mListTask = it
             mTaskRecentAdapter.setData(it)
-            binding.pbLoading.gone()
+        }
+        viewModel.getTaskSuccess.observe(this) {
+            if (it) binding.pbLoading.gone()
         }
     }
 
@@ -111,24 +117,15 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         when (v) {
             binding.imvAvatarToolbar -> openActivity(ProfileActivity::class.java)
             binding.imvNotification -> {}
-            binding.layoutReport, binding.imvReport -> {
-                openActivity(ReportActivity::class.java)
-            }
-            binding.imvCheckDate -> {
-                openActivity(CheckDateActivity::class.java)
-            }
-            binding.imvWorkSheet -> {
-                openActivity(WorkSheetActivity::class.java)
-            }
-            binding.imvStock -> {
-                openActivity(StockActivity::class.java)
-            }
-            binding.imvTask -> {
-                openActivity(TaskActivity::class.java)
-            }
-            binding.imvPay -> {
-                openActivity(AddInvoiceExportActivity::class.java)
-            }
+            binding.layoutReport, binding.imvReport -> if (mUser!!.role == ROLE.manager) openActivity(
+                ReportActivity::class.java
+            )
+            binding.imvCheckDate -> openActivity(CheckDateActivity::class.java)
+            binding.imvWorkSheet -> openActivity(WorkSheetActivity::class.java)
+            binding.imvStock -> openActivity(StockActivity::class.java)
+            binding.imvTask -> openActivity(TaskActivity::class.java)
+            binding.imvPay -> openActivity(AddInvoiceExportActivity::class.java)
+            binding.imvMessage -> openActivity(MessageActivity::class.java)
         }
     }
 

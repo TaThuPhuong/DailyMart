@@ -67,13 +67,28 @@
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:background="@color/white"
-                            android:progress="40"
-                            android:progressDrawable="@drawable/bg_ed_message" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp">
+
+                            <ProgressBar
+                                style="?android:attr/progressBarStyleHorizontal"
+                                set_progress_value="@{viewModel.taskPercent}"
+                                android:layout_width="match_parent"
+                                android:layout_height="16dp"
+                                android:max="100"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/progress_bar_horizontal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="@{viewModel.taskPercentText}"
+                                android:textColor="@color/gray_medium"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -170,13 +185,13 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="-30dp"
             android:overScrollMode="never"
             android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_collapseMode="none"
-            app:layout_collapseParallaxMultiplier="0.3">
+            app:layout_collapseParallaxMultiplier="0.5">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -249,7 +264,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/imv_report"
+                        android:id="@+id/imv_message"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
                         android:background="@drawable/bg_btn_home3"
@@ -271,6 +286,28 @@
                             android:textSize="12sp" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/imv_report"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/bg_btn_home3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/ic_home_7" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/imbplexsans_medium"
+                            android:text="Thống kê"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

@@ -62,6 +62,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
                     is Response.Success -> {
                         getListProducts()
                         message.postValue("Phục hồi thành công")
+                        mProductRecent = null
                     }
                 }
             }
