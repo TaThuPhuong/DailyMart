@@ -1,22 +1,14 @@
 package net.fpoly.dailymart.view.staff
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.Datum
-import net.fpoly.dailymart.data.model.param.UpdateParam
 import net.fpoly.dailymart.data.model.param.UserModel
-import net.fpoly.dailymart.data.repository.UserRepositoryImpl
-import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,139 +17,42 @@ class StaffViewModel(
     private val app: Application,
 ) : ViewModel() {
     val TAG = "tuvm";
-    private val userRepo = UserRepositoryImpl()
-    private val _user = MutableLiveData<List<Datum>>()
-    val mListUser: LiveData<List<Datum>> = _user
+    private val _listUser = MutableLiveData<List<Datum>>()
+    val mListUser: LiveData<List<Datum>> = _listUser
     private val mToken = SharedPref.getAccessToken(app)
-    private val _validateName = MutableLiveData("")
-    val validateNameUser: LiveData<String> = _validateName
-    private val _validatePhone = MutableLiveData("")
-    val validatePhone: LiveData<String> = _validatePhone
-    private val _validateEmailUser = MutableLiveData("")
-    val validateEmailUser: LiveData<String> = _validateEmailUser
 
-    private val _userParam = MutableLiveData(UpdateParam())
-
-    val updateSuccess = MutableLiveData(false)
-    init {
-        _validateName.value = ""
-        _validatePhone.value = ""
-        _validateEmailUser.value = ""
-    }
+    val getUserSuccess = MutableLiveData(false)
 
     fun getUser() {
         val server = ServerInstance.apiUser
         Log.d(TAG, "start ")
-        server.getAllUser(mToken)
-            .enqueue(object : Callback<UserModel> {
-                override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
-                ) {
-                    if (response.isSuccessful) {
-                        updateSuccess.postValue(true)
-                        _user.value = response.body()?.data;
-                        Log.d(TAG, "onResponse: " + response.body()?.data)
-                    } else {
-                        Log.d(TAG, "code: " + response.code())
-                        Log.d(TAG, "message: " + response.message())
-                        Log.d(TAG, "errorBody: " + response.errorBody()?.string())
+        try {
+            server.getAllUser(mToken)
+                .enqueue(object : Callback<UserModel> {
+                    override fun onResponse(
+                        call: Call<UserModel>,
+                        response: Response<UserModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            getUserSuccess.postValue(true)
+                            _listUser.value = response.body()?.data;
+                            Log.d(TAG, "onResponse: " + response.body()?.data)
+                        } else {
+                            Log.d(TAG, "code: " + response.code())
+                            Log.d(TAG, "message: " + response.message())
+                            Log.d(TAG, "errorBody: " + response.errorBody()?.string())
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                    Log.d(TAG, "message: " + t.message)
-                    updateSuccess.postValue(false)
-                }
-
-            })
-    }
-
-    fun updateUser(
-        id: String,
-        userParams: UpdateParam,
-        context: Context,
-        activity: DetailsStaffActivity?
-    ) {
-        viewModelScope.launch {
-            val res = userRepo.updateUser(mToken, id, updateParam = userParams)
-            when (res) {
-                is net.fpoly.dailymart.data.model.Response.Success -> {
-                    Log.e(TAG, "updateUser: ${res.data}")
-                    activity?.finish()
-                }
-                is net.fpoly.dailymart.data.model.Response.Error -> {
-                    Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    fun onEvent(event: UserEvent, context: Context) {
-        when (event) {
-            is UserEvent.OnNameUser -> {
-                _userParam.value = _userParam.value?.copy(
-                    name = event.value
-                )
-                if (event.value.trim().isEmpty()) {
-                    _validateName.value = event.value.blankException()
-                } else if (event.value.length < 3) {
-                    _validateName.value = "Tên không được bé hơn 3 kí tự"
-                } else {
-                    _validateName.value = ""
-                }
-            }
-            is UserEvent.OnPhoneNumberChange -> {
-                _userParam.value = _userParam.value?.copy(
-                    phoneNumber = event.value
-                )
-                if (event.value.trim().isEmpty()) {
-                    _validatePhone.value = event.value.blankException()
-                } else if (!isPhoneNumberValid(event.value)) {
-                    _validatePhone.value = "Số điện thoại không hợp lệ!"
-                } else {
-                    _validatePhone.value = ""
-                }
-            }
-            is UserEvent.OnEmail -> {
-                _userParam.value = _userParam.value?.copy(
-                    email = event.value
-                )
-                if (event.value.trim().isEmpty()) {
-                    _validateEmailUser.value = event.value.blankException()
-                } else if (!isEmailValid(event.value)) {
-                    _validateEmailUser.value = "Email không hợp lệ!"
-                } else {
-                    _validateEmailUser.value = ""
-                }
-            }
-
-            is UserEvent.ValidateForm -> {
-                _userParam.value?.let {
-                    if (it.checkValidate()) {
-                    } else {
-                        updateSuccess.value = false
+                    override fun onFailure(call: Call<UserModel>, t: Throwable) {
+                        Log.d(TAG, "message: " + t.message)
+                        getUserSuccess.postValue(false)
                     }
-                }
-            }
+
+                })
+        } catch (e: Exception) {
+            getUserSuccess.postValue(false)
         }
-    }
 
-    sealed class UserEvent {
-        data class OnNameUser(val value: String) : UserEvent()
-        data class OnEmail(val value: String) : UserEvent()
-        data class OnPhoneNumberChange(val value: String) : UserEvent()
-        object ValidateForm : UserEvent()
-    }
-
-    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
-        val regex =
-            Regex("^\\+?(0)([3|5|7|8|9]\\d{8})$")  // Biểu thức chính quy kiểm tra số điện thoại
-        return regex.matches(phoneNumber)
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        val regex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$")
-        return regex.matches(email)
     }
 }

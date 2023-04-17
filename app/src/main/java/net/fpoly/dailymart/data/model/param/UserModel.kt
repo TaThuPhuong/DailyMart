@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.model.param
 
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
 import java.io.Serializable
 
 data class UserModel(
@@ -13,15 +14,15 @@ data class Datum(
     val _id: String,
     val name: String,
     val status: Boolean,
-    val role: String,
+    val role: ROLE,
     val email: String,
     val phoneNumber: String,
-    val deviceID: String = "",
+    val deviceId: String = "",
     val linkAvt: String = Constant.AVATAR_DEFAULT,
 ) : Serializable {
     override fun hashCode(): Int {
         val result = _id.hashCode()
-        if (deviceID.isEmpty()) {
+        if (deviceId.isEmpty()) {
             result
         }
         return result
@@ -39,7 +40,7 @@ data class Datum(
         if (role != other.role) return false
         if (email != other.email) return false
         if (phoneNumber != other.phoneNumber) return false
-        if (deviceID != other.deviceID) return false
+        if (deviceId != other.deviceId) return false
         if (linkAvt != other.linkAvt) return false
 
         return true

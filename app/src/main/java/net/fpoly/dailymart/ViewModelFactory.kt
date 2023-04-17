@@ -31,6 +31,7 @@ import net.fpoly.dailymart.view.reset_password.ResetPasswordViewModel
 import net.fpoly.dailymart.view.splash.SplashViewModel
 import net.fpoly.dailymart.view.staff.StaffActivity
 import net.fpoly.dailymart.view.staff.StaffViewModel
+import net.fpoly.dailymart.view.staff.details.DetailStaffViewModel
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 import net.fpoly.dailymart.view.stock.StockViewModel
 import net.fpoly.dailymart.view.supplier.SupplierViewModel
@@ -105,7 +106,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(StaffViewModel::class.java) ->
                     StaffViewModel(app)
                 isAssignableFrom(AddStaffViewModel::class.java) ->
-                    AddStaffViewModel(app,userRepository)
+                    AddStaffViewModel(app, userRepository)
                 isAssignableFrom(ProfileViewModel::class.java) ->
                     ProfileViewModel(app)
                 isAssignableFrom(MessageViewModel::class.java) ->
@@ -140,6 +141,8 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                 isAssignableFrom(DetailInvoiceViewModel::class.java) -> {
                     DetailInvoiceViewModel(app)
                 }
+                isAssignableFrom(DetailStaffViewModel::class.java) ->
+                    DetailStaffViewModel(app, userRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

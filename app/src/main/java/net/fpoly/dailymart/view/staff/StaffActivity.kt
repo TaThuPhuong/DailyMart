@@ -56,6 +56,9 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
                 binding.tvNoData.visible()
             }
         }
+        viewModel.getUserSuccess.observe(this){
+            mLoadingDialog?.hideLoading()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

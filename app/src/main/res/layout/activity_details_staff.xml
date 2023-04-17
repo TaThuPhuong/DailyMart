@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="net.fpoly.dailymart.view.staff.StaffViewModel" />
+        <import type="net.fpoly.dailymart.view.staff.details.DetailStaffViewModel" />
 
         <variable
             name="viewModel"
-            type="StaffViewModel" />
+            type="DetailStaffViewModel" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
