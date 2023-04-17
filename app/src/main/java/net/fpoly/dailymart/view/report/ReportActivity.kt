@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.IMarker
@@ -35,7 +36,7 @@ class ReportActivity :
     BaseActivity<ActivityReportBinding>(ActivityReportBinding::inflate),
     View.OnClickListener {
 
-    private var TAG = "ReportActivity"
+    private var TAG = "YingMing"
     private val viewModel: ReportViewModel by viewModels { AppViewModelFactory }
     private var mYear = 0
     private var mMonth = 0
@@ -44,106 +45,48 @@ class ReportActivity :
     private var mDayOfMonth = 0
     private var typeChart = ""
     private val formatter = SimpleDateFormat("dd/MM/yyyy")
-    private val mLoadingDialog = LoadingDialog(context = this)
     private val calendarToday = Calendar.getInstance()
 
+    private var mTypeFilter = TypeFilter.DAY
+    private var mTime = Calendar.getInstance().timeInMillis
 
-    private var mlistReport = ArrayList<ReportPrice>()
-
+    private var mLoadingDialog: LoadingDialog? = null
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.initLoadDialog(this)
+        mLoadingDialog = LoadingDialog(this)
+        mLoadingDialog?.showLoading()
         initCharView()
     }
 
     override fun setupObserver() {
-        viewModel.getRevenueByMonth(calendarToday[Calendar.MONTH] + 1)
-        viewModel.totalImport.observe(this) {
-            binding.tvTotalImport.text = "${it} VND"
-        }
-        viewModel.totalExport.observe(this){
-            binding.tvTotalExport.text = "${it} VND"
-        }
-        viewModel.totalRevenue.observe(this){
-            binding.tvTotalRevenue.text = "${it} VND"
-        }
-        viewModel.quantityImport.observe(this){
-            binding.tvQuantityImport.text = "${it}"
-        }
-        viewModel.quantityExport.observe(this){
-            binding.tvQuantityExport.text = "${it}"
+        viewModel.onGetDone.observe(this) {
+            if (it) mLoadingDialog?.hideLoading()
         }
     }
 
     override fun setOnClickListener() {
         super.setOnClickListener()
         binding.imvBack.setOnClickListener(this)
-        binding.layoutFilter.setOnClickListener(this)
+        binding.tvFilter.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when (view) {
             binding.imvBack -> finish()
-            binding.layoutFilter -> {
-                FilterDialog(this){
-                    if (it.length in 1..2){
-                        viewModel.getRevenueByMonth(it.toInt())
-                        viewModel.totalImport.observe(this) {
-                            binding.tvTotalImport.text = "${it} VND"
-                        }
-                        viewModel.totalExport.observe(this){
-                            binding.tvTotalExport.text = "${it} VND"
-                        }
-                        viewModel.totalRevenue.observe(this){
-                            binding.tvTotalRevenue.text = "${it} VND"
-                        }
-                        viewModel.quantityExport.observe(this){
-                            binding.tvQuantityExport.text = "${it}"
-                        }
-                        viewModel.quantityImport.observe(this){
-                            binding.tvQuantityImport.text = "${it}"
-                        }
-                        viewModel.listRevenueByMonth.observe(this) {list ->
-                            setUpMonthlyChart(it.toInt() - 1, calendarToday[Calendar.YEAR], list)
-                        }
-                    }
-                    if (it.length == 4){
-                        viewModel.getRevenueByYear(it.toInt())
-                        viewModel.totalImport.observe(this){
-                            binding.tvTotalImport.text = "$it VND"
-                        }
-                        viewModel.totalExport.observe(this){
-                            binding.tvTotalExport.text = "$it VND"
-                        }
-                        viewModel.totalRevenue.observe(this){
-                            binding.tvTotalRevenue.text = "$it VND"
-                        }
-                        viewModel.quantityImport.observe(this){
-                            binding.tvQuantityImport.text = "$it"
-                        }
-                        viewModel.quantityExport.observe(this){
-                            binding.tvQuantityExport.text = "$it"
-                        }
-                        viewModel.listRevenueByYear.observe(this){list ->
-                            setUpYearlyChart(it.toInt(), list)
-                            Log.d(TAG, "onClick: listyear: ${list}")
-                        }
-                    }
-                    if (it.length > 4){
-                        viewModel.getRevenueByDate(it)
-                        viewModel.totalImport.observe(this) {
-                            binding.tvTotalImport.text = "${it} VND"
-                        }
-                        viewModel.totalExport.observe(this){
-                            binding.tvTotalExport.text = "${it} VND"
-                        }
-                        viewModel.totalRevenue.observe(this){
-                            binding.tvTotalRevenue.text = "${it} VND"
-                        }
-                        viewModel.revenueByDay.observe(this) {list ->
-                        }
+            binding.tvFilter -> {
+                FilterDialog(this, mTypeFilter, mTime) { type, time ->
+                    Log.e(TAG, "type:$type ")
+                    Log.e(TAG, "date:${formatter.format(time)} ")
+                    mTime = time
+                    mTypeFilter = type
+                    viewModel.onGetDone.postValue(false)
+                    mLoadingDialog?.showLoading()
+                    when (type) {
+                        TypeFilter.DAY -> viewModel.getRevenueByDate(time)
+                        TypeFilter.MONTH -> viewModel.getRevenueByMonth(time)
+                        TypeFilter.YEAR -> viewModel.getRevenueByYear(time)
                     }
                 }.show()
             }
@@ -161,10 +104,10 @@ class ReportActivity :
         binding.barChart.setFitBars(true)
         binding.barChart.animateXY(1000, 1000, Easing.EaseInOutExpo)
         binding.barChart.extraBottomOffset = 22f
-        binding.barChart.setNoDataText("Loading Data...")
+        binding.barChart.setNoDataText("Đang tải dữ liệu")
         val p = binding.barChart.getPaint(Chart.PAINT_INFO)
-        p.textSize = 22f
-        p.color = Color.parseColor("#7265E3")
+        p.textSize = 30f
+        p.color = Color.parseColor("#FF6E6A")
         val xAxis = binding.barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor = Color.parseColor("#B4B7CC")
@@ -190,7 +133,7 @@ class ReportActivity :
         }
         val rightAxis = binding.barChart.axisRight
         rightAxis.isEnabled = false
-        viewModel.listRevenueByMonth.observe(this){
+        viewModel.listRevenueByMonth.observe(this) {
             setUpMonthlyChart(calendarToday[Calendar.MONTH], calendarToday[Calendar.YEAR], it)
         }
     }
@@ -207,8 +150,6 @@ class ReportActivity :
         mYear = year
         Log.d(TAG, "setUpMonthlyChart: $mMonth")
         typeChart = "MONTHLY"
-        binding.tvFilter.text =
-            CheckTimeUtils.mDecimalFormat.format(month + 1).toString() + "/" + year
         val calendar = Calendar.getInstance()
         calendar[Calendar.DAY_OF_MONTH] = 1
         calendar[Calendar.MONTH] = month
@@ -259,14 +200,14 @@ class ReportActivity :
         dataSet.color = Color.parseColor("#FF444C")
         dataSet.highLightAlpha = 0
         val data = BarData(dataSet)
-        data.barWidth = 0.58f
+        data.barWidth = 0.3f
         data.setValueFormatter(object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return value.toInt().toString()
             }
         })
-        data.setValueTextSize(11f)
-        data.setValueTextColor(resources.getColor(R.color.transparent))
+        data.setValueTextSize(9f)
+        data.setValueTextColor(ContextCompat.getColor(this, R.color.transparent))
         data.isHighlightEnabled = true
         val barChartRender = CustomBarChartRender(
             binding.barChart,
@@ -303,7 +244,6 @@ class ReportActivity :
         (binding.barChart.onTouchListener as BarLineChartTouchListener).stopDeceleration()
         mYear = year
         typeChart = "YEARLY"
-        binding.tvFilter.text = year.toString()
         val valuesPushUp = java.util.ArrayList<BarEntry>()
         var maxMoney: Long = 0
         val monthOfYearList = arrayOfNulls<String>(12)
@@ -316,7 +256,9 @@ class ReportActivity :
                     valueMoney += doanhThu!!.data
                 }
             }
-            monthOfYearList[i] = SimpleDateFormat("MMMM").format(Calendar.getInstance().apply { set(Calendar.MONTH, i) }.time)
+            monthOfYearList[i] = SimpleDateFormat("MMMM").format(
+                Calendar.getInstance().apply { set(Calendar.MONTH, i) }.time
+            )
             valueMonthOfYearList[i] = valueMoney
         }
         for (i in monthOfYearList.indices) {
@@ -335,7 +277,7 @@ class ReportActivity :
         dataSet.color = Color.parseColor("#FF444C")
         dataSet.highLightAlpha = 0
         val data = BarData(dataSet)
-        data.barWidth = 0.5f
+        data.barWidth = 0.58f
         data.setValueFormatter(object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return value.toInt().toString()
@@ -368,71 +310,8 @@ class ReportActivity :
         binding.barChart.moveViewToX(0f)
         binding.barChart.invalidate()
     }
+}
 
-//    private fun setUpDailyChart(date: String, reportData: ReportDataByDay?) {
-//        Log.d(TAG, "setUpDailyChart: $reportData")
-//
-//        (binding.barChart.onTouchListener as BarLineChartTouchListener).stopDeceleration()
-//        typeChart = "DAILY"
-//        binding.tvFilter.text = formatter.format(date)
-//        mDayOfMonth = date.date
-//        val valuesPushUp = arrayListOf<BarEntry>()
-//        var maxMinute: Long = 0
-//        for (i in reportData?.timeList?.indices!!) {
-//            val entry = BarEntry(i.toFloat(), reportData.timeList?.get(i)?.data?.toFloat() ?: 0f)
-//            valuesPushUp.add(entry)
-//            if (reportData.timeList?.get(i)?.data ?: 0 > maxMinute) {
-//                maxMinute = reportData.timeList?.get(i)?.data ?: 0
-//            }
-//        }
-//        binding.barChart.axisLeft.axisMaximum = maxMinute + 100000f
-//        val xAxis = binding.barChart.xAxis
-//        xAxis.granularity = 1f
-//        xAxis.valueFormatter = object : ValueFormatter() {
-//            override fun getFormattedValue(value: Float): String {
-//                return if (value.toInt() >= reportData.timeList?.size ?: 0) {
-//                    ""
-//                } else {
-//                    CheckTimeUtils.convertToTimeOnly(reportData.timeList?.get(value.toInt())?.startTime
-//                        ?: Date())
-//                }
-//            }
-//        }
-//        val dataSet = BarDataSet(valuesPushUp, "")
-//        dataSet.color = Color.parseColor("#FF444C")
-//        dataSet.highLightAlpha = 0
-//        val data = BarData(dataSet)
-//        data.barWidth = 0.58f
-//        data.setValueFormatter(object : ValueFormatter() {
-//            override fun getFormattedValue(value: Float): String {
-//                return value.toInt().toString()
-//            }
-//        })
-//        data.setValueTextSize(11f)
-//        data.setValueTextColor(resources.getColor(R.color.transparent))
-//        data.isHighlightEnabled = true
-//        val barChartRender = CustomBarChartRender(
-//            binding.barChart,
-//            binding.barChart.animator,
-//            binding.barChart.viewPortHandler,
-//        )
-//        barChartRender.setRadius(16)
-//        binding.barChart.renderer = barChartRender
-//        binding.barChart.fitScreen()
-//        if (binding.barChart.data != null) {
-//            binding.barChart.data.clearValues()
-//        }
-//        binding.barChart.notifyDataSetChanged()
-//        binding.barChart.clear()
-//        binding.barChart.data = data
-//        binding.barChart.setVisibleXRangeMaximum(7f)
-//        binding.barChart.isHorizontalScrollBarEnabled = true
-//        binding.barChart.setTouchEnabled(true)
-//        binding.barChart.isDragEnabled = true
-//        val marker: IMarker = CustomMarkerChartView(this, R.layout.market_chart_view)
-//        binding.barChart.marker = marker
-//        binding.barChart.setDrawMarkerViews(true)
-//        binding.barChart.moveViewToX(valuesPushUp.size.toFloat())
-//        binding.barChart.invalidate()
-//    }
+enum class TypeFilter {
+    DAY, MONTH, YEAR
 }
