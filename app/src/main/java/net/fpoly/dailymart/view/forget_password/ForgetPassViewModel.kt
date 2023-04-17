@@ -24,7 +24,6 @@ class ForgetPassViewModel : ViewModel() {
     val validateEmail: LiveData<String> = _validateEmail
     private val _forgotPass = MutableLiveData(ForgotPass())
     private lateinit var mLoadingDialog: LoadingDialog
-    var resSend = String()
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context)
@@ -39,19 +38,18 @@ class ForgetPassViewModel : ViewModel() {
         context: Context,
         activity: ForgetPasswordActivity?
     ) {
-
         Log.d(TAG, "Params : $forgotPass")
         mLoadingDialog.showLoading()
         viewModelScope.launch {
             when (val forgot = forgotPassRepo.forgotPass(forgotPass)) {
                 is Success -> {
-                    resSend = forgot.message
+                    Log.e(TAG, "sendOTP: ${forgot.data}")
                     Toast.makeText(context, forgot.message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, ResetPasswordActivity::class.java)
-                    intent.putExtra("id", resSend)
-                    Log.e(TAG, "sendOTP: $resSend", )
+                    intent.putExtra("id", forgot.data)
                     activity?.startActivity(intent)
                 }
+
                 is Error -> {
                     _validateEmail.value = forgot.message
                     mLoadingDialog.hideLoading()
@@ -77,11 +75,11 @@ class ForgetPassViewModel : ViewModel() {
             is ForgotEvent.ValidateForm -> {
                 _forgotPass.value?.let {
                     if (it.checkValidate()) {
-//                        sendOTP(
-//                            forgotPass = it,
-//                            context = context,
-//                            activity = null
-//                        )
+                        sendOTP(
+                            forgotPass = it,
+                            context = context,
+                            activity = null
+                        )
                     } else {
                         mLoadingDialog.hideLoading()
                     }
