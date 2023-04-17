@@ -127,13 +127,16 @@ class ProductEditViewModel(
                     if (it) {
                         viewModelScope.launch(Dispatchers.IO) {
                             Log.d(TAG, "onEvent: ${_product.value}")
-                            val res = productRepo.updateProduct(mToken, productId, _product.value!!)
-                            if (res.isSuccess()) {
-                                message.postValue("Cập nhập thành công")
-                                actionSuccess.postValue(true)
-                            } else {
-                                message.postValue("Cập nhập thất bại")
-                                actionSuccess.postValue(false)
+                            when (val res =
+                                productRepo.updateProduct(mToken, productId, _product.value!!)) {
+                                is Response.Error -> {
+                                    message.postValue(res.message)
+                                    actionSuccess.postValue(false)
+                                }
+                                is Response.Success -> {
+                                    message.postValue(res.message)
+                                    actionSuccess.postValue(true)
+                                }
                             }
                         }
                     } else {

@@ -17,10 +17,10 @@ import retrofit2.http.Query
 interface ProductApi {
 
     @POST("product")
-    fun insertProduct(
+    suspend fun insertProduct(
         @Header("Authorization") token: String,
         @Body productParam: ProductParam,
-    ): Call<ResponseBody>
+    ): ResultData<Unit>
 
     @GET("product/getAll")
     suspend fun getAllProduct(@Header("Authorization") token: String): ResponseResult<List<Product>>
@@ -42,7 +42,7 @@ interface ProductApi {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body productParam: ProductParamUpdate,
-    ): ResponseResult<Product>
+    ): ResultData<Product>
 
     @DELETE("product/{id}")
     suspend fun deleteProduct(

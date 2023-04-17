@@ -28,7 +28,8 @@ class CheckDateViewModel(private val app: Application, private val productRepo: 
     private val TAG = "YingMing"
     private val mToken = SharedPref.getAccessToken(app)
     private val _listProduct = MutableLiveData<List<Product>>(ArrayList())
-    val listProduct: LiveData<List<Product>> = _listProduct
+    val listProductCheckDate: LiveData<List<Product>> = _listProduct
+    val getListSuccess = MutableLiveData(false)
 
     val message = MutableLiveData("")
     fun getListProduct() {
@@ -36,8 +37,10 @@ class CheckDateViewModel(private val app: Application, private val productRepo: 
             val res = productRepo.getAllProduct(mToken)
             if (res.isSuccess()) {
                 _listProduct.postValue(res.data!!)
+                getListSuccess.postValue(true)
             } else {
                 message.postValue("Đã xảy ra lỗi")
+                getListSuccess.postValue(true)
             }
         }
     }

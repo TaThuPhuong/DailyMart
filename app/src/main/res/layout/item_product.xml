@@ -69,5 +69,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:gravity="end"
+        android:paddingEnd="5dp"
         android:text="Giá bán:\n12.000 vnd" />
 </RelativeLayout>
