@@ -9,8 +9,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.api.ServerInstance
+import net.fpoly.dailymart.data.api.ServerInstance.Companion.apiProduct
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
+import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
@@ -30,7 +32,6 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
     val mUser = SharedPref.getUser(app)
     val getListSuccess = MutableLiveData(false)
 
-    private val apiProduct = ServerInstance.apiProduct
     private val mToken = SharedPref.getAccessToken(app)
 
     init {
@@ -46,7 +47,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
                 getListSuccess.postValue(true)
             } else {
                 message.postValue(res.message!!)
-                getListSuccess.postValue(false)
+                getListSuccess.postValue(true)
             }
         }
     }
@@ -54,26 +55,13 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
     fun onRestore() {
         mProductRecent?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    apiProduct.insertProduct(mToken, ProductParam(it))
-                        .enqueue(object : Callback<ResponseBody> {
-                            override fun onResponse(
-                                call: Call<ResponseBody>,
-                                response: retrofit2.Response<ResponseBody>,
-                            ) {
-                                if (response.isSuccessful) {
-                                    getListProducts()
-                                } else {
-                                    message.postValue(response.message())
-                                }
-                            }
-
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                            }
-                        })
-                } catch (e: Exception) {
-
+                when (repo.insertProduct(mToken, ProductParam(it))) {
+                    is Response.Error -> {
+                        message.postValue("Phục hồi lỗi")
+                    }
+                    is Response.Success -> {
+                        message.postValue("Phục hồi thành công")
+                    }
                 }
             }
         }

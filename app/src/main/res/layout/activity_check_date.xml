@@ -132,5 +132,30 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:id="@+id/tv_no_data"
+            set_visible="@{viewModel.listProductCheckDate.size() ==0}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_empty_list" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="@string/empty_list"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>

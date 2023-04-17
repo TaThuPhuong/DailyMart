@@ -57,7 +57,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
             mListProduct = it
         }
         viewModel.getListSuccess.observe(this) {
-            binding.pbLoading.gone()
+            if (it) binding.pbLoading.gone()
         }
     }
 

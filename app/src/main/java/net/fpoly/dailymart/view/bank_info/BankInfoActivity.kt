@@ -14,6 +14,7 @@ import net.fpoly.dailymart.databinding.ActivityBankInfoBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.SharedPref
 
@@ -27,6 +28,8 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
     private var mAccountNumber: String = ""
     private var mBin: Int = 0
     private var mBankInfo: BankInfo = BankInfo()
+    private var isShowListBank = false
+    private var isGetListBankSuccess = false
 
     override fun setupData() {
         initBankRecycleView()
@@ -47,8 +50,17 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
             viewModel.saveBankInfo(mBankInfo)
             SharedPref.setBankInfo(this, mBankInfo)
         }
+
         binding.imvDrop.setOnClickListener {
-            binding.rcvListBank.visible()
+            if (isGetListBankSuccess) {
+                isShowListBank = !isShowListBank
+                binding.rcvListBank.setVisibility(!isShowListBank)
+                if (isShowListBank) {
+                    binding.imvDrop.rotation = 0f
+                } else {
+                    binding.imvDrop.rotation = 180f
+                }
+            }
         }
         binding.imvBack.setOnClickListener {
             finish()
@@ -59,6 +71,7 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
         viewModel.mListBank.observe(this) {
             mBankAdapter.setData(it)
             mListBank = it
+            if (it.isNotEmpty()) isGetListBankSuccess = true
         }
         viewModel.mBankAccountRequest.observe(this) {
             if (it.code == "00") {
@@ -104,8 +117,8 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
         binding.tvCheckAccount.gone()
         Glide.with(this).load(bankInfo.logo).placeholder(R.drawable.img_default)
             .error(R.drawable.img_default).into(binding.imvLogo)
-        binding.edBankName.setText(bankInfo.bankName.replace("%20", " "))
+        binding.edBankName.setText(bankInfo.bankName)
         binding.edAccountNumber.setText(bankInfo.accountNumber)
-        binding.tvAccountName.text = bankInfo.accountName
+        binding.tvAccountName.text = bankInfo.accountName.replace("%20", " ")
     }
 }

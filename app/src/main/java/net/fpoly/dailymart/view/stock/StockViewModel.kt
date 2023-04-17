@@ -17,7 +17,8 @@ class StockViewModel(private val app: Application, private val productRepo: Prod
     private val TAG = "YingMing"
     private val mToken = SharedPref.getAccessToken(app)
     private val _listProduct = MutableLiveData<List<Product>>(ArrayList())
-    val listProduct: LiveData<List<Product>> = _listProduct
+    val listProducts: LiveData<List<Product>> = _listProduct
+    val getProductSuccess = MutableLiveData(false)
 
     val message = MutableLiveData("")
     fun getListProduct() {
@@ -25,8 +26,10 @@ class StockViewModel(private val app: Application, private val productRepo: Prod
             val res = productRepo.getAllProduct(mToken)
             if (res.isSuccess()) {
                 _listProduct.postValue(res.data!!)
+                getProductSuccess.postValue(true)
             } else {
                 message.postValue("Máy chủ không phản hồi")
+                getProductSuccess.postValue(true)
             }
         }
     }

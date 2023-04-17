@@ -62,8 +62,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.main.MainActivity"
-            android:launchMode="singleInstance"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />

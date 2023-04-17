@@ -31,10 +31,13 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
     }
 
     override fun setupObserver() {
-        viewModel.listProduct.observe(this) {
+        viewModel.listProducts.observe(this) {
             mListProduct = it
             mStockAdapter.setData(it)
-            binding.pbLoading.gone()
+        }
+        viewModel.getProductSuccess.observe(this) {
+            if (it) binding.pbLoading.gone()
+
         }
     }
 

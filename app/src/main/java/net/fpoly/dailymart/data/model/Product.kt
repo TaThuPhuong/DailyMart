@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import net.fpoly.dailymart.utils.Constant
 import java.io.Serializable
 
 data class Product(
@@ -32,7 +33,7 @@ data class ProductParam(
     @SerializedName("industry") var category: String = "",
     @SerializedName("importPrice") var importPrice: Int = 0,
     @SerializedName("sellPrice") var sellPrice: Int = 0,
-    @SerializedName("img_product") var imageProduct: String = "",
+    @SerializedName("img_product") var imageProduct: String = Constant.IMAGE_DEFAULT,
     @SerializedName("unit") var unit: String = "",
 ) {
     constructor(product: Product) : this() {
@@ -74,7 +75,7 @@ data class ProductInvoiceParam(
     @SerializedName("name") var name: String = "",
     @SerializedName("unitPrice") var unitPrice: Int = 0,
     @SerializedName("quantityPro") var quantity: Int = 0,
-    @SerializedName("totalPrice") var total : Int = 0,
+    @SerializedName("totalPrice") var total: Int = 0,
     @SerializedName("expiryDate") var expiryDate: Long = 0,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -117,7 +118,7 @@ data class InvoiceRefund(
     @SerializedName("idInvoice") val id: String = "",
     @SerializedName("products") var products: ArrayList<ProductInvoiceParam> = arrayListOf(),
     @SerializedName("invoiceType") var invoiceType: String = "REFUND",
-    @SerializedName("totalBill") var total : Long = 0,
+    @SerializedName("totalBill") var total: Long = 0,
 ) : Parcelable
 
 

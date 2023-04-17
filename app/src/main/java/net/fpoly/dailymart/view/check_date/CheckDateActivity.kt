@@ -1,7 +1,6 @@
 package net.fpoly.dailymart.view.check_date
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
@@ -13,12 +12,9 @@ import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
-import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.CheckDateFilter
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.message.MessageActivity
-import java.text.SimpleDateFormat
 
 class CheckDateActivity :
     BaseActivity<ActivityCheckDateBinding>(ActivityCheckDateBinding::inflate) {
@@ -32,12 +28,9 @@ class CheckDateActivity :
     private var mListProduct: List<Product> = ArrayList()
     private lateinit var mAdapter: ProductDateAdapter
 
-    private var mLoadingDialog: LoadingDialog? = null
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        mLoadingDialog = LoadingDialog(this)
-        mLoadingDialog?.showLoading()
         binding.imvBack.setOnClickListener { finish() }
         viewModel.getListProduct()
         initRecycleView()
@@ -57,16 +50,17 @@ class CheckDateActivity :
     }
 
     override fun setupObserver() {
-        viewModel.listProduct.observe(this) {
+        viewModel.listProductCheckDate.observe(this) {
             mListProduct = it
             mAdapter.setData(getListData(it, mFilter))
-            binding.pbLoading.gone()
-            mLoadingDialog?.hideLoading()
         }
         viewModel.message.observe(this) {
             if (it.isNotEmpty()) {
                 showToast(this, it)
             }
+        }
+        viewModel.getListSuccess.observe(this) {
+            if (it) binding.pbLoading.gone()
         }
     }
 
@@ -74,7 +68,7 @@ class CheckDateActivity :
         return when (type) {
             CheckDateFilter.SOON -> "Sắp hết hạn"
             CheckDateFilter.SEVEN_DAY -> "Hết hạn 7 ngày tới"
-            CheckDateFilter.CATEGORY -> "ngành hàng"
+            CheckDateFilter.CATEGORY -> "Ngành hàng"
         }
     }
 

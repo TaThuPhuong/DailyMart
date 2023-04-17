@@ -125,43 +125,16 @@ class AddProductViewModel(
                 checkValidate.value?.let {
                     if (it) {
                         viewModelScope.launch(Dispatchers.IO) {
-                            try {
-                                ServerInstance.apiProduct.insertProduct(mToken, _product.value!!)
-                                    .enqueue(object : Callback<ResponseBody> {
-                                        override fun onResponse(
-                                            call: Call<ResponseBody>,
-                                            response: retrofit2.Response<ResponseBody>,
-                                        ) {
-                                            if (response.isSuccessful) {
-                                                message.postValue("Thêm thành công")
-                                                actionSuccess.postValue(true)
-                                                Log.e(TAG, "body: ${response.body()?.string()}")
-                                                Log.e(
-                                                    TAG,
-                                                    "errorBody: ${response.errorBody()?.string()}",
-                                                )
-                                            } else {
-                                                message.postValue(response.message())
-                                                actionSuccess.postValue(false)
-                                                Log.e(TAG, "body: ${response.body()?.string()}")
-                                                Log.e(
-                                                    TAG,
-                                                    "errorBody: ${response.errorBody()?.string()}",
-                                                )
-                                            }
-                                        }
-
-                                        override fun onFailure(
-                                            call: Call<ResponseBody>,
-                                            t: Throwable,
-                                        ) {
-                                            Log.e(TAG, "onFailure: $t")
-                                        }
-                                    })
-                            } catch (e: Exception) {
-                                Log.e(TAG, "Exception: $e")
+                            when (val res = productRepo.insertProduct(mToken, _product.value!!)) {
+                                is Response.Error -> {
+                                    message.postValue(res.message)
+                                    actionSuccess.postValue(false)
+                                }
+                                is Response.Success -> {
+                                    message.postValue(res.message)
+                                    actionSuccess.postValue(true)
+                                }
                             }
-
                         }
                     } else {
                         message.postValue("Chưa nhập đủ dữ liệu")
@@ -169,10 +142,6 @@ class AddProductViewModel(
                 }
             }
         }
-    }
-
-    private fun checkBarcode(barcode: String) {
-
     }
 }
 

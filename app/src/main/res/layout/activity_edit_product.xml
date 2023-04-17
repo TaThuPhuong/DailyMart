@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/imbplexsans_medium"
                 android:gravity="center_vertical"
-                android:text="Thêm sản phẩm"
+                android:text="Sửa sản phẩm"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

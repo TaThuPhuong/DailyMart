@@ -8,11 +8,12 @@
         <item name="android:windowHideAnimation">@anim/fade_out</item>
         <item name="android:windowShowAnimation">@anim/fade_in</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
-
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:statusBarColor">@color/no_color</item>
+        <item name="android:navigationBarColor">@color/no_color</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Base.Splash" parent="Theme.Material3.Light.NoActionBar">
@@ -56,4 +57,9 @@
 
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="CardViewWhite" parent="CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">@dimen/_8sdp</item>
+        <item name="cardElevation">5dp</item>
+    </style>
 </resources>

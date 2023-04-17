@@ -1,12 +1,10 @@
 package net.fpoly.dailymart.repository
 
-import net.fpoly.dailymart.data.model.Product
-import net.fpoly.dailymart.data.model.ProductParam
-import net.fpoly.dailymart.data.model.ProductParamUpdate
+import net.fpoly.dailymart.data.model.*
 import net.fpoly.dailymart.data.model.response.ResponseResult
 
 interface ProductRepository {
-//    suspend fun insertProduct(token: String, productParam: ProductParam): ResponseResult<Unit>
+    suspend fun insertProduct(token: String, productParam: ProductParam): Response<Unit>
 
     suspend fun getAllProduct(token: String): ResponseResult<List<Product>>
 
@@ -16,7 +14,7 @@ interface ProductRepository {
         token: String,
         id: String,
         productParam: ProductParamUpdate,
-    ): ResponseResult<Product>
+    ): Response<Product>
 
     suspend fun deleteProduct(token: String, id: String): ResponseResult<Unit>
 
