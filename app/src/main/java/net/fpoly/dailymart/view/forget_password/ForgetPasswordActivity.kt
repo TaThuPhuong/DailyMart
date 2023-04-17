@@ -15,6 +15,9 @@ class ForgetPasswordActivity :
     private val viewModel: ForgetPassViewModel by viewModels { AppViewModelFactory }
 
     override fun setupData() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        viewModel.initLoadDialog(this)
         send()
         viewModel.initLoadDialog(this)
         onEditTextChange()

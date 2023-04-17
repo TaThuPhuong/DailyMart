@@ -8,25 +8,24 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.base.LoadingDialog
-import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.model.param.ChangePassParam
 import net.fpoly.dailymart.data.model.param.SendOtpParam
+import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.change_password.ChangePasswordActivity
+import net.fpoly.dailymart.data.model.Response.Success
+import net.fpoly.dailymart.data.model.Response.Error
 import net.fpoly.dailymart.view.login.LoginActivity
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
 
 class ResetPasswordViewModel(app: Application) : ViewModel() {
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
-    private val server = ServerInstance.apiUser
 
-    private val _validateOldPass = MutableLiveData("")
-    val validateOldPass: LiveData<String> = _validateOldPass
+    private val forgotPassRepo = UserRepositoryImpl()
+    private val _validateOtp = MutableLiveData("")
+    val validateOtp: LiveData<String> = _validateOtp
     private val _validateNewPass = MutableLiveData("")
     val validateNewPass: LiveData<String> = _validateNewPass
     private val _validateConfirm = MutableLiveData("")
@@ -46,40 +45,22 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
         Log.d(TAG, "Params : $sendOtpParam")
         Log.d(TAG, "token : $mToken")
         mLoadingDialog.showLoading()
-        server.sendOTP(
-            sendOtpParam
-        )
-            .enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.message() == "Update new password success!")
-                            Toast.makeText(
-                                context,
-                                response.message().toString(),
-                                Toast.LENGTH_LONG
-                            )
-                                .show()
-                        Log.d(TAG, "Response : " + response.body().toString())
-                        Log.e(TAG, "code: " + response.code())
-                        Log.e(TAG, "message: " + response.message())
-                        Log.e(TAG, "errorBody: " + response.errorBody()?.string())
-                        mLoadingDialog.hideLoading()
-                        activity?.startActivity(Intent(context, LoginActivity::class.java))
-                    } else {
-                        Log.e(TAG, "errorBody: " + response.errorBody())
-                        mLoadingDialog.hideLoading()
-                    }
-                }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e(TAG, "Response : " + t.message)
-                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+        viewModelScope.launch {
+            when (val resetPass = forgotPassRepo.resetPass(sendOtpParam)) {
+                is Success -> {
+                    Log.e(TAG, "sendOTP: ${resetPass.data}")
+                    Toast.makeText(context, resetPass.message, Toast.LENGTH_SHORT).show()
+                    activity?.startActivity(Intent(context, LoginActivity::class.java))
                     mLoadingDialog.hideLoading()
                 }
-            })
+
+                is Error -> {
+                    _validateOtp.value = resetPass.message
+                    mLoadingDialog.hideLoading()
+                }
+            }
+        }
     }
 
     fun onEvent(event: SetupEvent, context: Context) {
@@ -88,16 +69,35 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
                 _changeParam.value = _changeParam.value?.copy(
                     token = event.value
                 )
-                _validateOldPass.value = event.value.blankException()
+                if (event.value.trim().isEmpty()) {
+                    _validateOtp.value = event.value.blankException()
+                } else {
+                    _validateOtp.value = ""
+                }
             }
+
             is SetupEvent.OnNewPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     newPassword = event.value
                 )
-                _validateNewPass.value = event.value.blankException()
+                if (event.value.isEmpty()) {
+                    _validateNewPass.value = event.value.blankException()
+                } else if (!validatePassword(event.value)) {
+                    _validateNewPass.value =
+                        "Mật khẩu tối thiểu 8 kí tự có chữ hoa chữ thường, số và kí tự đặc biệt"
+                } else {
+                    _validateNewPass.value = ""
+                }
             }
+
             is SetupEvent.OnConfirm -> {
-                _validateConfirm.value = event.value.blankException()
+                if (event.value.isEmpty()) {
+                    _validateConfirm.value = event.value.blankException()
+                } else if (event.value != _changeParam.value?.newPassword) {
+                    _validateConfirm.value = "Mật khẩu không khớp !"
+                } else {
+                    _validateConfirm.value = ""
+                }
             }
 
             is SetupEvent.ValidateForm -> {
@@ -108,7 +108,7 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
                             sendOtpParam = it,
                             context = context,
                             activity = null
-                        );
+                        )
                     } else {
                         mLoadingDialog.hideLoading()
                     }
@@ -122,5 +122,11 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
         data class OnNewPass(val value: String) : SetupEvent()
         data class OnConfirm(val value: String) : SetupEvent()
         object ValidateForm : SetupEvent()
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        val pattern =
+            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[,.!@#\\/\\$&*~\"|:]).{8,}".toRegex()
+        return pattern.matches(password)
     }
 }

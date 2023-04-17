@@ -23,5 +23,9 @@ interface UserRepository {
 
     suspend fun forgotPass(
         forgotPass: ForgotPass,
-    ): Response<ResponseForgot>
+    ): Response<String>
+
+    suspend fun resetPass(
+        sendOtpParam: SendOtpParam,
+    ): Response<String>
 }
