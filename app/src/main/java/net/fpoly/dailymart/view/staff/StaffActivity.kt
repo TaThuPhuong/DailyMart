@@ -2,20 +2,17 @@ package net.fpoly.dailymart.view.staff
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.data.model.Task
+import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
-import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ActivityStaffBinding
 import net.fpoly.dailymart.extension.view_extention.*
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.add_staff.AddStaffActivity
-import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.staff.details.DetailsStaffActivity
 
 class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::inflate) {
@@ -26,9 +23,11 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
     private var mListUser: List<Datum> = ArrayList()
     private lateinit var mUser: User
 
+    private var mLoadingDialog: LoadingDialog? = null
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        mLoadingDialog = LoadingDialog(this)
         mUser = SharedPref.getUser(this)
         binding.imvBack.setOnClickListener { finish() }
         binding.tvAddNew.setOnClickListener {
@@ -40,15 +39,16 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
             binding.edSearch.setText("")
             mStaffAdapter.setUserData(mListUser)
         }
-        viewModel.initLoadDialog(context = this)
         setUserSearch()
-        viewModel.getUser()
+        mLoadingDialog?.showLoading()
         initRecycleView()
+        viewModel.getUser()
     }
 
     override fun setupObserver() {
-        viewModel.user.observe(this) { user ->
+        viewModel.mListUser.observe(this) { user ->
             mStaffAdapter.setUserData(user)
+            mLoadingDialog?.hideLoading()
             mListUser = user
             if (user.isNotEmpty()) {
                 binding.tvNoData.gone()
@@ -91,5 +91,11 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mLoadingDialog?.showLoading()
+        viewModel.getUser()
     }
 }

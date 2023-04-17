@@ -45,7 +45,7 @@ class CheckDateViewModel(private val app: Application, private val productRepo: 
     fun onDestroyProduct(expiry: ExpiryCheck) {
         val api = ServerInstance.apiProduct
         val cal = Calendar.getInstance()
-        val month = cal[Calendar.MONTH]
+        val month = cal[Calendar.MONTH] + 1
         val year = cal[Calendar.YEAR]
         viewModelScope.launch(Dispatchers.IO) {
             try {

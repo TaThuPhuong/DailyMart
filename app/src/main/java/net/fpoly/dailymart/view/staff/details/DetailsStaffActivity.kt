@@ -56,7 +56,6 @@ class DetailsStaffActivity :
                 isChangeAvatar = true
             }
         }
-        viewModel.initLoadDialog(context = this)
         setupBtnChangeRole()
         setupBtnChangeStatus()
     }

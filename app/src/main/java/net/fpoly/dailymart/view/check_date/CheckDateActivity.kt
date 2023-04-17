@@ -38,7 +38,6 @@ class CheckDateActivity :
         binding.lifecycleOwner = this
         mLoadingDialog = LoadingDialog(this)
         mLoadingDialog?.showLoading()
-        binding.layoutToolbar.setMarginsStatusBar(this)
         binding.imvBack.setOnClickListener { finish() }
         viewModel.getListProduct()
         initRecycleView()
@@ -83,7 +82,7 @@ class CheckDateActivity :
         binding.edSearch.getTextOnChange { value ->
             mListExpiry = getListData(mListProduct, mFilter)
             val listFilter = mListExpiry.filter {
-                it.id.contains(value, true) || it.productName.contains(
+                it.barcode.contains(value, true) || it.productName.contains(
                     value,
                     true
                 )

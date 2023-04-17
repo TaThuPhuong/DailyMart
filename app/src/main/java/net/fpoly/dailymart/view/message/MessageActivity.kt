@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.message
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.splash.SplashActivity
 
 class MessageActivity : AppCompatActivity() {
 
@@ -33,9 +35,14 @@ class MessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val user = SharedPref.getUser(this)
+        if (user.id == "") {
+            startActivity(Intent(this, SplashActivity::class.java))
+            finishAffinity()
+        }
         WindowCompat.getInsetsController(window, binding.root).let {
             it.isAppearanceLightNavigationBars = false
-            it.isAppearanceLightStatusBars= false
+            it.isAppearanceLightStatusBars = false
         }
         setupData()
         setupObserver()

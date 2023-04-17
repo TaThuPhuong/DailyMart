@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.model.param
 
 import com.google.gson.annotations.SerializedName
+import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.utils.ROLE
 
 data class RegisterParam(
@@ -10,8 +11,8 @@ data class RegisterParam(
     @SerializedName("phoneNumber") val phoneNumber: String = "",
     @SerializedName("status") val status: Boolean = true,
     @SerializedName("role") val role: ROLE = ROLE.staff,
-    @SerializedName("deviceId") var deviceId: String = "",
-    @SerializedName("linkAvt") var linkAvt: String = "",
+    @SerializedName("deviceId") var deviceId: String = "deviceId",
+    @SerializedName("linkAvt") var linkAvt: String = Constant.AVATAR_DEFAULT,
 ) {
     fun checkValidate(): Boolean =
         !(name.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim()

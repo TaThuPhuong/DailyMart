@@ -13,6 +13,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
@@ -91,7 +92,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_add_new"
+            android:layout_below="@+id/layout_search"
             android:layout_marginTop="20dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -105,6 +106,7 @@
             android:id="@+id/tv_no_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_search"
             android:layout_marginTop="20dp"
             android:background="@color/gray_light"
             android:gravity="center"
