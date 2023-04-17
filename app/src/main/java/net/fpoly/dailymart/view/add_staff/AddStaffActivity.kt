@@ -21,6 +21,7 @@ class AddStaffActivity : BaseActivity<ActivityAddStaffBinding>(ActivityAddStaffB
         binding.lifecycleOwner = this
         binding.layoutRole.setOnClickListener {
             ChangeRoleDialog(this, ROLE.staff) {
+                viewModel.onEvent(UserEvent.OnChangeRole(it))
                 binding.edRoleUser.text = it.value
             }.show()
         }

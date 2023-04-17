@@ -36,6 +36,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         mUser = SharedPref.getUser(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.pbLoading.visible()
         viewModel.getListProducts()
         binding.imvBack.setOnClickListener { finish() }
         binding.imvClear.setOnClickListener {
@@ -52,9 +53,11 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
-            binding.pbLoading.gone()
             mProductAdapter.setData(it)
             mListProduct = it
+        }
+        viewModel.getListSuccess.observe(this) {
+            binding.pbLoading.gone()
         }
     }
 

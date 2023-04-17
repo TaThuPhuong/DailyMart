@@ -28,6 +28,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
     private var mProductRecent: Product? = null
     val role: LiveData<Boolean> = _role
     val mUser = SharedPref.getUser(app)
+    val getListSuccess = MutableLiveData(false)
 
     private val apiProduct = ServerInstance.apiProduct
     private val mToken = SharedPref.getAccessToken(app)
@@ -42,8 +43,10 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
             if (res.isSuccess()) {
                 _listProduct.postValue(res.data!!)
                 message.postValue(res.message!!)
+                getListSuccess.postValue(true)
             } else {
                 message.postValue(res.message!!)
+                getListSuccess.postValue(false)
             }
         }
     }
@@ -69,7 +72,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
 
                             }
                         })
-                }catch (e:Exception){
+                } catch (e: Exception) {
 
                 }
             }
