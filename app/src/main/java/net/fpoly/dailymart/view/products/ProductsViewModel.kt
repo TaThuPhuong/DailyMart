@@ -60,6 +60,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
                         message.postValue("Phục hồi lỗi")
                     }
                     is Response.Success -> {
+                        getListProducts()
                         message.postValue("Phục hồi thành công")
                     }
                 }

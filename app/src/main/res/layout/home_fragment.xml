@@ -63,18 +63,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/imbplexsans_regular"
-                            android:text="Doanh thu:"
+                            android:text="Công việc:"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/imbplexsans_medium"
-                            android:text="12.000.000đ"
-                            android:textColor="@color/white"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/white"
+                            android:progress="40"
+                            android:progressDrawable="@drawable/bg_ed_message" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -90,7 +89,7 @@
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="@{viewModel.totalInvoice}"
                             android:textColor="@color/white"
-                            android:textSize="24sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -221,8 +220,8 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="Thanh toán"
-                            android:textSize="12sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -268,8 +267,8 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="Nhắn tin"
-                            android:textSize="12sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -300,8 +299,8 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="Công việc"
-                            android:textSize="12sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -347,8 +346,8 @@
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:text="Lịch Làm Việc"
-                            android:textSize="12sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -365,8 +364,8 @@
                 <ProgressBar
                     android:id="@+id/pb_loading"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_recent_task"
@@ -392,7 +391,8 @@
             android:layout_marginTop="70dp"
             android:background="@drawable/bg_notification"
             android:elevation="10dp"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_delete"

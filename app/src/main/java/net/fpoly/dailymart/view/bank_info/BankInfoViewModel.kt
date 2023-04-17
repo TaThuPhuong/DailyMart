@@ -24,6 +24,7 @@ class BankInfoViewModel(private val app: Application) : ViewModel() {
     val mListBank = MutableLiveData<ArrayList<BankModel>>()
     val mBankAccountRequest = MutableLiveData<BankAccountRequest>()
     val message = MutableLiveData("")
+    val saveSuccess = MutableLiveData(false)
 
     fun getListBank() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -68,8 +69,9 @@ class BankInfoViewModel(private val app: Application) : ViewModel() {
 
     fun saveBankInfo(bankInfo: BankInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            BankDao.insertBankInfo(bankInfo) {
-                message.postValue(it)
+            BankDao.insertBankInfo(bankInfo) { m, b ->
+                message.postValue(m)
+                saveSuccess.postValue(b)
             }
         }
     }
