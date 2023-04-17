@@ -85,7 +85,14 @@ class MessageActivity : AppCompatActivity() {
         viewModel.listMessage.observe(this) {
             if (it.isNotEmpty()) {
                 mMessageAdapter.setData(it)
-                binding.rcvMessage.scrollToPosition(it.size - 1)
+                mListMessage = it
+            }
+        }
+        viewModel.isGetDone.observe(this) {
+            Log.e(TAG, "setupObserver: $it -- ${mListMessage.isNotEmpty()}")
+            if (it && mListMessage.isNotEmpty()) {
+                Log.e(TAG, "mListMessage size: ${mListMessage.size}")
+                binding.rcvMessage.scrollToPosition(mListMessage.size - 1)
             }
         }
     }

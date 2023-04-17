@@ -18,6 +18,7 @@ class MessageViewModel(private val app: Application) : ViewModel() {
     private val message = MutableLiveData(Message())
     val listMessage = MutableLiveData<List<Message>>(ArrayList())
     val user = SharedPref.getUser(app)
+    val isGetDone = MutableLiveData(false)
 
     init {
         message.value = message.value?.copy(
@@ -31,6 +32,7 @@ class MessageViewModel(private val app: Application) : ViewModel() {
     fun getAllMessage() {
         MessageDao.getAllMessage {
             listMessage.value = it
+            isGetDone.postValue(true)
         }
     }
 
