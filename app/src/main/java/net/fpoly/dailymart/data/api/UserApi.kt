@@ -43,13 +43,13 @@ interface UserApi {
     @POST("sendMail")
     suspend fun forgotPassword(
         @Body forgotPass: ForgotPass,
-    ): ResultData<ResponseForgot>
+    ): ResultData<String>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("forgot-pass")
-    fun sendOTP(
+    suspend fun sendOTP(
         @Body params: SendOtpParam,
-    ): Call<ResponseBody>
+    ): ResultData<String>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("log-out")

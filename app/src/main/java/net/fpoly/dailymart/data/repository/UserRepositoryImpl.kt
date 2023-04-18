@@ -102,9 +102,25 @@ class UserRepositoryImpl(
             try {
                 Log.e(TAGS, "forgot pass: ${Gson().toJson(forgotPass)}")
                 val res = api.forgotPassword(forgotPass)
+                Log.e(TAGS, "Forgot pass viewModel: " + res.result)
                 if (res.isSuccess()) {
                     Response.Success(res.result, res.message)
-//                    Log.e(TAGS, "Forgot pass viewModel: " + res.result)
+                } else {
+                    Response.Error(res.message)
+                }
+            } catch (e: Exception) {
+                Log.e(TAGS, "forgot pass Exception: $e")
+                Response.Error(e.message.toString())
+            }
+        }
+
+    override suspend fun resetPass(sendOtpParam: SendOtpParam): Response<String> =
+        withContext(coroutineScope) {
+            try {
+                Log.e(TAGS, "reset pass: ${Gson().toJson(sendOtpParam)}")
+                val res = api.sendOTP(sendOtpParam)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
                 } else {
                     Response.Error(res.message)
                 }

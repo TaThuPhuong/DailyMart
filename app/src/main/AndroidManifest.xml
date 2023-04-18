@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="net.fpoly.dailymart">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -69,6 +68,9 @@
             android:exported="false" />
         <activity
             android:name=".view.task.TaskActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.reset_password.ResetPasswordActivity"
             android:exported="true" />
         <activity
             android:name=".view.check_date.CheckDateActivity"
