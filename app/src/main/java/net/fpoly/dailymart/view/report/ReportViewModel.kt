@@ -20,8 +20,8 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
     ViewModel() {
 
     private val TAG = "YinMing"
-    val listRevenueByMonth = MutableLiveData<List<ReportDataByDayInMonth>>(ArrayList())
-    val listRevenueByYear = MutableLiveData<List<ReportDataByMonthInYear>>()
+    val listRevenueByMonth = MutableLiveData<List<ReportDayData>>(ArrayList())
+    val listRevenueByYear = MutableLiveData<List<ReportMonthData>>(ArrayList())
 
     val totalRevenue = MutableLiveData("0 vnđ")
     val totalImport = MutableLiveData("0 vnđ")
@@ -52,7 +52,7 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
             when (val res =
                 reportRepository.getReportByMonth(mToken, mCalender[Calendar.MONTH] + 1)) {
                 is Response.Success -> {
-                    listRevenueByMonth.value = res.data.totalByDay
+                    listRevenueByMonth.postValue(res.data.listData)
                     totalRevenue.postValue(res.data.revenue.toMoney())
                     totalImport.postValue(res.data.totalImport.toMoney())
                     totalExport.postValue(res.data.totalExport.toMoney())
@@ -74,7 +74,7 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
         viewModelScope.launch {
             when (val res = reportRepository.getReportByYear(mToken, mCalender[Calendar.YEAR])) {
                 is Response.Success -> {
-                    listRevenueByYear.value = res.data.totalByMonth
+                    listRevenueByYear.postValue(res.data.listData)
                     totalRevenue.postValue(res.data.revenue.toMoney())
                     totalImport.postValue(res.data.totalImport.toMoney())
                     totalExport.postValue(res.data.totalExport.toMoney())

@@ -51,7 +51,7 @@ class RectangleMarkerLineView(
             imvMarkerRectangleDot.layoutParams = layoutParams
         }
         val markerData = e.data as MarkerDataModel
-        txvMakerRectangleValue.text = e.y.round(round) + " " + markerData.unit
+        txvMakerRectangleValue.text = e.y.round(round) + " " + markerData.value
         super.refreshContent(e, highlight)
     }
 

@@ -88,7 +88,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
                 autoReload()
             }
         }
-        autoReload()
+//        autoReload()
     }
 
     private fun autoReload() {

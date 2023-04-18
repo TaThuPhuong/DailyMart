@@ -1,12 +1,10 @@
 package net.fpoly.dailymart.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.*
-import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.repository.ReportRepository
 
 class ReportRepositoryImpl : ReportRepository {

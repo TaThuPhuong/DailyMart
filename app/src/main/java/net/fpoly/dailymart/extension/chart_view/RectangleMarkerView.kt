@@ -11,7 +11,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.databinding.MarkerRectangleLayoutBinding
-import net.fpoly.dailymart.utils.round
 
 class RectangleMarkerView(
     private val mContext: Context,
@@ -53,7 +52,7 @@ class RectangleMarkerView(
                 }
         }
         val markerData = e.data as MarkerDataModel
-        binding.tvMarkerRectangleValue.text = e.y.round(round) + " " + markerData.unit
+        binding.tvMarkerRectangleValue.text = markerData.value
         binding.tvMarkerRectangleTime.text = markerData.timer
 
         super.refreshContent(e, highlight)
