@@ -26,6 +26,10 @@ object AppModule {
 
     @Volatile
     var notificationRepo: NotificationRepository? = null
+
+    @Volatile
+    var reportRepository: ReportRepository? = null
+
     private var database: Database? = null
     fun providerTaskRepository(): TaskRepository {
         synchronized(this) {
@@ -66,6 +70,12 @@ object AppModule {
             return notificationRepo ?:  createNotificationRepositoryImpl(context)
         }
     }
+    fun providerReportRepository(): ReportRepository {
+        synchronized(this) {
+            return reportRepository ?: ReportRepositoryImpl()
+        }
+    }
+
     @VisibleForTesting
     fun createDatabase(context: Context): Database {
         return Room.databaseBuilder(

@@ -90,6 +90,9 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
                 showToast(this, it)
             }
         }
+        viewModel.saveSuccess.observe(this) {
+            if (it) finish()
+        }
     }
 
     private fun initBankRecycleView() {

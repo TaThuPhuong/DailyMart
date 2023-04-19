@@ -17,6 +17,7 @@ class DailySmartApp : Application() {
     val productRepository = AppModule.providerProductRepository()
     val categoryRepository = AppModule.providerCategoryRepository()
     val supplierRepository = AppModule.providerSupplierRepository()
+    val reportRepository = AppModule.providerReportRepository()
     val notificationRepo: NotificationRepository
         get() = AppModule.providerNotificationRepository(this)
     val context: Context
@@ -26,7 +27,7 @@ class DailySmartApp : Application() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Daily Mart"
-            val descriptionText ="Thông báo"
+            val descriptionText = "Thông báo"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText

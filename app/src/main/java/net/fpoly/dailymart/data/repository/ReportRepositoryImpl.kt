@@ -1,12 +1,10 @@
 package net.fpoly.dailymart.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.*
-import net.fpoly.dailymart.data.model.response.ResponseResult
 import net.fpoly.dailymart.repository.ReportRepository
 
 class ReportRepositoryImpl : ReportRepository {
@@ -15,10 +13,10 @@ class ReportRepositoryImpl : ReportRepository {
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     private val TAG = "ReportRepositoryImpl"
 
-    override suspend fun getReportByMonth(token: String, month: Int) =
+    override suspend fun getReportByMonth(token: String, month: Int, year: Int) =
         withContext(ioDispatcher) {
             try {
-                val res = reportApi.revenueMonth(token, month)
+                val res = reportApi.revenueMonth(token, month, year)
                 if (res.isSuccess()) {
                     Response.Success(res.result, res.message)
                 } else {
