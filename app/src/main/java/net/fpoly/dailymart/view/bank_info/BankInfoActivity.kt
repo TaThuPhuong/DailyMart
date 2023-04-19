@@ -62,7 +62,7 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
                 }
             }
         }
-        binding.imvBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }

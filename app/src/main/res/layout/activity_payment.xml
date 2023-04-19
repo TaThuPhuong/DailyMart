@@ -6,7 +6,6 @@
         <variable
             name="viewmodel"
             type="net.fpoly.dailymart.view.payment.PaymentViewModel" />
-
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

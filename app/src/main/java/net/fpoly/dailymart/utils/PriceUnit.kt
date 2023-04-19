@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 
 fun Int.toMoney(): String {
     val df = DecimalFormat("###,###,###")
-    return df.format(this) + " vnđ"
+    return df.format(this) + " VNĐ"
 }
 
 fun Long.toMoney(): String {
