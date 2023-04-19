@@ -57,4 +57,18 @@ class ReportRepositoryImpl : ReportRepository {
                 Response.Error(e.message.toString())
             }
         }
+
+    override suspend fun getBestSeller(token: String) =
+        withContext(ioDispatcher) {
+            try {
+                val res = reportApi.getBestSeller(token)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
+                } else {
+                    Response.Error(res.message)
+                }
+            } catch (e: Exception) {
+                Response.Error("")
+            }
+        }
 }

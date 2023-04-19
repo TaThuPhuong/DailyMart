@@ -36,11 +36,13 @@ class PickTimeDialog(
         binding.npvPopupPick1.setDisplayedValues(listHour, false)
         binding.npvPopupPick1.maxValue = listHour.size - 1
         binding.npvPopupPick1.value = currentHour
+        binding.npvPopupPick1.wrapSelectorWheel = true
 
         binding.npvPopupPick2.minValue = 0
         binding.npvPopupPick2.setDisplayedValues(listMinute, false)
         binding.npvPopupPick2.maxValue = listMinute.size - 1
         binding.npvPopupPick2.value = currentMinute
+        binding.npvPopupPick2.wrapSelectorWheel = true
 
         binding.npvPopupPick1.setOnValueChangedListener(object :
             NumberPickView.OnValueChangeListener {
