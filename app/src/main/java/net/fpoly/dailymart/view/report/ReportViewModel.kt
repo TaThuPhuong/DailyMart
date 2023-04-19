@@ -50,7 +50,11 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
         timeReport.value = time.date2String("MM/yyyy")
         viewModelScope.launch {
             when (val res =
-                reportRepository.getReportByMonth(mToken, mCalender[Calendar.MONTH] + 1)) {
+                reportRepository.getReportByMonth(
+                    mToken,
+                    mCalender[Calendar.MONTH] + 1,
+                    mCalender[Calendar.YEAR]
+                )) {
                 is Response.Success -> {
                     listRevenueByMonth.postValue(res.data.listData)
                     totalRevenue.postValue(res.data.revenue.toMoney())

@@ -1,7 +1,7 @@
 package net.fpoly.dailymart.utils
 
 import android.content.Context
-import android.graphics.Typeface
+import android.graphics.PointF
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
@@ -9,13 +9,17 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.IMarker
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.extension.chart_view.RectangleMarkerView
 import net.fpoly.dailymart.extension.chart_view.RoundedBarChartRenderer
+
 
 object ChartUtils {
     fun setConfigChart(context: Context, chart: BarChart, isRadius: Boolean = true) {
@@ -139,7 +143,6 @@ object ChartUtils {
         xAxis.textColor = ContextCompat.getColor(context, R.color.gray_medium)
         xAxis.textSize = 9f
         xAxis.axisMinimum = 1f
-//        xAxis.labelCount = max + 1
 
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -163,25 +166,36 @@ object ChartUtils {
                 return if (value < 0) {
                     ""
                 } else {
-                    value.round()
+                    value.round("###,###,###")
                 }
             }
         }
     }
 
-    fun setConfigLineDataSet(context: Context, data: MutableList<Entry>): LineDataSet {
+    fun setConfigLineDataSet(
+        context: Context,
+        data: MutableList<Entry>,
+        color: Int,
+        highlight: Int,
+        circleColor :Int
+    ): LineDataSet {
         val lineDataSet = LineDataSet(data, "")
 
         lineDataSet.lineWidth = 4f
         lineDataSet.setDrawValues(false)
         lineDataSet.setDrawCircles(true)
-        lineDataSet.setDrawCircleHole(false)
+        lineDataSet.setDrawCircleHole(true)
         lineDataSet.circleRadius = 2f
+        lineDataSet.color = ContextCompat.getColor(context, color)
+        lineDataSet.highlightLineWidth = 5f
+        lineDataSet.highLightColor = ContextCompat.getColor(context, highlight)
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, circleColor))
         lineDataSet.setDrawHorizontalHighlightIndicator(false)
         lineDataSet.setDrawVerticalHighlightIndicator(false)
         lineDataSet.isHighlightEnabled = true
+
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawFilled(true)
+        lineDataSet.setDrawFilled(false)
         lineDataSet.fillDrawable =
             ContextCompat.getDrawable(context, R.drawable.bg_line_chart_blue2)
         lineDataSet.axisDependency = YAxis.AxisDependency.LEFT

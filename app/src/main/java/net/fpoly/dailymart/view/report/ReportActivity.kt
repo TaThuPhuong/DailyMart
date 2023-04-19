@@ -167,15 +167,15 @@ class ReportActivity :
         (barchart.marker as RectangleMarkerView).setMaxX(maxX - 1)
 
         val maxMoney = if (typeChart == TypeChart.EXPORT) {
-            abs(mListMonthData.maxOf { it.data.tienNhap })
-        } else {
             abs(mListMonthData.maxOf { it.data.tienBan })
+        } else {
+            abs(mListMonthData.maxOf { it.data.tienNhap })
         }
         barchart.extraRightOffset = 10f
         barchart.xAxis.axisMaximum = maxX.toFloat()
         barchart.xAxis.axisMinimum = 1f
         barchart.xAxis.labelCount = maxX
-        barchart.axisLeft.axisMaximum = maxMoney * 1.5f
+        barchart.axisLeft.axisMaximum = maxMoney * 1.2f
         barchart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return if (value > maxX) {
@@ -242,9 +242,9 @@ class ReportActivity :
             this,
             barData,
             "",
-            R.color.pink_medium,
+            R.color.pink_primary,
             R.color.pink_light,
-            R.color.pink_primary
+            R.color.red_FF444C
         )
         return BarData(barDataSet)
     }
@@ -271,9 +271,9 @@ class ReportActivity :
             this,
             barData,
             "",
-            R.color.pink_medium,
+            R.color.pink_primary,
             R.color.pink_light,
-            R.color.pink_primary
+            R.color.red_FF444C
         )
         return BarData(barDataSet)
     }
@@ -288,16 +288,17 @@ class ReportActivity :
             max(mListYearData.maxOf { it.data.tienBan }, mListYearData.maxOf { it.data.tienBan })
         }
         lineChart.axisRight.isEnabled = false
-        lineChart.setMaxVisibleValueCount(12)
-        lineChart.setVisibleXRangeMaximum(10f)
-        lineChart.axisLeft.axisMaximum = maxMoney * 1.5f
+        lineChart.axisLeft.axisMaximum = maxMoney * 1.2f
         lineChart.xAxis.axisMaximum = maxLabel - 1f
         lineChart.xAxis.labelCount = maxLabel - 1
-        lineChart.data = when (type) {
+        val data = when (type) {
             TypeFilter.DAY -> return
             TypeFilter.MONTH -> getLineDataMonth()
             TypeFilter.YEAR -> getLineDataYear()
         }
+        lineChart.setMaxVisibleValueCount(12)
+        lineChart.setVisibleXRangeMaximum(10f)
+        lineChart.data = data
     }
 
     private fun getLineDataMonth(): LineData {
@@ -319,15 +320,21 @@ class ReportActivity :
             entryDataImport.add(entryImport)
             entryDataExport.add(entryExport)
         }
-        val lineDataSetImport = ChartUtils.setConfigLineDataSet(this, entryDataImport)
-        val lineDataSetExport = ChartUtils.setConfigLineDataSet(this, entryDataExport)
-        lineDataSetImport.color = R.color.red_FF444C
-        lineDataSetImport.setCircleColor(R.color.red_FF444C)
-        lineDataSetImport.highLightColor = R.color.red_FF444C
-        lineDataSetExport.color = R.color.blue_04
-        lineDataSetExport.setCircleColor(R.color.blue_04)
-        lineDataSetExport.highLightColor = R.color.blue_04
-
+        val lineDataSetImport = ChartUtils.setConfigLineDataSet(
+            this,
+            entryDataImport,
+            R.color.red_FF444C,
+            R.color.black,
+            R.color.red_FF444C
+        )
+        val lineDataSetExport =
+            ChartUtils.setConfigLineDataSet(
+                this,
+                entryDataExport,
+                R.color.blue_04,
+                R.color.start_text,
+                R.color.blue_04
+            )
         listLineData = ArrayList()
         listLineData.add(lineDataSetImport)
         listLineData.add(lineDataSetExport)
@@ -353,14 +360,21 @@ class ReportActivity :
             entryDataImport.add(entryImport)
             entryDataExport.add(entryExport)
         }
-        val lineDataSetImport = ChartUtils.setConfigLineDataSet(this, entryDataImport)
-        val lineDataSetExport = ChartUtils.setConfigLineDataSet(this, entryDataExport)
-        lineDataSetImport.color = R.color.red_FF444C
-        lineDataSetImport.setCircleColor(R.color.red_FF444C)
-        lineDataSetImport.highLightColor = R.color.red_FF444C
-        lineDataSetExport.color = R.color.blue_04
-        lineDataSetExport.setCircleColor(R.color.blue_04)
-        lineDataSetExport.highLightColor = R.color.blue_04
+        val lineDataSetImport = ChartUtils.setConfigLineDataSet(
+            this,
+            entryDataImport,
+            R.color.red_FF444C,
+            R.color.black,
+            R.color.red_FF444C
+        )
+        val lineDataSetExport =
+            ChartUtils.setConfigLineDataSet(
+                this,
+                entryDataExport,
+                R.color.blue_04,
+                R.color.start_text,
+                R.color.blue_04
+            )
 
         listLineData = ArrayList()
         listLineData.add(lineDataSetImport)

@@ -8,10 +8,11 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface ReportApi {
-    @GET("stats/revenue/month/{month}")
+    @GET("stats/revenue/month/{month}&{year}")
     suspend fun revenueMonth(
         @Header("Authorization") token: String,
         @Path("month") month: Int,
+        @Path("year") year: Int,
     ): ResultData<ReportDataByMonth>
 
     @GET("stats/revenue/date/{date}")

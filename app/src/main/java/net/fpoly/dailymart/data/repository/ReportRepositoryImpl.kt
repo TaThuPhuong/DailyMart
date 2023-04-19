@@ -13,10 +13,10 @@ class ReportRepositoryImpl : ReportRepository {
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     private val TAG = "ReportRepositoryImpl"
 
-    override suspend fun getReportByMonth(token: String, month: Int) =
+    override suspend fun getReportByMonth(token: String, month: Int, year: Int) =
         withContext(ioDispatcher) {
             try {
-                val res = reportApi.revenueMonth(token, month)
+                val res = reportApi.revenueMonth(token, month, year)
                 if (res.isSuccess()) {
                     Response.Success(res.result, res.message)
                 } else {
