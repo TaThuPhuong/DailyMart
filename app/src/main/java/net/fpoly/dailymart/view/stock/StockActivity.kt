@@ -18,7 +18,7 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
     private lateinit var mStockAdapter: StockAdapter
 
     override fun setOnClickListener() {
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     override fun setupData() {

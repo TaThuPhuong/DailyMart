@@ -36,7 +36,7 @@ class TaskEditActivity :
             mLoadingDialog!!.showLoading()
             viewModel.onEvent(EditEvent.OnSave)
         }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         binding.scFinish.setOnCheckedChangeListener { _, b ->
             viewModel.onEvent(EditEvent.OnFinishChange(b))
         }

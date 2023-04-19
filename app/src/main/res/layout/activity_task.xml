@@ -17,38 +17,49 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
-                android:text="Giao việc"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Giao Việc"
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
+            android:layout_marginTop="18dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_toolbar"
-            android:layout_marginHorizontal="30dp">
+            android:layout_below="@+id/toolbar"
+            android:layout_marginHorizontal="18dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/imv_add"
                 android:background="@drawable/bg_ed_search_task">
@@ -61,9 +72,9 @@
                     android:background="@color/no_color"
                     android:drawableStart="@drawable/ic_search"
                     android:drawablePadding="10dp"
-                    android:hint="Việc, tên .."
+                    android:hint="Việc, tên..."
                     android:maxLines="1"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="12dp"
                     android:textSize="12sp" />
 
                 <ImageView
@@ -80,8 +91,8 @@
             <ImageView
                 android:id="@+id/imv_add"
                 set_visible="@{viewModel.role}"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_add" />
         </RelativeLayout>
@@ -93,8 +104,10 @@
             android:layout_below="@+id/layout_search"
             app:tabBackground="@drawable/bg_tab_unselected"
             app:tabIndicator="@drawable/bg_tab_selected"
+            android:layout_marginTop="16dp"
             app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorColor="#FB3838"
+            app:tabIndicatorColor="@color/pink_primary"
+            app:tabRippleColor="@null"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorHeight="@dimen/_40sdp"
             app:tabMode="auto"
@@ -138,7 +151,7 @@
             android:id="@+id/pb_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_search"
+            android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp" />
     </RelativeLayout>

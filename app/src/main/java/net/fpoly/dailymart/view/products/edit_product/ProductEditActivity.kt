@@ -48,7 +48,7 @@ class ProductEditActivity :
     private var mLoadingDialog: LoadingDialog? = null
     override fun setOnClickListener() {
         super.setOnClickListener()
-        binding.imvBack.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
         binding.imvScan.setOnClickListener(this)
         binding.tvCategory.setOnClickListener(this)
         binding.tvSupplier.setOnClickListener(this)
@@ -107,7 +107,7 @@ class ProductEditActivity :
 
     override fun onClick(view: View) {
         when (view) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.imvScan -> {
                 if (binding.cvScanner.isShowing()) {
                     binding.cvScanner.gone()

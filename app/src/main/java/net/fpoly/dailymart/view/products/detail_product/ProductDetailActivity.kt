@@ -25,7 +25,7 @@ class ProductDetailActivity :
         mProduct?.let {
             setData(it)
         }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         binding.btnClose.setOnClickListener { finish() }
     }
 
@@ -35,14 +35,14 @@ class ProductDetailActivity :
 
     @SuppressLint("SetTextI18n")
     private fun setData(product: Product) {
-        binding.tvId.text = "Barcode: ${product.barcode}"
-        binding.tvName.text = "Tên: ${product.name}"
-        binding.tvQuantity.text = "Số lượng: ${product.totalQuantity}"
-        binding.tvCategory.text = "Ngành hàng: ${product.category.name}"
-        binding.tvSupplier.text = "Nhà CC: ${product.supplier.supplierName}"
-        binding.tvUnit.text = "ĐVT: ${product.unit}"
-        binding.tvImportPrice.text = "Nhập: ${product.importPrice.toMoney()}"
-        binding.tvSellPrice.text = "Bán: ${product.sellPrice.toMoney()}"
+        binding.tvId.text = product.barcode
+        binding.tvName.text = product.name
+        binding.tvQuantity.text = product.totalQuantity.toString()
+        binding.tvCategory.text = product.category.name
+        binding.tvSupplier.text = product.supplier.supplierName
+        binding.tvUnit.text = product.unit
+        binding.tvImportPrice.text = product.importPrice.toMoney()
+        binding.tvSellPrice.text = product.sellPrice.toMoney()
         Glide.with(this).load(product.img_product).placeholder(R.drawable.img_default)
             .into(binding.imvImage)
     }

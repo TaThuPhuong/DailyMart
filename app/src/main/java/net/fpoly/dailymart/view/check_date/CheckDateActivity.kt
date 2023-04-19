@@ -31,7 +31,7 @@ class CheckDateActivity :
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         viewModel.getListProduct()
         initRecycleView()
         setSearch()

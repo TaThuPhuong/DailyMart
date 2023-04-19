@@ -15,13 +15,13 @@
     </style>
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <!--<item name="tabMaxWidth">@dimen/tab_max_width</item>-->
-        <item name="tabIndicatorColor">@color/color_btn_orange_state_false</item>
+        <item name="tabIndicatorColor">@color/white</item>
         <item name="tabIndicatorHeight">3dp</item>
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/colorTextGold</item>
+        <item name="tabSelectedTextColor">#FFFFFF</item>
     </style>
 
     <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">

@@ -24,13 +24,12 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun setOnClickListener() {
-        binding.imvBack.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
         binding.imvAdd.setOnClickListener(this)
         binding.imvClear.setOnClickListener(this)
     }
 
     override fun setupData() {
-        binding.layoutToolbar.setMarginsStatusBar(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setSearchTask()
@@ -63,7 +62,7 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.imvAdd -> {
                 startActivity(Intent(this, AddTaskActivity::class.java))
             }

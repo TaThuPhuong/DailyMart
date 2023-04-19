@@ -28,7 +28,7 @@ class WorkSheetActivity :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getListWorkSheet()
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     override fun setupObserver() {

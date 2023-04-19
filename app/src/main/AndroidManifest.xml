@@ -38,13 +38,12 @@
             android:theme="@style/Base.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=""/>
         </activity>
         <activity
             android:name=".view.staff.details.DetailsStaffActivity"
@@ -61,8 +60,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.main.MainActivity"
-            android:exported="false"
-            android:launchMode="singleInstance" />
+            android:exported="false"/>
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />
