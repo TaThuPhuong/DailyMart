@@ -17,34 +17,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp">
 
             <ImageView
                 android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Thêm nhân viên"
-                android:textColor="@color/gray_medium"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imv_back"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -79,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <EditText
                 android:id="@+id/ed_name_user"
@@ -134,6 +138,7 @@
                 android:backgroundTint="@color/gray_medium"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="Số điện thoại"
+                android:maxLength="10"
                 android:inputType="phone"
                 android:padding="8dp"
                 android:textSize="14sp" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,28 +15,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp">
 
             <ImageView
                 android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
-                android:text="Thông tin"
-                android:textColor="@color/gray_medium"
-                android:textSize="20sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Nhân viên"
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imv_back"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_update"
@@ -46,8 +51,9 @@
                 android:text="Lưu"
                 android:textColor="@color/pink_primary"
                 android:textSize="20sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -149,8 +155,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ed_email"
-                        android:gravity="end"
                         android:layout_margin="8dp"
+                        android:gravity="end"
                         android:text="@{viewModel.validateEmailUser}"
                         android:textColor="@color/red_FF444C"
                         android:textSize="10sp"
@@ -195,8 +201,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ed_number"
-                        android:gravity="end"
                         android:layout_margin="8dp"
+                        android:gravity="end"
                         android:text="@{viewModel.validatePhone}"
                         android:textColor="@color/red_FF444C"
                         android:textSize="10sp"

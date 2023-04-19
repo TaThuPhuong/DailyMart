@@ -43,11 +43,12 @@
 
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
         </activity>
         <activity
             android:name=".view.staff.details.DetailsStaffActivity"
-            android:exported="false" /> <!-- activity -->
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" /> <!-- activity -->
         <activity
             android:name=".view.on_boarding.OnBoardingActivity"
             android:exported="false" />
