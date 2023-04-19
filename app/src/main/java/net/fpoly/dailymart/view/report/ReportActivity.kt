@@ -106,13 +106,13 @@ class ReportActivity :
 
     override fun setOnClickListener() {
         super.setOnClickListener()
-        binding.imvBack.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
         binding.tvFilter.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when (view) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.tvFilter -> {
                 FilterDialog(this, mTypeFilter, mTime) { type, time ->
                     setVisibleChart(type != TypeFilter.DAY, type)

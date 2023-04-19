@@ -30,7 +30,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
     private var mLoadingDialog: LoadingDialog? = null
 
     override fun setOnClickListener() {
-        binding.imvBack.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
         binding.tvSave.setOnClickListener(this)
         binding.imvAvatar.setOnClickListener(this)
         binding.layoutRole.setOnClickListener(this)
@@ -72,7 +72,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.imvAvatar -> {
                 ImagesUtils.checkPermissionPickImage(this, binding.imvAvatar) {
                     onChangeAvatar = true

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -15,37 +16,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:src="@drawable/ic_back_black"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Thống kê"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/layout_toolbar">
+            android:layout_below="@id/toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -56,8 +62,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="20dp"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="18dp"
                     android:weightSum="2">
 
                     <TextView
@@ -67,7 +73,7 @@
                         android:fontFamily="@font/imbplexsans_medium"
                         android:text="Tổng quan"
                         android:textColor="@color/gray_medium"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/tv_filter"
@@ -78,7 +84,7 @@
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="center_vertical|end"
                         android:text="@{viewModel.timeReport}"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -86,11 +92,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_top"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/bg_blue_light_rd_8"
                     android:orientation="vertical"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="16dp">
+                    android:padding="12dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -122,20 +128,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_revenue"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1.8"
                         android:background="@drawable/bg_pink_medium_rd_8"
                         android:orientation="vertical"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -146,7 +151,7 @@
                             android:gravity="center_vertical"
                             android:text="Tiền nhập"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_total_import"
@@ -155,7 +160,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@{viewModel.totalImport}"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
 
 
@@ -166,7 +171,7 @@
                         android:background="@drawable/bg_blue_medium_rd_8"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -175,7 +180,7 @@
                             android:gravity="center_vertical"
                             android:text="Hóa đơn nhập"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_quantity_import"
@@ -184,7 +189,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@{viewModel.quantityImport}"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -193,19 +198,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_import"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1.8"
                         android:background="@drawable/bg_green_light_rd_8"
                         android:orientation="vertical"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -216,7 +220,7 @@
                             android:gravity="center_vertical"
                             android:text="Tiền bán"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_total_export"
@@ -225,7 +229,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@{viewModel.totalExport}"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
 
 
@@ -236,7 +240,7 @@
                         android:background="@drawable/bg_blue_sky_rd_8"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -245,7 +249,7 @@
                             android:gravity="center_vertical"
                             android:text="Hóa đơn bán"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_quantity_export"
@@ -254,7 +258,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@{viewModel.quantityExport}"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -263,28 +267,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_export"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:gravity="center_vertical"
                     android:text="Tiền bán"
                     android:textColor="@color/gray_medium"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <RelativeLayout
                     android:id="@+id/layout_chart_export"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_chart_export"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp">
 
                     <TextView
                         android:id="@+id/tv_bc_export_top_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="VNĐ"
+                        android:fontFamily="@font/imbplexsans_medium"
                         android:textColor="@color/gray_medium"
                         android:textSize="12sp" />
 
@@ -303,6 +307,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginTop="10dp"
                         android:text="Ngày"
+                        android:fontFamily="@font/imbplexsans_medium"
                         android:textColor="@color/gray_medium"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -312,9 +317,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_chart_export"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:gravity="center_vertical"
                     android:text="Tiền nhập"
@@ -326,8 +330,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_chart_import"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp">
 
                     <TextView
                         android:id="@+id/tv_bc_import_top_unit"
@@ -362,14 +366,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_barchart_import"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:gravity="center_vertical"
                     android:text="Tổng hợp"
                     android:textColor="@color/gray_medium"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <RelativeLayout
                     android:id="@+id/layout_line_chart"
@@ -385,6 +388,7 @@
                         android:layout_height="wrap_content"
                         android:text="VNĐ"
                         android:textColor="@color/gray_medium"
+                        android:fontFamily="@font/imbplexsans_medium"
                         android:textSize="12sp" />
 
                     <com.github.mikephil.charting.charts.LineChart
@@ -402,6 +406,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginTop="10dp"
                         android:text="Ngày"
+                        android:fontFamily="@font/imbplexsans_medium"
                         android:textColor="@color/gray_medium"
                         android:textSize="12sp" />
                 </RelativeLayout>

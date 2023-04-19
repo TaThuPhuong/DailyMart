@@ -60,7 +60,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="140dp"
                     android:background="@drawable/bg_white_rd_12"
-                    android:elevation="5dp"
+                    android:elevation="1dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingVertical="32dp">
@@ -116,7 +116,7 @@
                     android:layout_below="@+id/tv_account"
                     android:layout_marginHorizontal="20dp"
                     android:background="@drawable/bg_white_rd_12"
-                    android:elevation="5dp"
+                    android:elevation="1dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -207,7 +207,7 @@
                     android:layout_below="@+id/tv_manage"
                     android:layout_marginHorizontal="20dp"
                     android:background="@drawable/bg_white_rd_12"
-                    android:elevation="5dp"
+                    android:elevation="1dp"
                     android:orientation="vertical"
                     android:paddingVertical="18dp">
 
@@ -315,7 +315,7 @@
                 <LinearLayout
                     android:id="@+id/layout_log_out"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_below="@+id/layout_manage"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginVertical="38dp"

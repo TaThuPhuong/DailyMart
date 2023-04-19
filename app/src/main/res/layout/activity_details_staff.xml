@@ -76,146 +76,109 @@
                 <RelativeLayout
                     android:id="@+id/layout_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/imv_avatar"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:layout_marginTop="26dp"
+                    android:background="@drawable/bg_ed_search_task"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
-                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:text="Họ tên"
+                        android:text="Họ tên:"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/ed_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/tv_name"
-                        android:background="@color/un_color"
-                        android:gravity="end"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="60dp"
+                        android:background="@color/no_color"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="end|center_vertical"
                         android:maxLines="1"
                         android:padding="8dp"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ed_name"
-                        android:layout_margin="8dp"
-                        android:gravity="end"
-                        android:text="@{viewModel.validateNameUser}"
-                        android:textColor="@color/red_FF444C"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/layout_name"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_ed_search_task"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
-                        android:id="@+id/tv_email"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:text="Email"
+                        android:text="Email:"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/ed_email"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/tv_email"
-                        android:background="@color/un_color"
-                        android:gravity="end"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="50dp"
+                        android:background="@color/no_color"
+                        android:textColor="@color/gray_medium"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="end|center_vertical"
                         android:maxLines="1"
-                        android:padding="8dp"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ed_email"
-                        android:layout_margin="8dp"
-                        android:gravity="end"
-                        android:text="@{viewModel.validateEmailUser}"
-                        android:textColor="@color/red_FF444C"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/layout_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/layout_email"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:background="@drawable/bg_ed_search_task"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
-                        android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:text="Số điện thoại"
+                        android:text="Số điện thoại:"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/ed_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/tv_phone"
-                        android:background="@color/un_color"
-                        android:gravity="end"
-                        android:inputType="number"
+                        android:id="@+id/ed_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/no_color"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="end|center_vertical"
+                        android:textColor="@color/gray_medium"
                         android:maxLines="1"
-                        android:padding="8dp"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ed_number"
-                        android:layout_margin="8dp"
-                        android:gravity="end"
-                        android:text="@{viewModel.validatePhone}"
-                        android:textColor="@color/red_FF444C"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/layout_role"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/layout_phone"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp"
+                    android:paddingHorizontal="12dp"
                     android:background="@drawable/bg_ed_search_task">
 
                     <TextView
@@ -224,7 +187,6 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
-                        android:padding="8dp"
                         android:text="Chức vụ"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
@@ -246,10 +208,10 @@
 
                     <ImageView
                         android:id="@+id/imv_change_role"
-                        android:layout_width="40dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:padding="14dp"
+                        android:padding="16dp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_black" />
                 </RelativeLayout>
@@ -257,10 +219,11 @@
                 <RelativeLayout
                     android:id="@+id/layout_disable"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/layout_role"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="12dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_ed_search_task">
 
                     <TextView
@@ -269,7 +232,6 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/imbplexsans_regular"
                         android:gravity="center"
-                        android:padding="8dp"
                         android:text="Trạng thái"
                         android:textColor="@color/gray_primary"
                         android:textSize="16sp" />
@@ -291,10 +253,10 @@
 
                     <ImageView
                         android:id="@+id/imv_change_status"
-                        android:layout_width="40dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:padding="14dp"
+                        android:padding="16dp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_black" />
                 </RelativeLayout>
