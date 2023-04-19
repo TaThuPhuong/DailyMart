@@ -26,4 +26,7 @@ interface ReportApi {
         @Header("Authorization") token: String,
         @Path("year") year: Int,
     ): ResultData<ReportDataByYear>
+
+    @GET("stats/bestsellerProduct")
+    suspend fun getBestSeller(@Header("Authorization") token: String): ResultData<List<BestSeller>>
 }

@@ -1,6 +1,6 @@
 package net.fpoly.dailymart.view.report
 
-import android.graphics.Typeface
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -8,30 +8,28 @@ import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.LoadingDialog
+import net.fpoly.dailymart.data.model.BestSeller
 import net.fpoly.dailymart.data.model.ReportDayData
 import net.fpoly.dailymart.data.model.ReportMonthData
 import net.fpoly.dailymart.databinding.ActivityReportBinding
 import net.fpoly.dailymart.extension.chart_view.MarkerDataModel
 import net.fpoly.dailymart.extension.chart_view.RectangleMarkerView
 import net.fpoly.dailymart.extension.time_extention.date2String
+import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.setVisibility
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.ChartUtils
 import net.fpoly.dailymart.utils.round
 import net.fpoly.dailymart.utils.toMoney
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -41,19 +39,21 @@ class ReportActivity :
 
     private var TAG = "YingMing"
     private val viewModel: ReportViewModel by viewModels { AppViewModelFactory }
-    private val calendarToday = Calendar.getInstance()
     private var mTypeFilter = TypeFilter.MONTH
     private var mTime = Calendar.getInstance().timeInMillis
 
     private var mLoadingDialog: LoadingDialog? = null
     private var mListMonthData: List<ReportDayData> = ArrayList()
     private var mListYearData: List<ReportMonthData> = ArrayList()
+    private lateinit var mBestSellerAdapter: BestSellerAdapter
+    private val mListBestSeller: List<BestSeller> = ArrayList()
 
     override fun setupData() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         mLoadingDialog = LoadingDialog(this)
         mLoadingDialog?.showLoading()
+        initRecycleView()
     }
 
     override fun setupObserver() {
@@ -102,6 +102,19 @@ class ReportActivity :
                 configLineChart(binding.lcHonHop, TypeFilter.YEAR, it.size)
             }
         }
+        viewModel.listBestSeller.observe(this) {
+            if (it.isNotEmpty()) {
+                mBestSellerAdapter.setData(it)
+                binding.layoutBestSeller.visible()
+            } else {
+                binding.layoutBestSeller.gone()
+            }
+        }
+        viewModel.pieChartData.observe(this) {
+            if (it != null) {
+                configPeiChart(binding.pcReportDay, it)
+            }
+        }
     }
 
     override fun setOnClickListener() {
@@ -121,9 +134,7 @@ class ReportActivity :
                     viewModel.onGetDone.postValue(false)
                     mLoadingDialog?.showLoading()
                     when (type) {
-                        TypeFilter.DAY -> {
-                            viewModel.getRevenueByDate(time)
-                        }
+                        TypeFilter.DAY -> viewModel.getRevenueByDate(time)
                         TypeFilter.MONTH -> viewModel.getRevenueByMonth(time)
                         TypeFilter.YEAR -> viewModel.getRevenueByYear(time)
                     }
@@ -146,6 +157,7 @@ class ReportActivity :
                 binding.tvLcBtUnit.text = "Tháng"
             }
         }
+        binding.layoutPiechart.setVisibility(!b)
         binding.tvChartExport.setVisibility(b)
         binding.tvChartImport.setVisibility(b)
         binding.tvHonHop.setVisibility(b)
@@ -154,28 +166,31 @@ class ReportActivity :
         binding.layoutLineChart.setVisibility(b)
     }
 
+    private fun configPeiChart(pieChart: PieChart, data: PieData) {
+        pieChart.data = data
+        pieChart.description.isEnabled = false
+        pieChart.isDrawHoleEnabled = true
+        pieChart.setHoleColor(Color.TRANSPARENT)
+        pieChart.legend.isEnabled = true
+        pieChart.setEntryLabelTextSize(12f)
+        pieChart.invalidate()
+    }
+
     private fun configBarChart(
         barchart: BarChart,
         maxY: Int,
         maxX: Int,
         typeChart: TypeChart,
-        typeFilter: TypeFilter
+        typeFilter: TypeFilter,
     ) {
         ChartUtils.setConfigChart(this, barchart)
         ChartUtils.setConfigXAxis(this, barchart.xAxis, maxY)
         ChartUtils.setConfigYAxis(this, barchart.axisLeft)
         (barchart.marker as RectangleMarkerView).setMaxX(maxX - 1)
-
-        val maxMoney = if (typeChart == TypeChart.EXPORT) {
-            abs(mListMonthData.maxOf { it.data.tienBan })
-        } else {
-            abs(mListMonthData.maxOf { it.data.tienNhap })
-        }
         barchart.extraRightOffset = 10f
-        barchart.xAxis.axisMaximum = maxX.toFloat()
         barchart.xAxis.axisMinimum = 1f
+        barchart.xAxis.axisMaximum = maxX.toFloat()
         barchart.xAxis.labelCount = maxX
-        barchart.axisLeft.axisMaximum = maxMoney * 1.2f
         barchart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return if (value > maxX) {
@@ -191,6 +206,12 @@ class ReportActivity :
             TypeFilter.YEAR -> getDataEntriesYear(mListYearData, typeChart)
         }
         if (typeFilter == TypeFilter.MONTH) {
+            val maxMoney = if (typeChart == TypeChart.EXPORT) {
+                abs(mListMonthData.maxOf { it.data.tienBan })
+            } else {
+                abs(mListMonthData.maxOf { it.data.tienNhap })
+            }
+            barchart.axisLeft.axisMaximum = maxMoney * 1.2f
             data.barWidth = 0.75f
             barchart.setVisibleXRangeMaximum(12f)
             if (barchart.data != null) {
@@ -202,6 +223,12 @@ class ReportActivity :
             barchart.animateY(500, Easing.Linear)
             barchart.moveViewToX((maxX / 2).toFloat())
         } else {
+            val maxMoney = if (typeChart == TypeChart.EXPORT) {
+                abs(mListYearData.maxOf { it.data.tienBan })
+            } else {
+                abs(mListYearData.maxOf { it.data.tienNhap })
+            }
+            barchart.axisLeft.axisMaximum = maxMoney * 1.2f
             data.barWidth = 0.3f
             barchart.setVisibleXRangeMaximum(12f)
             if (barchart.data != null) {
@@ -380,6 +407,11 @@ class ReportActivity :
         listLineData.add(lineDataSetImport)
         listLineData.add(lineDataSetExport)
         return LineData(listLineData)
+    }
+
+    private fun initRecycleView() {
+        mBestSellerAdapter = BestSellerAdapter(mListBestSeller)
+        binding.rcvBestSeller.adapter = mBestSellerAdapter
     }
 
 }

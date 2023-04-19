@@ -39,7 +39,7 @@
         android:fontFamily="@font/imbplexsans_medium"
         android:gravity="end"
         android:text="20/04/2023"
-        android:textColor="@color/pink_primary"
+        android:textColor="@color/gray_medium"
         android:textSize="14sp" />
 
     <View
