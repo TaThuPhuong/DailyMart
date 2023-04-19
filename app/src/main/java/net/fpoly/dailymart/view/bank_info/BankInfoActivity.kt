@@ -62,7 +62,7 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
                 }
             }
         }
-        binding.imvBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }
@@ -89,6 +89,9 @@ class BankInfoActivity : BaseActivity<ActivityBankInfoBinding>(ActivityBankInfoB
             if (it.isNotEmpty()) {
                 showToast(this, it)
             }
+        }
+        viewModel.saveSuccess.observe(this) {
+            if (it) finish()
         }
     }
 

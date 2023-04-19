@@ -21,7 +21,7 @@ class HomeViewModel(
     private val app: Application,
     private val taskRepo: TaskRepository,
     private val notificationRepo: NotificationRepository,
-    private val invoiceRepo: InvoiceRepository
+    private val invoiceRepo: InvoiceRepository,
 ) :
     ViewModel() {
 
@@ -33,6 +33,9 @@ class HomeViewModel(
     val listTask = MutableLiveData<List<Task>>(ArrayList())
 
     val totalInvoice = MutableLiveData("")
+    val taskPercent = MutableLiveData(0)
+    val taskPercentText = MutableLiveData("0 %")
+    val getTaskSuccess = MutableLiveData(false)
 
     fun getAllNotification() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -57,7 +60,15 @@ class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val res = taskRepo.getAllTask(mToken)
             if (res.isSuccess()) {
-                listTask.postValue(res.data!!.sortedByDescending { it.updatedAt.time })
+                val list = res.data!!.sortedByDescending { it.updatedAt.time }
+                val listFinish = list.filter { it.finish }
+                val percent = ((listFinish.size.toFloat() / list.size) * 100).toInt()
+                taskPercent.postValue(percent)
+                taskPercentText.postValue("$percent %")
+                listTask.postValue(list)
+                getTaskSuccess.postValue(true)
+            } else {
+                getTaskSuccess.postValue(true)
             }
         }
     }
@@ -69,7 +80,7 @@ class HomeViewModel(
                 is Response.Error -> {}
                 is Response.Success -> {
                     val listInvoice = res.data.filter { it.createAt >= today }
-                    totalInvoice.postValue(listInvoice.size.toString() +" phiếu")
+                    totalInvoice.postValue(listInvoice.size.toString() + " phiếu")
                     Log.e(TAG, "getInvoiceToday: ")
                 }
             }

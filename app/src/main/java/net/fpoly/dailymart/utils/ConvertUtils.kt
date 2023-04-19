@@ -50,3 +50,8 @@ fun takeLastId(id: String): String {
 }
 
 fun toString(number: Long) = number.toString()
+
+fun Float.round(pattern: String = "#"): String {
+    val df = DecimalFormat(pattern)
+    return df.format(this)
+}

@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
@@ -47,7 +46,7 @@ class AddProductActivity :
 
     override fun setOnClickListener() {
         super.setOnClickListener()
-        binding.imvBack.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
         binding.imvScan.setOnClickListener(this)
         binding.tvCategory.setOnClickListener(this)
         binding.tvSupplier.setOnClickListener(this)
@@ -86,7 +85,7 @@ class AddProductActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.imvScan -> {
                 if (binding.cvScanner.isShowing()) {
                     binding.cvScanner.gone()

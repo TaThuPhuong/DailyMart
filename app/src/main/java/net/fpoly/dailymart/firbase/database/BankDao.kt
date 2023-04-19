@@ -8,15 +8,15 @@ import net.fpoly.dailymart.data.model.WorkSheet
 
 object BankDao {
     private val TAG = "YinMing"
-    fun insertBankInfo(bankInfo: BankInfo, message: (String) -> Unit) {
+    fun insertBankInfo(bankInfo: BankInfo, message: (String, b: Boolean) -> Unit) {
         val db = Firebase.firestore
         db.collection("bank").document("bank_info")
             .set(bankInfo)
             .addOnSuccessListener {
-                message("Lưu thành công")
+                message("Lưu thành công", true)
             }
             .addOnFailureListener {
-                message("Lỗi kết nối với máy chủ")
+                message("Lỗi kết nối với máy chủ", false)
                 Log.e(TAG, "addOnFailureListener: $it")
             }
     }

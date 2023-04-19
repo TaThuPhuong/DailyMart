@@ -38,7 +38,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.lifecycleOwner = this
         binding.pbLoading.visible()
         viewModel.getListProducts()
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         binding.imvClear.setOnClickListener {
             binding.edSearch.setText("")
             binding.imvClear.gone()

@@ -5,6 +5,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
@@ -38,4 +39,9 @@ fun View.setVisible(visible: Boolean) {
 @BindingAdapter("set_hide")
 fun View.hideView(hide: Boolean) {
     visibility = if (hide) View.INVISIBLE else View.VISIBLE
+}
+
+@BindingAdapter("set_progress_value")
+fun ProgressBar.setValue(value: Int) {
+    progress = value
 }
