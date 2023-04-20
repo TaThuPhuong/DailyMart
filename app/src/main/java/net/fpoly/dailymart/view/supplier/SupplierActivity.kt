@@ -53,7 +53,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
 
     private fun setupSearchSupplier() {
         binding.edSearch.doAfterTextChanged {
-            val text = binding.edSearch.text
+            val text = binding.edSearch.text.toString().lowercase()
             if (text.isNotEmpty()) {
                 binding.imvClear.visibility = View.VISIBLE
                 viewModel.listSupplier.value?.also { invoices ->
