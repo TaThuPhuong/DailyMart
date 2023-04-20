@@ -25,7 +25,7 @@ class ProductDetailActivity :
         mProduct?.let {
             setData(it)
         }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         binding.btnClose.setOnClickListener { finish() }
     }
 
