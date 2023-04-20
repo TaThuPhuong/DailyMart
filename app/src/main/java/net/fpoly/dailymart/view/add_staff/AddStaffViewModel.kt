@@ -1,30 +1,19 @@
 package net.fpoly.dailymart.view.add_staff
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.base.LoadingDialog
-import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.RegisterParam
-import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.data.model.Response.Error
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.staff.details.UpdateEvent
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class AddStaffViewModel(
     private val app: Application,
@@ -64,6 +53,7 @@ class AddStaffViewModel(
                     _validateName.value = ""
                 }
             }
+
             is UserEvent.OnPhoneNumberChange -> {
                 _userParam.value = _userParam.value?.copy(
                     phoneNumber = event.phone,
@@ -77,6 +67,7 @@ class AddStaffViewModel(
                     _validatePhone.value = ""
                 }
             }
+
             is UserEvent.OnEmailChange -> {
                 _userParam.value = _userParam.value?.copy(
                     email = event.email
@@ -89,17 +80,20 @@ class AddStaffViewModel(
                     _validateEmailUser.value = ""
                 }
             }
+
             is UserEvent.OnChangeRole -> {
                 _userParam.value = _userParam.value?.copy(
                     role = event.role
                 )
             }
+
             is UserEvent.CreateUser -> {
                 _userParam.value?.let {
                     if (it.checkValidate()) {
                         postUser(it)
                     } else {
                         addStaffSuccess.value = false
+                        message.postValue("Vui lòng điền đầy đủ và đúng thông tin")
                     }
                 }
             }
@@ -110,8 +104,10 @@ class AddStaffViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             when (val res = userRepo.createUser(mToken, userParam)) {
                 is Error -> {
+                    addStaffSuccess.postValue(false)
                     message.postValue(res.message)
                 }
+
                 is Success -> {
                     addStaffSuccess.postValue(true)
                 }

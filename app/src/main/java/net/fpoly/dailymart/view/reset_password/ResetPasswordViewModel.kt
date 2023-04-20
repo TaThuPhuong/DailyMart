@@ -17,9 +17,11 @@ import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.data.model.Response.Error
+import net.fpoly.dailymart.repository.UserRepository
+import net.fpoly.dailymart.view.change_password.ChangePasswordViewModel
 import net.fpoly.dailymart.view.login.LoginActivity
 
-class ResetPasswordViewModel(app: Application) : ViewModel() {
+class ResetPasswordViewModel(app: Application, private val userRepo: UserRepository) : ViewModel() {
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
 
@@ -32,32 +34,32 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
     val validateConfirm: LiveData<String> = _validateConfirm
     private val _changeParam = MutableLiveData(SendOtpParam())
     private lateinit var mLoadingDialog: LoadingDialog
+    private val _passwordNew = MutableLiveData(false)
+    val passwordNew: LiveData<Boolean> = _passwordNew
+    private val _passwordConfirm = MutableLiveData(false)
+    val passwordConfirm: LiveData<Boolean> = _passwordConfirm
+
+    val updateSuccess = MutableLiveData(false)
+    val message = MutableLiveData("")
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context)
     }
 
-    fun sendOTP(
-        sendOtpParam: SendOtpParam,
-        context: Context,
-        activity: ResetPasswordActivity?
+    private fun sendOTP(
+        sendOtpParam: SendOtpParam
     ) {
         Log.d(TAG, "Params : $sendOtpParam")
-        Log.d(TAG, "token : $mToken")
         mLoadingDialog.showLoading()
-
         viewModelScope.launch {
-            when (val resetPass = forgotPassRepo.resetPass(sendOtpParam)) {
+            when (val resetPass = userRepo.resetPass(sendOtpParam)) {
                 is Success -> {
-                    Log.e(TAG, "sendOTP: ${resetPass.data}")
-                    Toast.makeText(context, resetPass.message, Toast.LENGTH_SHORT).show()
-                    activity?.startActivity(Intent(context, LoginActivity::class.java))
-                    mLoadingDialog.hideLoading()
+                    updateSuccess.postValue(true)
                 }
 
                 is Error -> {
-                    _validateOtp.value = resetPass.message
-                    mLoadingDialog.hideLoading()
+                    updateSuccess.postValue(false)
+                    message.postValue(resetPass.message)
                 }
             }
         }
@@ -100,17 +102,24 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
                 }
             }
 
+            is SetupEvent.OnPassNew -> {
+                _passwordNew.value = !_passwordNew.value!!
+            }
+
+            is SetupEvent.OnPassConfirm -> {
+                _passwordConfirm.value = !_passwordConfirm.value!!
+            }
+
             is SetupEvent.ValidateForm -> {
                 _changeParam.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
                         sendOTP(
-                            sendOtpParam = it,
-                            context = context,
-                            activity = null
+                            sendOtpParam = it
                         )
+                        return
                     } else {
-                        mLoadingDialog.hideLoading()
+                        updateSuccess.postValue(false)
+                        message.postValue("Vui lòng điền đầy đủ và đúng thông tin")
                     }
                 }
             }
@@ -121,6 +130,8 @@ class ResetPasswordViewModel(app: Application) : ViewModel() {
         data class OnOTP(val value: String) : SetupEvent()
         data class OnNewPass(val value: String) : SetupEvent()
         data class OnConfirm(val value: String) : SetupEvent()
+        object OnPassConfirm : SetupEvent()
+        object OnPassNew : SetupEvent()
         object ValidateForm : SetupEvent()
     }
 

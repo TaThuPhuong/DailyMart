@@ -62,54 +62,79 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
                     SplashViewModel()
+
                 isAssignableFrom(MainViewModel::class.java) ->
                     MainViewModel()
+
                 isAssignableFrom(RegisterViewModel::class.java) ->
                     RegisterViewModel()
+
                 isAssignableFrom(LoginViewModel::class.java) ->
                     LoginViewModel(app, userRepository)
+
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel(app, taskRepository, notificationRepo, InvoiceRepositoryImpl())
+
                 isAssignableFrom(InvoiceViewModel::class.java) ->
                     InvoiceViewModel(context)
+
                 isAssignableFrom(GoodsViewModel::class.java) ->
                     GoodsViewModel()
+
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
                     ShowMoreViewModel(app)
+
                 isAssignableFrom(TaskViewModel::class.java) ->
                     TaskViewModel(app, taskRepository)
+
                 isAssignableFrom(CheckDateViewModel::class.java) ->
                     CheckDateViewModel(app, productRepository)
+
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(context)
+
                 isAssignableFrom(ReportViewModel::class.java) ->
                     ReportViewModel(app, reportRepository)
+
                 isAssignableFrom(StockViewModel::class.java) ->
                     StockViewModel(app, productRepository)
+
                 isAssignableFrom(WorkSheetViewModel::class.java) ->
                     WorkSheetViewModel()
+
                 isAssignableFrom(CategoryViewModel::class.java) ->
                     CategoryViewModel(context)
+
                 isAssignableFrom(AddInvoiceExportViewModel::class.java) ->
                     AddInvoiceExportViewModel(context)
+
                 isAssignableFrom(PaymentViewModel::class.java) ->
                     PaymentViewModel(context)
+
                 isAssignableFrom(SupplierViewModel::class.java) ->
                     SupplierViewModel(context, SupplierRepositoryImpl())
+
                 isAssignableFrom(ProductsViewModel::class.java) ->
                     ProductsViewModel(app, productRepository)
+
                 isAssignableFrom(AddTaskViewModel::class.java) ->
                     AddTaskViewModel(app, taskRepository, userRepository)
+
                 isAssignableFrom(ChangePasswordViewModel::class.java) ->
-                    ChangePasswordViewModel(app)
+                    ChangePasswordViewModel(app, userRepository)
+
                 isAssignableFrom(StaffViewModel::class.java) ->
                     StaffViewModel(app)
+
                 isAssignableFrom(AddStaffViewModel::class.java) ->
                     AddStaffViewModel(app, userRepository)
+
                 isAssignableFrom(ProfileViewModel::class.java) ->
                     ProfileViewModel(app)
+
                 isAssignableFrom(MessageViewModel::class.java) ->
                     MessageViewModel(app)
+
                 isAssignableFrom(AddProductViewModel::class.java) ->
                     AddProductViewModel(
                         app,
@@ -117,31 +142,42 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                         supplierRepository,
                         categoryRepository
                     )
+
                 isAssignableFrom(TaskDetailViewModel::class.java) ->
                     TaskDetailViewModel(app, taskRepository)
+
                 isAssignableFrom(TaskEditViewModel::class.java) ->
                     TaskEditViewModel(app, taskRepository)
+
                 isAssignableFrom(ProductDetailViewModel::class.java) ->
                     ProductDetailViewModel()
+
                 isAssignableFrom(ProductEditViewModel::class.java) ->
                     ProductEditViewModel(
                         app, productRepository,
                         categoryRepository,
                         supplierRepository
                     )
+
                 isAssignableFrom(ForgetPassViewModel::class.java) ->
                     ForgetPassViewModel()
+
                 isAssignableFrom(ResetPasswordViewModel::class.java) ->
-                    ResetPasswordViewModel(app)
+                    ResetPasswordViewModel(app, userRepository)
+
                 isAssignableFrom(EditWorkSheetViewModel::class.java) ->
                     EditWorkSheetViewModel(app, userRepository)
+
                 isAssignableFrom(BankInfoViewModel::class.java) ->
                     BankInfoViewModel(app)
+
                 isAssignableFrom(DetailInvoiceViewModel::class.java) -> {
                     DetailInvoiceViewModel(app)
                 }
+
                 isAssignableFrom(DetailStaffViewModel::class.java) ->
                     DetailStaffViewModel(app, userRepository)
+
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T

@@ -56,7 +56,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
                 binding.tvNoData.visible()
             }
         }
-        viewModel.getUserSuccess.observe(this){
+        viewModel.getUserSuccess.observe(this) {
             mLoadingDialog?.hideLoading()
         }
     }
@@ -67,6 +67,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
             if (mUser.role == ROLE.staff) return@StaffAdapter
             val intent = Intent(this, DetailsStaffActivity::class.java)
             intent.putExtra("user", user)
+            binding.edSearch.setText("")
             startActivity(intent)
         }
         binding.rcvListStaff.adapter = mStaffAdapter
