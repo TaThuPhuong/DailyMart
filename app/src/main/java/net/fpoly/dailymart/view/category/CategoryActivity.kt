@@ -35,7 +35,7 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
 
     private fun setupEdSearch() {
         binding.edSearch.doAfterTextChanged {
-            val text = binding.edSearch.text
+            val text = binding.edSearch.text.toString().lowercase()
             if (text.isNotEmpty()) {
                 viewModel.listCategory.value?.also { invoices ->
                     val result =

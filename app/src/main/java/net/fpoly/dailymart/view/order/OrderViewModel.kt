@@ -153,6 +153,10 @@ class OrderViewModel(context: Context) : ViewModel() {
 
     fun paymentClick() {
         viewModelScope.launch {
+            if(listProductInvoices.isEmpty()) {
+                showSnackbar.value = "Chưa có sản phẩm nhập"
+                return@launch
+            }
             isShowLoading.postValue(true)
             val invoiceParam = InvoiceParam(
                 idUser = user.id,
