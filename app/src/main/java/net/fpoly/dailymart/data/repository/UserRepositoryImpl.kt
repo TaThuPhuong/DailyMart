@@ -41,6 +41,7 @@ class UserRepositoryImpl(
             }
         }
 
+    // Phần này Tuvm bắt đầu làm
     override suspend fun createUser(token: String, userParam: RegisterParam) =
         withContext(coroutineScope) {
             try {
@@ -125,7 +126,7 @@ class UserRepositoryImpl(
                     Response.Error(res.message)
                 }
             } catch (e: Exception) {
-                Log.e(TAGS, "forgot pass Exception: $e")
+                Log.e(TAGS, "reset pass Exception: $e")
                 Response.Error(e.message.toString())
             }
         }

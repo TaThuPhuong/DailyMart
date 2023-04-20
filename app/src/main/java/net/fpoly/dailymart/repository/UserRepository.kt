@@ -16,6 +16,7 @@ interface UserRepository {
         updateParam: UpdateParam
     ): Response<UpdateParam>
 
+
     suspend fun changePass(
         token: String,
         changePassParam: ChangePassParam,
