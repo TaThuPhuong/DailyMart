@@ -76,7 +76,7 @@ class StockAdapter(
                 var lossProduct = 0L
                 mExpiryAdapter =
                     ExpiryAdapter(
-                        mContext,
+                        mContext,mRole,
                         onChangeQuantity = {
                             val newTotal = this.expires.sumOf { e -> e.quantity }
                             if (newTotal < this.totalQuantity) {

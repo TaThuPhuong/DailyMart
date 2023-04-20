@@ -126,12 +126,14 @@
                 android:src="@{viewModel.passwordStatus ? @drawable/ic_hide_password: @drawable/ic_show_password }" />
 
             <TextView
+                android:id="@+id/tv_validate_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ed_password"
                 android:text="@{viewModel.validatePassword}"
                 android:textColor="@color/red_FF444C"
                 android:textSize="10sp"
+                android:visibility="gone"
                 tools:ignore="SmallSp" />
         </RelativeLayout>
 

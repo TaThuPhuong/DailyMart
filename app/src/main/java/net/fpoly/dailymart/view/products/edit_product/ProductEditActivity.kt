@@ -52,7 +52,6 @@ class ProductEditActivity :
         binding.imvScan.setOnClickListener(this)
         binding.tvCategory.setOnClickListener(this)
         binding.tvSupplier.setOnClickListener(this)
-        binding.imvAddImage.setOnClickListener(this)
         binding.imvImage.setOnClickListener(this)
         binding.btnAddProduct.setOnClickListener(this)
     }
@@ -100,7 +99,6 @@ class ProductEditActivity :
         binding.edUnit.setText(product.unit)
         Glide.with(this).load(product.img_product).placeholder(R.drawable.img_default)
             .into(binding.imvImage)
-        binding.imvAddImage.hide()
         viewModel.setProduct(product)
 
     }
@@ -131,9 +129,8 @@ class ProductEditActivity :
                     }.show()
                 }
             }
-            binding.imvAddImage, binding.imvImage -> {
+            binding.imvImage -> {
                 ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
-                    binding.imvAddImage.hide()
                     onImageChange = true
                 }
             }

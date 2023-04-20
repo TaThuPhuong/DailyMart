@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.products.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import net.fpoly.dailymart.utils.toMoney
 class ProductAdapter(
     val mContext: Context,
     var mListProduct: List<Product> = ArrayList(),
-    val onClick: (Product) -> Unit
+    val onClick: (Product) -> Unit,
 ) :
     RecyclerView.Adapter<ProductAdapter.ItemView>() {
 
@@ -45,6 +46,7 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListProduct[position]) {
+                Log.e("YingMing", "onBindViewHolder: $position")
                 binding.tvName.text = this.name
                 binding.tvId.text = "Barcode: ${this.barcode}"
                 binding.tvPrice.text = "Giá bán:\n${this.sellPrice.toMoney()}"

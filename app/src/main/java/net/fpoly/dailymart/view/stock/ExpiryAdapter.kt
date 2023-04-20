@@ -29,6 +29,7 @@ import kotlin.collections.ArrayList
 
 class ExpiryAdapter(
     private val mContext: Context,
+    private val mRole: ROLE,
     private var mListExpiry: ArrayList<ExpiryRes> = ArrayList(),
     private val onChangeQuantity: (expiry: ExpiryRes) -> Unit,
 ) : RecyclerView.Adapter<ExpiryAdapter.ItemView>() {
@@ -80,14 +81,19 @@ class ExpiryAdapter(
                 binding.layoutQuantity.setOnClickListener {
                     ChangeQuantityDialog(mContext, this.quantity) {
                         this.quantity = it
-                        onUpdate(this) { b ->
-                            if (b) {
-                                binding.tvQuantity.text = "SL: $it"
-                                onChangeQuantity(this)
-                                showToast(mContext, "Cập nhập thành công")
-                            } else {
-                                showToast(mContext, "Lỗi kết nối")
+                        if (mRole == ROLE.manager) {
+                            onUpdate(this) { b ->
+                                if (b) {
+                                    binding.tvQuantity.text = "SL: $it"
+                                    onChangeQuantity(this)
+                                    showToast(mContext, "Cập nhập thành công")
+                                } else {
+                                    showToast(mContext, "Lỗi kết nối")
+                                }
                             }
+                        } else {
+                            binding.tvQuantity.text = "SL: $it"
+                            onChangeQuantity(this)
                         }
                     }.show()
                 }

@@ -1,7 +1,9 @@
 package net.fpoly.dailymart.view.staff.details
 
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import net.fpoly.dailymart.AppViewModelFactory
+import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.param.Datum
@@ -112,6 +114,8 @@ class DetailsStaffActivity :
         binding.edPhone.setText(user.phoneNumber)
         binding.edRole.text = user.role.value
         binding.edStatus.text = getStatus(user.status)
+        Glide.with(this).load(user.linkAvt).placeholder(R.drawable.img_avatar_default)
+            .error(R.drawable.img_avatar_default).into(binding.imvAvatar)
         mRole = user.role
         mStatus = user.status
     }

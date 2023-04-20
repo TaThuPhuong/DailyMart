@@ -53,7 +53,10 @@ class MessageActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         mMessage = intent.getStringExtra(Constant.MESSAGE)
-        mMessage?.let { binding.edMessage.setText(it) }
+        mMessage?.let {
+            binding.edMessage.setText(it)
+            viewModel.onMessageChange(it)
+        }
         binding.btnBack.setOnClickListener { finish() }
 
         binding.edMessage.getTextOnChange {

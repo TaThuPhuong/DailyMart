@@ -54,6 +54,17 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
                     true
                 )
             }
+            if (value.isEmpty()) {
+                binding.imvClear.gone()
+                mStockAdapter.setData(mListProduct)
+            } else {
+                binding.imvClear.visible()
+            }
+            if (listFilter.isEmpty()) {
+                binding.tvNoData.visible()
+            } else {
+                binding.tvNoData.gone()
+            }
             mStockAdapter.setData(listFilter)
         }
     }

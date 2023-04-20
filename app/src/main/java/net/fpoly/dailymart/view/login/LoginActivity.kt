@@ -10,6 +10,7 @@ import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.databinding.ActivityLoginBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.view.forget_password.ForgetPasswordActivity
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.register.RegisterActivity
@@ -21,7 +22,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModels { AppViewModelFactory }
 
-    private  var mLoadingDialog: LoadingDialog ? =null
+    private var mLoadingDialog: LoadingDialog? = null
     override fun setOnClickListener() {
         binding.imvShowPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
@@ -54,6 +55,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         when (v) {
             binding.imvShowPassword -> viewModel.onEvent(LoginEvent.ShowPassword)
             binding.btnLogin -> {
+                binding.tvValidatePass.visible()
                 mLoadingDialog?.showLoading()
                 viewModel.onEvent(LoginEvent.Login)
             }
@@ -66,6 +68,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             viewModel.onEvent(LoginEvent.OnPhoneNumberChange(it))
         }
         binding.edPassword.getTextOnChange {
+            if (it.isNotEmpty()) {
+                binding.tvValidatePass.visible()
+            }
             viewModel.onEvent(LoginEvent.OnPasswordChange(it))
         }
     }

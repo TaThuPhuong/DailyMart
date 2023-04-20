@@ -124,10 +124,12 @@ data class InvoiceRefund(
 
 fun ProductParam.checkValidate(): Boolean {
     return name.trim().isNotEmpty() && barcode.trim().isNotEmpty() && supplier.trim()
-        .isNotEmpty() && category.trim().isNotEmpty() && importPrice != 0 && sellPrice != 0
+        .isNotEmpty() && category.trim()
+        .isNotEmpty() && importPrice != 0 && sellPrice != 0 && unit.trim().isNotEmpty()
 }
 
 fun ProductParamUpdate.checkValidate(): Boolean {
     return name.trim().isNotEmpty() && barcode.trim().isNotEmpty() && supplier.trim()
-        .isNotEmpty() && category.trim().isNotEmpty() && importPrice != 0 && sellPrice != 0
+        .isNotEmpty() && category.trim()
+        .isNotEmpty() && importPrice != 0 && sellPrice != 0 && unit.trim().isNotEmpty()
 }
