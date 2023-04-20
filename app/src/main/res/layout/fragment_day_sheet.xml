@@ -27,14 +27,14 @@
                     android:id="@+id/viewLine0"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/pink_light" />
+                    android:background="@color/white" />
 
                 <LinearLayout
                     android:id="@+id/layout_title"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:layout_below="@+id/viewLine0"
-                    android:background="@color/pink_primary"
+                    android:background="@color/gray_light"
                     android:orientation="horizontal">
 
                     <View
@@ -54,7 +54,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/pink_light" />
+                        android:background="@color/white" />
 
                     <TextView
                         android:id="@+id/tvTitleEvent"
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_below="@+id/layout_title"
-                    android:background="@color/pink_light" />
+                    android:background="@color/white" />
 
                 <LinearLayout
                     android:id="@+id/layout_ca_1"
@@ -98,7 +98,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/pink_light" />
+                        android:background="@color/gray_light" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcv_ca_1"
@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/layout_ca_1"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
 
                 <LinearLayout
                     android:id="@+id/layout_ca_2"
@@ -133,7 +133,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/pink_light" />
+                        android:background="@color/gray_light" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcv_ca_2"
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/layout_ca_2"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
 
                 <LinearLayout
                     android:id="@+id/layout_ca_3"
@@ -167,7 +167,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/pink_light" />
+                        android:background="@color/gray_light" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcv_ca_3"
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/layout_ca_3"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 

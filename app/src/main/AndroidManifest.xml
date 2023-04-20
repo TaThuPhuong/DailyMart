@@ -38,7 +38,6 @@
             android:theme="@style/Base.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -48,7 +47,8 @@
         </activity>
         <activity
             android:name=".view.staff.details.DetailsStaffActivity"
-            android:exported="false" /> <!-- activity -->
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" /> <!-- activity -->
         <activity
             android:name=".view.on_boarding.OnBoardingActivity"
             android:exported="false" />
@@ -61,8 +61,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.main.MainActivity"
-            android:exported="false"
-            android:launchMode="singleInstance" />
+            android:exported="false"/>
         <activity
             android:name=".view.forget_password.ForgetPasswordActivity"
             android:exported="false" />
@@ -90,7 +89,9 @@
         <activity
             android:name=".view.category.CategoryActivity"
             android:exported="true" />
-        <activity android:name=".view.task.add_new.AddTaskActivity" />
+        <activity
+            android:name=".view.task.add_new.AddTaskActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.pay.AddInvoiceExportActivity"
             android:exported="true"
@@ -101,14 +102,22 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity android:name=".view.products.ProductsActivity" />
-        <activity android:name=".view.change_password.ChangePasswordActivity" />
+        <activity
+            android:name=".view.change_password.ChangePasswordActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.staff.StaffActivity" />
-        <activity android:name=".view.add_staff.AddStaffActivity" />
+        <activity
+            android:name=".view.add_staff.AddStaffActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.profile.ProfileActivity" />
         <activity android:name=".view.task.task_detail.TaskDetailActivity" />
-        <activity android:name=".view.task.task_edit.TaskEditActivity" />
+        <activity
+            android:name=".view.task.task_edit.TaskEditActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.products.detail_product.ProductDetailActivity" />
-        <activity android:name=".view.products.edit_product.ProductEditActivity" />
+        <activity
+            android:name=".view.products.edit_product.ProductEditActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.work_sheet.edit_work_sheet.EditWorkSheetActivity" />
         <activity android:name=".view.bank_info.BankInfoActivity" />
         <activity

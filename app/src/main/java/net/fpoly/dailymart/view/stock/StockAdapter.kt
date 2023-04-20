@@ -91,7 +91,7 @@ class StockAdapter(
                                 lossProduct =
                                     ((this.totalQuantity - newTotal) * this.sellPrice).toLong()
                             } else {
-                                binding.tvQuantity.text = "Tổng số lượng: $newTotal"
+                                binding.tvQuantity.text = "SL: $newTotal"
                                 binding.tvMakeMessage.gone()
                                 binding.tvAdd.gone()
                             }
@@ -127,7 +127,7 @@ class StockAdapter(
                 binding.imvArrow.hide(this.expires.isEmpty())
                 binding.tvName.text = this.name
                 binding.tvBarcode.text = "Barcode: ${this.barcode}"
-                binding.tvQuantity.text = "Tổng số lượng: ${this.totalQuantity}"
+                binding.tvQuantity.text = "SL: ${this.totalQuantity}"
                 mExpiryAdapter.setDate(this.expires)
                 binding.rcvExpiry.adapter = mExpiryAdapter
                 binding.imvArrow.setOnClickListener {

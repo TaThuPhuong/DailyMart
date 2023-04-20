@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_edit"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="26dp"
         android:background="@drawable/bg_red_ff44c_rd_8"
         android:drawableStart="@drawable/ic_delete"
         android:drawablePadding="10dp"

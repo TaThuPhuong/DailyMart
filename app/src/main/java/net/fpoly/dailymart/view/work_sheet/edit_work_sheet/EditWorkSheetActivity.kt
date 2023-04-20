@@ -57,7 +57,7 @@ class EditWorkSheetActivity :
                 viewModel.saveWorkSheet(sheet)
             }
         }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     override fun setupObserver() {

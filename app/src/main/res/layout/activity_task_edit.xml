@@ -17,38 +17,46 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="58dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
-                android:text="Sửa"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:text="Chỉnh sửa công việc"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_toolbar">
+            android:layout_below="@+id/toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="50dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -57,45 +65,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_banner_add_task" />
 
-                <LinearLayout
-                    android:id="@+id/layout_finish"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imv_banner"
-                    android:orientation="horizontal">
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:text="@{viewModel.task.finish}"
+                    android:textAllCaps="true"
+                    android:textSize="22sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="20dp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:text="Hoàn thành"
-                        android:textColor="@color/gray_primary"
-                        android:textSize="20sp" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/sc_finish"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="20dp"
-                        android:layout_marginStart="30dp"
-                        android:checked="@{viewModel.taskParam.finish}"
-                        android:thumb="@drawable/thumb"
-                        app:track="@drawable/track" />
-                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sc_finish"
+                    android:layout_width="wrap_content"
+                    app:switchPadding="12dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="12dp"
+                    android:checked="@{viewModel.taskParam.finish}"
+                    android:text="Đã hoàn thành"
+                    android:thumb="@drawable/thumb"
+                    app:track="@drawable/track" />
 
                 <EditText
                     android:id="@+id/ed_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/layout_finish"
-                    android:layout_marginVertical="5dp"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_below="@+id/sc_finish"
+                    android:layout_marginTop="12dp"
+                    android:paddingHorizontal="12dp"
+                    android:fontFamily="@font/imbplexsans_regular"
                     android:background="@drawable/bg_ed_search_task"
                     android:hint="Tên công việc"
-                    android:padding="8dp"
                     android:text="@{viewModel.task.title}"
                     android:textColor="@color/gray_medium"
                     android:textSize="16sp" />
@@ -103,12 +112,15 @@
                 <EditText
                     android:id="@+id/ed_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/ed_title"
-                    android:layout_marginVertical="5dp"
                     android:background="@drawable/bg_ed_search_task"
+                    android:layout_marginHorizontal="26dp"
                     android:enabled="false"
-                    android:padding="8dp"
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:paddingHorizontal="12dp"
+                    android:layout_marginTop="12dp"
+                    android:hint="Nhập tên, mã nhân viên..."
                     android:text="@{viewModel.task.name}"
                     android:textColor="@color/gray_medium"
                     android:textSize="16sp" />
@@ -116,27 +128,32 @@
                 <TextView
                     android:id="@+id/tv_time_start"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/ed_name"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_ed_search_task"
                     android:drawableStart="@drawable/ic_calander_gray"
+                    android:layout_marginHorizontal="26dp"
                     android:drawablePadding="10dp"
+                    android:fontFamily="@font/imbplexsans_regular"
+                    android:layout_marginTop="12dp"
                     android:hint="Bắt đầu"
                     android:padding="8dp"
                     android:text="@{viewModel.task.startTime}"
                     android:textColor="@color/gray_medium"
                     android:textSize="16sp" />
 
-
                 <TextView
                     android:id="@+id/tv_time_end"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/tv_time_start"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_ed_search_task"
+                    android:gravity="center_vertical"
                     android:drawableStart="@drawable/ic_calander_gray"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:layout_marginHorizontal="26dp"
+                    android:fontFamily="@font/imbplexsans_regular"
                     android:drawablePadding="10dp"
                     android:hint="Kết thúc"
                     android:padding="8dp"
@@ -149,23 +166,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_time_end"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_ed_search_task"
                     android:drawablePadding="10dp"
+                    android:layout_marginHorizontal="26dp"
                     android:gravity="top"
+                    android:fontFamily="@font/imbplexsans_regular"
                     android:hint="Mô tả ..."
                     android:minLines="4"
-                    android:padding="8dp"
+                    android:padding="12dp"
                     android:text="@{viewModel.task.description}"
                     android:textColor="@color/gray_medium"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/ed_comment"
+                <TextView
+                    android:id="@+id/tv_comment"
+                    set_visible="@{viewModel.task.comment.length()!=0}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_description"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_ed_search_task"
                     android:drawablePadding="10dp"
                     android:gravity="top"
@@ -179,17 +200,20 @@
                     android:id="@+id/btn_save"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_below="@+id/ed_comment"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="40dp"
-                    android:background="@drawable/bg_btn"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginVertical="24dp"
+                    android:layout_below="@id/tv_comment"
+                    android:background="@drawable/bg_pink_primary_rd_8"
                     android:fontFamily="@font/imbplexsans_medium"
                     android:gravity="center"
                     android:text="Lưu"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
+
 </layout>

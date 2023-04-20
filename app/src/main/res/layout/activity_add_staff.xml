@@ -17,34 +17,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp">
 
             <ImageView
                 android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Thêm nhân viên"
-                android:textColor="@color/gray_medium"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imv_back"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -75,32 +79,27 @@
         <!--                    android:textColor="@color/gray_primary"-->
         <!--                    android:textSize="24sp" />-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/ed_name_user"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_ed_search_task"
                 android:drawableStart="@drawable/ic_person_gray"
-                android:drawablePadding="10dp"
+                android:drawablePadding="12dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginHorizontal="26dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="Họ Tên"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="12dp"
+                android:padding="12dp"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp" />
-        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ed_name_user"
-            android:layout_marginHorizontal="35dp"
+            android:layout_marginHorizontal="26dp"
             android:text="@{viewModel.validateNameUser}"
             android:textColor="@color/red_FF444C"
             android:textSize="10sp"
@@ -108,16 +107,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:background="@drawable/bg_ed_search_task"
                 app:ccpDialog_textColor="@color/gray_light"
                 app:ccp_arrowSize="14dp"
@@ -128,14 +128,14 @@
             <EditText
                 android:id="@+id/ed_number_user"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bg_ed_search_task"
-                android:backgroundTint="@color/gray_medium"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:hint="Số điện thoại"
+                android:maxLength="10"
                 android:inputType="phone"
-                android:padding="8dp"
+                android:padding="12dp"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -143,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ed_number_user"
-            android:layout_marginHorizontal="35dp"
+            android:layout_marginHorizontal="26dp"
             android:text="@{viewModel.validatePhone}"
             android:textColor="@color/red_FF444C"
             android:textSize="10sp"
@@ -152,17 +152,15 @@
         <EditText
             android:id="@+id/ed_email_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="14dp"
             android:background="@drawable/bg_ed_search_task"
-            android:backgroundTint="@color/gray_medium"
             android:drawableStart="@drawable/ic_mail"
-            android:drawablePadding="10dp"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/imbplexsans_regular"
             android:hint="Email"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="12dp"
+            android:padding="12dp"
             android:textColor="@color/gray_primary"
             android:textSize="14sp" />
 
@@ -179,10 +177,11 @@
         <RelativeLayout
             android:id="@+id/layout_role"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_below="@+id/layout_phone"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="14dp"
+            android:paddingHorizontal="12dp"
             android:background="@drawable/bg_ed_search_task">
 
             <TextView
@@ -192,7 +191,6 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:gravity="center"
-                android:padding="6dp"
                 android:text="Chức vụ"
                 android:textColor="@color/gray_medium"
                 android:textSize="14sp" />
@@ -205,19 +203,20 @@
                 android:layout_toStartOf="@id/imv_change_role"
                 android:layout_toEndOf="@+id/tv_role"
                 android:backgroundTint="@color/gray_medium"
-                android:gravity="end"
+                android:gravity="end|center_vertical"
                 android:maxLines="1"
                 android:padding="6dp"
                 android:text="Nhân viên"
+                android:fontFamily="@font/imbplexsans_medium"
                 android:textColor="@color/gray_medium" />
 
             <ImageView
                 android:id="@+id/imv_change_role"
-                android:layout_width="40dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:padding="14dp"
+                android:padding="16dp"
                 android:rotation="180"
                 android:src="@drawable/ic_back_black" />
         </RelativeLayout>
@@ -225,22 +224,18 @@
         <TextView
             android:id="@+id/tv_save"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_btn"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_pink_primary_rd_8"
             android:fontFamily="@font/imbplexsans_medium"
             android:gravity="center"
             android:text="Thêm"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="110dp"
-            android:layout_marginVertical="20dp"
-            android:background="@color/gray_medium" />
     </LinearLayout>
 </layout>

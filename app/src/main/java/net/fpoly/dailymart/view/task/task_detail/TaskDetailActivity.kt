@@ -27,7 +27,7 @@ class TaskDetailActivity :
         mTask?.let {
             viewModel.setTask(it)
         }
-        binding.imvBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
         binding.btnClose.setOnClickListener { finish() }
     }
 

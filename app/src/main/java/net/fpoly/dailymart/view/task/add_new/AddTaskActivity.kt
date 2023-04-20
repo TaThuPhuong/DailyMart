@@ -35,8 +35,8 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     private var mLoadingDialog: LoadingDialog? = null
 
     override fun setOnClickListener() {
-        binding.imvBack.setOnClickListener(this)
-        binding.btnAddTask.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
         binding.tvTimeEnd.setOnClickListener(this)
         binding.tvName.setOnClickListener(this)
     }
@@ -66,14 +66,14 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding>(ActivityAddTaskBind
     @SuppressLint("SetTextI18n")
     override fun onClick(v: View?) {
         when (v) {
-            binding.imvBack -> finish()
+            binding.btnBack -> finish()
             binding.tvTimeEnd -> {
                 PickTimeDialog(this) { time ->
                     binding.tvTimeEnd.text = "Kết thúc: ${timeFormat.format(time)}"
                     viewModel.onEvent(AddTaskEvent.TimeEndChange(time))
                 }.show()
             }
-            binding.btnAddTask -> {
+            binding.btnSave -> {
                 mLoadingDialog!!.showLoading()
                 viewModel.onEvent(AddTaskEvent.AddNew)
             }

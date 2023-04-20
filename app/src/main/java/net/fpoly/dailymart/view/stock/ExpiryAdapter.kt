@@ -62,14 +62,14 @@ class ExpiryAdapter(
     override fun onBindViewHolder(holder: ItemView, position: Int) {
         with(holder) {
             with(mListExpiry[position]) {
-                binding.tvDate.text = "Hạn sử dụng: ${this.expiryDate.date2String()}"
-                binding.tvQuantity.text = "Số lượng ${this.quantity}"
+                binding.tvDate.text = "HSD: ${this.expiryDate.date2String()}"
+                binding.tvQuantity.text = "SL: ${this.quantity}"
                 binding.layoutDate.setOnClickListener {
                     datePicker(this.expiryDate) {
                         this.expiryDate = it
                         onUpdate(this) { b ->
                             if (b) {
-                                binding.tvDate.text = "Hạn sử dụng: ${it.date2String()}"
+                                binding.tvDate.text = "HSD: ${it.date2String()}"
                                 showToast(mContext, "Cập nhập thành công")
                             } else {
                                 showToast(mContext, "Lỗi kết nối")
@@ -82,7 +82,7 @@ class ExpiryAdapter(
                         this.quantity = it
                         onUpdate(this) { b ->
                             if (b) {
-                                binding.tvQuantity.text = "Số lượng: $it"
+                                binding.tvQuantity.text = "SL: $it"
                                 onChangeQuantity(this)
                                 showToast(mContext, "Cập nhập thành công")
                             } else {

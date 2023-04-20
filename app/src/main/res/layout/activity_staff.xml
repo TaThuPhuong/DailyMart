@@ -17,28 +17,33 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp">
 
             <ImageView
                 android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:src="@drawable/ic_back_black" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Nhân viên"
-                android:textColor="@color/gray_medium"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:textColor="@color/gray_primary"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imv_back"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:id="@+id/layout_search"
@@ -58,10 +63,10 @@
                 android:background="@color/no_color"
                 android:drawableStart="@drawable/ic_search_pink"
                 android:drawablePadding="10dp"
-                android:hint="Tên, sdt"
+                android:hint="Tên, số điện thoại,..."
                 android:padding="8dp"
-                android:textColor="@color/pink_primary"
-                android:textColorHint="@color/pink_primary"
+                android:textColor="@color/black"
+                android:textColorHint="@color/txt_medium_gray"
                 android:textSize="16sp" />
 
             <ImageView
@@ -84,6 +89,7 @@
             android:layout_marginEnd="18dp"
             android:background="@drawable/bg_red_ff44c_rd_8"
             android:drawableStart="@drawable/ic_plus"
+            android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
             android:paddingHorizontal="20dp"
             android:text="Thêm"
@@ -99,6 +105,7 @@
                 android:id="@+id/rcv_list_staff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.core.widget.NestedScrollView>
 

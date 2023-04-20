@@ -20,7 +20,7 @@ class ChangePasswordActivity :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setupSaveChangePass()
-        binding.imvBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             onBackPressed()
         }
         viewModel.initLoadDialog(this)

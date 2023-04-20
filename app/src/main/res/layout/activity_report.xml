@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -15,37 +16,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="38dp">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imv_back"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:src="@drawable/ic_back_black"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/imbplexsans_medium"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:text="Thống kê"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/layout_toolbar">
+            android:layout_below="@id/toolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -258,152 +264,263 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_chart_export"
+                <LinearLayout
+                    android:id="@+id/layout_losses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_export"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:gravity="center_vertical"
-                    android:text="Tiền bán"
-                    android:textColor="@color/gray_medium"
-                    android:textSize="20sp" />
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_red_rd_8"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:text="Tiền hàng thất thoát"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_losses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:includeFontPadding="false"
+                        android:text="@{viewModel.totalLosses}"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/layout_chart_export"
+                    android:id="@+id/layout_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_chart_export"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp">
+                    android:layout_below="@+id/layout_losses">
 
-                    <TextView
-                        android:id="@+id/tv_bc_export_top_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="VNĐ"
-                        android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
-
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/bc_export"
+                    <LinearLayout
+                        android:id="@+id/layout_piechart"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_below="@+id/tv_bc_export_top_unit" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pc_report_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_chart_export_bt_unit"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_chart_export"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/bc_export"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Ngày"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical"
+                        android:text="Tiền bán"
                         android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
+                        android:textSize="20sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_chart_export"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_chart_export"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_bc_export_top_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VNĐ"
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bc_export"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_below="@+id/tv_bc_export_top_unit" />
+
+                        <TextView
+                            android:id="@+id/tv_chart_export_bt_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/bc_export"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Ngày"
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_chart_import"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_chart_export"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical"
+                        android:text="Tiền nhập"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="20sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_barchart_import"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_chart_import"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_bc_import_top_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VNĐ"
+
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bc_import"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_below="@+id/tv_bc_import_top_unit" />
+
+                        <TextView
+                            android:id="@+id/tv_import_bt_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/bc_import"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Ngày"
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_hon_hop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_barchart_import"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical"
+                        android:text="Tổng hợp"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="20sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_hon_hop"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_lc_top_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VNĐ"
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/lc_hon_hop"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_below="@+id/tv_lc_top_unit" />
+
+                        <TextView
+                            android:id="@+id/tv_lc_bt_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lc_hon_hop"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Ngày"
+                            android:textColor="@color/gray_medium"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_chart_import"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_chart_export"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:gravity="center_vertical"
-                    android:text="Tiền nhập"
-                    android:textColor="@color/gray_medium"
-                    android:textSize="20sp" />
-
                 <RelativeLayout
-                    android:id="@+id/layout_barchart_import"
+                    android:id="@+id/layout_best_seller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_chart_import"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp">
+                    android:layout_below="@+id/layout_chart"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp">
 
                     <TextView
-                        android:id="@+id/tv_bc_import_top_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="VNĐ"
-
-                        android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
-
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/bc_import"
+                        android:id="@+id/tv_best_seller"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_below="@+id/tv_bc_import_top_unit" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/imbplexsans_medium"
+                        android:gravity="center_vertical"
+                        android:text="10 Sản phẩm bán chạy"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/tv_import_bt_unit"
+                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/bc_import"
+                        android:layout_below="@+id/tv_best_seller"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="Tên sản phẩm"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_best_seller"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Ngày"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="Số lượng bán"
                         android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tv_hon_hop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_barchart_import"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/imbplexsans_medium"
-                    android:gravity="center_vertical"
-                    android:text="Tổng hợp"
-                    android:textColor="@color/gray_medium"
-                    android:textSize="20sp" />
-
-                <RelativeLayout
-                    android:id="@+id/layout_line_chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_hon_hop"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp">
-
-                    <TextView
-                        android:id="@+id/tv_lc_top_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="VNĐ"
-                        android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/lc_hon_hop"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_best_seller"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_below="@+id/tv_lc_top_unit" />
-
-                    <TextView
-                        android:id="@+id/tv_lc_bt_unit"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lc_hon_hop"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Ngày"
-                        android:textColor="@color/gray_medium"
-                        android:textSize="12sp" />
+                        android:layout_below="@+id/tv_name"
+                        android:layout_marginBottom="20dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </RelativeLayout>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>

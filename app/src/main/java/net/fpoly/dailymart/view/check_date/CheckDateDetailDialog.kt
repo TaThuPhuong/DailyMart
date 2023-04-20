@@ -30,9 +30,9 @@ class CheckDateDetailDialog(
         binding.tvMakeMessage.setVisibility(role == ROLE.staff && outOfDate)
         binding.tvClose.setVisibility(!outOfDate)
         binding.tvName.text = expiry.productName
-        binding.tvDate.text = expiry.expiryDate.date2String()
+        binding.tvDate.text = "HSD: ${expiry.expiryDate.date2String()}"
         binding.tvBarcode.text = "Barcode: ${expiry.barcode}"
-        binding.tvQuantity.text = expiry.quantity.toString()
+        binding.tvQuantity.text = "SL: ${expiry.quantity}"
         Glide.with(mContext).load(expiry.image)
             .placeholder(R.drawable.img_default).into(binding.imvImage)
         binding.imvClose.setOnClickListener {

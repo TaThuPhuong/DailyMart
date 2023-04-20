@@ -4,47 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layout_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="28dp">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imv_back"
-            android:layout_width="56dp"
-            android:layout_height="match_parent"
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="16dp"
-            android:src="@drawable/ic_back_black" />
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/imbplexsans_medium"
-            android:gravity="center_vertical"
-            android:text="Chỉnh lịch làm"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/bg_blue_light_rd_8"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="8dp"
-            android:text="Lưu"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:fontFamily="@font/imbplexsans_regular"
+            android:text="Chỉnh lịch làm việc"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/tv_save"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_confirm"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_toolbar">
+        android:layout_below="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +82,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/pink_light" />
+                    android:background="@color/white" />
 
                 <TextView
                     android:id="@+id/tvTitleEvent"
@@ -99,7 +105,7 @@
                 android:id="@+id/viewLine1"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/pink_light" />
+                android:background="@color/white" />
 
             <RelativeLayout
                 android:id="@+id/layout_ca_1"
@@ -124,7 +130,7 @@
                     android:layout_alignTop="@+id/rcv_ca_1"
                     android:layout_alignBottom="@+id/rcv_ca_1"
                     android:layout_toEndOf="@+id/tv_shift_1"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_ca_1"
@@ -140,13 +146,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:translationY="-12dp"
+                    android:translationX="-12dp"
                     android:background="@drawable/bg_btn"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="6dp"
                     android:text="Thêm"
                     android:textColor="@color/white" />
             </RelativeLayout>
@@ -155,7 +159,7 @@
                 android:id="@+id/viewLine2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/pink_light" />
+                android:background="@color/gray_light" />
 
             <RelativeLayout
                 android:id="@+id/layout_ca_2"
@@ -180,7 +184,7 @@
                     android:layout_alignTop="@+id/rcv_ca_2"
                     android:layout_alignBottom="@+id/rcv_ca_2"
                     android:layout_toEndOf="@+id/tv_shift_2"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_ca_2"
@@ -196,13 +200,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:translationY="-12dp"
+                    android:translationX="-12dp"
                     android:background="@drawable/bg_btn"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="6dp"
                     android:text="Thêm"
                     android:textColor="@color/white" />
             </RelativeLayout>
@@ -211,7 +213,7 @@
                 android:id="@+id/viewLine3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/pink_light" />
+                android:background="@color/gray_light" />
 
             <RelativeLayout
                 android:id="@+id/layout_ca_3"
@@ -236,7 +238,7 @@
                     android:layout_alignTop="@+id/rcv_ca_3"
                     android:layout_alignBottom="@+id/rcv_ca_3"
                     android:layout_toEndOf="@+id/tv_shift_3"
-                    android:background="@color/pink_light" />
+                    android:background="@color/gray_light" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_ca_3"
@@ -250,15 +252,13 @@
                     android:id="@+id/tv_add_shift_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_btn"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="6dp"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:translationY="-12dp"
+                    android:translationX="-12dp"
                     android:text="Thêm"
                     android:textColor="@color/white" />
             </RelativeLayout>
@@ -267,7 +267,7 @@
                 android:id="@+id/viewLine4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/pink_light" />
+                android:background="@color/gray_light" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

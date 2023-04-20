@@ -88,7 +88,7 @@ class DetailsStaffActivity :
         binding.edName.getTextOnChange {
             viewModel.onEvent(UpdateEvent.OnNameChange(it))
         }
-        binding.edNumber.getTextOnChange {
+        binding.edPhone.getTextOnChange {
             viewModel.onEvent(UpdateEvent.OnPhoneNumberChange(it))
         }
         binding.edEmail.getTextOnChange {
@@ -109,7 +109,7 @@ class DetailsStaffActivity :
     private fun setData(user: Datum) {
         binding.edName.setText(user.name)
         binding.edEmail.setText(user.email)
-        binding.edNumber.setText(user.phoneNumber)
+        binding.edPhone.setText(user.phoneNumber)
         binding.edRole.text = user.role.value
         binding.edStatus.text = getStatus(user.status)
         mRole = user.role

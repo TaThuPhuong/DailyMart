@@ -1,37 +1,49 @@
 package net.fpoly.dailymart.view.report
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.*
 import net.fpoly.dailymart.extension.time_extention.date2String
+import net.fpoly.dailymart.firbase.database.LossesDao
 import net.fpoly.dailymart.repository.ReportRepository
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.utils.toMoney
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class ReportViewModel(context: Context, private val reportRepository: ReportRepository) :
+class ReportViewModel(val app: Application, private val reportRepository: ReportRepository) :
     ViewModel() {
 
     private val TAG = "YinMing"
     val listRevenueByMonth = MutableLiveData<List<ReportDayData>>(ArrayList())
     val listRevenueByYear = MutableLiveData<List<ReportMonthData>>(ArrayList())
+    val listBestSeller = MutableLiveData<List<BestSeller>>(ArrayList())
+    val pieChartData = MutableLiveData<PieData>(null)
 
     val totalRevenue = MutableLiveData("0 vnđ")
     val totalImport = MutableLiveData("0 vnđ")
     val totalExport = MutableLiveData("0 vnđ")
     val quantityImport = MutableLiveData("0")
     val quantityExport = MutableLiveData("0")
+    val totalLosses = MutableLiveData("0 vnđ")
     val onGetDone = MutableLiveData(false)
 
 
-    private val mToken = SharedPref.getAccessToken(context)
+    private val mToken = SharedPref.getAccessToken(app)
     private val mCalender = Calendar.getInstance()
 
     val timeReport = MutableLiveData("")
@@ -43,12 +55,25 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
     init {
         timeReport.value = mCalender.timeInMillis.date2String()
         getRevenueByMonth(mCalender.timeInMillis)
+        getListBestSeller()
+    }
+
+    private fun getListBestSeller() = viewModelScope.launch(Dispatchers.IO) {
+        when (val res = reportRepository.getBestSeller(mToken)) {
+            is Response.Error -> return@launch
+            is Response.Success -> {
+                listBestSeller.postValue(res.data.take(10))
+            }
+        }
     }
 
     fun getRevenueByMonth(time: Long) {
         mCalender.timeInMillis = time
         timeReport.value = time.date2String("MM/yyyy")
         viewModelScope.launch {
+            LossesDao.getLossesByMonth(mCalender[Calendar.MONTH] + 1, mCalender[Calendar.YEAR]) {
+                totalLosses.postValue(it.toMoney())
+            }
             when (val res =
                 reportRepository.getReportByMonth(
                     mToken,
@@ -76,6 +101,9 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
         mCalender.timeInMillis = time
         timeReport.value = time.date2String("yyyy")
         viewModelScope.launch {
+            LossesDao.getLossesByYear(mCalender[Calendar.YEAR]) {
+                totalLosses.postValue(it.toMoney())
+            }
             when (val res = reportRepository.getReportByYear(mToken, mCalender[Calendar.YEAR])) {
                 is Response.Success -> {
                     listRevenueByYear.postValue(res.data.listData)
@@ -108,6 +136,7 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
                     quantityImport.postValue(res.data.quantityImport.toString())
                     quantityExport.postValue(res.data.quantityExport.toString())
                     onGetDone.postValue(true)
+                    pieChartData.postValue(genPieData(res.data.totalImport, res.data.totalExport))
                 }
                 is Response.Error -> {
                     onGetDone.postValue(true)
@@ -115,5 +144,20 @@ class ReportViewModel(context: Context, private val reportRepository: ReportRepo
                 }
             }
         }
+    }
+
+    private fun genPieData(import: Long, export: Long): PieData {
+        val entries = listOf(
+            PieEntry(import.toFloat(), "Nhập"),
+            PieEntry(export.toFloat(), "Bán")
+        )
+        val dataSet = PieDataSet(entries, "")
+        dataSet.valueTextSize = 12f
+        dataSet.valueTextColor = ContextCompat.getColor(app, R.color.white)
+        dataSet.colors = listOf(
+            ContextCompat.getColor(app, R.color.pink_medium),
+            ContextCompat.getColor(app, R.color.green_light)
+        )
+        return PieData(dataSet)
     }
 }
