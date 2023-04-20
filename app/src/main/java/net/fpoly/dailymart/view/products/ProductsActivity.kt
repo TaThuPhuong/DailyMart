@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.view.products
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import net.fpoly.dailymart.AppViewModelFactory
@@ -53,6 +54,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
 
     override fun setupObserver() {
         viewModel.listProduct.observe(this) {
+            Log.e(TAG, "setupObserver: ${it.size}")
             mProductAdapter.setData(it)
             mListProduct = it
         }

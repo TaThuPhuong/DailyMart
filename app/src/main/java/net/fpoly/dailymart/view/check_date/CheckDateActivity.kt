@@ -12,6 +12,7 @@ import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.CheckDateFilter
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.message.MessageActivity
@@ -80,6 +81,17 @@ class CheckDateActivity :
                     value,
                     true
                 )
+            }
+            if (listFilter.isEmpty()) {
+                binding.tvNoData.visible()
+            } else {
+                binding.tvNoData.gone()
+            }
+            if (value.isEmpty()) {
+                binding.imvClear.gone()
+                mAdapter.setData(mListExpiry)
+            } else {
+                binding.imvClear.visible()
             }
             mAdapter.setData(listFilter)
         }

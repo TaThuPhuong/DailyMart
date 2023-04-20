@@ -9,6 +9,7 @@ import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.databinding.ActivityTaskEditBinding
 import net.fpoly.dailymart.extension.showToast
+import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.utils.Constant
 import net.fpoly.dailymart.view.task.PickTimeDialog
 import net.fpoly.dailymart.view.task.add_new.AddTaskEvent
@@ -50,6 +51,7 @@ class TaskEditActivity :
         mTask?.let {
             viewModel.setTask(it)
         }
+        setEditTextChange()
     }
 
     override fun setupObserver() {
@@ -63,6 +65,15 @@ class TaskEditActivity :
                 mLoadingDialog?.hideLoading()
                 if (it) finish()
             }
+        }
+    }
+
+    private fun setEditTextChange() {
+        binding.edTitle.getTextOnChange {
+            viewModel.onEvent(EditEvent.OnChangeTitle(it))
+        }
+        binding.edDescription.getTextOnChange {
+            viewModel.onEvent(EditEvent.OnChangeDes(it))
         }
     }
 }

@@ -71,7 +71,7 @@ class TaskRepositoryImpl(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "getTaskById Ex: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, ERROR_NETWORK, null)
             }
         }
 
@@ -83,7 +83,10 @@ class TaskRepositoryImpl(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "getAllTask Ex: $e")
-                ResponseResult(0, "Lỗi", null)
+                ResponseResult(0, ERROR_NETWORK, null)
             }
         }
+    companion object{
+        const val ERROR_NETWORK = "Máy chủ không phản hồi"
+    }
 }

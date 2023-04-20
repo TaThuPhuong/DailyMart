@@ -114,6 +114,7 @@ class AddProductViewModel(
                 }
             }
             is ProductEvent.UnitChange -> {
+                checkValidate.value = _product.value?.checkValidate()
                 _product.value = _product.value?.copy(
                     unit = event.unit
                 )

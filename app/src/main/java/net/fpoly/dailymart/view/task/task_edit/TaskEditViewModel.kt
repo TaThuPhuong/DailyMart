@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.task.task_edit
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,16 +41,8 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
             endTime = "Kết thúc: ${SimpleDateFormat("HH:mm").format(task.deadline)}",
             finish = if (task.finish) "Đã hoàn thành" else if (task.deadline < System.currentTimeMillis()) "Quá hạn" else "Đang thực hiện"
         )
-        taskParam.value = taskParam.value?.copy(
-            idCreator = task.idCreator.id,
-            idReceiver = task.idReceiver.id,
-            title = task.title,
-            description = task.description,
-            deadline = task.deadline,
-            finish = task.finish,
-            finishTime = task.finishTime,
-            comment = task.comment
-        )
+        taskParam.value = TaskParam(task)
+        Log.e("YingMing", "taskParam: ${taskParam.value!!}")
     }
 
     fun onEvent(event: EditEvent) {
@@ -83,7 +76,9 @@ class TaskEditViewModel(private val app: Application, private val repo: TaskRepo
             EditEvent.OnSave -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val res = repo.updateTask(mToken, taskParam.value!!, task.value!!.id)
+                    Log.e("YingMing", "onEvent: ${taskParam.value!!}")
                     if (res.isSuccess()) {
+                        Log.e("YingMing", "onEvent: ${res.data}")
                         message.postValue(res.message!!)
                         updateTaskSuccess.postValue(true)
                         mTask?.idReceiver?.deviceId?.let {

@@ -51,6 +51,7 @@ class LoginViewModel(private val app: Application, private val repo: UserReposit
                 _validatePhone.value = event.value.blankException()
             }
             is LoginEvent.OnPasswordChange -> {
+                _validatePassword.value = event.value.blankException()
                 _loginParam.value = _loginParam.value?.copy(
                     password = event.value
                 )
