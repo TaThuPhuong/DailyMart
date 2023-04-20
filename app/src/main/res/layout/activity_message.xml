@@ -92,8 +92,10 @@
                 android:focusable="true"
                 android:hint="Nhập tin nhắn ..."
                 android:maxLines="4"
-                android:paddingHorizontal="6dp"
+                android:textColor="@color/gray_medium"
+                android:fontFamily="@font/imbplexsans_regular"
                 android:paddingVertical="14dp"
+                android:paddingHorizontal="12dp"
                 android:textSize="16sp" />
 
             <ImageView

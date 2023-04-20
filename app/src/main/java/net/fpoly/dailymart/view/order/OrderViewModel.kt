@@ -31,7 +31,7 @@ class OrderViewModel(context: Context) : ViewModel() {
     private val invoiceRepo = InvoiceRepositoryImpl()
     private val productRepo = ProductRepositoryImpl()
 
-    val products = MutableLiveData(listOf<Product>())
+    val products = MutableLiveData<List<Product>>()
     val currentProduct = MutableLiveData<Product>()
 
     val invoiceProducts = MutableLiveData<ArrayList<ProductInvoiceParam>>()
@@ -51,7 +51,7 @@ class OrderViewModel(context: Context) : ViewModel() {
         isShowLoading.postValue(true)
         val res = productRepo.getAllProduct(token)
         if (res.isSuccess()) {
-            products.postValue(res.data)
+            this@OrderViewModel.products.postValue(res.data)
         } else {
             showSnackbar.postValue("Lấy danh sách sản phẩm thất bại")
         }

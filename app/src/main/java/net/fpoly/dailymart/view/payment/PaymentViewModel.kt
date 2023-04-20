@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +37,7 @@ class PaymentViewModel(context: Context) : ViewModel() {
     private val customerRepo = CustomerRepositoryImpl()
     private val invoiceRepo = InvoiceRepositoryImpl()
 
-    val customers = MutableLiveData(listOf<Customer>())
+    val customers = MutableLiveData<List<Customer>>()
     var customerSelected = MutableLiveData<Customer>()
     val eventCreateInvoiceSuccess = MutableLiveData<Unit>()
     val isLoading = MutableLiveData(false)
@@ -53,7 +52,7 @@ class PaymentViewModel(context: Context) : ViewModel() {
         when (val res = customerRepo.getCustomers(token)) {
             is Response.Success -> {
                 customerSelected(res.data.last())
-                customers.postValue(res.data)
+                this@PaymentViewModel.customers.postValue(res.data)
             }
             is Response.Error -> {
                 showSnackbar.postValue(res.message)

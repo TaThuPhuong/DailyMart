@@ -35,7 +35,7 @@ class ProductRepositoryImpl : ProductRepository {
                 api.getAllProduct(token)
             } catch (e: Exception) {
                 Log.e(TAG, "Exception: $e")
-                ResponseResult(0, ERROR_CONNECT, null)
+                ResponseResult(0, ERROR_CONNECT, mutableListOf())
             }
         }
 
