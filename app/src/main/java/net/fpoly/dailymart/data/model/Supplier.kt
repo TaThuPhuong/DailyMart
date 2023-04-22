@@ -9,12 +9,18 @@ data class Supplier(
     @SerializedName("supplierName") val supplierName: String = "",
     @SerializedName("phoneNumber") var phoneNumber: String = "",
     @SerializedName("createdAt") var createdAt: String = "",
+    @SerializedName("representativeName") var representativeName: String = "",
+    @SerializedName("address") var address: String = "",
+    @SerializedName("status") var status: Boolean = true,
 ) : Serializable
 
 data class SupplierParam(
     @SerializedName("supplierName") val supplierName: String = "",
     @SerializedName("phoneNumber") var phoneNumber: String = "",
-    )
+    @SerializedName("representativeName") var representativeName: String = "",
+    @SerializedName("address") var address: String = "",
+    @SerializedName("status") var status: Boolean = true,
+)
 
 data class ResultData<T>(
     var status: Int = 0,

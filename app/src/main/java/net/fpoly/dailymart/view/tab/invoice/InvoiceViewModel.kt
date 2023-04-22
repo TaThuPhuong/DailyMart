@@ -3,7 +3,6 @@ package net.fpoly.dailymart.view.tab.invoice
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Invoice
 import net.fpoly.dailymart.data.model.InvoiceType
@@ -22,54 +21,68 @@ class InvoiceViewModel(context: Context) : ViewModel() {
     val openTabReceipt: LiveData<Int> = _openTabReceipt
     private val token = SharedPref.getAccessToken(context)
 
-    var invoicesResult: MutableList<Invoice> = mutableListOf()
+    var rootInvoices = mutableListOf<Invoice>()
     val invoices = MutableLiveData(mutableListOf<Invoice>())
-
-    val invoiceImport = invoices.switchMap { filterInvoice(it, InvoiceType.IMPORT) }
-    val invoiceSell =
-        invoices.switchMap { filterInvoice(it, InvoiceType.REFUND, InvoiceType.EXPORT) }
 
     val showSnackbar = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
-    val isRefund = MutableLiveData(false)
-    val isShowEmptyList = MutableLiveData(false)
-
-    private lateinit var invoiceRefund: Invoice
+    val isShowEmptyList = invoices.switchMap {
+        MutableLiveData(it.isNullOrEmpty())
+    }
+    var nowPage = 1
+    var totalPage = 1
 
     init {
-        viewModelScope.launch { getAllInvoice() }
+        viewModelScope.launch { getInvoices() }
     }
 
-    private suspend fun getAllInvoice() {
+    private suspend fun getInvoices() {
         isLoading.postValue(true)
-        when (val res = repoInvoice.getInvoices(token)) {
+        when (val res = repoInvoice.getInvoicesPage(token, nowPage)) {
             is Response.Success -> {
-                invoicesResult = res.data
-                invoices.postValue(res.data)
+                val root = res.data.toMutableList()
+                rootInvoices.addAll(root)
+                nowPage++
+                totalPage = res.page
+                showInvoice()
             }
+
             is Response.Error -> {
                 showSnackbar.value = res.message
             }
         }
         isLoading.postValue(false)
-        delay(200)
-        checkShowEmptyList()
     }
 
-    private fun filterInvoice(
-        invoices: MutableList<Invoice>,
-        vararg typeInvoice: InvoiceType
-    ): LiveData<MutableList<Invoice>> {
-        val invoicesImport =
-            invoices.filter { list -> typeInvoice.any { list.type == it.name } }
+    fun loadMore() {
+        if (nowPage == totalPage) return
+        viewModelScope.launch {
+            val res = repoInvoice.getInvoicesPage(token, nowPage)
+            if (res is Response.Success) {
+                val root = res.data.toMutableList()
+                rootInvoices.addAll(root)
+                nowPage++
+                totalPage = res.page
+                showInvoice()
+            }
+        }
+    }
+
+    fun showInvoice(tab: Int? = _openTabReceipt.value) {
+        val filter = when (tab) {
+            TAB_EXPORT -> rootInvoices.filter { it.type == InvoiceType.EXPORT.name || it.type == InvoiceType.REFUND.name }
                 .toMutableList()
-        return MutableLiveData(invoicesImport)
+
+            TAB_IMPORT -> rootInvoices.filter { it.type == InvoiceType.IMPORT.name }.toMutableList()
+            else -> mutableListOf()
+        }
+        invoices.postValue(filter)
     }
 
     fun onOpenTab(id: Int) {
-        _openTabReceipt.value = id
-        if(isLoading.value == false) {
-            checkShowEmptyList()
+        viewModelScope.launch {
+            _openTabReceipt.postValue(id)
+            showInvoice(id)
         }
     }
 
@@ -78,16 +91,6 @@ class InvoiceViewModel(context: Context) : ViewModel() {
             it.putExtra(INVOICE, invoice)
             context.startActivity(it)
         }
-    }
-
-    fun checkShowEmptyList(): Boolean {
-        val isShow = when {
-            openTabReceipt.value == TAB_EXPORT && invoiceSell.value.isNullOrEmpty() -> true
-            openTabReceipt.value == TAB_IMPORT && invoiceImport.value.isNullOrEmpty() -> true
-            else -> false
-        }
-        isShowEmptyList.value = isShow
-        return isShow
     }
 
     companion object {

@@ -95,6 +95,7 @@
                             android:layout_marginHorizontal="18dp"
                             android:layout_marginTop="26dp"
                             android:fontFamily="@font/imbplexsans_regular"
+                            android:textAllCaps="true"
                             android:text="@{@string/id_category(viewmodel.invoice.numberID)}"
                             android:textColor="@color/gray_medium" />
 
@@ -335,16 +336,16 @@
 
                     <TextView
                         android:id="@+id/tv_confirm"
-                        set_visible="@{viewmodel.isShowDelete()}"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        set_visible="@{viewmodel.isRefund() == true}"
                         android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_pink_primary_rd_8"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="center"
-                        android:onClick="@{() -> viewmodel.deleteBtnClick(context)}"
-                        android:text='@{viewmodel.isRefund == true ? "Xác nhận" : "Xóa"}'
+                        android:onClick="@{() -> viewmodel.confirmRefund(context)}"
+                        android:text="Xác nhận"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 

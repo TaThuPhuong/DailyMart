@@ -3,42 +3,75 @@ package net.fpoly.dailymart.view.supplier
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.model.CategoryParam
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
 import net.fpoly.dailymart.repository.SupplierRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 
-class SupplierViewModel(context: Context ,val repository: SupplierRepository) : ViewModel() {
+class SupplierViewModel(context: Context, val repository: SupplierRepository) : ViewModel() {
 
-    val listSupplier = MutableLiveData<List<Supplier>>()
+    private val rootSupplier = mutableListOf<Supplier>()
+    val listSupplier = MutableLiveData<MutableList<Supplier>>()
     var listSupplierRemote: ArrayList<Supplier> = arrayListOf()
     var isLoading = MutableLiveData(false)
+
+    val listShow = MutableLiveData<MutableList<Supplier>>()
 
     val showSnackbar = MutableLiveData<String>()
     val token = SharedPref.getAccessToken(context)
     val user = SharedPref.getUser(context)
 
+    var typeSupplier = ACTIVE
+    private var page = 1
+    private var totalPage = 1
 
     init {
-        getAllSuppliers()
+        viewModelScope.launch { getSupplierPage() }
     }
 
-    private fun getAllSuppliers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            isLoading.postValue(true)
-            val resultData = repository.getSuppliers(token)
-            resultData.result.also {
-                listSupplierRemote = it
-                listSupplier.postValue(it)
-            }
-            isLoading.postValue(false)
+    private suspend fun getSupplierPage() {
+        isLoading.postValue(true)
+        val result = repository.getSuppliersPage(token, page)
+        if (result.isSuccess()) {
+            totalPage = result.totalPage
+            rootSupplier.addAll(result.result)
+            listSupplier.postValue(rootSupplier)
+            loadShowList()
+            page++
+        } else {
+            showSnackbar.postValue("Lấy danh sách thất bại")
         }
+        isLoading.postValue(false)
+    }
+
+    suspend fun loadMorePage() {
+        if (page == totalPage) return
+        val result = repository.getSuppliersPage(token, page)
+        if (result.isSuccess()) {
+            rootSupplier.addAll(result.result)
+            listSupplier.postValue(rootSupplier)
+            loadShowList()
+            page++
+        }
+    }
+
+    fun loadShowList() {
+        val filter = rootSupplier.filter { it.status == typeSupplier }.toMutableList()
+        listShow.postValue(filter)
+    }
+
+    private suspend fun reloadSupplier() {
+        page = 1
+        rootSupplier.clear()
+        getSupplierPage()
     }
 
     fun callToSupplier(context: Context, supplier: Supplier) {
@@ -59,7 +92,7 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
             isLoading.postValue(true)
             val result = repository.insertSupplier(supplier, token)
             if (result.isSuccess()) {
-                getAllSuppliers()
+                reloadSupplier()
                 showSnackbar.postValue(MESSAGE_ADD_SUCCESS)
             } else {
                 showSnackbar.postValue(MESSAGE_ADD_FAILED)
@@ -72,9 +105,10 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
     fun editNewSupplier(id: String, supplier: SupplierParam) {
         viewModelScope.launch {
             isLoading.postValue(true)
+            Log.e(TAG, "editNewSupplier: $id --- ${Gson().toJson(supplier)}")
             val result = repository.editSupplier(id, supplier, token)
             if (result.isSuccess()) {
-                getAllSuppliers()
+                reloadSupplier()
                 showSnackbar.postValue(MESSAGE_EDIT_SUCCESS)
             } else {
                 showSnackbar.postValue(MESSAGE_EDIT_FAILED)
@@ -88,16 +122,16 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
             isLoading.postValue(true)
             val res = repository.removeSupplier(supplier, token)
             if (res.isSuccess()) {
-                getAllSuppliers()
-                showSnackbar.postValue(MESSAGE_REMOVE_SUCCESS)
+                reloadSupplier()
+                showSnackbar.postValue(res.message)
             } else {
                 showSnackbar.postValue(MESSAGE_REMOVE_FAILED)
             }
-            isLoading.postValue(true)
+            isLoading.postValue(false)
         }
     }
 
-    fun showDialogAdd(context: Context){
+    fun showDialogAdd(context: Context) {
         AddEditSupplierDialog(context, null, this).show()
     }
 
@@ -117,15 +151,20 @@ class SupplierViewModel(context: Context ,val repository: SupplierRepository) : 
         AddEditSupplierDialog(context, supplier, this).show()
     }
 
+    fun restoreCategory(categoryParam: CategoryParam) {
+
+    }
+
     companion object {
         const val TAG = "BXT"
         const val MESSAGE_ADD_SUCCESS = "Thêm thành công"
         const val MESSAGE_ADD_FAILED = "Thêm thất bại"
-        const val MESSAGE_REMOVE_SUCCESS = "Xóa thành công"
-        const val MESSAGE_REMOVE_FAILED = "Xóa thất bại"
-        const val MESSAGE_EDIT_SUCCESS = "Sửa thành công"
-        const val MESSAGE_EDIT_FAILED = "Sửa thất bại"
-
+        const val MESSAGE_REMOVE_SUCCESS = "Vô hiệu hóa thành công"
+        const val MESSAGE_REMOVE_FAILED = "Vô hiệu hóa thất bại"
+        const val MESSAGE_EDIT_SUCCESS = "Cập nhật thành công"
+        const val MESSAGE_EDIT_FAILED = "Cập nhật thất bại"
+        const val ACTIVE = true
+        const val DISABLE = false
     }
 }
 

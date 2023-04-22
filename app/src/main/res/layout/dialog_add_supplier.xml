@@ -55,11 +55,41 @@
         android:padding="8dp"
         android:textSize="16sp" />
 
+    <EditText
+        android:id="@+id/ed_representativeName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ed_supplier_phone"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:background="@drawable/bg_ed_search_task"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:hint="Tên người đại diện"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/ed_address"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ed_representativeName"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:background="@drawable/bg_ed_search_task"
+        android:fontFamily="@font/imbplexsans_regular"
+        android:hint="Địa chỉ"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textSize="16sp" />
+
     <TextView
         android:id="@+id/tv_add_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ed_supplier_phone"
+        android:layout_below="@+id/ed_address"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="26dp"
         android:paddingVertical="16dp"

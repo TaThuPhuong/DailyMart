@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/bg_white_rd_top_10"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/imbplexsans_medium"
-        android:paddingTop="26dp"
         android:paddingStart="26dp"
+        android:paddingTop="26dp"
         android:text="Tùy Chọn"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -27,39 +26,285 @@
         android:paddingEnd="26dp"
         android:src="@drawable/ic_close_square" />
 
-    <TextView
-        android:id="@+id/btn_update"
+    <LinearLayout
+        android:id="@+id/layout_option"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_marginHorizontal="26dp"
-        android:layout_marginTop="26dp"
-        android:background="@drawable/bg_blue_light_rd_8"
-        android:drawablePadding="16dp"
-        android:gravity="center_vertical"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:padding="10dp"
-        android:text="Sửa"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:drawableStartCompat="@drawable/ic_task_finish" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/btn_remove"
+        <TextView
+            android:id="@+id/btn_info"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/bg_gray_light_rd_8"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Chi tiết"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_info" />
+
+        <TextView
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_blue_light_rd_8"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Sửa"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_task_finish" />
+
+        <TextView
+            android:id="@+id/btn_remove"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/bg_red_ff44c_rd_8"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Vô hiệu hóa"
+            android:textColor="@color/red_FF444C"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/btn_restore"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/bg_green_light_rd_8"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/imbplexsans_regular"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Khôi phục"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_restore" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/layout_info"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/btn_update"
-        android:layout_marginHorizontal="26dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_red_ff44c_rd_8"
-        android:drawablePadding="16dp"
-        android:gravity="center_vertical"
-        android:fontFamily="@font/imbplexsans_regular"
-        android:padding="10dp"
-        android:text="Xóa"
-        android:textColor="@color/red_FF444C"
-        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:visibility="gone"
+        android:layout_below="@id/title"
         android:layout_marginBottom="26dp"
-        app:drawableStartCompat="@drawable/ic_delete" />
+        android:layout_marginHorizontal="26dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên nhà cung cấp:"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Người đại diện:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_supplier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/representativeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="end"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_info_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:visibility="gone"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="26dp"
+        android:layout_marginHorizontal="26dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID:"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên ngành hàng:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái:"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/id_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAllCaps="true"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/name_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/status_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="end"
+                android:fontFamily="@font/imbplexsans_regular"
+                android:textColor="@color/gray_medium"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

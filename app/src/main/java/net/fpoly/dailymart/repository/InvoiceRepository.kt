@@ -19,4 +19,6 @@ interface InvoiceRepository {
 
     suspend fun refundInvoice(token: String, invoiceParam: InvoiceRefund): Response<Unit>
 
+    suspend fun getInvoicesPage(token: String, page: Int): Response<ArrayList<Invoice>>
+
 }

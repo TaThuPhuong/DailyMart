@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.data.repository
 
+import androidx.work.ListenableWorker.Result.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -53,4 +54,16 @@ class SupplierRepositoryImpl(
                 ResultData(result = Unit)
             }
         }
+
+    override suspend fun getSuppliersPage(
+        token: String,
+        page: Int
+    ) = withContext(ioDispatcher) {
+        try {
+            remoteData.getSuppliersPage(token, page)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            ResultData(status = 0, result = arrayListOf())
+        }
+    }
 }

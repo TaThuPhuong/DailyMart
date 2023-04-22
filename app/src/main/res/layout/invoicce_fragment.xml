@@ -168,23 +168,12 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_sell"
+                android:id="@+id/listInvoices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_filter"
                 android:layout_marginTop="14dp"
-                android:visibility="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_EXPORT ? View.VISIBLE : View.GONE}"
-                app:items="@{viewModel.invoiceSell}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_import"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_filter"
-                android:layout_marginTop="14dp"
-                android:visibility="@{viewModel.openTabReceipt == InvoiceViewModel.TAB_IMPORT ? View.VISIBLE : View.GONE}"
-                app:items="@{viewModel.invoiceImport}"
+                app:items="@{viewModel.invoices}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <LinearLayout

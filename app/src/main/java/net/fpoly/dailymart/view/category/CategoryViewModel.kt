@@ -1,12 +1,14 @@
 package net.fpoly.dailymart.view.category
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Category
+import net.fpoly.dailymart.data.model.CategoryAddParam
 import net.fpoly.dailymart.data.model.CategoryParam
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.repository.CategoryRepositoryImpl
@@ -18,35 +20,49 @@ class CategoryViewModel(context: Context) : ViewModel() {
     val repository = CategoryRepositoryImpl()
     val user = SharedPref.getUser(context)
 
-    var listCategoryRemoteData = listOf<Category>()
-    val listCategory = MutableLiveData(listOf<Category>())
+    var rootCategories = mutableListOf<Category>()
+    val categoriesShowing = MutableLiveData(listOf<Category>())
     val token = SharedPref.getAccessToken(context)
 
-    val totalCountCategory = listCategory.switchMap {
+    val totalCountCategory = categoriesShowing.switchMap {
         MutableLiveData(it.size)
     }
 
     val showSnackbar = MutableLiveData<String>()
     val isLoading = MutableLiveData(true)
 
+    private var nowPage = 1
+    var totalPage = 1
+    var type = true
+
     init {
-        getAllCategory()
+        viewModelScope.launch { getCategories() }
     }
 
-    private fun getAllCategory() {
-        viewModelScope.launch {
-            isLoading.postValue(true)
-            when (val result = repository.getAllCategory(token)) {
-                is Response.Success -> {
-                    listCategoryRemoteData = result.data
-                    listCategory.postValue(result.data)
-                }
-                is Response.Error -> {
-                    showSnackbar.postValue(GET_ALL_FAILED)
-                }
+    private suspend fun getCategories() {
+        isLoading.postValue(true)
+        when (val res = repository.getCategoriesPage(token, nowPage)) {
+            is Response.Success -> {
+                totalPage = res.page
+                rootCategories.addAll(res.data)
+                nowPage++
+                showListCategories()
             }
-            isLoading.postValue(false)
+
+            is Response.Error -> showSnackbar.postValue(res.message)
         }
+        isLoading.postValue(false)
+    }
+
+    fun showListCategories() {
+        val filter = rootCategories.filter { it.status == type }
+        categoriesShowing.postValue(filter)
+    }
+
+    private suspend fun reloadCategories() {
+        rootCategories.clear()
+        nowPage = 1
+        getCategories()
     }
 
     fun clickAddNew(context: Context) {
@@ -69,14 +85,15 @@ class CategoryViewModel(context: Context) : ViewModel() {
         MoreCategoryPopup(context, category, this).show()
     }
 
-    fun createNewCategory(categoryParam: CategoryParam) {
+    fun createNewCategory(categoryParam: CategoryAddParam) {
         viewModelScope.launch {
             isLoading.postValue(true)
             when (repository.addCategory(categoryParam, token)) {
                 is Response.Success -> {
-                    getAllCategory()
+                    reloadCategories()
                     showSnackbar.postValue(ADD_SUCCESS)
                 }
+
                 is Response.Error -> {
                     showSnackbar.postValue(ADD_FAILED)
                 }
@@ -90,9 +107,10 @@ class CategoryViewModel(context: Context) : ViewModel() {
             isLoading.postValue(true)
             when (repository.updateCategory(idCategory, categoryParam, token)) {
                 is Response.Success -> {
-                    getAllCategory()
+                    reloadCategories()
                     showSnackbar.postValue(EDIT_SUCCESS)
                 }
+
                 is Response.Error -> {
                     showSnackbar.postValue(EDIT_FAILED)
                 }
@@ -106,9 +124,10 @@ class CategoryViewModel(context: Context) : ViewModel() {
             isLoading.postValue(true)
             when (repository.removeCategory(idCategory, token)) {
                 is Response.Success -> {
-                    getAllCategory()
+                    reloadCategories()
                     showSnackbar.postValue(REMOVE_SUCCESS)
                 }
+
                 is Response.Error -> {
                     showSnackbar.postValue(REMOVE_FAILED)
                 }
@@ -117,13 +136,28 @@ class CategoryViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun loadMorePage() {
+        if (nowPage == totalPage) return
+        viewModelScope.launch {
+            when (val res = repository.getCategoriesPage(token, nowPage)) {
+                is Response.Success -> {
+                    totalPage = res.page
+                    rootCategories.addAll(res.data)
+                    nowPage++
+                    showListCategories()
+                }
+
+                is Response.Error -> showSnackbar.postValue(res.message)
+            }
+        }
+    }
+
     companion object {
-        const val GET_ALL_FAILED = "Cập nhật danh sách thất bại"
         const val ADD_SUCCESS = "Thêm ngành hàng thành công"
         const val ADD_FAILED = "Thêm ngành hàng thất bại"
-        const val EDIT_SUCCESS = "Sửa ngành hàng thành công"
-        const val EDIT_FAILED = "Sửa ngành hàng thất bại"
-        const val REMOVE_SUCCESS = "Xóa ngành hàng thành công"
-        const val REMOVE_FAILED = "Xóa ngành hàng thất bại"
+        const val EDIT_SUCCESS = "Cập nhật ngành hàng thành công"
+        const val EDIT_FAILED = "Cập nhật ngành hàng thất bại"
+        const val REMOVE_SUCCESS = "Vô hiệu hóa ngành hàng thành công"
+        const val REMOVE_FAILED = "Vô hiệu hóa ngành hàng thất bại"
     }
 }

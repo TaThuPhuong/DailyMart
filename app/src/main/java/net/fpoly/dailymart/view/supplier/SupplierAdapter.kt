@@ -19,6 +19,7 @@ class SupplierAdapter(private val viewModel: SupplierViewModel) :
             binding.supplier = item
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): SupplierViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -49,8 +50,8 @@ class SupplierDiffCallback : DiffUtil.ItemCallback<Supplier>() {
 }
 
 @BindingAdapter("supplierItems")
-fun setItemsSupplier(list: RecyclerView, items: List<Supplier>?){
+fun setItemsSupplier(list: RecyclerView, items: List<Supplier>?) {
     items?.let {
-        (list.adapter as SupplierAdapter).submitList(items)
+        (list.adapter as SupplierAdapter).submitList(items.toMutableList())
     }
 }

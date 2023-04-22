@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardCornerRadius="5dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +24,7 @@
             android:textColor="@color/gray_medium"
             android:fontFamily="@font/imbplexsans_medium"
             android:layout_marginTop="28dp"
-            android:text="Xóa Ngành hàng"/>
+            android:text="Vô hiệu hóa"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,8 +33,9 @@
             android:textColor="@color/gray_medium"
             android:fontFamily="@font/imbplexsans_medium"
             android:layout_marginTop="28dp"
+            android:layout_marginHorizontal="16dp"
             android:gravity="center_horizontal"
-            android:text="Bạn chắc chắn muốn xóa ngành hàng này không?"/>
+            android:text="Bạn chắc chắn muốn vô hiệu hóa ngành hàng này không?"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +51,7 @@
                 android:text="Xác Nhận"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_pink_corner_bl_5"
+                android:background="@color/pink_primary"
                 android:textSize="18sp"
                 android:fontFamily="@font/imbplexsans_medium"
                 />
@@ -66,7 +64,7 @@
                 android:text="Hủy"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_gray_corner_br_5"
+                android:background="@color/gray_light"
                 android:textSize="18sp"
                 android:fontFamily="@font/imbplexsans_medium"
                 />

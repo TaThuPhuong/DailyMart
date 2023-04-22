@@ -107,6 +107,19 @@ class InvoiceRepositoryImpl : InvoiceRepository {
             }
         }
 
+    override suspend fun getInvoicesPage(token: String, page: Int) = withContext(ioDispatcher) {
+        try {
+            val res = remoteDataInvoice.getInvoicesPage(token, page)
+            if (res.isSuccess()) {
+                Response.Success(res.result, res.message, res.totalPage)
+            } else {
+                Response.Error(res.message)
+            }
+        } catch (ex: Exception) {
+            Response.Error(ERROR_CONNECTED)
+        }
+    }
+
     companion object {
         const val TAG = "BT"
         const val ERROR_CONNECTED = "Kết nối thất bại"

@@ -48,6 +48,17 @@
                 app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/btnMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_more_mode"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray_primary" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -120,8 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imv_add"
                     android:layout_marginTop="12dp"
-                    android:nestedScrollingEnabled="false"
-                    app:categoryItems="@{viewModel.listCategory}"
+                    app:categoryItems="@{viewModel.categoriesShowing}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </RelativeLayout>

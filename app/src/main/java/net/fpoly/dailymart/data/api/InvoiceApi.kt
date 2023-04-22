@@ -11,6 +11,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface InvoiceApi {
 
@@ -47,4 +48,10 @@ interface InvoiceApi {
         @Header("Authorization") token: String,
         @Body invoice: InvoiceRefund
     ): ResultData<Unit>
+
+    @GET("invoice")
+    suspend fun getInvoicesPage(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int
+    ): ResultData<ArrayList<Invoice>>
 }

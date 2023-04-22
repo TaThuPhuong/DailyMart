@@ -28,12 +28,12 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     val isRefund = MutableLiveData(false)
     val invoiceParam = MutableLiveData<InvoiceParam>()
     private lateinit var invoiceRoot: InvoiceParam
+    private lateinit var rootInvoice: Invoice
 
     private var rootProducts = mutableListOf<ProductInvoiceParam>()
     private var rootProductsRefund = mutableListOf<ProductInvoiceParam>()
     private var changeProducts = mutableListOf<ProductInvoiceParam>()
     var totalInvoice = MutableLiveData<Long>()
-    var isShowDelete = MutableLiveData(false)
     var isShowRefund = MutableLiveData(false)
     var isShowLoading = MutableLiveData(false)
 
@@ -48,13 +48,16 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
         }
 
         isRefund.value?.also { isRefund ->
-            changeProducts.removeAll(rootProductsRefund)
-            invoiceParam.value?.also {
-                it.products = ArrayList(changeProducts)
-                getTotalInvoice(it)
-                invoiceParam.postValue(it)
+            if (!isRefund) {
+                changeProducts.removeAll(rootProductsRefund)
+                invoiceParam.value?.also {
+                    it.products = ArrayList(changeProducts)
+                    getTotalInvoice(it)
+                    invoiceParam.postValue(it)
+                }
+            }else {
+                invoiceParam.postValue(rootInvoice.toParam())
             }
-
             this.isRefund.value = !isRefund
         }
     }
@@ -63,6 +66,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
         with(activity) {
             val invoiceIntent = intent.getParcelableExtra<Invoice>(DetailInvoiceActivity.INVOICE)
             invoiceIntent?.also { invoice1 ->
+                rootInvoice = invoice1
                 val param = invoice1.toParam()
                 invoiceRoot = param
                 invoice.value = invoice1
@@ -72,7 +76,6 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
                 changeProducts = param.products.filter { it.quantity > 0 }.toMutableList()
                 rootProductsRefund = param.products.filter { it.quantity < 0 }.toMutableList()
 
-                checkShowBtnDelete()
                 checkShowBtnRefund(invoice1)
                 Log.e(TAG, "getInvoice: ${Gson().toJson(invoice1)} --- ${Gson().toJson(param)}")
             }
@@ -81,10 +84,6 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
 
     private fun checkShowBtnRefund(invoice1: Invoice) {
         isShowRefund.value = invoice1.type != InvoiceType.IMPORT.name && user.role == ROLE.manager
-    }
-
-    private fun checkShowBtnDelete() {
-        isShowDelete.value = user.role == ROLE.manager
     }
 
     fun productClick(product: ProductInvoiceParam) {
@@ -173,16 +172,8 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
         totalInvoice.value = total.toLong()
     }
 
-    fun deleteBtnClick(context: Context) {
-        when (isRefund.value) {
-            true -> getFinalInvoice(context)
-            false -> removeConfirm(context)
-            else -> {}
-        }
-    }
-
-    private fun removeConfirm(context: Context) {
-        ConfirmRemoveInvoiceDialog(context, this).show()
+    fun confirmRefund(context: Context) {
+        getFinalInvoice(context)
     }
 
     private fun getFinalInvoice(context: Context) {

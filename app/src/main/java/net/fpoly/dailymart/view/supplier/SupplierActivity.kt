@@ -1,9 +1,17 @@
 package net.fpoly.dailymart.view.supplier
 
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.MenuRes
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.AppViewModelFactory
+import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivitySupplierBinding
 import net.fpoly.dailymart.extension.setupSnackbar
@@ -35,7 +43,7 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     }
 
     private fun setupBtnBack() {
-        binding.btnBack.setOnClickListener{
+        binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -58,7 +66,10 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
                 binding.imvClear.visibility = View.VISIBLE
                 viewModel.listSupplier.value?.also { invoices ->
                     val result =
-                        invoices.filter { it.id.lowercase().contains(text) || it.supplierName.lowercase().contains(text) }
+                        invoices.filter {
+                            it.id.lowercase().contains(text) || it.supplierName.lowercase()
+                                .contains(text)
+                        }
                             .toMutableList()
                     viewModel.listSupplier.value = result
                 }
@@ -72,5 +83,45 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
     private fun setupListSupplier() {
         supplierAdapter = SupplierAdapter(viewModel)
         binding.listSupplier.adapter = supplierAdapter
+
+        binding.btnMore.setOnClickListener {
+            showMenu(it, R.menu.more_supplier)
+        }
+
+        binding.listSupplier.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    lifecycleScope.launch {
+                        viewModel.loadMorePage()
+                    }
+                }
+            }
+        })
+
+    }
+
+    private fun showMenu(v: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(this, v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            when (menuItem.itemId) {
+                R.id.type_active -> {
+                    viewModel.typeSupplier = SupplierViewModel.ACTIVE
+                    viewModel.loadShowList()
+                    true
+                }
+
+                R.id.type_disable -> {
+                    viewModel.typeSupplier = SupplierViewModel.DISABLE
+                    viewModel.loadShowList()
+                    true
+                }
+
+                else -> true
+            }
+        }
+        popup.show()
     }
 }

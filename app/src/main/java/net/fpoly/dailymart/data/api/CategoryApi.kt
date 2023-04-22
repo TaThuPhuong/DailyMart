@@ -1,6 +1,7 @@
 package net.fpoly.dailymart.data.api
 
 import net.fpoly.dailymart.data.model.Category
+import net.fpoly.dailymart.data.model.CategoryAddParam
 import net.fpoly.dailymart.data.model.CategoryParam
 import net.fpoly.dailymart.data.model.ResultData
 import retrofit2.http.Body
@@ -10,6 +11,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface CategoryApi {
 
@@ -18,7 +20,7 @@ interface CategoryApi {
 
     @POST("industry")
     suspend fun addCategory(
-        @Body category: CategoryParam,
+        @Body category: CategoryAddParam,
         @Header("Authorization") token: String
     ): ResultData<Category>
 
@@ -34,4 +36,7 @@ interface CategoryApi {
         @Path("id") id: String,
         @Header("Authorization") token: String
     ): ResultData<Unit>
+
+    @GET("industry")
+    suspend fun getCategoriesPage(@Header("Authorization") token: String, @Query("page") page: Int): ResultData<List<Category>>
 }

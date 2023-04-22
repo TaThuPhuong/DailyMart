@@ -10,4 +10,5 @@ interface SupplierRepository {
     suspend fun insertSupplier(supplier: SupplierParam, token: String): ResultData<Supplier>
     suspend fun editSupplier(id: String, supplier: SupplierParam, token: String): ResultData<Unit>
     suspend fun removeSupplier(supplier: Supplier, token: String): ResultData<Unit>
+    suspend fun getSuppliersPage(token: String, page: Int): ResultData<ArrayList<Supplier>>
 }

@@ -33,7 +33,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:supplierItems="@{viewModel.listSupplier}" />
+                app:supplierItems="@{viewModel.listShow}" />
         </androidx.core.widget.NestedScrollView>
 
         <RelativeLayout
@@ -110,6 +110,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/btnMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_more_mode"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -135,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:visibility="@{viewModel.listSupplier.size() == 0 &amp;&amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.listShow.size() == 0 &amp;&amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}">
 
             <ImageView
                 android:layout_width="200dp"

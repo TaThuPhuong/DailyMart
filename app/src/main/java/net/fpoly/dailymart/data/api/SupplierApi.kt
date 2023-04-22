@@ -19,4 +19,6 @@ interface SupplierApi {
     @PUT("supplier/{id}")
     suspend fun updateSuppliers(@Header("Authorization") token: String, @Path("id") idSupplier: String, @Body param: SupplierParam) : ResultData<Unit>
 
+    @GET("supplier")
+    suspend fun getSuppliersPage(@Header("Authorization") token: String, @Query("page") page: Int) : ResultData<ArrayList<Supplier>>
 }
