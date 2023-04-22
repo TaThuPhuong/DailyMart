@@ -11,16 +11,18 @@ import com.bumptech.glide.Glide
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ItemProductBinding
+import net.fpoly.dailymart.databinding.ItemProductDisableBinding
 import net.fpoly.dailymart.utils.toMoney
 
-class ProductAdapter(
+class ProductDisableAdapter(
     val mContext: Context,
     var mListProduct: List<Product> = ArrayList(),
-    val onClick: (Product) -> Unit,
+    val onRestore: (product: Product) -> Unit,
+    val onClick: (product: Product) -> Unit,
 ) :
-    RecyclerView.Adapter<ProductAdapter.ItemView>() {
+    RecyclerView.Adapter<ProductDisableAdapter.ItemView>() {
 
-    class ItemView(val binding: ItemProductBinding) : ViewHolder(binding.root)
+    class ItemView(val binding: ItemProductDisableBinding) : ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Product>) {
@@ -30,7 +32,7 @@ class ProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemView {
         return ItemView(
-            ItemProductBinding.inflate(
+            ItemProductDisableBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -48,13 +50,15 @@ class ProductAdapter(
             with(mListProduct[position]) {
                 binding.tvName.text = this.name
                 binding.tvId.text = "Barcode: ${this.barcode}"
-                binding.tvPrice.text = "Giá bán:\n${this.sellPrice.toMoney()}"
                 Glide.with(mContext).load(this.img_product)
                     .placeholder(R.drawable.img_default)
                     .error(R.drawable.img_default)
                     .into(binding.imvImage)
                 binding.root.setOnClickListener {
                     onClick(this)
+                }
+                binding.tvRestore.setOnClickListener {
+                    onRestore(this)
                 }
             }
         }

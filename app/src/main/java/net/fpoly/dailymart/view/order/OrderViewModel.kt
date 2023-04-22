@@ -73,7 +73,7 @@ class OrderViewModel(context: Context) : ViewModel() {
         edUnitPrice: EditText
     ) {
         val productId = products.value?.first { it.barcode == edBarcode.text.toString() } ?: return
-        val unitPrice = edUnitPrice.text.toString().toIntOrNull()
+        val unitPrice = edUnitPrice.text.toString().toLongOrNull()
         val quantity = edQuantity.text.toString().toIntOrNull() ?: 0
         val expiryDate = edExpiry.text.toString().convertDateToMilliseconds()
         val nowTime = Calendar.getInstance()

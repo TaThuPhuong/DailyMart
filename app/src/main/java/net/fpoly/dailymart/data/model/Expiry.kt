@@ -26,7 +26,7 @@ data class ExpiryCheck(
     var expiryDate: Long = 0,
     var quantity: Int = 0,
     var image: String = "",
-    var sellPrice: Int = 0,
+    var sellPrice: Long = 0,
 )
 
 data class ExpiryUpdate(

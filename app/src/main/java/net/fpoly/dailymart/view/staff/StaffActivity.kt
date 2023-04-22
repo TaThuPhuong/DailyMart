@@ -1,11 +1,14 @@
 package net.fpoly.dailymart.view.staff
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.LoadingDialog
+import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
 import net.fpoly.dailymart.databinding.ActivityStaffBinding
@@ -56,19 +59,24 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
                 binding.tvNoData.visible()
             }
         }
-        viewModel.getUserSuccess.observe(this){
+        viewModel.getUserSuccess.observe(this) {
             mLoadingDialog?.hideLoading()
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView() {
-        mStaffAdapter = StaffAdapter(this, mListUser) { user ->
+        mStaffAdapter = StaffAdapter(this, mListUser, onClick = { user ->
             if (mUser.role == ROLE.staff) return@StaffAdapter
             val intent = Intent(this, DetailsStaffActivity::class.java)
             intent.putExtra("user", user)
             startActivity(intent)
-        }
+        }, onCall = {
+            val phoneNumber = it.phoneNumber
+            val phoneUri = Uri.parse("tel:$phoneNumber")
+            val phoneIntent = Intent(Intent.ACTION_DIAL, phoneUri)
+            startActivity(phoneIntent)
+        })
         binding.rcvListStaff.adapter = mStaffAdapter
     }
 

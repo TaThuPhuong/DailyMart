@@ -43,6 +43,7 @@ class ProductDetailActivity :
         binding.tvUnit.text = product.unit
         binding.tvImportPrice.text = product.importPrice.toMoney()
         binding.tvSellPrice.text = product.sellPrice.toMoney()
+        binding.tvStatus.text = product.getStatus()
         Glide.with(this).load(product.img_product).placeholder(R.drawable.img_default)
             .into(binding.imvImage)
     }

@@ -221,7 +221,13 @@ class ReportActivity :
             barchart.clear()
             barchart.data = data
             barchart.animateY(500, Easing.Linear)
-            barchart.moveViewToX((maxX / 2).toFloat())
+            barchart.animateX(1000, Easing.EaseInSine)
+            for (i in mListMonthData.indices) {
+                if (mListMonthData[i].data.tienBan != 0L || mListMonthData[i].data.tienNhap != 0L) {
+                    barchart.moveViewToX(i.toFloat())
+                    break
+                }
+            }
         } else {
             val maxMoney = if (typeChart == TypeChart.EXPORT) {
                 abs(mListYearData.maxOf { it.data.tienBan })
@@ -238,6 +244,7 @@ class ReportActivity :
             barchart.clear()
             barchart.data = data
             barchart.animateY(500, Easing.Linear)
+            barchart.animateX(1000, Easing.EaseInSine)
             for (i in mListYearData.indices) {
                 if (mListYearData[i].data.tienBan != 0L || mListYearData[i].data.tienNhap != 0L) {
                     barchart.moveViewToX(i.toFloat())
@@ -310,18 +317,36 @@ class ReportActivity :
         ChartUtils.setConfigXAxiLineChart(this, lineChart.xAxis, maxLabel)
         ChartUtils.setConfigYAxisLineChart(this, lineChart.axisLeft)
         val maxMoney = if (type == TypeFilter.MONTH) {
-            max(mListMonthData.maxOf { it.data.tienBan }, mListMonthData.maxOf { it.data.tienBan })
+            max(mListMonthData.maxOf { it.data.tienBan }, mListMonthData.maxOf { it.data.tienNhap })
         } else {
-            max(mListYearData.maxOf { it.data.tienBan }, mListYearData.maxOf { it.data.tienBan })
+            max(mListYearData.maxOf { it.data.tienBan }, mListYearData.maxOf { it.data.tienNhap })
         }
         lineChart.axisRight.isEnabled = false
         lineChart.axisLeft.axisMaximum = maxMoney * 1.2f
-        lineChart.xAxis.axisMaximum = maxLabel - 1f
-        lineChart.xAxis.labelCount = maxLabel - 1
+        lineChart.xAxis.axisMaximum = maxLabel.toFloat()
+        lineChart.xAxis.labelCount = maxLabel
+        lineChart.moveViewToX(10f)
+        lineChart.animateY(500, Easing.Linear)
+        lineChart.animateX(1000, Easing.EaseInSine)
         val data = when (type) {
             TypeFilter.DAY -> return
             TypeFilter.MONTH -> getLineDataMonth()
             TypeFilter.YEAR -> getLineDataYear()
+        }
+        if(type == TypeFilter.MONTH){
+            for (i in mListMonthData.indices) {
+                if (mListMonthData[i].data.tienBan != 0L || mListMonthData[i].data.tienNhap != 0L) {
+                    lineChart.moveViewToX(i.toFloat())
+                    break
+                }
+            }
+        }else{
+            for (i in mListYearData.indices) {
+                if (mListYearData[i].data.tienBan != 0L || mListYearData[i].data.tienNhap != 0L) {
+                    lineChart.moveViewToX(i.toFloat())
+                    break
+                }
+            }
         }
         lineChart.setMaxVisibleValueCount(12)
         lineChart.setVisibleXRangeMaximum(10f)

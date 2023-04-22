@@ -69,7 +69,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/imbplexsans_regular"
         android:padding="10dp"
-        android:text="Xóa"
+        android:text="Chuyển tới thùng rác"
         android:textColor="@color/red_FF444C"
         android:textSize="16sp"
         tools:ignore="UseCompatTextViewDrawableXml" />
