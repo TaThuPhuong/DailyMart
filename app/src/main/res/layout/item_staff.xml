@@ -32,8 +32,8 @@
         android:id="@+id/tv_role"
         android:layout_width="79dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/tv_phone"
+        android:layout_marginTop="5dp"
         android:background="@drawable/bg_btn"
         android:fontFamily="@font/imbplexsans_medium"
         android:gravity="center"
@@ -42,4 +42,13 @@
         android:text="Nhân viên"
         android:textColor="@color/white"
         android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/imv_phone"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_phone" />
 </RelativeLayout>

@@ -109,8 +109,6 @@ object ChartUtils {
 
     fun setConfigLineChart(context: Context, color: Int, chart: LineChart) {
         chart.invalidate()
-        chart.moveViewToX(10f)
-        chart.animateX(1000, Easing.EaseInSine)
         chart.description.isEnabled = false
         chart.setDrawGridBackground(false)
         chart.setScaleEnabled(false)

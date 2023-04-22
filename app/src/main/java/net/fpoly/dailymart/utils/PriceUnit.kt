@@ -9,7 +9,7 @@ fun Int.toMoney(): String {
 
 fun Long.toMoney(): String {
     val df = DecimalFormat("###,###,###,###,###")
-    return df.format(this) + " vnđ"
+    return df.format(this) + " VNĐ"
 }
 
 

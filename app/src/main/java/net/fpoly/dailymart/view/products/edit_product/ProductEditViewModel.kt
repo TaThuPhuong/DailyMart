@@ -88,7 +88,7 @@ class ProductEditViewModel(
                 checkValidate.value = _product.value?.checkValidate()
                 try {
                     _product.value = _product.value?.copy(
-                        importPrice = event.price.toInt()
+                        importPrice = event.price.toLong()
                     )
                 } catch (e: Exception) {
                     _product.value = _product.value?.copy(
@@ -106,7 +106,7 @@ class ProductEditViewModel(
                 checkValidate.value = _product.value?.checkValidate()
                 try {
                     _product.value = _product.value?.copy(
-                        sellPrice = event.price.toInt()
+                        sellPrice = event.price.toLong()
                     )
                 } catch (e: Exception) {
                     _product.value = _product.value?.copy(

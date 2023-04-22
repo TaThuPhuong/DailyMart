@@ -53,8 +53,8 @@ fun ArrayList<DetailInvoice>.detailInvoiceToParam(): ArrayList<ProductInvoicePar
 data class DetailInvoice(
     @SerializedName("_id") val id: String = UUID.randomUUID().toString(),
     @SerializedName("product") val product: DetailProductInvoice = DetailProductInvoice(),
-    @SerializedName("totalPrice") val totalPrice: Int = 0,
-    @SerializedName("unitPrice") val unitPrice: Int = 0,
+    @SerializedName("totalPrice") val totalPrice: Long = 0,
+    @SerializedName("unitPrice") val unitPrice: Long = 0,
     @SerializedName("createdAt") val createdAt: String = "",
     @SerializedName("expiryDate") val expiry: Long = 0,
     @SerializedName("quantityProduct") val quantityProduct: Int = 0,

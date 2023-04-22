@@ -12,6 +12,7 @@ import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.api.ServerInstance.Companion.apiProduct
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.data.model.ProductParam
+import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.utils.ROLE
@@ -23,9 +24,9 @@ import retrofit2.Callback
 class ProductsViewModel(val app: Application, private val repo: ProductRepository) : ViewModel() {
 
     private val TAG = "YingMing"
-    private val _listProduct = MutableLiveData<List<Product>>(ArrayList())
-    val listProduct: LiveData<List<Product>> = _listProduct
-    val message = MutableLiveData<String>(null)
+    val listProductActive = MutableLiveData<List<Product>>(ArrayList())
+    val listProductDisable = MutableLiveData<List<Product>>(ArrayList())
+    val message = MutableLiveData("")
     private val _role = MutableLiveData(false)
     private var mProductRecent: Product? = null
     val role: LiveData<Boolean> = _role
@@ -35,15 +36,17 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
     private val mToken = SharedPref.getAccessToken(app)
 
     init {
-        _role.value = mUser!!.role != ROLE.staff
+        _role.value = mUser.role != ROLE.staff
     }
 
     fun getListProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = repo.getAllProduct(mToken)
             if (res.isSuccess()) {
-                _listProduct.postValue(res.data!!)
-                message.postValue(res.message!!)
+                res.data?.let { products ->
+                    listProductActive.postValue(products.filter { it.status })
+                    listProductDisable.postValue(products.filter { !it.status })
+                }
                 getListSuccess.postValue(true)
             } else {
                 message.postValue(res.message!!)
@@ -52,18 +55,15 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
         }
     }
 
-    fun onRestore() {
-        mProductRecent?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                when (repo.insertProduct(mToken, ProductParam(it))) {
-                    is Response.Error -> {
-                        message.postValue("Phục hồi lỗi")
-                    }
-                    is Response.Success -> {
-                        getListProducts()
-                        message.postValue("Phục hồi thành công")
-                        mProductRecent = null
-                    }
+    fun onRestore(product: Product) {
+        val productParamUpdate = ProductParamUpdate(product)
+        productParamUpdate.status = true
+        viewModelScope.launch(Dispatchers.IO) {
+            when (repo.updateProduct(mToken, product.id, productParamUpdate)) {
+                is Response.Error -> message.postValue("Phục hồi lỗi")
+                is Response.Success -> {
+                    getListProducts()
+                    message.postValue("Phục hồi thành công")
                 }
             }
         }
@@ -76,6 +76,7 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
                 mProductRecent = product
                 getListProducts()
                 onDeleteSuccess()
+                message.postValue("Đã chuyển tới thùng rác !!!")
             } else {
                 message.postValue("Xóa thất bại")
             }

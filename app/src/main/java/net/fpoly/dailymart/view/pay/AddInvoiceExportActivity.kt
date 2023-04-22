@@ -25,6 +25,8 @@ import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.databinding.ActivityPayBinding
 import net.fpoly.dailymart.extension.setupSnackbar
 import net.fpoly.dailymart.extension.view_extention.hideKeyboard
+import net.fpoly.dailymart.firbase.database.BankDao
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.utils.convertTotalInvoiceNumber
 import net.fpoly.dailymart.view.order.OrderActivity
 import net.fpoly.dailymart.view.tab.invoice.InvoiceProductAdapter
@@ -81,7 +83,11 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         cameraSource = CameraSource.Builder(this, detector)
             .setAutoFocusEnabled(true)
             .build()
-
+        BankDao.getBankInfo {
+            it?.let { bank ->
+                SharedPref.setBankInfo(this, bank)
+            }
+        }
         setupBtnBack()
         setupShowSnackbar()
         setupCheckPermission()
