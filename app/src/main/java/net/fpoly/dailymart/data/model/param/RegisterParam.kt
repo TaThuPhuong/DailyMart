@@ -6,7 +6,7 @@ import net.fpoly.dailymart.utils.ROLE
 
 data class RegisterParam(
     @SerializedName("name") val name: String = "",
-    @SerializedName("password") val password: String = "",
+//    @SerializedName("password") val password: String = "",
     @SerializedName("email") val email: String = "",
     @SerializedName("phoneNumber") val phoneNumber: String = "",
     @SerializedName("status") val status: Boolean = true,

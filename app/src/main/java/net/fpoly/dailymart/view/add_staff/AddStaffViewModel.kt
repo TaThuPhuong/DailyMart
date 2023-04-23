@@ -57,7 +57,6 @@ class AddStaffViewModel(
             is UserEvent.OnPhoneNumberChange -> {
                 _userParam.value = _userParam.value?.copy(
                     phoneNumber = event.phone,
-                    password = event.phone
                 )
                 if (event.phone.trim().isEmpty()) {
                     _validatePhone.value = event.phone.blankException()
