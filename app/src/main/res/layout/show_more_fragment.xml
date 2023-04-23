@@ -249,7 +249,6 @@
                         android:id="@+id/layout_staff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="18dp"
                         android:paddingEnd="16dp">
 
                         <ImageView
@@ -283,6 +282,7 @@
                         set_visible="@{viewModel.role}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
                         android:paddingEnd="16dp">
 
                         <ImageView

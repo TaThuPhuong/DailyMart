@@ -62,6 +62,12 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.pbLoading.visible()
         viewModel.getListProducts()
         initRecycleProducts()
+        setSearch(mListProduct) {
+            mProductAdapter.setData(it)
+            binding.tvNoData.setVisible(it.isEmpty())
+            binding.rcvProducts.setVisible(it.isNotEmpty())
+        }
+        binding.rcvProducts.adapter = mProductAdapter
     }
 
     override fun setupObserver() {

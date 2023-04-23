@@ -53,7 +53,7 @@ class PickTimeDialog(
         binding.npvPopupPick2.setOnValueChangedListener(object :
             NumberPickView.OnValueChangeListener {
             override fun onValueChange(picker: NumberPickView?, oldVal: Int, newVal: Int) {
-                currentMinute = newVal - 1
+                currentMinute = newVal
             }
         })
         binding.btnSave.setOnClickListener {

@@ -51,14 +51,18 @@ class AddProductViewModel(
 
             when (resCategory) {
                 is Response.Success -> {
-                    _listCategory.postValue(resCategory.data!!)
+                    resCategory.data?.let { categories ->
+                        _listCategory.postValue(categories.filter { it.status })
+                    }
                 }
                 is Response.Error -> {
 
                 }
             }
             if (resSupplier.isSuccess()) {
-                _listSupplier.postValue(resSupplier.result!!)
+                resSupplier.result?.let { suppliers ->
+                    _listSupplier.postValue(suppliers.filter { it.status })
+                }
             }
         }
     }
