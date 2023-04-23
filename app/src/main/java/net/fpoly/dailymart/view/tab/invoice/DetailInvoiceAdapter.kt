@@ -57,6 +57,7 @@ class DetailInvoiceAdapter(
 fun setItems(listView: RecyclerView, items: List<ProductInvoiceParam>?) {
     items?.let { params ->
         val new = params.filter { it.quantity > 0 }.toMutableList()
+        Log.e("TAG", "setItems: $new" )
         (listView.adapter as DetailInvoiceAdapter).submitList(new)
         (listView.adapter as DetailInvoiceAdapter).notifyItemRangeChanged(0, new.size)
     }
@@ -76,14 +77,14 @@ class InVoiceDetailDiffCallback : DiffUtil.ItemCallback<ProductInvoiceParam>() {
         oldItem: ProductInvoiceParam,
         newItem: ProductInvoiceParam
     ): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id == newItem.id && oldItem.total == newItem.total && oldItem.quantity == newItem.quantity
     }
 
     override fun areItemsTheSame(
         oldItem: ProductInvoiceParam,
         newItem: ProductInvoiceParam
     ): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id == newItem.id && oldItem.total == newItem.total && oldItem.quantity == newItem.quantity
     }
 
 }

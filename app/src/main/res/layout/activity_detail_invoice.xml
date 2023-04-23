@@ -7,6 +7,8 @@
     <data>
         <import type="android.view.View" />
         <import type="net.fpoly.dailymart.utils.ConvertUtilsKt" />
+        <import type="net.fpoly.dailymart.utils.ROLE" />
+        <import type="net.fpoly.dailymart.data.model.InvoiceType" />
 
         <variable
             name="viewmodel"
@@ -221,7 +223,7 @@
                             android:layout_marginTop="8sp"
                             android:fontFamily="@font/imbplexsans_medium"
                             android:gravity="end"
-                            android:text="@{@string/total_invoice(ConvertUtilsKt.convertTotalInvoiceNumber(viewmodel.totalInvoice))}"
+                            android:text='@{viewmodel.showPrice ? "*****" : @string/total_invoice(ConvertUtilsKt.convertTotalInvoiceNumber(viewmodel.totalInvoice))}'
                             android:textColor="@color/gray_medium" />
 
                         <LinearLayout

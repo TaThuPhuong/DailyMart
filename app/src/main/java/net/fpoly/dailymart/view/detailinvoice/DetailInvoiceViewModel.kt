@@ -27,15 +27,16 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     val invoice = MutableLiveData<Invoice>()
     val isRefund = MutableLiveData(false)
     val invoiceParam = MutableLiveData<InvoiceParam>()
-    private lateinit var invoiceRoot: InvoiceParam
-    private lateinit var rootInvoice: Invoice
 
+    private lateinit var rootParam: InvoiceParam
     private var rootProducts = mutableListOf<ProductInvoiceParam>()
     private var rootProductsRefund = mutableListOf<ProductInvoiceParam>()
     private var changeProducts = mutableListOf<ProductInvoiceParam>()
     var totalInvoice = MutableLiveData<Long>()
+    var showPrice = MutableLiveData<Boolean>()
     var isShowRefund = MutableLiveData(false)
     var isShowLoading = MutableLiveData(false)
+    var eventResetScreen = MutableLiveData<Unit>()
 
     fun refundInvoice() {
         val timeInvoice = invoice.value?.createAt ?: return
@@ -47,18 +48,20 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
             return
         }
 
-        isRefund.value?.also { isRefund ->
-            if (!isRefund) {
-                changeProducts.removeAll(rootProductsRefund)
-                invoiceParam.value?.also {
-                    it.products = ArrayList(changeProducts)
-                    getTotalInvoice(it)
-                    invoiceParam.postValue(it)
+        viewModelScope.launch {
+            isRefund.value?.also { isRefund ->
+                if (isRefund) {
+                    eventResetScreen.postValue(Unit)
+                } else {
+                    changeProducts.removeAll(rootProductsRefund)
+                    invoiceParam.value?.also {
+                        it.products = ArrayList(changeProducts)
+                        getTotalInvoice(it)
+                        invoiceParam.postValue(it)
+                    }
                 }
-            }else {
-                invoiceParam.postValue(rootInvoice.toParam())
+                this@DetailInvoiceViewModel.isRefund.postValue(!isRefund)
             }
-            this.isRefund.value = !isRefund
         }
     }
 
@@ -66,28 +69,42 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
         with(activity) {
             val invoiceIntent = intent.getParcelableExtra<Invoice>(DetailInvoiceActivity.INVOICE)
             invoiceIntent?.also { invoice1 ->
-                rootInvoice = invoice1
-                val param = invoice1.toParam()
-                invoiceRoot = param
+                val param = invoice1.copy().toParam()
+                param.products = getProductsList(param)
                 invoice.value = invoice1
                 invoiceParam.value = param
                 totalInvoice.value = invoice1.totalBill
-                rootProducts = param.products
+                rootParam = invoice1.toParam()
+                rootProducts = invoice1.toParam().products.toMutableList()
                 changeProducts = param.products.filter { it.quantity > 0 }.toMutableList()
                 rootProductsRefund = param.products.filter { it.quantity < 0 }.toMutableList()
-
+                showPrice.value =
+                    invoice1.type == InvoiceType.IMPORT.name && user.role == ROLE.staff
                 checkShowBtnRefund(invoice1)
-                Log.e(TAG, "getInvoice: ${Gson().toJson(invoice1)} --- ${Gson().toJson(param)}")
             }
         }
     }
+
+    private fun getProductsList(invoice: InvoiceParam): ArrayList<ProductInvoiceParam> {
+        val map = mutableMapOf<String, ProductInvoiceParam>()
+        for (product in invoice.products) {
+            val key = product.id + (if (product.quantity >= 0) "sell" else "refund")
+            if (map.contains(key)) {
+                map[key]?.quantity = map[key]?.quantity?.plus(product.quantity) ?: product.quantity
+            } else {
+                map[key] = product
+            }
+        }
+        val result = map.values.map { it.apply { total = unitPrice * quantity } }
+        return ArrayList(result)
+    }
+
 
     private fun checkShowBtnRefund(invoice1: Invoice) {
         isShowRefund.value = invoice1.type != InvoiceType.IMPORT.name && user.role == ROLE.manager
     }
 
     fun productClick(product: ProductInvoiceParam) {
-        Log.e(TAG, "productClick: ${Gson().toJson(product)}")
         if (isRefund.value != true) return
         val isBuyItemClick = product.quantity > 0
         if (isBuyItemClick) {
@@ -169,7 +186,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
 
     private fun getTotalInvoice(invoiceParam: InvoiceParam) {
         val total = invoiceParam.products.filter { it.quantity > 0 }.sumOf { it.total }
-        totalInvoice.value = total.toLong()
+        totalInvoice.value = total
     }
 
     fun confirmRefund(context: Context) {
@@ -183,7 +200,7 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
 //            changeProduct.addAll(rootProductsRefund)
 
             val final = InvoiceRefund(
-                idUser = invoiceRoot.idUser,
+                idUser = rootParam.idUser,
                 id = invoice.value!!.id,
                 products = ArrayList(changeProduct),
                 total = totalInvoice.value ?: 0L
@@ -228,6 +245,6 @@ class DetailInvoiceViewModel(context: Context) : ViewModel() {
     }
 
     companion object {
-        const val TAG = "Senior"
+        const val TAG = "`Senior`"
     }
 }

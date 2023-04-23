@@ -55,7 +55,7 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
     }
 
     suspend fun loadMorePage() {
-        if (page == totalPage) return
+        if (page > totalPage) return
         val result = repository.getSuppliersPage(token, page)
         if (result.isSuccess()) {
             rootSupplier.addAll(result.result)
@@ -69,6 +69,9 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         val filter = listSupplier.value?.filter { it.status == typeSupplier }?.toMutableList()
             ?: mutableListOf()
         listShow.postValue(filter)
+        viewModelScope.launch {
+            if (filter.size <= 10) loadMorePage()
+        }
     }
 
     private suspend fun reloadSupplier() {

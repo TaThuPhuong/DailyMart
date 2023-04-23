@@ -155,7 +155,8 @@ class OrderViewModel(context: Context) : ViewModel() {
 
     fun paymentClick() {
         viewModelScope.launch {
-            if (listProductInvoices.isEmpty()) {
+            val filter = ArrayList(listProductInvoices.filter { it.total > 0 })
+            if (filter.isEmpty()) {
                 showSnackbar.value = "Chưa có sản phẩm nhập"
                 return@launch
             }
@@ -163,7 +164,7 @@ class OrderViewModel(context: Context) : ViewModel() {
             val invoiceParam = InvoiceParam(
                 idUser = user.id,
                 invoiceType = InvoiceType.IMPORT.name,
-                products = listProductInvoices,
+                products = filter,
                 totalBill = listProductInvoices.sumOf { it.total }
             )
             Log.e(TAG, "paymentClick: ${Gson().toJson(invoiceParam)}")

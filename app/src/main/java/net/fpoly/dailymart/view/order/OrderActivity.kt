@@ -7,7 +7,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
+import android.text.method.PasswordTransformationMethod
 import android.view.SurfaceHolder
 import android.widget.ArrayAdapter
 import android.widget.Filter
@@ -28,6 +28,8 @@ import net.fpoly.dailymart.extension.setupSnackbar
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.hideKeyboard
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.pay.AddInvoiceExportActivity
 import net.fpoly.dailymart.view.payment.PaymentActivity
@@ -88,7 +90,7 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
         cameraSource = CameraSource.Builder(this, detector)
             .setAutoFocusEnabled(true)
             .build()
-
+        setupUser()
         setupBtnBack()
         setupSnackbar()
         setupCheckPermission()
@@ -96,6 +98,12 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
         setupSearchBarcode()
         setupCalenderPicker()
         setupOrderList()
+    }
+
+    private fun setupUser() {
+        if (SharedPref.getUser(this).role == ROLE.staff) {
+            binding.edUnitPrice.transformationMethod = PasswordTransformationMethod.getInstance()
+        }
     }
 
     private fun setupBtnBack() {

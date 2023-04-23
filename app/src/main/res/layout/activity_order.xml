@@ -6,7 +6,7 @@
     <data>
 
         <import type="net.fpoly.dailymart.view.order.OrderViewModel" />
-
+        <import type="net.fpoly.dailymart.utils.ROLE"/>
         <variable
             name="viewModel"
             type="OrderViewModel" />
@@ -148,7 +148,6 @@
                     android:cursorVisible='false'
                     android:background="@drawable/bg_gray_r4"
                     android:padding="12dp"
-                    android:inputType="number"
                     android:hint="Đơn giá"
                     android:textSize="14sp"
                     android:textColor="@color/gray_primary"/>
@@ -195,7 +194,7 @@
                         android:background="@drawable/bg_pink_primary_rd_8"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="center"
-                        android:text="Thanh toán"
+                        android:text="Xác nhận"
                         android:onClick="@{() -> viewModel.paymentClick()}"
                         android:layout_marginEnd="8dp"
                         android:textColor="@color/white"
