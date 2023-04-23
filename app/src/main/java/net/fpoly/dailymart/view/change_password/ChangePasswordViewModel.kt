@@ -3,27 +3,23 @@ package net.fpoly.dailymart.view.change_password
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.base.LoadingDialog
-import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.param.ChangePassParam
-import net.fpoly.dailymart.data.repository.UserRepositoryImpl
 import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.data.model.Response.Error
+import net.fpoly.dailymart.repository.UserRepository
 
-class ChangePasswordViewModel(app: Application) : ViewModel() {
+class ChangePasswordViewModel(app: Application, private val userRepo: UserRepository) :
+    ViewModel() {
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
-    private val server = ServerInstance.apiUser
-
-    private val changePassRepo = UserRepositoryImpl()
     private val _validateOldPass = MutableLiveData("")
     val validateOldPass: LiveData<String> = _validateOldPass
     private val _validateNewPass = MutableLiveData("")
@@ -32,35 +28,42 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
     val validateConfirm: LiveData<String> = _validateConfirm
     private val _changeParam = MutableLiveData(ChangePassParam())
     private lateinit var mLoadingDialog: LoadingDialog
+    private val _passwordOld = MutableLiveData(false)
+    val passwordOld: LiveData<Boolean> = _passwordOld
+    private val _passwordNew = MutableLiveData(false)
+    val passwordNew: LiveData<Boolean> = _passwordNew
+    private val _passwordConfirm = MutableLiveData(false)
+    val passwordConfirm: LiveData<Boolean> = _passwordConfirm
+
+    val updateSuccess = MutableLiveData(false)
+    val message = MutableLiveData("")
 
     fun initLoadDialog(context: Context) {
         mLoadingDialog = LoadingDialog(context)
     }
 
-    fun changePass(
+    private fun changePass(
         changePassParam: ChangePassParam,
-        context: Context,
-        activity: ChangePasswordActivity?
     ) {
         mLoadingDialog.showLoading()
         viewModelScope.launch {
-            when (val resPass = changePassRepo.changePass(mToken, changePassParam)) {
+            when (val resPass = userRepo.changePass(mToken, changePassParam)) {
                 is Success -> {
+                    updateSuccess.postValue(true)
                     Log.e(TAG, "changePassViewModel: ${resPass.data}")
-                    Toast.makeText(context, resPass.message, Toast.LENGTH_SHORT).show()
-                    activity?.finish()
                 }
+
                 is Error -> {
-                    _validateOldPass.value = resPass.message
-                    mLoadingDialog.hideLoading()
+                    updateSuccess.postValue(false)
+                    message.postValue(resPass.message)
                 }
             }
         }
     }
 
-    fun onEvent(event: UserEvent, context: Context) {
+    fun onEvent(event: ChangeEvent, context: Context) {
         when (event) {
-            is UserEvent.OnOldPass -> {
+            is ChangeEvent.OnOldPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     oldPass = event.value
                 )
@@ -70,7 +73,8 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
                     _validateOldPass.value = ""
                 }
             }
-            is UserEvent.OnNewPass -> {
+
+            is ChangeEvent.OnNewPass -> {
                 _changeParam.value = _changeParam.value?.copy(
                     newPass = event.value
                 )
@@ -85,7 +89,8 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
                     _validateNewPass.value = ""
                 }
             }
-            is UserEvent.OnConfirm -> {
+
+            is ChangeEvent.OnConfirm -> {
                 if (event.value.isEmpty()) {
                     _validateConfirm.value = event.value.blankException()
                 } else if (event.value != _changeParam.value?.newPass) {
@@ -95,28 +100,41 @@ class ChangePasswordViewModel(app: Application) : ViewModel() {
                 }
             }
 
-            is UserEvent.ValidateForm -> {
+            is ChangeEvent.OnPassOld -> {
+                _passwordOld.value = !_passwordOld.value!!
+            }
+
+            is ChangeEvent.OnPassNew -> {
+                _passwordNew.value = !_passwordNew.value!!
+            }
+
+            is ChangeEvent.OnPassConfirm -> {
+                _passwordConfirm.value = !_passwordConfirm.value!!
+            }
+
+            is ChangeEvent.ValidateForm -> {
                 _changeParam.value?.let {
                     if (it.checkValidate()) {
-                        mLoadingDialog.showLoading()
                         changePass(
                             changePassParam = it,
-                            context = context,
-                            activity = null
                         )
                     } else {
-                        mLoadingDialog.hideLoading()
+                        updateSuccess.postValue(false)
+                        message.postValue("Vui lòng điền đầy đủ và đúng thông tin")
                     }
                 }
             }
         }
     }
 
-    sealed class UserEvent {
-        data class OnOldPass(val value: String) : UserEvent()
-        data class OnNewPass(val value: String) : UserEvent()
-        data class OnConfirm(val value: String) : UserEvent()
-        object ValidateForm : UserEvent()
+    sealed class ChangeEvent {
+        data class OnOldPass(val value: String) : ChangeEvent()
+        data class OnNewPass(val value: String) : ChangeEvent()
+        data class OnConfirm(val value: String) : ChangeEvent()
+        object OnPassOld : ChangeEvent()
+        object OnPassNew : ChangeEvent()
+        object OnPassConfirm : ChangeEvent()
+        object ValidateForm : ChangeEvent()
     }
 
     private fun validatePassword(password: String): Boolean {

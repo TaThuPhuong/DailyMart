@@ -70,6 +70,7 @@ class StaffActivity : BaseActivity<ActivityStaffBinding>(ActivityStaffBinding::i
             if (mUser.role == ROLE.staff) return@StaffAdapter
             val intent = Intent(this, DetailsStaffActivity::class.java)
             intent.putExtra("user", user)
+            binding.edSearch.setText("")
             startActivity(intent)
         }, onCall = {
             val phoneNumber = it.phoneNumber
