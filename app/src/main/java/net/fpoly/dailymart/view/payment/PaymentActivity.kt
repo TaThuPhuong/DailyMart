@@ -50,7 +50,13 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
 
     private fun setupBtnCreateInvoice() {
         binding.btnPayment.setOnClickListener {
-            viewModel.createInvoice()
+            val invoiceTotal = viewModel.invoice.value?.totalBill ?: 0
+            binding.amountPaid.text.toString()
+            if (binding.edAmount.text.toString().toLong() >= invoiceTotal) {
+                viewModel.createInvoice()
+            }else {
+                viewModel.showSnackbar.value = "Khách hàng chưa thanh toán đủ"
+            }
         }
         viewModel.eventCreateInvoiceSuccess.observe(this) {
             Intent(this, MainActivity::class.java).also {
@@ -140,15 +146,17 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
     }
 
     private fun checkChange(isChecked: Boolean) {
+        val invoiceTotal = viewModel.invoice.value?.totalBill ?: 0
+
         if (isChecked) {
             binding.layoutBanking.visible()
             binding.edAmount.gone()
-            val invoiceTotal = viewModel.invoice.value?.totalBill ?: 0
 
             binding.amountPaid.text =
                 getString(R.string.cover_vnd, convertTotalInvoiceNumber(invoiceTotal))
             binding.amountReturn.text =
                 getString(R.string.cover_vnd, convertTotalInvoiceNumber(0))
+            binding.edAmount.setText(invoiceTotal.toString())
         } else {
             binding.layoutBanking.gone()
             binding.edAmount.visible()
@@ -158,7 +166,6 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
     override fun setupObserver() {
         viewModel.invoice.observe(this) {
             binding.edMoneyPay.setText(it.totalBill.toString())
-            binding.edAmount.setText(it.totalBill.toString())
         }
     }
 

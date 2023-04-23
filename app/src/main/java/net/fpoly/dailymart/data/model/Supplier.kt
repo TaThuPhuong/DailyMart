@@ -22,6 +22,13 @@ data class SupplierParam(
     @SerializedName("status") var status: Boolean = true,
 )
 
+data class SupplierParamAdd(
+    @SerializedName("supplierName") val supplierName: String = "",
+    @SerializedName("phoneNumber") var phoneNumber: String = "",
+    @SerializedName("representativeName") var representativeName: String = "",
+    @SerializedName("address") var address: String = ""
+)
+
 data class ResultData<T>(
     var status: Int = 0,
     var message: String = "",

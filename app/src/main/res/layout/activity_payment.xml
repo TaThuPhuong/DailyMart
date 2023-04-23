@@ -287,6 +287,8 @@
                             android:layout_height="52dp"
                             android:layout_marginEnd="12dp"
                             android:layout_weight="1"
+                            android:focusable='false'
+                            android:cursorVisible='false'
                             android:background="@drawable/bg_gray_r4"
                             android:elevation="1dp"
                             android:textSize="14sp"

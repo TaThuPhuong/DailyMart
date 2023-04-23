@@ -105,7 +105,7 @@
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="center_vertical"
                         android:includeFontPadding="false"
-                        android:text="Tổng doanh thu"
+                        android:text="Tổng lợi nhuận"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         app:drawableStartCompat="@drawable/ic_revenue" />

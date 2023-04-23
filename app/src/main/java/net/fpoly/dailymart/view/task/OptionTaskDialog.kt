@@ -21,7 +21,6 @@ class OptionTaskDialog(
     private val mUser = SharedPref.getUser(mContext)
     override fun initData() {
         binding.btnEdit.setVisibility(mUser.role != ROLE.staff)
-        binding.btnDelete.setVisibility(mUser.role != ROLE.staff)
         binding.btnFinish.setVisibility(!finished && (owner || mUser.role != ROLE.staff))
         binding.imvClose.setOnClickListener { dismiss() }
         binding.btnDetail.setOnClickListener {

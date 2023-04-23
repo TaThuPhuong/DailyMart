@@ -29,7 +29,7 @@ interface UserApi {
     suspend fun login(@Body login: LoginParam): ResponseResult<User>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @GET("getAllNameUser")
+    @GET("getAll")
     fun getAllUser(@Header("Authorization") token: String): Call<UserModel>
 
     @Headers("Content-Type: application/json;charset=UTF-8")

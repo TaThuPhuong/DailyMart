@@ -35,6 +35,7 @@ class AddProductViewModel(
     private val _product = MutableLiveData(ProductParam())
     val product: LiveData<ProductParam> = _product
     val actionSuccess = MutableLiveData(false)
+    val getDataSuccess = MutableLiveData(GetDataSuccess())
     val message = MutableLiveData<String>()
     val checkValidate = MutableLiveData(false)
 
@@ -53,6 +54,9 @@ class AddProductViewModel(
                 is Response.Success -> {
                     resCategory.data?.let { categories ->
                         _listCategory.postValue(categories.filter { it.status })
+                        getDataSuccess.value = getDataSuccess.value?.copy(
+                            getCategory = true
+                        )
                     }
                 }
                 is Response.Error -> {
@@ -62,6 +66,9 @@ class AddProductViewModel(
             if (resSupplier.isSuccess()) {
                 resSupplier.result?.let { suppliers ->
                     _listSupplier.postValue(suppliers.filter { it.status })
+                    getDataSuccess.value = getDataSuccess.value?.copy(
+                        getSupplier = true
+                    )
                 }
             }
         }
@@ -160,3 +167,8 @@ sealed class ProductEvent {
     data class UnitChange(val unit: String) : ProductEvent()
     data class AddProduct(val linkImage: String) : ProductEvent()
 }
+
+data class GetDataSuccess(
+    var getCategory: Boolean = false,
+    var getSupplier: Boolean = false,
+)
