@@ -1,14 +1,12 @@
 package net.fpoly.dailymart.view.pay
 
 import android.Manifest
-import android.R
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.SurfaceHolder
-import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -107,8 +105,8 @@ class AddInvoiceExportActivity : BaseActivity<ActivityPayBinding>(ActivityPayBin
         binding.listInvoiceDetail.adapter = invoiceAdapter
         viewModel.invoiceDetails.observe(this) { params ->
             val totalBill = params.sumOf { it.total }
-            viewModel.totalInvoice = totalBill.toLong()
-            binding.tvTotalBill.text = convertTotalInvoiceNumber(totalBill.toLong())
+            viewModel.totalInvoice = totalBill
+            binding.tvTotalBill.text = convertTotalInvoiceNumber(totalBill)
             invoiceAdapter.submitList(params)
             invoiceAdapter.notifyItemRangeChanged(0, params.size)
         }

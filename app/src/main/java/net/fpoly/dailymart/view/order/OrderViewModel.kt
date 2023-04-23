@@ -72,10 +72,12 @@ class OrderViewModel(context: Context) : ViewModel() {
         edExpiry: EditText,
         edUnitPrice: EditText
     ) {
-        val productId = products.value?.first { it.barcode == edBarcode.text.toString() } ?: return
-        val unitPrice = edUnitPrice.text.toString().toLongOrNull()
-        val quantity = edQuantity.text.toString().toIntOrNull() ?: 0
-        val expiryDate = edExpiry.text.toString().convertDateToMilliseconds()
+        if (edBarcode.text.toString().isEmpty()) return
+        val productId =
+            products.value?.firstOrNull { it.barcode == edBarcode.text.toString() } ?: return
+        val unitPrice = edUnitPrice.text.toString().toLongOrNull() ?: return
+        val quantity = edQuantity.text.toString().toIntOrNull() ?: return
+        val expiryDate = edExpiry.text.toString().convertDateToMilliseconds() ?: return
         val nowTime = Calendar.getInstance()
         nowTime.set(
             nowTime[Calendar.YEAR],
@@ -84,7 +86,7 @@ class OrderViewModel(context: Context) : ViewModel() {
         )
 
 
-        if (unitPrice == null || unitPrice < 0) {
+        if (unitPrice < 0) {
             edUnitPrice.error = "Đơn giá không hợp lệ"
             return
         }
@@ -133,8 +135,8 @@ class OrderViewModel(context: Context) : ViewModel() {
         edExpiry.error = null
     }
 
-    private fun String.convertDateToMilliseconds(): Long {
-        if (this.isEmpty()) return 0
+    private fun String.convertDateToMilliseconds(): Long? {
+        if (this.isEmpty()) return null
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val date = dateFormat.parse(this) ?: return 0
         return date.time
@@ -153,7 +155,7 @@ class OrderViewModel(context: Context) : ViewModel() {
 
     fun paymentClick() {
         viewModelScope.launch {
-            if(listProductInvoices.isEmpty()) {
+            if (listProductInvoices.isEmpty()) {
                 showSnackbar.value = "Chưa có sản phẩm nhập"
                 return@launch
             }
@@ -162,7 +164,7 @@ class OrderViewModel(context: Context) : ViewModel() {
                 idUser = user.id,
                 invoiceType = InvoiceType.IMPORT.name,
                 products = listProductInvoices,
-                totalBill = listProductInvoices.sumOf { it.total }.toLong()
+                totalBill = listProductInvoices.sumOf { it.total }
             )
             Log.e(TAG, "paymentClick: ${Gson().toJson(invoiceParam)}")
             when (val res = invoiceRepo.insertInvoice(token, invoiceParam)) {
@@ -170,6 +172,7 @@ class OrderViewModel(context: Context) : ViewModel() {
                     showSnackbar.postValue("Tạo mới hóa đơn thành công")
                     eventDone.postValue(Unit)
                 }
+
                 is Response.Error -> {
                     showSnackbar.postValue(res.message)
                 }

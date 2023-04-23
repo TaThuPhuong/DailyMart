@@ -253,7 +253,6 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(ActivityOrderBinding::i
                         notifyDataSetInvalidated()
                     }
                 }
-
                 override fun convertResultToString(resultValue: Any?): CharSequence {
                     return resultValue as String
                 }
