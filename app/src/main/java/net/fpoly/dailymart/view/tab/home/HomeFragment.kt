@@ -60,6 +60,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         binding.imvStock.setOnClickListener(this)
         binding.imvTask.setOnClickListener(this)
         binding.imvPay.setOnClickListener(this)
+        binding.imvMessage.setOnClickListener(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -117,9 +118,17 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::infl
         when (v) {
             binding.imvAvatarToolbar -> openActivity(ProfileActivity::class.java)
             binding.imvNotification -> {}
-            binding.layoutReport, binding.imvReport -> if (mUser!!.role == ROLE.manager) openActivity(
-                ReportActivity::class.java
-            )
+            binding.layoutReport -> {
+                if (mUser!!.role == ROLE.manager) {
+                    openActivity(ReportActivity::class.java)
+                } else return
+            }
+            binding.imvReport -> {
+                if (mUser!!.role == ROLE.manager) {
+                    openActivity(ReportActivity::class.java)
+                } else return
+            }
+
             binding.imvCheckDate -> openActivity(CheckDateActivity::class.java)
             binding.imvWorkSheet -> openActivity(WorkSheetActivity::class.java)
             binding.imvStock -> openActivity(StockActivity::class.java)

@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import net.fpoly.dailymart.utils.Constant
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class Product(
     @SerializedName("_id") var id: String = "",
@@ -20,7 +22,7 @@ data class Product(
     @SerializedName("status") var status: Boolean = true,
     @SerializedName("img_product") var img_product: String = "",
     @SerializedName("expires") var expires: ArrayList<ExpiryRes> = ArrayList(),
-    @SerializedName("createdAt") var createdAt: String = "",
+    @SerializedName("createdAt") var createdAt: Date = Date(),
 ) : Serializable {
     companion object {
         const val TABLE_NAME = "products"
@@ -40,7 +42,7 @@ data class ProductParam(
     @SerializedName("sellPrice") var sellPrice: Long = 0,
     @SerializedName("img_product") var imageProduct: String = Constant.IMAGE_DEFAULT,
     @SerializedName("unit") var unit: String = "",
-    @SerializedName("status") var status: Boolean = true,
+//    @SerializedName("status") var status: Boolean = true,
 ) {
     constructor(product: Product) : this() {
         this.name = product.name
@@ -51,7 +53,7 @@ data class ProductParam(
         this.importPrice = product.importPrice
         this.sellPrice = product.sellPrice
         this.unit = product.unit
-        this.status = product.status
+//        this.status = product.status
     }
 }
 

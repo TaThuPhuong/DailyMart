@@ -65,7 +65,7 @@ class HomeViewModel(
                 val percent = ((listFinish.size.toFloat() / list.size) * 100).toInt()
                 taskPercent.postValue(percent)
                 taskPercentText.postValue("$percent %")
-                listTask.postValue(list)
+                listTask.postValue(list.take(10))
                 getTaskSuccess.postValue(true)
             } else {
                 getTaskSuccess.postValue(true)

@@ -88,5 +88,6 @@
         android:text="Xóa"
         android:textColor="@color/red_FF444C"
         android:textSize="16sp"
+        android:visibility="gone"
         tools:ignore="UseCompatTextViewDrawableXml" />
 </RelativeLayout>

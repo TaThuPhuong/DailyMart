@@ -79,6 +79,7 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/imbplexsans_regular"
             android:hint="Số điện thoại"
+            android:inputType="phone"
             android:maxLines="1"
             android:paddingVertical="16dp"
             android:textColor="@color/gray_primary"

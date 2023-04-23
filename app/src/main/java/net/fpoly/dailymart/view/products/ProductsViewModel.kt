@@ -1,25 +1,18 @@
 package net.fpoly.dailymart.view.products
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.fpoly.dailymart.data.api.ServerInstance
-import net.fpoly.dailymart.data.api.ServerInstance.Companion.apiProduct
 import net.fpoly.dailymart.data.model.Product
-import net.fpoly.dailymart.data.model.ProductParam
 import net.fpoly.dailymart.data.model.ProductParamUpdate
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.repository.ProductRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
 
 class ProductsViewModel(val app: Application, private val repo: ProductRepository) : ViewModel() {
 
@@ -44,7 +37,8 @@ class ProductsViewModel(val app: Application, private val repo: ProductRepositor
             val res = repo.getAllProduct(mToken)
             if (res.isSuccess()) {
                 res.data?.let { products ->
-                    listProductActive.postValue(products.filter { it.status })
+                    listProductActive.postValue(products.filter { it.status }
+                        .sortedByDescending { p -> p.createdAt })
                     listProductDisable.postValue(products.filter { !it.status })
                 }
                 getListSuccess.postValue(true)

@@ -120,7 +120,7 @@ class AddTaskViewModel(
             val res = userRepo.getAllUser2(mToken)
             if (res.isSuccess()) {
                 res.data?.let { users ->
-                    _listUser.postValue(users.filter { it.role == ROLE.staff })
+                    _listUser.postValue(users.filter { it.role == ROLE.staff && it.status })
                 }
             } else {
                 message.postValue(res.message!!)

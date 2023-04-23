@@ -382,7 +382,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/imbplexsans_medium"
-                            android:text="Lịch Làm Việc"
+                            android:text="Lịch làm việc"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
                     </LinearLayout>

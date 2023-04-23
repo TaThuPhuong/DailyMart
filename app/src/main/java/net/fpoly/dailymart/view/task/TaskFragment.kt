@@ -13,6 +13,7 @@ import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.task.adapter.TaskAdapter
 import net.fpoly.dailymart.view.task.task_detail.TaskDetailActivity
@@ -52,40 +53,47 @@ class TaskFragment : BaseFragment<FragmentTaskBinding>(FragmentTaskBinding::infl
     private fun initRecycleView() {
         val user = SharedPref.getUser(mContext)
         mTaskAdapter = TaskAdapter(mListTask) { task ->
-            OptionTaskDialog(mContext, task.finish, user.id == task.idReceiver.id,
-                onShowDetail = {
-                    Intent(mContext, TaskDetailActivity::class.java).also {
-                        it.putExtra(Constant.TASK, task)
-                        startActivity(it)
-                    }
-                },
-                onFinish = {
-                    FinishTaskConfirmDialog(mContext = mContext) { comment, time ->
-                        task.comment = comment ?: ""
-                        task.finish = true
-                        if (task.finishTime == 0L) {
-                            task.finishTime = time
+            if (user.role == ROLE.manager || user.id == task.idReceiver.id) {
+                OptionTaskDialog(mContext, task.finish, user.id == task.idReceiver.id,
+                    onShowDetail = {
+                        Intent(mContext, TaskDetailActivity::class.java).also {
+                            it.putExtra(Constant.TASK, task)
+                            startActivity(it)
                         }
-                        viewModel.onFinish(task)
-                    }.show()
-                },
-                onEdit = {
-                    Intent(mContext, TaskEditActivity::class.java).also {
-                        it.putExtra(Constant.TASK, task)
-                        startActivity(it)
-                    }
-                }, onDelete = {
-                    DeleteTaskConfirmDialog(mContext) {
-                        viewModel.onDeleteTask(task) {
-                            val snack =
-                                Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
-                            snack.setAction("Hoàn tác") {
-                                viewModel.onRestore()
+                    },
+                    onFinish = {
+                        FinishTaskConfirmDialog(mContext = mContext) { comment, time ->
+                            task.comment = comment ?: ""
+                            task.finish = true
+                            if (task.finishTime == 0L) {
+                                task.finishTime = time
                             }
-                            snack.show()
+                            viewModel.onFinish(task)
+                        }.show()
+                    },
+                    onEdit = {
+                        Intent(mContext, TaskEditActivity::class.java).also {
+                            it.putExtra(Constant.TASK, task)
+                            startActivity(it)
                         }
-                    }.show()
-                }).show()
+                    }, onDelete = {
+//                        DeleteTaskConfirmDialog(mContext) {
+//                            viewModel.onDeleteTask(task) {
+//                                val snack =
+//                                    Snackbar.make(binding.root, "Đã xóa", Snackbar.LENGTH_LONG)
+//                                snack.setAction("Hoàn tác") {
+//                                    viewModel.onRestore()
+//                                }
+//                                snack.show()
+//                            }
+//                        }.show()
+                    }).show()
+            } else {
+                Intent(mContext, TaskDetailActivity::class.java).also {
+                    it.putExtra(Constant.TASK, task)
+                    startActivity(it)
+                }
+            }
         }
         binding.rcvListTask.adapter = mTaskAdapter
     }
