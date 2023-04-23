@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import net.fpoly.dailymart.base.BaseBottomDialog
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
+import net.fpoly.dailymart.data.model.SupplierParamAdd
 import net.fpoly.dailymart.databinding.DialogAddSupplierBinding
 import net.fpoly.dailymart.extension.view_extention.hideKeyboard
 
@@ -21,17 +22,19 @@ class AddEditSupplierDialog(
             binding.edSupplierName.setText(supplier.supplierName)
             binding.edRepresentativeName.setText(supplier.representativeName)
             binding.edAddress.setText(supplier.address)
+            binding.title.text = "Sửa nhà cung cấp"
             binding.tvAddNew.text = "Sửa"
         }
 
         binding.imvClose.setOnClickListener { dismiss() }
         binding.tvAddNew.setOnClickListener {
             if (!isValidate()) return@setOnClickListener
-            val supplierParam = getSupplierParam()
             if (supplier != null) {
+                val supplierParam = getSupplierParam()
                 viewModel.editNewSupplier(supplier.id, supplierParam)
                 dismiss()
             } else {
+                val supplierParam = getSupplierParamAdd()
                 viewModel.addNewSupplier(supplierParam)
                 dismiss()
             }
@@ -54,6 +57,19 @@ class AddEditSupplierDialog(
             representativeName = representativeName,
             address = address,
             status = supplier?.status ?: true
+        )
+    }
+
+    private fun getSupplierParamAdd(): SupplierParamAdd {
+        val phoneNumber = binding.edSupplierPhone.text.toString().replace(" ", "")
+        val nameSupplier = binding.edSupplierName.text.toString()
+        val representativeName = binding.edRepresentativeName.text.toString()
+        val address = binding.edAddress.text.toString()
+        return SupplierParamAdd(
+            supplierName = nameSupplier,
+            phoneNumber = phoneNumber,
+            representativeName = representativeName,
+            address = address
         )
     }
 

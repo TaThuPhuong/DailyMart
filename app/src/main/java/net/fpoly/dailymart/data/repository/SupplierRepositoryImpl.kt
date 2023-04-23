@@ -9,6 +9,7 @@ import net.fpoly.dailymart.data.api.SupplierApi
 import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
+import net.fpoly.dailymart.data.model.SupplierParamAdd
 import net.fpoly.dailymart.repository.SupplierRepository
 
 class SupplierRepositoryImpl(
@@ -25,7 +26,7 @@ class SupplierRepositoryImpl(
             }
         }
 
-    override suspend fun insertSupplier(supplier: SupplierParam, token: String) =
+    override suspend fun insertSupplier(supplier: SupplierParamAdd, token: String) =
         withContext(ioDispatcher) {
             try {
                 remoteData.insertSupplier(token, supplier)

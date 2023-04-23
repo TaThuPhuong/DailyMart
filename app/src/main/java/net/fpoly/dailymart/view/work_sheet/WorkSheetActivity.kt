@@ -58,7 +58,9 @@ class WorkSheetActivity :
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = mListTitle[position]
         }.attach()
-
+        val cal = Calendar.getInstance()
+        val today = cal[Calendar.DAY_OF_MONTH]
+        binding.viewPager.currentItem = today
         binding.viewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -87,7 +89,10 @@ class WorkSheetActivity :
     }
 
     override fun onResume() {
-        super.onResume()
         viewModel.getListWorkSheet()
+        val cal = Calendar.getInstance()
+        val today = cal[Calendar.DAY_OF_MONTH]
+        binding.viewPager.currentItem = today
+        super.onResume()
     }
 }

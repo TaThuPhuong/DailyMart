@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/layout_date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="16dp"
@@ -31,12 +31,12 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="2dp"
-            android:src="@drawable/ic_exchange" />
+            android:src="@drawable/ic_edit_black" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_quantity"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_date"
         android:layout_alignParentStart="true"
@@ -57,8 +57,9 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginEnd="60dp"
             android:padding="2dp"
-            android:src="@drawable/ic_exchange" />
+            android:src="@drawable/ic_edit_black" />
     </LinearLayout>
 
     <TextView

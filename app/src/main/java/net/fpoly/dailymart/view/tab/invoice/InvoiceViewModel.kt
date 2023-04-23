@@ -22,6 +22,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
     private val token = SharedPref.getAccessToken(context)
 
     var rootInvoices = mutableListOf<Invoice>()
+    var listInvoice = mutableListOf<Invoice>()
     val invoices = MutableLiveData(mutableListOf<Invoice>())
 
     val showSnackbar = MutableLiveData<String>()
@@ -44,6 +45,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
                 rootInvoices.addAll(root)
                 nowPage++
                 totalPage = res.page
+                listInvoice = rootInvoices
                 showInvoice()
             }
 
@@ -63,6 +65,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
                 rootInvoices.addAll(root)
                 nowPage++
                 totalPage = res.page
+                listInvoice = rootInvoices
                 showInvoice()
             }
         }
@@ -70,10 +73,10 @@ class InvoiceViewModel(context: Context) : ViewModel() {
 
     fun showInvoice(tab: Int? = _openTabReceipt.value) {
         val filter = when (tab) {
-            TAB_EXPORT -> rootInvoices.filter { it.type == InvoiceType.EXPORT.name || it.type == InvoiceType.REFUND.name }
+            TAB_EXPORT -> listInvoice.filter { it.type == InvoiceType.EXPORT.name || it.type == InvoiceType.REFUND.name }
                 .toMutableList()
 
-            TAB_IMPORT -> rootInvoices.filter { it.type == InvoiceType.IMPORT.name }.toMutableList()
+            TAB_IMPORT -> listInvoice.filter { it.type == InvoiceType.IMPORT.name }.toMutableList()
             else -> mutableListOf()
         }
         invoices.postValue(filter)

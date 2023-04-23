@@ -102,7 +102,7 @@ class CustomerPopup(val activity: PaymentActivity, private val viewModel: Paymen
             val filter =
                 customers.filter {
                     it.name.lowercase().contains(keyword) || it.phoneNumber.contains(
-                        keyword
+                        keyword, true
                     )
                 }
             adapter.submitList(filter)

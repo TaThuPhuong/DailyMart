@@ -64,18 +64,14 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
             val text = binding.edSearch.text.toString().lowercase()
             if (text.isNotEmpty()) {
                 binding.imvClear.visibility = View.VISIBLE
-                viewModel.listSupplier.value?.also { invoices ->
-                    val result =
-                        invoices.filter {
-                            it.id.lowercase().contains(text) || it.supplierName.lowercase()
-                                .contains(text)
-                        }
-                            .toMutableList()
-                    viewModel.listSupplier.value = result
-                }
+                val filter = viewModel.rootSupplier.filter { it.phoneNumber.lowercase().contains(text) || it.supplierName.lowercase()
+                    .contains(text) }
+                viewModel.listSupplier.value = filter.toMutableList()
+                viewModel.loadShowList()
             } else {
                 binding.imvClear.visibility = View.GONE
-                viewModel.listSupplier.value = viewModel.listSupplierRemote
+                viewModel.listSupplier.value = viewModel.rootSupplier
+                viewModel.loadShowList()
             }
         }
     }

@@ -8,19 +8,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.CategoryParam
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
+import net.fpoly.dailymart.data.model.SupplierParamAdd
 import net.fpoly.dailymart.repository.SupplierRepository
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 
 class SupplierViewModel(context: Context, val repository: SupplierRepository) : ViewModel() {
 
-    private val rootSupplier = mutableListOf<Supplier>()
+    val rootSupplier = mutableListOf<Supplier>()
     val listSupplier = MutableLiveData<MutableList<Supplier>>()
-    var listSupplierRemote: ArrayList<Supplier> = arrayListOf()
     var isLoading = MutableLiveData(false)
 
     val listShow = MutableLiveData<MutableList<Supplier>>()
@@ -44,6 +45,7 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
             totalPage = result.totalPage
             rootSupplier.addAll(result.result)
             listSupplier.postValue(rootSupplier)
+            delay(100)
             loadShowList()
             page++
         } else {
@@ -64,7 +66,8 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
     }
 
     fun loadShowList() {
-        val filter = rootSupplier.filter { it.status == typeSupplier }.toMutableList()
+        val filter = listSupplier.value?.filter { it.status == typeSupplier }?.toMutableList()
+            ?: mutableListOf()
         listShow.postValue(filter)
     }
 
@@ -87,7 +90,7 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         context.startActivity(Intent(Intent.ACTION_VIEW, smsUri))
     }
 
-    fun addNewSupplier(supplier: SupplierParam) {
+    fun addNewSupplier(supplier: SupplierParamAdd) {
         viewModelScope.launch {
             isLoading.postValue(true)
             val result = repository.insertSupplier(supplier, token)

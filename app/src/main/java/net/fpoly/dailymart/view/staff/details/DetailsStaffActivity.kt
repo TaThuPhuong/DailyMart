@@ -54,11 +54,11 @@ class DetailsStaffActivity :
                 viewModel.onEvent(UpdateEvent.OnUpdate(null))
             }
         }
-        binding.imvAvatar.setOnClickListener {
-            ImagesUtils.checkPermissionPickImage(this, binding.imvAvatar) {
-                isChangeAvatar = true
-            }
-        }
+//        binding.imvAvatar.setOnClickListener {
+//            ImagesUtils.checkPermissionPickImage(this, binding.imvAvatar) {
+//                isChangeAvatar = true
+//            }
+//        }
         setupBtnChangeRole()
         setupBtnChangeStatus()
     }

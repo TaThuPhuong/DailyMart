@@ -40,6 +40,7 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
     val quantityImport = MutableLiveData("0")
     val quantityExport = MutableLiveData("0")
     val totalLosses = MutableLiveData("0 vnđ")
+    val reportDay = MutableLiveData(ReportDay())
     val onGetDone = MutableLiveData(false)
 
 
@@ -70,9 +71,11 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
     fun getRevenueByMonth(time: Long) {
         mCalender.timeInMillis = time
         timeReport.value = time.date2String("MM/yyyy")
+        var losses = 0L
         viewModelScope.launch {
             LossesDao.getLossesByMonth(mCalender[Calendar.MONTH] + 1, mCalender[Calendar.YEAR]) {
                 totalLosses.postValue(it.toMoney())
+                losses = it
             }
             when (val res =
                 reportRepository.getReportByMonth(
@@ -82,7 +85,7 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
                 )) {
                 is Response.Success -> {
                     listRevenueByMonth.postValue(res.data.listData)
-                    totalRevenue.postValue(res.data.revenue.toMoney())
+                    totalRevenue.postValue((res.data.revenue - losses).toMoney())
                     totalImport.postValue(res.data.totalImport.toMoney())
                     totalExport.postValue(res.data.totalExport.toMoney())
                     quantityImport.postValue(res.data.quantityImport.toString())
@@ -100,14 +103,16 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
     fun getRevenueByYear(time: Long) {
         mCalender.timeInMillis = time
         timeReport.value = time.date2String("yyyy")
+        var losses = 0L
         viewModelScope.launch {
             LossesDao.getLossesByYear(mCalender[Calendar.YEAR]) {
                 totalLosses.postValue(it.toMoney())
+                losses = it
             }
             when (val res = reportRepository.getReportByYear(mToken, mCalender[Calendar.YEAR])) {
                 is Response.Success -> {
                     listRevenueByYear.postValue(res.data.listData)
-                    totalRevenue.postValue(res.data.revenue.toMoney())
+                    totalRevenue.postValue((res.data.revenue - losses).toMoney())
                     totalImport.postValue(res.data.totalImport.toMoney())
                     totalExport.postValue(res.data.totalExport.toMoney())
                     quantityImport.postValue(res.data.quantityImport.toString())
@@ -124,17 +129,23 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
 
     @SuppressLint("SimpleDateFormat")
     fun getRevenueByDate(time: Long) {
-        val date = SimpleDateFormat("yyyy-MM-dd").format(time)
         mCalender.timeInMillis = time
         timeReport.value = time.date2String("dd/MM/yyyy")
         viewModelScope.launch {
-            when (val res = reportRepository.getReportByDay(mToken, date)) {
+            when (val res =
+                reportRepository.getReportByDay(mToken, time.date2String("yyyy-MM-dd"))) {
                 is Response.Success -> {
                     totalRevenue.postValue(res.data.revenue.toMoney())
                     totalImport.postValue(res.data.totalImport.toMoney())
                     totalExport.postValue(res.data.totalExport.toMoney())
                     quantityImport.postValue(res.data.quantityImport.toString())
                     quantityExport.postValue(res.data.quantityExport.toString())
+                    reportDay.postValue(
+                        ReportDay(
+                            totalExport = res.data.totalExport,
+                            totalImport = res.data.totalImport
+                        )
+                    )
                     onGetDone.postValue(true)
                     pieChartData.postValue(genPieData(res.data.totalImport, res.data.totalExport))
                 }
@@ -161,3 +172,8 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
         return PieData(dataSet)
     }
 }
+
+data class ReportDay(
+    var totalImport: Long = 0,
+    var totalExport: Long = 0,
+)

@@ -3,12 +3,13 @@ package net.fpoly.dailymart.data.api
 import net.fpoly.dailymart.data.model.ResultData
 import net.fpoly.dailymart.data.model.Supplier
 import net.fpoly.dailymart.data.model.SupplierParam
+import net.fpoly.dailymart.data.model.SupplierParamAdd
 import retrofit2.http.*
 
 interface SupplierApi {
 
     @POST("supplier")
-    suspend fun insertSupplier(@Header("Authorization") token: String, @Body supplier: SupplierParam): ResultData<Supplier>
+    suspend fun insertSupplier(@Header("Authorization") token: String, @Body supplier: SupplierParamAdd): ResultData<Supplier>
 
     @GET("supplier/getAll")
     suspend fun getSuppliers(@Header("Authorization") token: String) : ResultData<ArrayList<Supplier>>

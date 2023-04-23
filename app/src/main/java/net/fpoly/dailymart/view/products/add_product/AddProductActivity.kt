@@ -61,6 +61,7 @@ class AddProductActivity :
         setEditTextChange()
         checkPermission()
         mLoadingDialog = LoadingDialog(this)
+        mLoadingDialog?.showLoading()
     }
 
     override fun setupObserver() {
@@ -80,6 +81,9 @@ class AddProductActivity :
         }
         viewModel.listSupplier.observe(this) {
             mListSupplier = it
+        }
+        viewModel.getDataSuccess.observe(this) {
+            if (it.getCategory && it.getSupplier) mLoadingDialog?.hideLoading()
         }
     }
 

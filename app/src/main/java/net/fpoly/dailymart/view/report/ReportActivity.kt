@@ -115,6 +115,11 @@ class ReportActivity :
                 configPeiChart(binding.pcReportDay, it)
             }
         }
+        viewModel.reportDay.observe(this) {
+            if (it.totalExport == 0L && it.totalImport == 0L) {
+                binding.layoutPiechart.gone()
+            }
+        }
     }
 
     override fun setOnClickListener() {
@@ -160,6 +165,7 @@ class ReportActivity :
         binding.layoutPiechart.setVisibility(!b)
         binding.tvChartExport.setVisibility(b)
         binding.tvChartImport.setVisibility(b)
+        binding.layoutLosses.setVisibility(b)
         binding.tvHonHop.setVisibility(b)
         binding.layoutChartExport.setVisibility(b)
         binding.layoutBarchartImport.setVisibility(b)
@@ -333,14 +339,14 @@ class ReportActivity :
             TypeFilter.MONTH -> getLineDataMonth()
             TypeFilter.YEAR -> getLineDataYear()
         }
-        if(type == TypeFilter.MONTH){
+        if (type == TypeFilter.MONTH) {
             for (i in mListMonthData.indices) {
                 if (mListMonthData[i].data.tienBan != 0L || mListMonthData[i].data.tienNhap != 0L) {
                     lineChart.moveViewToX(i.toFloat())
                     break
                 }
             }
-        }else{
+        } else {
             for (i in mListYearData.indices) {
                 if (mListYearData[i].data.tienBan != 0L || mListYearData[i].data.tienNhap != 0L) {
                     lineChart.moveViewToX(i.toFloat())

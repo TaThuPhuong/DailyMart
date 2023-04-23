@@ -47,14 +47,16 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         binding.edSearchInvoice.doAfterTextChanged {
             val text = binding.edSearchInvoice.text.toString().lowercase()
             if (text.isNotEmpty()) {
-                viewModel.rootInvoices.also { invoices ->
-                    val result = invoices.filter {
-                        it.numberID.lowercase().contains((text)) || it.user.name.lowercase()
-                            .contains(text)
-                    }.toMutableList()
-                    viewModel.invoices.value = result
+                val filter = viewModel.rootInvoices.filter {
+                    it.numberID.contains(
+                        text,
+                        true
+                    ) || it.user.name.contains(text, true)
                 }
+                viewModel.listInvoice = filter.toMutableList()
+                viewModel.showInvoice()
             } else {
+                viewModel.listInvoice = viewModel.rootInvoices
                 viewModel.showInvoice()
             }
         }

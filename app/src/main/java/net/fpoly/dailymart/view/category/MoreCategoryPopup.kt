@@ -22,6 +22,9 @@ class MoreCategoryPopup(
 
     override fun initData() {
         setupCategory()
+        binding.imvClose.setOnClickListener {
+            dismiss()
+        }
 
         binding.btnInfo.setOnClickListener {
             binding.layoutInfoCategory.visible()
