@@ -15,6 +15,7 @@ import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.fpoly.dailymart.R
@@ -54,6 +55,7 @@ class PaymentViewModel(context: Context) : ViewModel() {
                 customerSelected(res.data.last())
                 this@PaymentViewModel.customers.postValue(res.data)
             }
+
             is Response.Error -> {
                 showSnackbar.postValue(res.message)
             }
@@ -72,6 +74,19 @@ class PaymentViewModel(context: Context) : ViewModel() {
             }
             formIntent?.also {
                 invoice.value = it
+                getCustomerFromID(it.idCustomer)
+            }
+        }
+    }
+
+    private fun getCustomerFromID(id: String) {
+        viewModelScope.launch {
+            delay(200)
+            if (id != "642d285acf62ee68ba804759") {
+                val list = customers.value ?: return@launch
+                val customer = list.firstOrNull { it.id == id } ?: return@launch
+                customerSelected.postValue(customer)
+                invoice.value?.idCustomer = customer.id
             }
         }
     }
@@ -89,6 +104,7 @@ class PaymentViewModel(context: Context) : ViewModel() {
                     showSnackbar.postValue(MESSAGE_SUCCESS)
                     callback()
                 }
+
                 is Response.Error -> showSnackbar.postValue(res.message)
             }
         }
@@ -128,6 +144,7 @@ class PaymentViewModel(context: Context) : ViewModel() {
                         showSnackbar.postValue(MESSAGE_SUCCESS_INVOICE)
                         eventCreateInvoiceSuccess.value = Unit
                     }
+
                     is Response.Error -> {
                         showSnackbar.postValue(res.message)
                     }

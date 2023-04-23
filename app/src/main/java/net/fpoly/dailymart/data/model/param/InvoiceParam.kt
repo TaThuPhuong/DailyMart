@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import net.fpoly.dailymart.data.model.ProductInvoiceParam
+import java.io.Serializable
 
 @Parcelize
 class InvoiceParam(

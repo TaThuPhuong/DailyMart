@@ -57,7 +57,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
     }
 
     fun loadMore() {
-        if (nowPage == totalPage) return
+        if (nowPage > totalPage) return
         viewModelScope.launch {
             val res = repoInvoice.getInvoicesPage(token, nowPage)
             if (res is Response.Success) {
@@ -80,6 +80,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
             else -> mutableListOf()
         }
         invoices.postValue(filter)
+        if (filter.size <= 10) loadMore()
     }
 
     fun onOpenTab(id: Int) {

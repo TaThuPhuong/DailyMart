@@ -57,6 +57,7 @@ class CategoryViewModel(context: Context) : ViewModel() {
     fun showListCategories() {
         val filter = rootCategories.filter { it.status == type }
         categoriesShowing.postValue(filter)
+        if (filter.size <= 10) loadMorePage()
     }
 
     private suspend fun reloadCategories() {
@@ -137,7 +138,7 @@ class CategoryViewModel(context: Context) : ViewModel() {
     }
 
     fun loadMorePage() {
-        if (nowPage == totalPage) return
+        if (nowPage > totalPage) return
         viewModelScope.launch {
             when (val res = repository.getCategoriesPage(token, nowPage)) {
                 is Response.Success -> {

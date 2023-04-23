@@ -23,6 +23,10 @@ class DetailInvoiceActivity : BaseActivity<ActivityDetailInvoiceBinding>(Activit
         setupBtnBack()
         setupSnackbar()
         setupListInvoiceDetail()
+
+        viewModel.eventResetScreen.observe(this) {
+            viewModel.getInvoice(this)
+        }
     }
 
     private fun setupBtnBack() {
