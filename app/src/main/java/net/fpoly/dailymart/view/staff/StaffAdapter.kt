@@ -2,18 +2,13 @@ package net.fpoly.dailymart.view.staff
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import net.fpoly.dailymart.R
-import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.data.model.param.Datum
-import net.fpoly.dailymart.data.model.param.RegisterParam
 import net.fpoly.dailymart.databinding.ItemStaffBinding
-import net.fpoly.dailymart.utils.ROLE
-import kotlin.math.log
 
 class StaffAdapter(
     private val mContext: Context,
