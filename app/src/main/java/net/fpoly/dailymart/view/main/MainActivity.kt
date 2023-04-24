@@ -1,8 +1,13 @@
 package net.fpoly.dailymart.view.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
             val windowInsetsController = WindowCompat.getInsetsController(window, view)
-            val navBarHeight = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val navBarHeight =
+                windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             binding.layoutBottomNavigationBackgroundConnerTop.setPadding(0, 0, 0, navBarHeight)
             windowInsetsController.let {
                 it.isAppearanceLightStatusBars = true
@@ -43,6 +49,22 @@ class MainActivity : AppCompatActivity() {
             navController = findNavController(R.id.nav_host_fragment)
             if (navController.currentDestination?.id != it) {
                 navController.navigate(it)
+            }
+        }
+        checkNotification()
+    }
+
+    private fun checkNotification() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Yêu cầu cấp quyền gửi thông báo nếu chưa được cấp
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    100
+                )
             }
         }
     }
