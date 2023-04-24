@@ -9,6 +9,7 @@
         <import type="net.fpoly.dailymart.utils.ConvertUtilsKt" />
 
         <import type="net.fpoly.dailymart.view.tab.invoice.InvoiceViewModel" />
+        <import type="net.fpoly.dailymart.data.model.InvoiceType"/>
 
         <import type="androidx.core.content.ContextCompat" />
 
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:text="@{ConvertUtilsKt.convertTotalInvoiceNumber(invoice.totalBill)}"
+                android:text='@{viewmodel.isStaff(invoice) ? "*****" : ConvertUtilsKt.convertTotalInvoiceNumber(invoice.totalBill)}'
                 android:textColor="@color/gray_primary"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"

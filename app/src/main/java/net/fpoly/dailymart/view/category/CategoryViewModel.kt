@@ -139,12 +139,13 @@ class CategoryViewModel(context: Context) : ViewModel() {
     }
 
     fun loadMorePage() {
-        if (nowPage > totalPage) return
+        if (nowPage >= totalPage) return
         viewModelScope.launch {
             when (val res = repository.getCategoriesPage(token, nowPage)) {
                 is Response.Success -> {
                     totalPage = res.page
                     rootCategories.addAll(res.data)
+                    rootCategories.toMutableSet()
                     nowPage++
                     showListCategories()
                 }

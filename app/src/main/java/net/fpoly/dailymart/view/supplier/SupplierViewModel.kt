@@ -43,11 +43,11 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         val result = repository.getSuppliersPage(token, page)
         if (result.isSuccess()) {
             totalPage = result.totalPage
+            page++
             rootSupplier.addAll(result.result)
             listSupplier.postValue(rootSupplier)
             delay(100)
             loadShowList()
-            page++
         } else {
             showSnackbar.postValue("Lấy danh sách thất bại")
         }
@@ -55,10 +55,15 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
     }
 
     suspend fun loadMorePage() {
-        if (page > totalPage) return
+        Log.e(TAG, "loadMorePage2: $page --- $totalPage" )
+        if (page >= totalPage) {
+            Log.e(TAG, "loadMorePage: $page --- $totalPage" )
+            return
+        }
         val result = repository.getSuppliersPage(token, page)
         if (result.isSuccess()) {
             rootSupplier.addAll(result.result)
+            rootSupplier.toMutableSet()
             listSupplier.postValue(rootSupplier)
             loadShowList()
             page++

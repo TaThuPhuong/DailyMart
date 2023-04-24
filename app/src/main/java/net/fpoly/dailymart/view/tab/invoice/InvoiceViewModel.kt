@@ -9,6 +9,7 @@ import net.fpoly.dailymart.data.model.InvoiceType
 import net.fpoly.dailymart.data.model.Response
 import net.fpoly.dailymart.data.repository.InvoiceRepositoryImpl
 import net.fpoly.dailymart.repository.InvoiceRepository
+import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceActivity
 import net.fpoly.dailymart.view.detailinvoice.DetailInvoiceActivity.Companion.INVOICE
@@ -20,6 +21,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
     private val _openTabReceipt = MutableLiveData(TAB_EXPORT)
     val openTabReceipt: LiveData<Int> = _openTabReceipt
     private val token = SharedPref.getAccessToken(context)
+    val user = SharedPref.getUser(context)
 
     var rootInvoices = mutableListOf<Invoice>()
     var listInvoice = mutableListOf<Invoice>()
@@ -57,7 +59,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
     }
 
     fun loadMore() {
-        if (nowPage > totalPage) return
+        if (nowPage >= totalPage) return
         viewModelScope.launch {
             val res = repoInvoice.getInvoicesPage(token, nowPage)
             if (res is Response.Success) {
@@ -79,9 +81,13 @@ class InvoiceViewModel(context: Context) : ViewModel() {
             TAB_IMPORT -> listInvoice.filter { it.type == InvoiceType.IMPORT.name }.toMutableList()
             else -> mutableListOf()
         }
+
         invoices.postValue(filter)
         if (filter.size <= 10) loadMore()
     }
+
+    fun isStaff(invoice: Invoice): Boolean =
+        user.role == ROLE.staff && invoice.type == InvoiceType.IMPORT.name
 
     fun onOpenTab(id: Int) {
         viewModelScope.launch {
