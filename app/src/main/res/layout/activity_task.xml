@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,8 +11,7 @@
             type="TaskViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:text="Giao Việc"
+                android:text="Giao việc"
                 android:textColor="@color/gray_primary"
                 android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,10 +52,10 @@
         <RelativeLayout
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
-            android:layout_marginTop="18dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_marginHorizontal="18dp">
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="18dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                     android:hint="Việc, tên..."
                     android:maxLines="1"
                     android:paddingHorizontal="12dp"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/imv_clear"
@@ -102,57 +102,67 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/layout_search"
+            android:layout_marginTop="16dp"
             app:tabBackground="@drawable/bg_tab_unselected"
             app:tabIndicator="@drawable/bg_tab_selected"
-            android:layout_marginTop="16dp"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/pink_primary"
-            app:tabRippleColor="@null"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorHeight="@dimen/_40sdp"
             app:tabMode="auto"
+            app:tabRippleColor="@null"
             app:tabSelectedTextColor="@color/white"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Body2"
             app:tabTextColor="#8D9AB3" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tab_layout" />
-
-        <LinearLayout
-            android:id="@+id/tv_no_data"
-            set_visible="@{viewModel.listTask.size() ==0}"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_empty_list" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:text="@string/empty_list"
-                android:textColor="@color/gray_medium"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp" />
+            android:layout_below="@+id/tab_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/tv_no_data"
+                    set_visible="@{viewModel.listTask.size() ==0}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/img_empty_list" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@string/empty_list"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp" />
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 </layout>

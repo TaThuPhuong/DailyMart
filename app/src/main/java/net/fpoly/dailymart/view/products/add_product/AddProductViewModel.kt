@@ -54,8 +54,10 @@ class AddProductViewModel(
                 is Response.Success -> {
                     resCategory.data?.let { categories ->
                         _listCategory.postValue(categories.filter { it.status })
-                        getDataSuccess.value = getDataSuccess.value?.copy(
-                            getCategory = true
+                        getDataSuccess.postValue(
+                            getDataSuccess.value?.copy(
+                                getCategory = true
+                            )
                         )
                     }
                 }
@@ -66,8 +68,10 @@ class AddProductViewModel(
             if (resSupplier.isSuccess()) {
                 resSupplier.result?.let { suppliers ->
                     _listSupplier.postValue(suppliers.filter { it.status })
-                    getDataSuccess.value = getDataSuccess.value?.copy(
-                        getSupplier = true
+                    getDataSuccess.postValue(
+                        getDataSuccess.value?.copy(
+                            getSupplier = true
+                        )
                     )
                 }
             }

@@ -25,7 +25,7 @@ class StockViewModel(private val app: Application, private val productRepo: Prod
         viewModelScope.launch(Dispatchers.IO) {
             val res = productRepo.getAllProduct(mToken)
             if (res.isSuccess()) {
-                _listProduct.postValue(res.data!!)
+                _listProduct.postValue(res.data!!.filter { it.status })
                 getProductSuccess.postValue(true)
             } else {
                 message.postValue("Máy chủ không phản hồi")

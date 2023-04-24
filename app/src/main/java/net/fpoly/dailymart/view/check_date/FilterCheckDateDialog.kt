@@ -36,7 +36,6 @@ class FilterCheckDateDialog(
             setUnSelected(binding.tvOutOfDate)
             setUnSelected(binding.tv7)
             setSelected(binding.tvCategory)
-            mFilter = CheckDateFilter.CATEGORY
         }
         binding.tvSelect.setOnClickListener {
             onSelected(mFilter)
@@ -55,11 +54,6 @@ class FilterCheckDateDialog(
                 setUnSelected(binding.tvOutOfDate)
                 setSelected(binding.tv7)
                 setUnSelected(binding.tvCategory)
-            }
-            CheckDateFilter.CATEGORY -> {
-                setUnSelected(binding.tvOutOfDate)
-                setUnSelected(binding.tv7)
-                setSelected(binding.tvCategory)
             }
         }
     }

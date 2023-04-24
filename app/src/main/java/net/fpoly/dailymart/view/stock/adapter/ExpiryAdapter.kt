@@ -1,25 +1,21 @@
-package net.fpoly.dailymart.view.stock
+package net.fpoly.dailymart.view.stock.adapter
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.api.ServerInstance
 import net.fpoly.dailymart.data.model.ExpiryRes
 import net.fpoly.dailymart.data.model.ExpiryUpdate
 import net.fpoly.dailymart.databinding.ItemExpiryStockBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.date2String
-import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.setVisibility
-import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.stock.ChangeQuantityAndDateDialog
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +27,7 @@ class ExpiryAdapter(
     private val mContext: Context,
     private val mRole: ROLE,
     private var mListExpiry: ArrayList<ExpiryRes> = ArrayList(),
-    private val onChangeQuantity: (expiry: ExpiryRes) -> Unit,
+    private val onChangeQuantity: (expiry: ExpiryRes, numChange: Int) -> Unit,
 ) : RecyclerView.Adapter<ExpiryAdapter.ItemView>() {
 
     class ItemView(val binding: ItemExpiryStockBinding) : ViewHolder(binding.root)
@@ -65,51 +61,49 @@ class ExpiryAdapter(
             with(mListExpiry[position]) {
                 binding.tvDate.text = "HSD: ${this.expiryDate.date2String()}"
                 binding.tvQuantity.text = "SL: ${this.quantity}"
-                binding.layoutDate.setOnClickListener {
-                    datePicker(this.expiryDate) {
-                        this.expiryDate = it
-                        onUpdate(this) { b ->
-                            if (b) {
-                                binding.tvDate.text = "HSD: ${it.date2String()}"
-                                showToast(mContext, "Cập nhập thành công")
-                            } else {
-                                showToast(mContext, "Lỗi kết nối")
-                            }
-                        }
+                binding.root.setOnClickListener {
+                    val qt = binding.tvQuantity.text
+                    val i = qt.indexOf(" ")
+                    val quantity = try {
+                        binding.tvQuantity.text.substring(i + 1, qt.length).toInt()
+                    } catch (e: Exception) {
+                        this.quantity
                     }
-                }
-                binding.layoutQuantity.setOnClickListener {
-                    ChangeQuantityDialog(mContext, this.quantity) {
-                        this.quantity = it
+                    Log.e(TAG, "quantity:$quantity ")
+                    ChangeQuantityAndDateDialog(
+                        mContext,
+                        quantity = quantity,
+                        this.expiryDate
+                    ) { newQuantity, newTime ->
+                        val numChange = newQuantity - this.quantity
+                        this.expiryDate = newTime
                         if (mRole == ROLE.manager) {
+                            this.quantity = newQuantity
                             onUpdate(this) { b ->
                                 if (b) {
-                                    binding.tvQuantity.text = "SL: $it"
-                                    onChangeQuantity(this)
+                                    binding.tvDate.text = "HSD: ${this.expiryDate.date2String()}"
+                                    binding.tvQuantity.text = "SL: $newQuantity"
+                                    onChangeQuantity(this, numChange)
                                     showToast(mContext, "Cập nhập thành công")
                                 } else {
                                     showToast(mContext, "Lỗi kết nối")
                                 }
                             }
                         } else {
-                            binding.tvQuantity.text = "SL: $it"
-                            onChangeQuantity(this)
+                            onUpdate(this) { b ->
+                                if (b) {
+                                    binding.tvDate.text = "HSD: ${this.expiryDate.date2String()}"
+                                    binding.tvQuantity.text = "SL: $newQuantity"
+                                    onChangeQuantity(this, numChange)
+                                } else {
+                                    showToast(mContext, "Lỗi kết nối")
+                                }
+                            }
                         }
                     }.show()
                 }
             }
         }
-    }
-
-    private fun datePicker(time: Long, onPick: (time: Long) -> Unit) {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = time
-        val theme = R.style.DatePickerTheme
-        val datePickerDialog = DatePickerDialog(mContext, theme, { _, year, month, dayOfMonth ->
-            calendar.set(year, month, dayOfMonth)
-            onPick(calendar.timeInMillis)
-        }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DATE])
-        datePickerDialog.show()
     }
 
     private fun onUpdate(expiry: ExpiryRes, onSuccess: (b: Boolean) -> Unit) {

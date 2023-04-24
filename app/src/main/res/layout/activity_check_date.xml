@@ -11,7 +11,7 @@
             type="CheckDateViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -19,21 +19,17 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:rotation="180"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_bg_tab_cover"
-            app:layout_constraintBottom_toBottomOf="@id/tv_filter"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/img_bg_tab_cover" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="36dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@color/no_color">
 
             <ImageView
                 android:id="@+id/btnBack"
@@ -49,9 +45,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:text="Sắp hết hạn"
+                android:text="Kiểm tra hạn sử dụng"
                 android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,15 +55,13 @@
 
         <RelativeLayout
             android:id="@+id/layout_search"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:layout_below="@+id/toolbar"
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="18dp"
             android:layout_toStartOf="@+id/imv_filter"
-            android:background="@drawable/bg_bd_white_rd_10"
-            app:layout_constraintEnd_toStartOf="@id/imv_filter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            android:background="@drawable/bg_bd_white_rd_10">
 
             <EditText
                 android:id="@+id/ed_search"
@@ -98,14 +92,14 @@
             android:id="@+id/imv_filter"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:src="@drawable/ic_filter_white"
-            android:textColor="@color/pink_primary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            android:textColor="@color/pink_primary" />
 
         <TextView
             android:id="@+id/tv_filter"
@@ -123,58 +117,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_search" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_list_products"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_refresh"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tv_filter"
             android:background="@color/white"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_filter" />
+            app:layout_constraintTop_toBottomOf="@id/tv_filter">
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="5dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_filter" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/tv_no_data"
-            set_visible="@{viewModel.listProductCheckDate.size() ==0}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_filter">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_list_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_empty_list" />
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_no_data"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:elevation="5dp"
+                    android:visibility="visible" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/imbplexsans_regular"
-                android:text="@string/empty_list"
-                android:textColor="@color/gray_medium"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/tv_no_data"
+                    set_visible="@{viewModel.listProductCheckDate.size() ==0}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/img_empty_list" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/imbplexsans_regular"
+                        android:text="@string/empty_list"
+                        android:textColor="@color/gray_medium"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 </layout>

@@ -60,7 +60,7 @@ class WorkSheetActivity :
         }.attach()
         val cal = Calendar.getInstance()
         val today = cal[Calendar.DAY_OF_MONTH]
-        binding.viewPager.currentItem = today
+        binding.viewPager.currentItem = today - 1
         binding.viewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

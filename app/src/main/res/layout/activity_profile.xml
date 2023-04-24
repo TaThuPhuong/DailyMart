@@ -13,10 +13,10 @@
     </data>
 
     <RelativeLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
@@ -114,13 +114,22 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/tv_name_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_name"
+                    android:layout_alignStart="@+id/layout_name"
+                    android:layout_alignEnd="@+id/layout_name"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/red_FF444C" />
+
                 <RelativeLayout
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/layout_name"
+                    android:layout_below="@+id/tv_name_error"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_ed_search_task"
                     android:paddingHorizontal="12dp">
 
@@ -139,21 +148,29 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="50dp"
                         android:background="@color/no_color"
-                        android:enabled="false"
-                        android:textColor="@color/gray_medium"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="end|center_vertical"
                         android:maxLines="1"
+                        android:textColor="@color/gray_medium"
                         android:textSize="16sp" />
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_email_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_email"
+                    android:layout_alignStart="@+id/layout_email"
+                    android:layout_alignEnd="@+id/layout_email"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/red_FF444C" />
 
                 <LinearLayout
                     android:id="@+id/layout_phone"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/layout_email"
+                    android:layout_below="@+id/tv_email_error"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/bg_ed_search_task"
                     android:orientation="horizontal"
                     android:paddingHorizontal="12dp">
@@ -173,21 +190,30 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/no_color"
-                        android:enabled="false"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="end|center_vertical"
-                        android:textColor="@color/gray_medium"
+                        android:inputType="phone"
                         android:maxLines="1"
+                        android:textColor="@color/gray_medium"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_phone_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_phone"
+                    android:layout_alignStart="@+id/layout_phone"
+                    android:layout_alignEnd="@+id/layout_phone"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/red_FF444C" />
 
                 <RelativeLayout
                     android:id="@+id/layout_role"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/layout_phone"
+                    android:layout_below="@+id/tv_phone_error"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/bg_ed_search_task"
                     android:paddingHorizontal="12dp">
 
@@ -219,9 +245,9 @@
                     android:layout_height="52dp"
                     android:layout_below="@+id/layout_role"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingHorizontal="12dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_ed_search_task"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"

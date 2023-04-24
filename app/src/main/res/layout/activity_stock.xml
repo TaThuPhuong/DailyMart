@@ -11,7 +11,7 @@
             type="StockViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -19,20 +19,15 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:rotation="180"
-            android:src="@drawable/img_bg_tab_cover"/>
+            android:src="@drawable/img_bg_tab_cover" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="36dp">
 
             <ImageView
@@ -51,7 +46,7 @@
                 android:fontFamily="@font/imbplexsans_regular"
                 android:text="Kiểm tồn"
                 android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,9 +56,6 @@
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_below="@+id/toolbar"
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="20dp"
@@ -77,8 +69,8 @@
                 android:background="@color/no_color"
                 android:drawableStart="@drawable/ic_search_white"
                 android:drawablePadding="10dp"
-                android:hint="Tên, barcode"
                 android:fontFamily="@font/imbplexsans_regular"
+                android:hint="Tên, barcode"
                 android:padding="12dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -102,35 +94,54 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/bg_white_rd_top_10"
             android:fontFamily="@font/imbplexsans_medium"
-            app:layout_constraintTop_toBottomOf="@id/layout_search"
-            app:layout_constraintStart_toStartOf="parent"
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="Danh sách"
-            android:textSize="18sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_list_products"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tv_filter"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/layout_search" />
+
+        <TextView
+            android:id="@+id/tv_create_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_filter"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_btn_home3"
+            android:fontFamily="@font/imbplexsans_medium"
+            android:padding="12dp"
+            android:text="Tạo báo cáo"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_filter">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_list_products"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/pb_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_filter"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:elevation="5dp"
-            app:layout_constraintTop_toTopOf="@id/tv_filter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:visibility="visible" />
 
         <LinearLayout
@@ -138,11 +149,8 @@
             set_visible="@{viewModel.listProducts.size() ==0}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_filter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_below="@+id/pb_loading"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -163,5 +171,10 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <net.fpoly.dailymart.view.stock.CreateReportView
+            android:id="@+id/view_create_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </RelativeLayout>
 </layout>

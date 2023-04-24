@@ -25,7 +25,6 @@
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0869023500"
         android:textColor="@color/gray_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

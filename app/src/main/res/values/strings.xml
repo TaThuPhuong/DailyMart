@@ -8,7 +8,7 @@
     <string name="welcome">Welcome</string>
     <string name="to_the_daily_mart">To the Daily Mart</string>
     <string name="daily_mart_gi_i_ph_p_ho_n_h_o_cho_c_a_h_ng_c_a_b_n">Daily Mart - giải pháp hoàn hảo cho cửa hàng của bạn</string>
-    <string name="n_gi_n_ti_n_l_i"><![CDATA[Đơn giản & Tiện Lợi]]></string>
+    <string name="n_gi_n_ti_n_l_i"><![CDATA[Đơn giản & Tiện lợi]]></string>
     <string name="qu_n_l_c_a_h_ng_d_d_ng_h_n_v_i_ng_d_ng_c_a_ch_ng_t_i">Quản lý cửa hàng dễ dàng hơn với ứng dụng của chúng tôi</string>
     <string name="qu_n_l_n_h_ng">Quản lý đơn hàng</string>
     <string name="qu_n_l_c_a_h_ng_th_ng_minh_t_i_u_h_a_quy_tr_nh_kinh_doanh">Quản lý cửa hàng thông minh, tối ưu hóa quy trình kinh doanh</string>
@@ -29,7 +29,7 @@
     <string name="da_nhan">Đã nhận</string>
     <string name="disable_camera_permission">Chưa cấp quyền camera</string>
     <string name="enable_camera_permission">Đã cấp quyền camera</string>
-    <string name="hoa_don">Hóa Đơn: %s</string>
+    <string name="hoa_don">ID: %s</string>
     <string name="nhan_vien">Nhân viên: %s</string>
     <string name="customer_name">Khách hàng: %s</string>
 

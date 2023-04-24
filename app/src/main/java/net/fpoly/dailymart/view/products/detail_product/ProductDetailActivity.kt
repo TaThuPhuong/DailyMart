@@ -8,7 +8,10 @@ import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityProductDetailBinding
+import net.fpoly.dailymart.extension.view_extention.setVisibility
 import net.fpoly.dailymart.utils.Constant
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.utils.toMoney
 
 class ProductDetailActivity :
@@ -35,6 +38,8 @@ class ProductDetailActivity :
 
     @SuppressLint("SetTextI18n")
     private fun setData(product: Product) {
+        val role = SharedPref.getUser(this).role
+        binding.tvImportPrice.setVisibility(role == ROLE.manager)
         binding.tvId.text = product.barcode
         binding.tvName.text = product.name
         binding.tvQuantity.text = product.totalQuantity.toString()
