@@ -1,10 +1,10 @@
 package net.fpoly.dailymart.view.check_date
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
-import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.ExpiryCheck
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityCheckDateBinding
@@ -12,6 +12,7 @@ import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.gone
+import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
 import net.fpoly.dailymart.extension.view_extention.visible
 import net.fpoly.dailymart.utils.CheckDateFilter
 import net.fpoly.dailymart.utils.Constant
@@ -30,6 +31,7 @@ class CheckDateActivity :
     private lateinit var mAdapter: ProductDateAdapter
 
     override fun setupData() {
+        binding.toolbar.setMarginsStatusBar(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.btnBack.setOnClickListener { finish() }
@@ -48,12 +50,17 @@ class CheckDateActivity :
             binding.edSearch.setText("")
             mAdapter.setData(getListData(mListProduct, mFilter))
         }
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.getListProduct()
+        }
     }
 
     override fun setupObserver() {
         viewModel.listProductCheckDate.observe(this) {
+            Log.e(TAG, "listProductCheckDate: $it")
             mListProduct = it
             mAdapter.setData(getListData(it, mFilter))
+            Log.e(TAG, "getListData:${getListData(it, mFilter).size} ")
         }
         viewModel.message.observe(this) {
             if (it.isNotEmpty()) {
@@ -61,7 +68,10 @@ class CheckDateActivity :
             }
         }
         viewModel.getListSuccess.observe(this) {
-            if (it) binding.pbLoading.gone()
+            if (it) {
+                binding.layoutRefresh.isRefreshing = false
+                binding.pbLoading.gone()
+            }
         }
     }
 
@@ -69,7 +79,6 @@ class CheckDateActivity :
         return when (type) {
             CheckDateFilter.SOON -> "Sắp hết hạn"
             CheckDateFilter.SEVEN_DAY -> "Hết hạn 7 ngày tới"
-            CheckDateFilter.CATEGORY -> "Ngành hàng"
         }
     }
 
@@ -137,9 +146,6 @@ class CheckDateActivity :
         return when (type) {
             CheckDateFilter.SOON -> listData.sortedBy { it.expiryDate }
             CheckDateFilter.SEVEN_DAY -> listData.filter { it.expiryDate - System.currentTimeMillis() <= Constant.SEVEN_DAY }
-            CheckDateFilter.CATEGORY -> {
-                listData
-            }
         }
     }
 

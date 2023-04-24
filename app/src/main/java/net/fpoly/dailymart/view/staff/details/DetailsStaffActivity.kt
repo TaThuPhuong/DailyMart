@@ -37,8 +37,6 @@ class DetailsStaffActivity :
             setData(it)
             viewModel.setUser(it)
         }
-        onEditTextChange()
-
         binding.tvUpdate.setOnClickListener {
             mLoadingDialog?.showLoading()
             if (isChangeAvatar) {
@@ -54,11 +52,6 @@ class DetailsStaffActivity :
                 viewModel.onEvent(UpdateEvent.OnUpdate(null))
             }
         }
-//        binding.imvAvatar.setOnClickListener {
-//            ImagesUtils.checkPermissionPickImage(this, binding.imvAvatar) {
-//                isChangeAvatar = true
-//            }
-//        }
         setupBtnChangeRole()
         setupBtnChangeStatus()
     }
@@ -83,18 +76,6 @@ class DetailsStaffActivity :
                 mRole = it
                 binding.edRole.text = mRole.value
             }.show()
-        }
-    }
-
-    private fun onEditTextChange() {
-        binding.edName.getTextOnChange {
-            viewModel.onEvent(UpdateEvent.OnNameChange(it))
-        }
-        binding.edPhone.getTextOnChange {
-            viewModel.onEvent(UpdateEvent.OnPhoneNumberChange(it))
-        }
-        binding.edEmail.getTextOnChange {
-            viewModel.onEvent(UpdateEvent.OnEmailChange(it))
         }
     }
 

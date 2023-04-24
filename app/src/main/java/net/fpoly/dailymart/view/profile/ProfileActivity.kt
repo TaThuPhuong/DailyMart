@@ -11,6 +11,7 @@ import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityProfileBinding
+import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
 import net.fpoly.dailymart.extension.view_extention.hide
@@ -18,6 +19,7 @@ import net.fpoly.dailymart.firbase.storege.Images
 import net.fpoly.dailymart.utils.ImagesUtils
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
+import net.fpoly.dailymart.view.staff.details.UpdateEvent
 
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBinding::inflate),
     View.OnClickListener {
@@ -65,6 +67,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
             if (it) {
                 SharedPref.insertUser(this, mUser!!)
                 showToast(this, "Đã lưu")
+                mLoadingDialog?.hideLoading()
             }
         }
     }
@@ -79,6 +82,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
                 }
             }
             binding.tvSave -> {
+                mLoadingDialog?.showLoading()
                 if (onChangeAvatar) {
                     Images.uploadImage(
                         binding.imvAvatar,
@@ -102,6 +106,33 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
     private fun setOnTextChange() {
         binding.edName.getTextOnChange {
             mUser = mUser?.copy(name = it)
+            if (it.trim().isEmpty()) {
+                binding.tvNameError.text = it.blankException()
+            } else if (it.length < 3) {
+                binding.tvNameError.text = "Tên từ 4 kí tự"
+            } else {
+                binding.tvNameError.text = ""
+            }
+        }
+        binding.edPhone.getTextOnChange {
+            mUser = mUser?.copy(phone = it)
+            if (it.trim().isEmpty()) {
+                binding.tvPhoneError.text = it.blankException()
+            } else if (!isPhoneNumberValid(it)) {
+                binding.tvPhoneError.text = "Số điện thoại không hợp lệ!"
+            } else {
+                binding.tvPhoneError.text = ""
+            }
+        }
+        binding.edEmail.getTextOnChange {
+            mUser = mUser?.copy(email = it)
+            if (it.trim().isEmpty()) {
+                binding.tvEmailError.text = it.blankException()
+            } else if (!isEmailValid(it)) {
+                binding.tvEmailError.text = "Email không hợp lệ!"
+            } else {
+                binding.tvEmailError.text = ""
+            }
         }
     }
 
@@ -111,5 +142,16 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(ActivityProfileBind
         } else {
             "Đang hoạt động"
         }
+    }
+
+    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
+        val regex =
+            Regex("^\\+?(0)([3|5|7|8|9]\\d{8})$")
+        return regex.matches(phoneNumber)
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val regex = Regex("^[A-Za-z\\d+_.-]+@[A-Za-z\\d.-]+\\.[A-Za-z]{2,}\$")
+        return regex.matches(email)
     }
 }

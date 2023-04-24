@@ -1,24 +1,35 @@
 package net.fpoly.dailymart.view.stock
 
+import android.util.Log
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.data.model.Product
 import net.fpoly.dailymart.databinding.ActivityStockBinding
-import net.fpoly.dailymart.extension.view_extention.getTextOnChange
-import net.fpoly.dailymart.extension.view_extention.gone
-import net.fpoly.dailymart.extension.view_extention.setMarginsStatusBar
-import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.extension.view_extention.*
+import net.fpoly.dailymart.utils.ROLE
+import net.fpoly.dailymart.utils.SharedPref
 
 class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::inflate) {
 
+    private val TAG = "YingMing"
     private val viewModel: StockViewModel by viewModels { AppViewModelFactory }
 
     private var mListProduct: List<Product> = ArrayList()
     private lateinit var mStockAdapter: StockAdapter
+    private var mListStockCheck: MutableMap<String, StockCheck> = mutableMapOf()
 
     override fun setOnClickListener() {
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { onBackPressed() }
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.getListProduct()
+        }
+        binding.tvCreateReport.setOnClickListener {
+            Log.e(TAG, "setOnClickListener: ")
+            val listData = mListStockCheck.values.toList()
+            binding.viewCreateReport.setData(listData)
+            binding.viewCreateReport.visible()
+        }
     }
 
     override fun setupData() {
@@ -36,13 +47,20 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
             mStockAdapter.setData(it)
         }
         viewModel.getProductSuccess.observe(this) {
-            if (it) binding.pbLoading.gone()
-
+            if (it) {
+                binding.layoutRefresh.isRefreshing = false
+                binding.pbLoading.gone()
+            }
         }
     }
 
     private fun initRecycleView() {
-        mStockAdapter = StockAdapter(this, mListProduct)
+        val role = SharedPref.getUser(this).role
+        mStockAdapter = StockAdapter(this, mListProduct) {
+            Log.e(TAG, "StockCheck: $it")
+            mListStockCheck[it.expiryId] = it
+            binding.tvCreateReport.setVisible(mListStockCheck.isNotEmpty() && role == ROLE.staff)
+        }
         binding.rcvListProducts.adapter = mStockAdapter
     }
 
@@ -66,6 +84,14 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
                 binding.tvNoData.gone()
             }
             mStockAdapter.setData(listFilter)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (binding.viewCreateReport.isShowing()) {
+            binding.viewCreateReport.gone()
+        } else {
+            finish()
         }
     }
 }

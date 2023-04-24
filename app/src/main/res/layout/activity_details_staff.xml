@@ -13,9 +13,9 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_height="match_parent">
+        android:focusableInTouchMode="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
@@ -101,6 +101,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="60dp"
                         android:background="@color/no_color"
+                        android:enabled="false"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="end|center_vertical"
                         android:maxLines="1"
@@ -133,10 +134,11 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="50dp"
                         android:background="@color/no_color"
-                        android:textColor="@color/gray_medium"
+                        android:enabled="false"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="end|center_vertical"
                         android:maxLines="1"
+                        android:textColor="@color/gray_medium"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
@@ -166,10 +168,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/no_color"
+                        android:enabled="false"
                         android:fontFamily="@font/imbplexsans_medium"
                         android:gravity="end|center_vertical"
-                        android:textColor="@color/gray_medium"
                         android:maxLines="1"
+                        android:textColor="@color/gray_medium"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -180,8 +183,8 @@
                     android:layout_below="@+id/layout_phone"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="10dp"
-                    android:paddingHorizontal="12dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:background="@drawable/bg_ed_search_task"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -224,9 +227,9 @@
                     android:layout_height="52dp"
                     android:layout_below="@+id/layout_role"
                     android:layout_marginHorizontal="24dp"
-                    android:paddingHorizontal="12dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_ed_search_task">
+                    android:background="@drawable/bg_ed_search_task"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"

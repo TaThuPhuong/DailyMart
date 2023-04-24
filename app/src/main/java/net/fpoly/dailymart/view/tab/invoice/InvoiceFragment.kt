@@ -20,7 +20,6 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         setupSnackbar()
-        setupBtnBack()
         setupAdapter()
         setupEditSearch()
         setupBtnAdd()
@@ -59,12 +58,6 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
                 viewModel.listInvoice = viewModel.rootInvoices
                 viewModel.showInvoice()
             }
-        }
-    }
-
-    private fun setupBtnBack() {
-        binding.btnBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 

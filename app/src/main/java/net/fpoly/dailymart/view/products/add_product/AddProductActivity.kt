@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.products.add_product
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -31,6 +32,7 @@ class AddProductActivity :
     BaseActivity<ActivityAddProductBinding>(ActivityAddProductBinding::inflate),
     View.OnClickListener {
 
+    private val TAG = "YingMing"
     private val viewModel by viewModels<AddProductViewModel> { AppViewModelFactory }
 
     private var id = ""
@@ -77,6 +79,7 @@ class AddProductActivity :
             }
         }
         viewModel.listCategory.observe(this) {
+            Log.e(TAG, "listCategory: $it")
             mListCategory = it
         }
         viewModel.listSupplier.observe(this) {

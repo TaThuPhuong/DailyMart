@@ -9,6 +9,7 @@ import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.Task
 import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ItemTaskBinding
+import net.fpoly.dailymart.extension.time_extention.date2String
 import net.fpoly.dailymart.extension.view_extention.setImage
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -20,9 +21,6 @@ class TaskAdapter(
     RecyclerView.Adapter<TaskAdapter.ItemView>() {
 
     class ItemView(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root)
-
-    @SuppressLint("SimpleDateFormat")
-    private val timeFormatter = SimpleDateFormat("HH:mm")
 
     @SuppressLint("NotifyDataSetChanged")
     fun setTaskData(listTask: List<Task>) {
@@ -54,9 +52,9 @@ class TaskAdapter(
                 }
                 binding.tvTitle.text = this.title
                 binding.tvReceiver.text = this.idReceiver.name
-                binding.tvTime.text = "Từ ${timeFormatter.format(this.createAt)} -" +
-                        " ${timeFormatter.format(this.deadline)}"
-                binding.tvDate.text = SimpleDateFormat("dd.MM.yyyy").format(this.createAt)
+                binding.tvTime.text = "Từ ${this.createAt.date2String("HH:mm")} -" +
+                        " ${this.deadline.date2String("HH:mm")}"
+                binding.tvDate.text = this.deadline.date2String("dd.MM.yyyy")
                 binding.root.setOnClickListener {
                     onClick(this)
                 }

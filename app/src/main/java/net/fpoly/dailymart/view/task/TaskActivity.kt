@@ -50,12 +50,16 @@ class TaskActivity : BaseActivity<ActivityTaskBinding>(ActivityTaskBinding::infl
                 binding.viewPager.gone()
             }
         })
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.getAllTask(binding.viewPager.currentItem)
+        }
     }
 
     override fun setupObserver() {
         viewModel.listTask.observe(this) {
             binding.pbLoading.gone()
             binding.viewPager.visible()
+            binding.layoutRefresh.isRefreshing = false
         }
     }
 

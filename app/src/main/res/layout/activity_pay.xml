@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_regular"
-                android:text="Thêm Hóa Đơn"
+                android:text="Thêm hóa đơn"
                 android:textColor="@color/gray_primary"
                 android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"

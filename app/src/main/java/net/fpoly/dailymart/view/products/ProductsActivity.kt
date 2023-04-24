@@ -45,13 +45,22 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.imvClear.setOnClickListener {
             binding.edSearch.setText("")
             binding.imvClear.gone()
-            mProductAdapter.setData(mListProduct)
+            if (isShowActiveProduct) {
+                mProductAdapter.setData(mListProduct)
+                binding.rcvProducts.adapter = mProductAdapter
+            } else {
+                mProductDisableAdapter.setData(mListProductDisable)
+                binding.rcvProducts.adapter = mProductDisableAdapter
+            }
         }
         binding.tvAddNew.setOnClickListener {
             startActivity(Intent(this, AddProductActivity::class.java))
         }
         binding.imvBin.setOnClickListener {
             showProductDisable()
+        }
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.getListProducts()
         }
     }
 
@@ -62,25 +71,38 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
         binding.pbLoading.visible()
         viewModel.getListProducts()
         initRecycleProducts()
-        setSearch(mListProduct) {
-            mProductAdapter.setData(it)
-            binding.tvNoData.setVisible(it.isEmpty())
-            binding.rcvProducts.setVisible(it.isNotEmpty())
-        }
-        binding.rcvProducts.adapter = mProductAdapter
     }
 
     override fun setupObserver() {
         viewModel.listProductActive.observe(this) {
             mProductAdapter.setData(it)
             mListProduct = it
+            if (isShowActiveProduct) {
+                setSearch(it) { listProduct ->
+                    mProductAdapter.setData(listProduct)
+                    binding.tvNoData.setVisible(listProduct.isEmpty())
+                    binding.rcvProducts.setVisible(listProduct.isNotEmpty())
+                }
+                binding.rcvProducts.adapter = mProductAdapter
+            }
         }
         viewModel.getListSuccess.observe(this) {
-            if (it) binding.pbLoading.gone()
+            if (it) {
+                binding.pbLoading.gone()
+                binding.layoutRefresh.isRefreshing = false
+            }
         }
         viewModel.listProductDisable.observe(this) {
             mListProductDisable = it
             mProductDisableAdapter.setData(it)
+            if (!isShowActiveProduct) {
+                setSearch(it) { listProduct ->
+                    mProductDisableAdapter.setData(listProduct)
+                    binding.tvNoData.setVisible(listProduct.isEmpty())
+                    binding.rcvProducts.setVisible(listProduct.isNotEmpty())
+                }
+                binding.rcvProducts.adapter = mProductDisableAdapter
+            }
         }
         viewModel.message.observe(this) {
             if (it.isNotEmpty()) showToast(this, it)
@@ -124,6 +146,8 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding>(ActivityProductsB
                         product.barcode.contains(it, true)
             }
             onFilter(listFilter)
+            if (it.isEmpty()) onFilter(list)
+            binding.imvClear.setVisible(it.isNotEmpty())
         }
     }
 

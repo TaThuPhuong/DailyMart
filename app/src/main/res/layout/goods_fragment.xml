@@ -12,8 +12,8 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
@@ -24,25 +24,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:src="@drawable/ic_arrow_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
                 android:fontFamily="@font/imbplexsans_regular"
                 android:text="Hàng hóa"
                 android:textColor="@color/gray_primary"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -58,34 +49,32 @@
                 android:id="@+id/ic2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_category_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_category_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Ngành hàng"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Ngành hàng"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic2"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -100,34 +89,32 @@
                 android:id="@+id/ic1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_supplier_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_supplier_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Nhà cung cấp"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Nhà cung cấp"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic1"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -142,34 +129,32 @@
                 android:id="@+id/ic6"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_product_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_product_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Sản phẩm"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Sản phẩm"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic6"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -184,34 +169,32 @@
                 android:id="@+id/ic3"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_impport_product_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_impport_product_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Nhập hàng"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Nhập hàng"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic3"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -226,34 +209,32 @@
                 android:id="@+id/ic4"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_stock_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_stock_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Kiểm tra tồn kho"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Kiểm tồn"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic4"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -268,34 +249,32 @@
                 android:id="@+id/ic5"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_check_date_tab"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginVertical="6dp"
+                android:src="@drawable/ic_check_date_tab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_right_pink_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_medium"
-                android:text="Kiểm tra HSD"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/imbplexsans_medium"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Kiểm tra HSD"
+                android:textColor="@color/gray_medium"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic5"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

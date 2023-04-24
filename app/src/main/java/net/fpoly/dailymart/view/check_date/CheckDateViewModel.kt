@@ -36,7 +36,10 @@ class CheckDateViewModel(private val app: Application, private val productRepo: 
         viewModelScope.launch(Dispatchers.IO) {
             val res = productRepo.getAllProduct(mToken)
             if (res.isSuccess()) {
-                _listProduct.postValue(res.data!!)
+                res.data?.let { listProduct ->
+                    Log.e(TAG, "listProduct: $listProduct")
+                    _listProduct.postValue(listProduct.filter { it.totalQuantity > 0 && it.status })
+                }
                 getListSuccess.postValue(true)
             } else {
                 message.postValue("Đã xảy ra lỗi")

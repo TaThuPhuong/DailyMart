@@ -103,8 +103,8 @@
         <activity android:name=".view.supplier.SupplierActivity" />
         <activity
             android:name=".view.products.ProductsActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Base.AppTheme" />
+            android:theme="@style/Base.AppTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.change_password.ChangePasswordActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -129,7 +129,10 @@
         <activity
             android:name=".view.message.MessageActivity"
             android:theme="@style/Base.AppChatTheme" />
-        <activity android:name=".view.products.add_product.AddProductActivity" /> <!-- activity -->
+        <activity android:name=".view.stock_report.StockReportActivity" />
+        <activity android:name=".view.products.add_product.AddProductActivity"
+            android:windowSoftInputMode="adjustPan"
+            /> <!-- activity -->
         <!-- service -->
         <service
             android:name=".service.FirebaseMessageService"

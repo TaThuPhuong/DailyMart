@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
@@ -18,6 +19,7 @@ import net.fpoly.dailymart.view.profile.ProfileActivity
 import net.fpoly.dailymart.view.report.ReportActivity
 import net.fpoly.dailymart.view.splash.SplashActivity
 import net.fpoly.dailymart.view.staff.StaffActivity
+import net.fpoly.dailymart.view.stock_report.StockReportActivity
 
 class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentBinding::inflate),
     View.OnClickListener {
@@ -34,6 +36,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
         binding.layoutStaff.setOnClickListener(this)
         binding.layoutUpdateBankInfo.setOnClickListener(this)
         binding.layoutLogOut.setOnClickListener(this)
+        binding.layoutStockReport.setOnClickListener(this)
     }
 
     override fun setupData() {
@@ -68,6 +71,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
             binding.layoutChangePassword -> openActivity(ChangePasswordActivity::class.java)
             binding.layoutMessage -> openActivity(MessageActivity::class.java)
             binding.layoutReport -> openActivity(ReportActivity::class.java)
+            binding.layoutStockReport -> openActivity(StockReportActivity::class.java)
             binding.layoutStaff -> openActivity(StaffActivity::class.java)
             binding.layoutUpdateBankInfo -> openActivity(BankInfoActivity::class.java)
             binding.layoutLogOut -> logOut()
@@ -82,6 +86,7 @@ class ShowMoreFragment : BaseFragment<ShowMoreFragmentBinding>(ShowMoreFragmentB
         LogOutConfirmDialog(mContext) {
             SharedPref.setAccessToken(mContext, "")
             SharedPref.insertUser(mContext, User())
+            viewModel.deleteNotification()
             startActivity(Intent(mContext, SplashActivity::class.java))
             (mContext as Activity).finishAffinity()
         }.show()

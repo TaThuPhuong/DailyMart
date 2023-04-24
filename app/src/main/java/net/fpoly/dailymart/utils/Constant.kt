@@ -30,5 +30,5 @@ enum class ROLE(val value: String) {
 }
 
 enum class CheckDateFilter {
-    SOON, SEVEN_DAY, CATEGORY
+    SOON, SEVEN_DAY
 }

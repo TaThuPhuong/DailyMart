@@ -20,7 +20,7 @@ class StaffViewModel(
     private val _listUser = MutableLiveData<List<Datum>>()
     val mListUser: LiveData<List<Datum>> = _listUser
     private val mToken = SharedPref.getAccessToken(app)
-
+    private val listUser: ArrayList<Datum> = ArrayList()
     val getUserSuccess = MutableLiveData(false)
 
     fun getUser() {
@@ -31,12 +31,11 @@ class StaffViewModel(
                 .enqueue(object : Callback<UserModel> {
                     override fun onResponse(
                         call: Call<UserModel>,
-                        response: Response<UserModel>
+                        response: Response<UserModel>,
                     ) {
                         if (response.isSuccessful) {
                             getUserSuccess.postValue(true)
-                            _listUser.value = response.body()?.data;
-                            Log.d(TAG, "onResponse: " + response.body()?.data)
+                            _listUser.value = response.body()?.data?.sortedByDescending { it.status }
                         } else {
                             Log.d(TAG, "code: " + response.code())
                             Log.d(TAG, "message: " + response.message())

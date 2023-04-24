@@ -61,7 +61,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
 
             when {
                 isAssignableFrom(SplashViewModel::class.java) ->
-                    SplashViewModel()
+                    SplashViewModel(app, userRepository)
 
                 isAssignableFrom(MainViewModel::class.java) ->
                     MainViewModel()
@@ -82,7 +82,7 @@ val AppViewModelFactory = object : ViewModelProvider.Factory {
                     GoodsViewModel()
 
                 isAssignableFrom(ShowMoreViewModel::class.java) ->
-                    ShowMoreViewModel(app)
+                    ShowMoreViewModel(app,notificationRepo)
 
                 isAssignableFrom(TaskViewModel::class.java) ->
                     TaskViewModel(app, taskRepository)
