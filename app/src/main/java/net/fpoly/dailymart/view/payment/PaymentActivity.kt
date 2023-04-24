@@ -52,7 +52,11 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(ActivityPaymentBind
         binding.btnPayment.setOnClickListener {
             val invoiceTotal = viewModel.invoice.value?.totalBill ?: 0
             binding.amountPaid.text.toString()
-            val amount = binding.edAmount.text.toString().toLongOrNull() ?: return@setOnClickListener
+            val amount = binding.edAmount.text.toString().toLongOrNull()
+            if (amount == null) {
+                viewModel.showSnackbar.value = "Khách hàng chưa thanh toán đủ"
+                return@setOnClickListener
+            }
             if (amount >= invoiceTotal) {
                 viewModel.createInvoice()
             }else {

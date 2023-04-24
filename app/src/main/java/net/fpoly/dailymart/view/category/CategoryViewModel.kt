@@ -42,7 +42,7 @@ class CategoryViewModel(context: Context) : ViewModel() {
 
     private suspend fun getCategories() {
         isLoading.postValue(true)
-        when (val res = repository.getCategoriesPage(token, nowPage)) {
+        when (val res = repository.getAllCategory(token)) {
             is Response.Success -> {
                 totalPage = res.page
                 rootCategories.addAll(res.data)
@@ -58,7 +58,7 @@ class CategoryViewModel(context: Context) : ViewModel() {
     fun showListCategories(list: MutableList<Category> = rootCategories) {
         val filter = list.filter { it.status == type }
         categoriesShowing.postValue(filter)
-        if (filter.size <= 10) loadMorePage()
+//        if (filter.size <= 10) loadMorePage()
     }
 
     private suspend fun reloadCategories() {
@@ -138,22 +138,22 @@ class CategoryViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun loadMorePage() {
-        if (nowPage >= totalPage) return
-        viewModelScope.launch {
-            when (val res = repository.getCategoriesPage(token, nowPage)) {
-                is Response.Success -> {
-                    totalPage = res.page
-                    rootCategories.addAll(res.data)
-                    rootCategories.toMutableSet()
-                    nowPage++
-                    showListCategories()
-                }
-
-                is Response.Error -> showSnackbar.postValue(res.message)
-            }
-        }
-    }
+//    fun loadMorePage() {
+//        if (nowPage > totalPage) return
+//        viewModelScope.launch {
+//            when (val res = repository.getCategoriesPage(token, nowPage)) {
+//                is Response.Success -> {
+//                    totalPage = res.page
+//                    rootCategories.addAll(res.data)
+//                    rootCategories.toMutableSet()
+//                    nowPage++
+//                    showListCategories()
+//                }
+//
+//                is Response.Error -> showSnackbar.postValue(res.message)
+//            }
+//        }
+//    }
 
     companion object {
         const val ADD_SUCCESS = "Thêm ngành hàng thành công"

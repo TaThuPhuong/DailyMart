@@ -110,6 +110,7 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentBottom="true"
                         android:fontFamily="@font/imbplexsans_regular"
+                        android:visibility="invisible"
                         android:text="@{@string/total_category(viewModel.totalCountCategory)}"
                         android:textSize="14sp" />
                 </RelativeLayout>

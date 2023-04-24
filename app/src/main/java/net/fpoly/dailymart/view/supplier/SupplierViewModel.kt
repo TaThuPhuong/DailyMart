@@ -40,7 +40,7 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
 
     private suspend fun getSupplierPage() {
         isLoading.postValue(true)
-        val result = repository.getSuppliersPage(token, page)
+        val result = repository.getSuppliers(token)
         if (result.isSuccess()) {
             totalPage = result.totalPage
             page++
@@ -54,29 +54,23 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         isLoading.postValue(false)
     }
 
-    suspend fun loadMorePage() {
-        Log.e(TAG, "loadMorePage2: $page --- $totalPage" )
-        if (page >= totalPage) {
-            Log.e(TAG, "loadMorePage: $page --- $totalPage" )
-            return
-        }
-        val result = repository.getSuppliersPage(token, page)
-        if (result.isSuccess()) {
-            rootSupplier.addAll(result.result)
-            rootSupplier.toMutableSet()
-            listSupplier.postValue(rootSupplier)
-            loadShowList()
-            page++
-        }
-    }
+//    suspend fun loadMorePage() {
+//        if (page > totalPage) return
+//        val result = repository.getSuppliersPage(token, page)
+//        if (result.isSuccess()) {
+//            rootSupplier.addAll(result.result)
+//            rootSupplier.toMutableSet()
+//            listSupplier.postValue(rootSupplier)
+//            loadShowList()
+//            page++
+//        }
+//    }
 
     fun loadShowList() {
         val filter = listSupplier.value?.filter { it.status == typeSupplier }?.toMutableList()
             ?: mutableListOf()
         listShow.postValue(filter)
-        viewModelScope.launch {
-            if (filter.size <= 10) loadMorePage()
-        }
+//        viewModelScope.launch { if (filter.size <= 10) loadMorePage() }
     }
 
     private suspend fun reloadSupplier() {

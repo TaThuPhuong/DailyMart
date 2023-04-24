@@ -41,7 +41,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
 
     private suspend fun getInvoices() {
         isLoading.postValue(true)
-        when (val res = repoInvoice.getInvoicesPage(token, nowPage)) {
+        when (val res = repoInvoice.getInvoices(token)) {
             is Response.Success -> {
                 val root = res.data.toMutableList()
                 rootInvoices.addAll(root)
@@ -58,20 +58,20 @@ class InvoiceViewModel(context: Context) : ViewModel() {
         isLoading.postValue(false)
     }
 
-    fun loadMore() {
-        if (nowPage >= totalPage) return
-        viewModelScope.launch {
-            val res = repoInvoice.getInvoicesPage(token, nowPage)
-            if (res is Response.Success) {
-                val root = res.data.toMutableList()
-                rootInvoices.addAll(root)
-                nowPage++
-                totalPage = res.page
-                listInvoice = rootInvoices
-                showInvoice()
-            }
-        }
-    }
+//    fun loadMore() {
+//        if (nowPage > totalPage) return
+//        viewModelScope.launch {
+//            val res = repoInvoice.getInvoicesPage(token, nowPage)
+//            if (res is Response.Success) {
+//                val root = res.data.toMutableList()
+//                rootInvoices.addAll(root)
+//                nowPage++
+//                totalPage = res.page
+//                listInvoice = rootInvoices
+//                showInvoice()
+//            }
+//        }
+//    }
 
     fun showInvoice(tab: Int? = _openTabReceipt.value) {
         val filter = when (tab) {
@@ -83,7 +83,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
         }
 
         invoices.postValue(filter)
-        if (filter.size <= 10) loadMore()
+//        if (filter.size <= 10) loadMore()
     }
 
     fun isStaff(invoice: Invoice): Boolean =
