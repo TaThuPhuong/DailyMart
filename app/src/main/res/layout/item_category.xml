@@ -42,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/imbplexsans_medium"
                 android:text="@{category.name}"
-                android:textAllCaps="true"
                 android:textColor="@color/gray_medium"
                 android:textSize="16sp" />
 

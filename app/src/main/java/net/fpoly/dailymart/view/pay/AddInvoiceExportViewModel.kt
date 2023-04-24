@@ -52,7 +52,8 @@ class AddInvoiceExportViewModel(context: Context) : ViewModel() {
         val res = repoProduct.getAllProduct(token)
         Log.e(TAG, "getAllProduct: ${res.data}  --- ${res.message} --- ${res.status}")
         if (res.isSuccess() && res.data != null) {
-            listProducts.postValue(res.data!!)
+            val filter = res.data?.filter { it.status == true } ?: return@withContext
+            listProducts.postValue(filter)
             if (currentBarcode.isNotEmpty()) getInvoiceDetail(currentBarcode)
         }
     }

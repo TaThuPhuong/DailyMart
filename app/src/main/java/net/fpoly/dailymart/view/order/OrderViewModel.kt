@@ -51,7 +51,8 @@ class OrderViewModel(context: Context) : ViewModel() {
         isShowLoading.postValue(true)
         val res = productRepo.getAllProduct(token)
         if (res.isSuccess()) {
-            this@OrderViewModel.products.postValue(res.data)
+            val filter = res.data?.filter { it.status == true } ?: return@withContext
+            this@OrderViewModel.products.postValue(filter)
         } else {
             showSnackbar.postValue("Lấy danh sách sản phẩm thất bại")
         }

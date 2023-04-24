@@ -6,9 +6,7 @@ import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.annotation.MenuRes
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.launch
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
@@ -17,7 +15,6 @@ import net.fpoly.dailymart.extension.setupSnackbar
 import net.fpoly.dailymart.extension.view_extention.gone
 import net.fpoly.dailymart.utils.ROLE
 import net.fpoly.dailymart.utils.SharedPref
-import net.fpoly.dailymart.view.supplier.SupplierViewModel
 
 class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryBinding::inflate) {
 
@@ -74,18 +71,15 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
 
     private fun setupEdSearch() {
         binding.edSearch.doAfterTextChanged {
-            val text = binding.edSearch.text.toString().lowercase()
+            val text = binding.edSearch.text.toString()
             if (text.isNotEmpty()) {
-                viewModel.categoriesShowing.value?.also { invoices ->
-                    val result =
-                        invoices.filter {
-                            it.id.lowercase().contains(text) || it.name.lowercase().contains(text)
-                        }
-                            .toMutableList()
-                    viewModel.categoriesShowing.value = result
-                }
+                val result =
+                    viewModel.rootCategories.filter {
+                        it.id.contains(text, true) || it.name.contains(text, true)
+                    }.toMutableList()
+                viewModel.showListCategories(result)
             } else {
-                viewModel.categoriesShowing.value = viewModel.rootCategories
+                viewModel.showListCategories()
             }
         }
     }

@@ -10,7 +10,7 @@ import retrofit2.http.POST
 
 interface CustomerApi {
 
-    @GET("customer")
+    @GET("customer/getAll")
     suspend fun getCustomers(@Header("Authorization") token: String): ResultData<ArrayList<Customer>>
 
     @POST("customer")

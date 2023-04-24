@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.data.model.Category
 import net.fpoly.dailymart.data.model.CategoryAddParam
@@ -54,8 +55,8 @@ class CategoryViewModel(context: Context) : ViewModel() {
         isLoading.postValue(false)
     }
 
-    fun showListCategories() {
-        val filter = rootCategories.filter { it.status == type }
+    fun showListCategories(list: MutableList<Category> = rootCategories) {
+        val filter = list.filter { it.status == type }
         categoriesShowing.postValue(filter)
         if (filter.size <= 10) loadMorePage()
     }

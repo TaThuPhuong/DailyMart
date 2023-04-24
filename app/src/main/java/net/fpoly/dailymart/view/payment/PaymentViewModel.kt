@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,7 +43,6 @@ class PaymentViewModel(context: Context) : ViewModel() {
     var customerSelected = MutableLiveData<Customer>()
     val eventCreateInvoiceSuccess = MutableLiveData<Unit>()
     val isLoading = MutableLiveData(false)
-
     init {
         viewModelScope.launch {
             getCustomer()
@@ -52,6 +52,8 @@ class PaymentViewModel(context: Context) : ViewModel() {
     private suspend fun getCustomer() = withContext(Dispatchers.IO) {
         when (val res = customerRepo.getCustomers(token)) {
             is Response.Success -> {
+                Log.e(TAG, "getCustomer: ${res.data}")
+                Log.e(TAG, "getCustomer: ${res.data.last()}")
                 customerSelected(res.data.last())
                 this@PaymentViewModel.customers.postValue(res.data)
             }

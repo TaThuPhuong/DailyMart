@@ -135,6 +135,8 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_gray_r4"
                     android:padding="12dp"
+                    android:focusable='false'
+                    android:cursorVisible='false'
                     android:textSize="14sp"
                     android:hint="Tên sản phẩm"
                     android:textColor="@color/gray_primary"/>
