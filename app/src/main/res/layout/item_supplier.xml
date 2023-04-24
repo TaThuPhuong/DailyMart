@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/imv_phone"
                 android:fontFamily="@font/imbplexsans_semibold"
-                android:maxLines="1"
+                android:minLines="2"
                 android:text="@{supplier.supplierName}"
                 android:textColor="@color/gray_primary"
                 android:textSize="14sp"
