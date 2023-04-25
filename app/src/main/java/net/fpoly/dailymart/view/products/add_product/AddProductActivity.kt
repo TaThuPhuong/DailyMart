@@ -2,10 +2,12 @@ package net.fpoly.dailymart.view.products.add_product
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.AutoFocusMode
@@ -117,9 +119,13 @@ class AddProductActivity :
                 }
             }
             binding.imvAddImage, binding.imvImage -> {
-                ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
-                    binding.imvAddImage.hide()
-                    onChangeImage = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    checkPermissionImage()
+                } else {
+                    ImagesUtils.checkPermissionPickImage(this, binding.imvImage) {
+                        binding.imvAddImage.hide()
+                        onChangeImage = true
+                    }
                 }
             }
             binding.btnAddProduct -> {
@@ -180,6 +186,26 @@ class AddProductActivity :
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun checkPermissionImage() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_MEDIA_IMAGES
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                2
+            )
+        } else {
+            ImagesUtils.openImagesPicker(this, binding.imvImage) {
+                binding.imvAddImage.hide()
+                onChangeImage = true
+            }
+        }
+    }
+
     private fun startScanning() {
         codeScanner = CodeScanner(this, binding.scannerView)
         codeScanner.camera = CodeScanner.CAMERA_BACK
@@ -211,10 +237,19 @@ class AddProductActivity :
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Đã cấp quyền", Toast.LENGTH_LONG).show()
                 startScanning()
             } else {
                 Toast.makeText(this, "Chưa có quyền", Toast.LENGTH_LONG).show()
+            }
+        }
+        if (requestCode == 2) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                ImagesUtils.openImagesPicker(this, binding.imvImage) {
+                    binding.imvAddImage.hide()
+                    onChangeImage = true
+                }
+            } else {
+                Toast.makeText(this, "Vui lòng câps quyền", Toast.LENGTH_LONG).show()
             }
         }
     }
