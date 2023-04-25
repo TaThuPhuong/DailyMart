@@ -2,6 +2,7 @@ package net.fpoly.dailymart.view.check_date
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.data.model.ExpiryCheck
 import net.fpoly.dailymart.databinding.ItemProductDateBinding
+import net.fpoly.dailymart.extension.time_extention.date2String
 import java.text.SimpleDateFormat
 
 class ProductDateAdapter(
@@ -45,15 +47,28 @@ class ProductDateAdapter(
         with(holder) {
             with(mListExpiry[position]) {
                 val isOutOfDate = System.currentTimeMillis() > this.expiryDate
-                if (isOutOfDate) binding.date.setTextColor(
-                    ContextCompat.getColor(
-                        mContext,
-                        R.color.red_FF444C
-                    )
+                Log.e(
+                    "YingMing",
+                    "${this.productName}-${this.barcode}: now: ${System.currentTimeMillis()} - date: ${this.expiryDate}\n"
                 )
+                if (isOutOfDate) {
+                    binding.date.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.red_FF444C
+                        )
+                    )
+                } else {
+                    binding.date.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.gray_medium
+                        )
+                    )
+                }
                 binding.name.text = this.productName
                 binding.tvBarcode.text = "Barcode: ${this.barcode}"
-                binding.date.text = SimpleDateFormat("dd/MM/yyyy").format(this.expiryDate)
+                binding.date.text = this.expiryDate.date2String()
                 binding.root.setOnClickListener {
                     onClick(this)
                 }
