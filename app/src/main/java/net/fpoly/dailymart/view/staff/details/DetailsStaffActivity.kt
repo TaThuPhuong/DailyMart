@@ -101,6 +101,6 @@ class DetailsStaffActivity :
         mStatus = user.status
     }
 
-    private fun getStatus(status: Boolean): String = if (status) "Đang hoạt đông" else "Vô hiệu hóa"
+    private fun getStatus(status: Boolean): String = if (status) "Đang hoạt động" else "Vô hiệu hóa"
 
 }

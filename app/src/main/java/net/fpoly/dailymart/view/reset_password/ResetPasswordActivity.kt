@@ -35,6 +35,7 @@ class ResetPasswordActivity :
         binding.imvBack.setOnClickListener() {
             onBackPressed()
         }
+        viewModel.setID(id!!)
         onEditTextChange()
         sendSetUpNewPass()
     }

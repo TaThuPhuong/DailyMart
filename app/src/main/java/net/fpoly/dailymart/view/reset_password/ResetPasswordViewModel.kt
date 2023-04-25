@@ -25,7 +25,6 @@ class ResetPasswordViewModel(app: Application, private val userRepo: UserReposit
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
 
-    private val forgotPassRepo = UserRepositoryImpl()
     private val _validateOtp = MutableLiveData("")
     val validateOtp: LiveData<String> = _validateOtp
     private val _validateNewPass = MutableLiveData("")
@@ -46,6 +45,10 @@ class ResetPasswordViewModel(app: Application, private val userRepo: UserReposit
         mLoadingDialog = LoadingDialog(context)
     }
 
+    init {
+        val user = SharedPref.getUser(app)
+    }
+
     private fun sendOTP(
         sendOtpParam: SendOtpParam
     ) {
@@ -63,6 +66,12 @@ class ResetPasswordViewModel(app: Application, private val userRepo: UserReposit
                 }
             }
         }
+    }
+
+    fun setID(id: String) {
+        _changeParam.value = _changeParam.value?.copy(
+            id = id
+        )
     }
 
     fun onEvent(event: SetupEvent, context: Context) {
