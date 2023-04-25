@@ -158,14 +158,23 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listInvoices"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_filter"
-                android:layout_marginTop="14dp"
-                app:items="@{viewModel.invoices}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:layout_marginTop="14dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listInvoices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:items="@{viewModel.invoices}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
             <LinearLayout
                 set_visible="@{viewModel.isShowEmptyList()}"

@@ -39,8 +39,9 @@ class InvoiceViewModel(context: Context) : ViewModel() {
         viewModelScope.launch { getInvoices() }
     }
 
-    private suspend fun getInvoices() {
-        isLoading.postValue(true)
+    suspend fun getInvoices(clear: Boolean = false, loading: Boolean = true) {
+        if (clear) rootInvoices.clear()
+        if (loading) isLoading.postValue(true)
         when (val res = repoInvoice.getInvoices(token)) {
             is Response.Success -> {
                 val root = res.data.toMutableList()
@@ -55,7 +56,7 @@ class InvoiceViewModel(context: Context) : ViewModel() {
                 showSnackbar.value = res.message
             }
         }
-        isLoading.postValue(false)
+        if (loading) isLoading.postValue(false)
     }
 
 //    fun loadMore() {

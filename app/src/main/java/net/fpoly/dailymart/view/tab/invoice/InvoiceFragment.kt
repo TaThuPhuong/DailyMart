@@ -1,10 +1,14 @@
 package net.fpoly.dailymart.view.tab.invoice
 
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.AppViewModelFactory
+import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseFragment
 import net.fpoly.dailymart.databinding.InvoicceFragmentBinding
 import net.fpoly.dailymart.extension.setupSnackbar
@@ -24,6 +28,22 @@ class InvoiceFragment : BaseFragment<InvoicceFragmentBinding>(InvoicceFragmentBi
         setupEditSearch()
         setupBtnAdd()
         setupBtnGetInvoice()
+        setupRefresh()
+    }
+
+    private fun setupRefresh() {
+        binding.refreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.pink_primary
+            )
+        )
+        binding.refreshLayout.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.getInvoices(clear = true, loading = false)
+                binding.refreshLayout.isRefreshing = false
+            }
+        }
     }
 
     private fun setupBtnGetInvoice() {

@@ -38,8 +38,9 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         viewModelScope.launch { getSupplierPage() }
     }
 
-    private suspend fun getSupplierPage() {
-        isLoading.postValue(true)
+    suspend fun getSupplierPage(clear: Boolean = false, loading: Boolean = true) {
+        if (clear) rootSupplier.clear()
+        if (loading) isLoading.postValue(true)
         val result = repository.getSuppliers(token)
         if (result.isSuccess()) {
             totalPage = result.totalPage
@@ -51,7 +52,7 @@ class SupplierViewModel(context: Context, val repository: SupplierRepository) : 
         } else {
             showSnackbar.postValue("Lấy danh sách thất bại")
         }
-        isLoading.postValue(false)
+        if (loading) isLoading.postValue(false)
     }
 
 //    suspend fun loadMorePage() {

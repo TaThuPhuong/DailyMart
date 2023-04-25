@@ -3,12 +3,13 @@ package net.fpoly.dailymart.view.supplier
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.MenuRes
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
@@ -34,6 +35,22 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
         setupSnackbar()
         setupBtnBack()
         setupCheckRole()
+        setupRefresh()
+    }
+
+    private fun setupRefresh() {
+        binding.refreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                this,
+                R.color.pink_primary
+            )
+        )
+        binding.refreshLayout.setOnRefreshListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getSupplierPage(clear = true, loading = false)
+                binding.refreshLayout.isRefreshing = false
+            }
+        }
     }
 
     private fun setupCheckRole() {
@@ -64,8 +81,10 @@ class SupplierActivity : BaseActivity<ActivitySupplierBinding>(ActivitySupplierB
             val text = binding.edSearch.text.toString().lowercase()
             if (text.isNotEmpty()) {
                 binding.imvClear.visibility = View.VISIBLE
-                val filter = viewModel.rootSupplier.filter { it.phoneNumber.lowercase().contains(text) || it.supplierName.lowercase()
-                    .contains(text) }
+                val filter = viewModel.rootSupplier.filter {
+                    it.phoneNumber.lowercase().contains(text) || it.supplierName.lowercase()
+                        .contains(text)
+                }
                 viewModel.listSupplier.value = filter.toMutableList()
                 viewModel.loadShowList()
             } else {

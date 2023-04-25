@@ -5,8 +5,11 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.annotation.MenuRes
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.R
 import net.fpoly.dailymart.base.BaseActivity
@@ -31,6 +34,22 @@ class CategoryActivity : BaseActivity<ActivityCategoryBinding>(ActivityCategoryB
         setupListCategory()
         setupSnackbar()
         setupCheckRole()
+        setupRefresh()
+    }
+
+    private fun setupRefresh() {
+        binding.refreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                this,
+                R.color.pink_primary
+            )
+        )
+        binding.refreshLayout.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.getCategories(clear = true, loading = false)
+                binding.refreshLayout.isRefreshing = false
+            }
+        }
     }
 
     private fun setupBtnMore() {

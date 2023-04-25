@@ -40,8 +40,9 @@ class CategoryViewModel(context: Context) : ViewModel() {
         viewModelScope.launch { getCategories() }
     }
 
-    private suspend fun getCategories() {
-        isLoading.postValue(true)
+    suspend fun getCategories(clear: Boolean = false , loading: Boolean = true) {
+        if (clear) rootCategories.clear()
+        if (loading) isLoading.postValue(true)
         when (val res = repository.getAllCategory(token)) {
             is Response.Success -> {
                 totalPage = res.page
@@ -52,7 +53,7 @@ class CategoryViewModel(context: Context) : ViewModel() {
 
             is Response.Error -> showSnackbar.postValue(res.message)
         }
-        isLoading.postValue(false)
+        if (loading) isLoading.postValue(false)
     }
 
     fun showListCategories(list: MutableList<Category> = rootCategories) {
