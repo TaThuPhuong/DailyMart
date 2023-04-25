@@ -7,7 +7,7 @@ import java.util.*
 
 fun Date.date2String(pattern: String = "dd/MM/yyyy"): String {
     return try {
-        val format = SimpleDateFormat(pattern, Locale.ENGLISH)
+        val format = SimpleDateFormat(pattern, Locale.getDefault())
         format.format(this.time)
     } catch (e: Exception) {
         ""
@@ -16,7 +16,7 @@ fun Date.date2String(pattern: String = "dd/MM/yyyy"): String {
 
 fun Long.date2String(pattern: String = "dd/MM/yyyy"): String {
     return try {
-        val format = SimpleDateFormat(pattern, Locale.ENGLISH)
+        val format = SimpleDateFormat(pattern, Locale.getDefault())
         format.format(this)
     } catch (e: Exception) {
         ""
@@ -25,7 +25,7 @@ fun Long.date2String(pattern: String = "dd/MM/yyyy"): String {
 
 fun Date.string2Date(sDate: String, pattern: String = "dd/MM/yyyy"): Date {
     return try {
-        val sdf = SimpleDateFormat(pattern, Locale.ENGLISH)
+        val sdf = SimpleDateFormat(pattern,Locale.getDefault())
         sdf.parse(sDate)
     } catch (e: Exception) {
         this
