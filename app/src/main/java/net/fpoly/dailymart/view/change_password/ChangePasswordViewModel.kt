@@ -28,7 +28,6 @@ class ChangePasswordViewModel(private val app: Application, private val userRepo
     private val _validateConfirm = MutableLiveData("")
     val validateConfirm: LiveData<String> = _validateConfirm
     private val _changeParam = MutableLiveData(ChangePassParam())
-    private lateinit var mLoadingDialog: LoadingDialog
     private val _passwordOld = MutableLiveData(false)
     val passwordOld: LiveData<Boolean> = _passwordOld
     private val _passwordNew = MutableLiveData(false)
@@ -38,10 +37,6 @@ class ChangePasswordViewModel(private val app: Application, private val userRepo
 
     val updateSuccess = MutableLiveData(false)
     val message = MutableLiveData("")
-
-    fun initLoadDialog(context: Context) {
-        mLoadingDialog = LoadingDialog(context)
-    }
 
     init {
         val user = SharedPref.getUser(app)
@@ -54,7 +49,6 @@ class ChangePasswordViewModel(private val app: Application, private val userRepo
     private fun changePass(
         changePassParam: ChangePassParam,
     ) {
-        mLoadingDialog.showLoading()
         viewModelScope.launch {
             when (val resPass = userRepo.changePass(mToken, changePassParam)) {
                 is Success -> {

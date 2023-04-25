@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.view.change_password
 
+import android.content.Intent
 import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
@@ -34,7 +35,6 @@ class ChangePasswordActivity :
         binding.imvShowPasswordConfirm.setOnClickListener {
             viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassConfirm)
         }
-        viewModel.initLoadDialog(this)
     }
 
     override fun setupObserver() {
@@ -46,12 +46,14 @@ class ChangePasswordActivity :
             }
         }
         viewModel.message.observe(this) {
+            mLoadingDialog?.hideLoading()
             if (it.isNotEmpty()) showToast(this, it)
         }
     }
 
     private fun setupSaveChangePass() {
         binding.tvChangePass.setOnClickListener {
+            mLoadingDialog?.showLoading()
             viewModel.onEvent(
                 ChangePasswordViewModel.ChangeEvent.ValidateForm
             )

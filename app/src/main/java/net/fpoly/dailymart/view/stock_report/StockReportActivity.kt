@@ -38,6 +38,7 @@ class StockReportActivity :
         mReportStockAdapter = ReportStockAdapter(mListReportStock) {
             binding.viewReport.setData(it.data.stringToData(), false, it.time)
             binding.viewReport.visible()
+            binding.rcvList.gone()
         }
         binding.rcvList.adapter = mReportStockAdapter
     }
@@ -45,6 +46,7 @@ class StockReportActivity :
     override fun onBackPressed() {
         if (binding.viewReport.isShowing()) {
             binding.viewReport.gone()
+            binding.rcvList.visible()
         } else {
             finish()
         }

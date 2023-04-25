@@ -30,6 +30,10 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
             binding.viewCreateReport.setData(listData)
             binding.viewCreateReport.visible()
         }
+        binding.imvClear.setOnClickListener {
+            binding.imvClear.gone()
+            binding.edSearch.setText("")
+        }
     }
 
     override fun setupData() {
@@ -39,6 +43,12 @@ class StockActivity : BaseActivity<ActivityStockBinding>(ActivityStockBinding::i
         initRecycleView()
         viewModel.getListProduct()
         setSearch()
+        binding.viewCreateReport.sendSuccess.observe(this) {
+            if (it) {
+                binding.tvCreateReport.gone()
+                mListStockCheck.clear()
+            }
+        }
     }
 
     override fun setupObserver() {

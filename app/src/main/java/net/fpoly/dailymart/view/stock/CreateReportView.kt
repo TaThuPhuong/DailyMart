@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,7 @@ class CreateReportView : RelativeLayout {
     private var mListStockCheck: List<StockCheck> = ArrayList()
     private lateinit var mStockReportAdapter: StockReportAdapter
     private lateinit var binding: ViewCreateReportBinding
+    val sendSuccess = MutableLiveData(false)
 
     constructor(context: Context) : super(context) {
         mContext = context
@@ -57,9 +59,11 @@ class CreateReportView : RelativeLayout {
                 if (it) {
                     showToast(mContext, "Gửi thành công")
                     sendMessage(mListStockCheck)
-                    mListStockCheck = ArrayList()
+                    sendSuccess.value = true
+                    mListStockCheck = arrayListOf()
                     gone()
                 } else {
+                    sendSuccess.value = false
                     showToast(mContext, "Gửi thất bại")
                 }
             }
@@ -72,7 +76,11 @@ class CreateReportView : RelativeLayout {
     }
 
     @SuppressLint("SetTextI18n")
-    fun setData(list: List<StockCheck>, isStaff: Boolean = true, time: Long = 0) {
+    fun setData(
+        list: List<StockCheck>,
+        isStaff: Boolean = true,
+        time: Long = 0,
+    ) {
         mListStockCheck = ArrayList()
         mListStockCheck = list
         mStockReportAdapter.setData(list)

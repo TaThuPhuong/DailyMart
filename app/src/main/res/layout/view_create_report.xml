@@ -23,7 +23,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:padding="8dp"
-        android:src="@drawable/ic_close_square" />
+        android:src="@drawable/ic_close_square"
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_report_stock"
