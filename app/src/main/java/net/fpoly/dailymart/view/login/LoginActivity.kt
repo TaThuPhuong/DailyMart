@@ -10,7 +10,10 @@ import net.fpoly.dailymart.base.LoadingDialog
 import net.fpoly.dailymart.databinding.ActivityLoginBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.extension.view_extention.setVisibility
+import net.fpoly.dailymart.extension.view_extention.setVisible
 import net.fpoly.dailymart.extension.view_extention.visible
+import net.fpoly.dailymart.utils.ConnectionLiveData
 import net.fpoly.dailymart.view.forget_password.ForgetPasswordActivity
 import net.fpoly.dailymart.view.main.MainActivity
 import net.fpoly.dailymart.view.register.RegisterActivity
@@ -23,6 +26,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     private val viewModel: LoginViewModel by viewModels { AppViewModelFactory }
 
     private var mLoadingDialog: LoadingDialog? = null
+    private lateinit var mConnect: ConnectionLiveData
     override fun setOnClickListener() {
         binding.imvShowPassword.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
@@ -30,6 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     override fun setupData() {
+        mConnect = ConnectionLiveData(this)
         onEditTextChange()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -48,6 +53,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             if (it.isNotEmpty()) {
                 showToast(this, it)
             }
+        }
+        mConnect.observe(this) {
+            binding.tvInternet.setVisible(!it)
         }
     }
 

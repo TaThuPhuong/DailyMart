@@ -63,7 +63,7 @@ class ReportViewModel(val app: Application, private val reportRepository: Report
         when (val res = reportRepository.getBestSeller(mToken)) {
             is Response.Error -> return@launch
             is Response.Success -> {
-                listBestSeller.postValue(res.data.take(10))
+                listBestSeller.postValue(res.data.filter { it.soLuongDaBan > 0 }.take(10))
             }
         }
     }
