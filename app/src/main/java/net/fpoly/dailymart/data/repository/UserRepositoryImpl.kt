@@ -16,7 +16,7 @@ import net.fpoly.dailymart.repository.UserRepository
 
 class UserRepositoryImpl(
     private val api: UserApi = ServerInstance.apiUser,
-    private val coroutineScope: CoroutineDispatcher = Dispatchers.IO
+    private val coroutineScope: CoroutineDispatcher = Dispatchers.IO,
 ) : UserRepository {
 
     private val TAG = "YingMing"
@@ -62,7 +62,7 @@ class UserRepositoryImpl(
     override suspend fun updateUser(
         token: String,
         id: String,
-        updateParam: UpdateParam
+        updateParam: UpdateParam,
     ) =
         withContext(coroutineScope) {
             try {
@@ -127,6 +127,20 @@ class UserRepositoryImpl(
                 }
             } catch (e: Exception) {
                 Log.e(TAGS, "reset pass Exception: $e")
+                Response.Error(e.message.toString())
+            }
+        }
+
+    override suspend fun getUserById(token: String, id: String): Response<UserRes> =
+        withContext(coroutineScope) {
+            try {
+                val res = api.getUserById(token, id)
+                if (res.isSuccess()) {
+                    Response.Success(res.result, res.message)
+                } else {
+                    Response.Error(res.message)
+                }
+            } catch (e: Exception) {
                 Response.Error(e.message.toString())
             }
         }

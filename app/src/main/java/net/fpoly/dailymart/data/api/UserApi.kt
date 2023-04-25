@@ -74,4 +74,10 @@ interface UserApi {
         @Path("id") id: String,
         @Body userParam: UserRes,
     ): Call<ResponseBody>
+
+    @GET("user/{id}")
+    suspend fun getUserById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): ResultData<UserRes>
 }

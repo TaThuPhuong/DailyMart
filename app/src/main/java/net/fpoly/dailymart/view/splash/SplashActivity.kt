@@ -26,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
 
     private val viewModel: SplashViewModel by viewModels { AppViewModelFactory }
     private lateinit var bindingData: ActivitySplashBinding
+    private var active = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,9 @@ class SplashActivity : AppCompatActivity() {
                 SharedPref.setBankInfo(this, bank)
             }
         }
+        viewModel.checkActive(this) {
+            active = it
+        }
 
         viewModel.loadingSplash.observe(this) {
             if (it >= 200) {
@@ -52,7 +56,7 @@ class SplashActivity : AppCompatActivity() {
                     openActivity(OnBoardingActivity::class.java)
                 } else {
                     SharedPref.setTimeOnApp(this)
-                    if (SharedPref.getUser(this@SplashActivity).id.isEmpty()) {
+                    if (SharedPref.getUser(this@SplashActivity).id.isEmpty() || !active) {
                         openActivity(LoginActivity::class.java)
                     } else {
                         openActivity(MainActivity::class.java)
