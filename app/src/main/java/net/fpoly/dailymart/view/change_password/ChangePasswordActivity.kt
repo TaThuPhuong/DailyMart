@@ -4,15 +4,18 @@ import androidx.activity.viewModels
 import net.fpoly.dailymart.AppViewModelFactory
 import net.fpoly.dailymart.base.BaseActivity
 import net.fpoly.dailymart.base.LoadingDialog
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.databinding.ActivityChangePasswordBinding
 import net.fpoly.dailymart.extension.showToast
 import net.fpoly.dailymart.extension.view_extention.getTextOnChange
+import net.fpoly.dailymart.utils.SharedPref
 
 class ChangePasswordActivity :
     BaseActivity<ActivityChangePasswordBinding>(ActivityChangePasswordBinding::inflate) {
 
     private val viewModel: ChangePasswordViewModel by viewModels { AppViewModelFactory }
     private var mLoadingDialog: LoadingDialog? = null
+
     override fun setupData() {
         onEditTextChange()
         binding.viewModel = viewModel
@@ -23,13 +26,13 @@ class ChangePasswordActivity :
             onBackPressed()
         }
         binding.imvShowPasswordOld.setOnClickListener {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassOld, applicationContext)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassOld)
         }
         binding.imvShowPasswordNew.setOnClickListener {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassNew, applicationContext)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassNew)
         }
         binding.imvShowPasswordConfirm.setOnClickListener {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassConfirm, applicationContext)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnPassConfirm)
         }
         viewModel.initLoadDialog(this)
     }
@@ -50,21 +53,20 @@ class ChangePasswordActivity :
     private fun setupSaveChangePass() {
         binding.tvChangePass.setOnClickListener {
             viewModel.onEvent(
-                ChangePasswordViewModel.ChangeEvent.ValidateForm,
-                context = applicationContext
+                ChangePasswordViewModel.ChangeEvent.ValidateForm
             )
         }
     }
 
     private fun onEditTextChange() {
         binding.edOldPass.getTextOnChange {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnOldPass(it), this)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnOldPass(it))
         }
         binding.edNewPass.getTextOnChange {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnNewPass(it), this)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnNewPass(it))
         }
         binding.edPassConfirm.getTextOnChange {
-            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnConfirm(it), this)
+            viewModel.onEvent(ChangePasswordViewModel.ChangeEvent.OnConfirm(it))
         }
     }
 

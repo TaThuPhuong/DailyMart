@@ -14,9 +14,10 @@ import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.utils.SharedPref
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.data.model.Response.Error
+import net.fpoly.dailymart.data.model.User
 import net.fpoly.dailymart.repository.UserRepository
 
-class ChangePasswordViewModel(app: Application, private val userRepo: UserRepository) :
+class ChangePasswordViewModel(private val app: Application, private val userRepo: UserRepository) :
     ViewModel() {
     private val TAG = "Tuvm"
     private val mToken = SharedPref.getAccessToken(app)
@@ -42,6 +43,14 @@ class ChangePasswordViewModel(app: Application, private val userRepo: UserReposi
         mLoadingDialog = LoadingDialog(context)
     }
 
+    init {
+        val user = SharedPref.getUser(app)
+        _changeParam.value = _changeParam.value?.copy(
+            id = user.id,
+            phoneNumber = user.phone
+        )
+    }
+
     private fun changePass(
         changePassParam: ChangePassParam,
     ) {
@@ -61,7 +70,7 @@ class ChangePasswordViewModel(app: Application, private val userRepo: UserReposi
         }
     }
 
-    fun onEvent(event: ChangeEvent, context: Context) {
+    fun onEvent(event: ChangeEvent) {
         when (event) {
             is ChangeEvent.OnOldPass -> {
                 _changeParam.value = _changeParam.value?.copy(
@@ -115,9 +124,7 @@ class ChangePasswordViewModel(app: Application, private val userRepo: UserReposi
             is ChangeEvent.ValidateForm -> {
                 _changeParam.value?.let {
                     if (it.checkValidate()) {
-                        changePass(
-                            changePassParam = it,
-                        )
+                        changePass(it)
                     } else {
                         updateSuccess.postValue(false)
                         message.postValue("Vui lòng điền đầy đủ và đúng thông tin")

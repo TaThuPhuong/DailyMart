@@ -1,5 +1,6 @@
 package net.fpoly.dailymart.view.forget_password
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -16,8 +17,9 @@ import net.fpoly.dailymart.extension.blankException
 import net.fpoly.dailymart.view.reset_password.ResetPasswordActivity
 import net.fpoly.dailymart.data.model.Response.Success
 import net.fpoly.dailymart.data.model.Response.Error
+import net.fpoly.dailymart.utils.SharedPref
 
-class ForgetPassViewModel : ViewModel() {
+class ForgetPassViewModel() : ViewModel() {
     private val TAG = "Tuvm"
     private val forgotPassRepo = UserRepositoryImpl()
     private val _validateEmail = MutableLiveData("")
