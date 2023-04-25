@@ -53,7 +53,11 @@ class ForgetPassViewModel() : ViewModel() {
                 }
 
                 is Error -> {
-                    _validateEmail.value = forgot.message
+                    if (forgot.message != "Email không hợp lệ!") {
+                        _validateEmail.value = "Đã xảy ra lỗi trong quá trình đăng nhập"
+                    } else {
+                        _validateEmail.value = forgot.message
+                    }
                     mLoadingDialog.hideLoading()
                 }
             }
