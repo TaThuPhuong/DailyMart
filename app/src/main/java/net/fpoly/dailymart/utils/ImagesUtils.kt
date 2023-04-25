@@ -4,14 +4,17 @@ import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.os.Build
 import android.provider.MediaStore
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.exifinterface.media.ExifInterface
 import com.bumptech.glide.Glide
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import gun0912.tedimagepicker.builder.TedImagePicker
 import java.io.IOException
+
 
 object ImagesUtils {
     fun checkPermissionPickImage(context: Context, imv: ImageView, onChoseImage: () -> Unit) {
@@ -31,10 +34,10 @@ object ImagesUtils {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
             )
-            .check();
+            .check()
     }
 
-    private fun openImagesPicker(context: Context, imv: ImageView, onChoseImage: () -> Unit) {
+    fun openImagesPicker(context: Context, imv: ImageView, onChoseImage: () -> Unit) {
         TedImagePicker.with(context)
             .start { uri ->
                 try {
