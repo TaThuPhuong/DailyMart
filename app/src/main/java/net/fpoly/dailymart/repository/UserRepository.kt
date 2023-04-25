@@ -13,7 +13,7 @@ interface UserRepository {
     suspend fun updateUser(
         token: String,
         id: String,
-        updateParam: UpdateParam
+        updateParam: UpdateParam,
     ): Response<UpdateParam>
 
 
@@ -29,4 +29,6 @@ interface UserRepository {
     suspend fun resetPass(
         sendOtpParam: SendOtpParam,
     ): Response<String>
+
+    suspend fun getUserById(token: String, id: String): Response<UserRes>
 }

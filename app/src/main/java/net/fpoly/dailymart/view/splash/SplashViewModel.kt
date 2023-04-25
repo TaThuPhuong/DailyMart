@@ -10,11 +10,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.fpoly.dailymart.data.model.Response
+import net.fpoly.dailymart.data.model.User
+import net.fpoly.dailymart.repository.NotificationRepository
 import net.fpoly.dailymart.repository.UserRepository
 import net.fpoly.dailymart.utils.SharedPref
 import java.util.*
 
-class SplashViewModel(private val app: Application, private val userRepo: UserRepository) :
+class SplashViewModel(
+    private val app: Application,
+    private val userRepo: UserRepository,
+    private val notificationRepo: NotificationRepository,
+) :
     ViewModel() {
     private var timer: Timer? = null
 
@@ -42,12 +49,30 @@ class SplashViewModel(private val app: Application, private val userRepo: UserRe
         }, 100, 10)
     }
 
-//    fun checkActive(context: Context): Boolean {
-//        val user = SharedPref.getUser(context)
-//        if (user.id.isNotEmpty()) {
-//            viewModelScope.launch(Dispatchers.IO){
-//                userRepo.get
-//            }
-//        }
-//    }
+    fun checkActive(context: Context, onCheck: (Boolean) -> Unit) {
+        val user = SharedPref.getUser(context)
+        val token = SharedPref.getAccessToken(context)
+        if (user.id.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                when (val res = userRepo.getUserById(token, user.id)) {
+                    is Response.Error -> {
+                        onCheck(false)
+                        reset(false)
+                    }
+                    is Response.Success -> {
+                        onCheck(res.data.status)
+                        reset(res.data.status)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun reset(b: Boolean) {
+        if (!b) {
+            SharedPref.setAccessToken(app, "")
+            SharedPref.insertUser(app, User())
+            notificationRepo.deleteSeenNotification()
+        }
+    }
 }
